@@ -1,0 +1,36 @@
+# Explicit operator opt-in only. The default application.yml keeps management off.
+management:
+  server:
+    address: 127.0.0.1
+    port: 8081
+  endpoints:
+    access:
+      default: none
+    jmx:
+      exposure:
+        exclude: '*'
+    web:
+      discovery:
+        enabled: false
+      exposure:
+        include: health,metrics,prometheus
+  endpoint:
+    health:
+      access: read-only
+      show-details: never
+      show-components: never
+    metrics:
+      access: read-only
+    prometheus:
+      access: read-only
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: false
+      slo:
+        http.server.requests: 100ms,300ms,800ms,1500ms,3000ms
+
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true

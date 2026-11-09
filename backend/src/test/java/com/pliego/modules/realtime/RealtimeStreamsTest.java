@@ -48,7 +48,7 @@ class RealtimeStreamsTest {
    if("b".repeat(43).equals(cookies.get(call.getArgument(0))))borrows.hold("disconnect");
    return null;
   }).when(service).disconnect(any());
-  var streams=new RealtimeStreams(service);
+  var streams=new RealtimeStreams(service,new io.micrometer.core.instrument.simple.SimpleMeterRegistry());
   var clients=Executors.newVirtualThreadPerTaskExecutor();
   try {
    streams.open("a".repeat(43),null);streams.open("b".repeat(43),null);
@@ -74,7 +74,7 @@ class RealtimeStreamsTest {
   var failure=new com.pliego.foundation.database.DatabaseExceptionTranslator()
    .translate(new java.sql.SQLException("synthetic timeout",sqlState));
   when(service.connect(anyString(),any())).thenThrow(failure);
-  var streams=new RealtimeStreams(service);
+  var streams=new RealtimeStreams(service,new io.micrometer.core.instrument.simple.SimpleMeterRegistry());
   try {
    assertThatThrownBy(()->streams.open("a".repeat(43),null))
     .isInstanceOfSatisfying(RealtimeStreams.OpenFailure.class,error->assertThat(error.limited()).isTrue());
@@ -84,7 +84,7 @@ class RealtimeStreamsTest {
   var failure=new com.pliego.foundation.database.DatabaseExceptionTranslator()
    .translate(new java.sql.SQLException("synthetic contract failure","P1001"));
   when(service.connect(anyString(),any())).thenThrow(failure);
-  var streams=new RealtimeStreams(service);
+  var streams=new RealtimeStreams(service,new io.micrometer.core.instrument.simple.SimpleMeterRegistry());
   try{assertThatThrownBy(()->streams.open("a".repeat(43),null)).isSameAs(failure);}
   finally{streams.shutdown();}
  }
@@ -92,7 +92,7 @@ class RealtimeStreamsTest {
   when(service.read(any(),any())).thenReturn(
    new RealtimeGateway.Batch(true,"1",true,List.of(new RealtimeGateway.Event("1","order.changed","order","123"))),
    new RealtimeGateway.Batch(false,"1",false,List.of()));
-  var streams=new RealtimeStreams(service);
+  var streams=new RealtimeStreams(service,new io.micrometer.core.instrument.simple.SimpleMeterRegistry());
   var permits=(Semaphore)org.springframework.test.util.ReflectionTestUtils.getField(streams,"database");
   var sends=new AtomicInteger();
   doAnswer(call->{assertThat(permits.availablePermits()).isEqualTo(4);sends.incrementAndGet();return null;})
@@ -109,7 +109,7 @@ class RealtimeStreamsTest {
   var failure=new com.pliego.foundation.database.DatabaseExceptionTranslator()
    .translate(new java.sql.SQLException("synthetic lock timeout","55P03"));
   doThrow(failure).when(service).disconnect(any());
-  var streams=new RealtimeStreams(service);
+  var streams=new RealtimeStreams(service,new io.micrometer.core.instrument.simple.SimpleMeterRegistry());
   try {
    streams.open("a".repeat(43),null);
    verify(service,timeout(3000)).disconnect(any());
@@ -127,7 +127,7 @@ class RealtimeStreamsTest {
   when(service.read(any(),any())).thenAnswer(call->{
    readCalls.incrementAndGet();firstRead.countDown();return new RealtimeGateway.Batch(true,"0",false,List.of());
   });
-  var streams=new RealtimeStreams(service);
+  var streams=new RealtimeStreams(service,new io.micrometer.core.instrument.simple.SimpleMeterRegistry());
   var permits=(Semaphore)org.springframework.test.util.ReflectionTestUtils.getField(streams,"database");
   var mvc=org.springframework.test.web.servlet.setup.MockMvcBuilders
    .standaloneSetup(new StreamEndpoint(streams)).build();
@@ -163,7 +163,7 @@ class RealtimeStreamsTest {
    unblock.await();
    return new RealtimeGateway.Batch(true,"0",true,List.of());
   });
-  var streams=new RealtimeStreams(service);
+  var streams=new RealtimeStreams(service,new io.micrometer.core.instrument.simple.SimpleMeterRegistry());
   try {
    for(int n=0;n<4;n++)streams.open("a".repeat(43),null);
    assertThat(reading.await(5,TimeUnit.SECONDS)).isTrue();
@@ -185,7 +185,7 @@ class RealtimeStreamsTest {
    reading.countDown();return new RealtimeGateway.Batch(true,"0",true,List.of());
   });
   doAnswer(call->{released.countDown();return null;}).when(service).disconnect(any());
-  var streams=new RealtimeStreams(service);
+  var streams=new RealtimeStreams(service,new io.micrometer.core.instrument.simple.SimpleMeterRegistry());
   try {
    for(int n=0;n<subscribers;n++)streams.open("a".repeat(43),null);
    assertThat(reading.await(5,TimeUnit.SECONDS)).isTrue();

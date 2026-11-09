@@ -72,6 +72,12 @@ pliego:
     jwt:
       secret: ${PLIEGO_JWT_SECRET}
 
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
 management:
   # Exposure is deferred to the performance-assessment task.
   server:

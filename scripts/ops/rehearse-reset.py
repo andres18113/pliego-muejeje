@@ -270,6 +270,8 @@ class Rehearsal:
     def start_backend(self):
         app_port = free_port()
         self.env['CHECKOUT_BASE_URL'] = f'http://127.0.0.1:{app_port}'
+        # Readiness polls /v3/api-docs, which production disables; opt in locally.
+        self.env['SPRING_PROFILES_INCLUDE'] = 'contract'
         log = (self.work / 'backend.log').open('w')
         self.app = subprocess.Popen(['java', '-jar', str(self.jar), '--server.address=127.0.0.1',
             f'--server.port={app_port}', '--pliego.mail.enabled=false', '--pliego.r2.enabled=false',

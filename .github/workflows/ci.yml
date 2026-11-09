@@ -169,6 +169,8 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Run live SQL, concurrency, HTTP, Flyway, and browser gates
         env:
+          # HTTP/schema/upgrade gates use OpenAPI on disposable local backends.
+          SPRING_PROFILES_INCLUDE: contract
           PLIEGO_TEST_DISPOSABLE_DB: '1'
           PLIEGO_RUN_LIVE_BROWSER: '1'
           PLIEGO_BILLING_ENABLED: 'true'
@@ -179,6 +181,8 @@ jobs:
         run: sudo -u postgres psql -p 55432 -d pliego -v ON_ERROR_STOP=1 -f backend/src/test/postgres18/billing_runtime_privileges_gate.sql
       - name: Verify academic billing coexistence across Flyway upgrades
         shell: bash
+        env:
+          SPRING_PROFILES_INCLUDE: contract
         run: |
           sudo -u postgres createdb -p 55432 --owner=pliego pliego_billing_upgrade_ci
           PGDATABASE=pliego_billing_upgrade_ci \
@@ -217,6 +221,8 @@ jobs:
             timeout 180s python3 backend/src/test/postgres18/offer_expiry_upgrade_gate.py
       - name: Verify stored cédulas survive the required, correctable cédula and RUC upgrades
         shell: bash
+        env:
+          SPRING_PROFILES_INCLUDE: contract
         run: |
           sudo -u postgres createdb -p 55432 --owner=pliego pliego_identity_upgrade_ci
           PGDATABASE=pliego_identity_upgrade_ci \
@@ -224,6 +230,8 @@ jobs:
             timeout 180s python3 backend/src/test/postgres18/billing_identity_upgrade_gate.py
       - name: Verify public references preserve orders, invoices and files across V087 upgrade
         shell: bash
+        env:
+          SPRING_PROFILES_INCLUDE: contract
         run: |
           sudo -u postgres createdb -p 55432 --owner=pliego pliego_order_reference_upgrade_ci
           PGDATABASE=pliego_order_reference_upgrade_ci \
@@ -231,6 +239,8 @@ jobs:
             timeout 180s python3 backend/src/test/postgres18/order_reference_upgrade_gate.py
       - name: Verify transactional email with local Mailtrap stub
         shell: bash
+        env:
+          SPRING_PROFILES_INCLUDE: contract
         run: |
           sudo -u postgres createdb -p 55432 --owner=pliego pliego_mail_delivery_ci
           PGDATABASE=pliego_mail_delivery_ci \
@@ -238,6 +248,8 @@ jobs:
             timeout 180s python3 backend/src/test/postgres18/transactional_email_http_gate.py
       - name: Verify historical monetary snapshots across Flyway upgrade
         shell: bash
+        env:
+          SPRING_PROFILES_INCLUDE: contract
         run: |
           sudo -u postgres createdb -p 55432 --owner=pliego pliego_monetary_upgrade_ci
           PGDATABASE=pliego_monetary_upgrade_ci \
@@ -245,6 +257,8 @@ jobs:
             timeout 180s python3 backend/src/test/postgres18/monetary_upgrade_gate.py
       - name: Verify Ecuador zero IVA and preserved taxable history across Flyway upgrade
         shell: bash
+        env:
+          SPRING_PROFILES_INCLUDE: contract
         run: |
           sudo -u postgres createdb -p 55432 --owner=pliego pliego_ecuador_tax_upgrade_ci
           PGDATABASE=pliego_ecuador_tax_upgrade_ci \
@@ -252,6 +266,8 @@ jobs:
             timeout 180s python3 backend/src/test/postgres18/ecuador_tax_upgrade_gate.py
       - name: Verify Ecuador contact policy preserves legacy contacts and delivery history
         shell: bash
+        env:
+          SPRING_PROFILES_INCLUDE: contract
         run: |
           sudo -u postgres createdb -p 55432 --owner=pliego pliego_ecuador_contact_upgrade_ci
           PGDATABASE=pliego_ecuador_contact_upgrade_ci \
@@ -259,6 +275,8 @@ jobs:
             timeout 180s python3 backend/src/test/postgres18/ecuador_contact_upgrade_gate.py
       - name: Verify the INEC province/city catalog links legacy addresses and keeps snapshots across Flyway upgrade
         shell: bash
+        env:
+          SPRING_PROFILES_INCLUDE: contract
         run: |
           sudo -u postgres createdb -p 55432 --owner=pliego pliego_geo_upgrade_ci
           # Production's runtime role, so the gate proves V082 leaves it SELECT-only on the catalog.

@@ -47,6 +47,9 @@ class ActuatorExposureIntegrationTest {
     @Autowired
     ObjectMapper json;
 
+    @Autowired
+    org.springframework.core.env.Environment environment;
+
     @MockitoBean
     CatalogGateway catalog;
 
@@ -57,7 +60,7 @@ class ActuatorExposureIntegrationTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"/actuator", "/actuator/health", "/actuator/env",
-            "/actuator/heapdump", "/actuator/metrics"})
+            "/actuator/heapdump", "/actuator/metrics", "/actuator/prometheus"})
     void managementPathsAreUnavailableOnApplicationPort(String path) throws Exception {
         var anonymous = get(path, null);
         assertThat(anonymous.statusCode()).as("anonymous GET %s", path).isEqualTo(401);
@@ -71,6 +74,13 @@ class ActuatorExposureIntegrationTest {
             assertThat(authenticated.headers().firstValue("Content-Type").orElse(""))
                     .startsWith("application/problem+json");
         }
+    }
+
+    @Test
+    void managementServerRemainsDisabledWithoutProfile() {
+        assertThat(environment.getProperty("management.server.port", Integer.class)).isEqualTo(-1);
+        assertThat(environment.getProperty("local.management.port")).isNull();
+        assertThat(environment.matchesProfiles("observability")).isFalse();
     }
 
     @Test

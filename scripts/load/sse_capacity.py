@@ -79,6 +79,8 @@ class Run:
             self.env.pop(key,None)
         self.key=base64.urlsafe_b64encode(os.urandom(48)).decode()
         self.jar=self.out/'backend.jar'; shutil.copyfile(args.jar,self.jar)
+        # Readiness polls /v3/api-docs, which production disables; opt in locally.
+        self.env['SPRING_PROFILES_INCLUDE']='contract'
         self.env.update(PLIEGO_DB_URL=f'jdbc:postgresql://127.0.0.1:{args.pg_port}/capacity',PLIEGO_DB_USERNAME='capacity',
           PLIEGO_DB_PASSWORD='',PLIEGO_ADMIN_EMAIL='capacity-admin@example.invalid',PLIEGO_ADMIN_PASSWORD_HASH='fixture-hash',
           PLIEGO_JWT_SECRET=self.key,PLIEGO_MAIL_ENABLED='false',PLIEGO_R2_ENABLED='false',PLIEGO_AUTH_COOKIE_SECURE='false')
