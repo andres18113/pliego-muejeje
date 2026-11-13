@@ -113,8 +113,13 @@
 .card[data-media][data-unavailable] .shelf :global(.book-cover) { opacity: .72; }
 .card[data-media] .identity { padding-top: 14px; }
 .card[data-media] .bookTitle { font-size: 1.1875rem; line-height: 1.2; }
-.card[data-media] .commercial { padding-top: 10px; }
-.card[data-media] .availability { margin: 2px 0 0; }
+/* Prices still start on one line across a shelf row (the block keeps its subgrid tracks), but inside it the stock
+   follows whatever the price says: directly under the price line, or under the saving when there is an offer.
+   A shared stock track would open an empty band under every regular price beside an offer; the difference falls
+   below the stock instead, where a fieldless browse card shows nothing. */
+.card[data-media] .commercial { display: flex; flex-direction: column; padding-top: 10px; }
+.card[data-media] .offerChips { margin: 6px 0 0; }
+.card[data-media] .availability { margin: 4px 0 0; }
 
 /* Favorite: a quiet paper disc in the stage's top-right corner — a sibling of the product link, never
    inside it — that takes the yellow "this one" fill with an ultramar heart when saved. */

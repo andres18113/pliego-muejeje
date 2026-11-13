@@ -2,8 +2,10 @@ import { expect, test, type Page } from "@playwright/test";
 import manifest from "../../../covers/generated/manifest-normalized.json" with { type: "json" };
 import { bookCardFixtures } from "../../src/dev/bookCardFixtures";
 
-async function install(page: Page, scheme: "light" | "dark", outcome: "ok" | "unconfirmed" | "observed-after-loss" = "ok") {
-  const editions = bookCardFixtures.map((book, index) => ({ ...book, available: index % 3 !== 2, price: index === 8 ? "999999999.99" : book.price }));
+const offerOn = (price: string) => ({ offerId: "5", originalPrice: (Number(price) + 1.19).toFixed(2), discountAmount: "1.19", effectivePrice: price, savingsAmount: "1.19", savingsPercent: "10.00", startsAt: "2026-11-01T00:00:00Z", endsAt: "2026-11-15T00:00:00Z", daysRemaining: 2, endingSoon: true, offerCopy: "Una lectura para ti", terms: "Hasta agotar la vigencia" });
+
+async function install(page: Page, scheme: "light" | "dark", outcome: "ok" | "unconfirmed" | "observed-after-loss" = "ok", offered: number[] = []) {
+  const editions = bookCardFixtures.map((book, index) => ({ ...book, available: index % 3 !== 2, price: index === 8 ? "999999999.99" : book.price, ...(offered.includes(index) ? { offer: offerOn(book.price) } : {}) }));
   const saved = new Set(editions.map((book) => book.editionId));
   const quantities = new Map<string, number>();
   const commands: { method: string; path: string; body: unknown }[] = [];
@@ -75,7 +77,7 @@ for (const scheme of ["light", "dark"] as const) {
             stockOnCover: card.querySelector('[data-bookcard-cover] [data-stockstatus]') !== null,
             links: card.querySelectorAll("[data-bookcard-link]").length,
             titleTop: card.querySelector("[data-bookcard-title]")!.getBoundingClientRect().top,
-            stockTop: card.querySelector("[data-bookcard-availability]")!.getBoundingClientRect().top,
+            stockGap: card.querySelector("[data-bookcard-availability]")!.getBoundingClientRect().top - (card.querySelector("[data-bookcard-offer]") ?? card.querySelector("[data-bookcard-price]")!.parentElement!).getBoundingClientRect().bottom,
             height: card.getBoundingClientRect().height,
             priceTop: card.querySelector("[data-bookcard-price]")!.getBoundingClientRect().top,
             commercialGap: card.querySelector("[data-bookcard-price]")!.getBoundingClientRect().top - card.querySelector("[data-bookcard-identity]")!.getBoundingClientRect().bottom,
@@ -98,10 +100,56 @@ for (const scheme of ["light", "dark"] as const) {
         for (let index = 0; index < metrics.cards.length; index += metrics.columns) {
           const row = metrics.cards.slice(index, index + metrics.columns);
           expect(Math.max(...row.map((card) => card.titleTop)) - Math.min(...row.map((card) => card.titleTop))).toBeLessThan(1);
-          for (const key of ["height", "priceTop", "stockTop"] as const) {
+          // Prices start on one line; the stock follows each card's own price block (a wrapped price or an offer
+          // pushes only its own stock down), always at the same distance.
+          for (const key of ["height", "priceTop", "stockGap"] as const) {
             expect(Math.max(...row.map((card) => card[key])) - Math.min(...row.map((card) => card[key])), `${route}, ${width}px, ${key}`).toBeLessThan(1);
           }
         }
+      }
+    }
+  });
+}
+
+for (const scheme of ["light", "dark"] as const) {
+  test(`BookCard ${scheme}: mixed offer row keeps one price-to-stock rhythm`, async ({ page }) => {
+    // A shelf row mixing regular and offered editions: prices start on one line, the stock follows each card's own
+    // price block (price, or price and saving) at the same distance, so no empty band opens under a regular price.
+    await install(page, scheme, "ok", [1, 5, 6]);
+    await page.goto("/catalog?que=lectura");
+    await expect(page.locator("[data-bookcard-offer]")).toHaveCount(3);
+    await page.evaluate(() => document.fonts.ready);
+    for (const zoom of ["100%", "200%"]) {
+      await page.evaluate((size) => { document.documentElement.style.fontSize = size; }, zoom);
+      for (const width of [320, 390, 768, 1024, 1440]) {
+        await page.setViewportSize({ width, height: 1000 });
+        const result = await page.locator(".edition-grid").evaluate((grid) => ({
+          columns: getComputedStyle(grid).gridTemplateColumns.split(" ").length,
+          cards: [...grid.querySelectorAll<HTMLElement>("[data-bookcard]")].map((card) => {
+            const top = (selector: string) => card.querySelector(selector)!.getBoundingClientRect().top;
+            // The last visible fact above the stock (the saving, or the price line), never the pricing wrapper:
+            // a stretched subgrid track would hide the empty band inside that wrapper.
+            const lastFact = (card.querySelector("[data-bookcard-offer]") ?? card.querySelector("[data-bookcard-price]")!.parentElement!).getBoundingClientRect().bottom;
+            const offer = card.querySelector("[data-bookcard-offer]")?.getBoundingClientRect();
+            const price = card.querySelector("[data-bookcard-price]")!.getBoundingClientRect();
+            const priceLine = card.querySelector("[data-bookcard-price]")!.parentElement!.getBoundingClientRect();
+            return { offered: Boolean(offer), height: card.getBoundingClientRect().height, titleTop: top("[data-bookcard-title]"), priceTop: price.top,
+              stockGap: top("[data-bookcard-availability]") - lastFact, chipGap: offer ? offer.top - priceLine.bottom : 0 };
+          }),
+        }));
+        const label = `${zoom} text, ${width}px`;
+        for (const card of result.cards) {
+          expect(card.stockGap, `${label}, stock follows its price block`).toBeGreaterThanOrEqual(0);
+          expect(card.stockGap, `${label}, stock follows its price block`).toBeLessThanOrEqual(8);
+          if (card.offered) expect(card.chipGap, `${label}, saving sits under the price`).toBeLessThanOrEqual(10);
+        }
+        const gaps = result.cards.map((card) => card.stockGap);
+        expect(Math.max(...gaps) - Math.min(...gaps), `${label}, one rhythm for every card`).toBeLessThan(1);
+        for (let index = 0; index < result.cards.length; index += result.columns) {
+          const row = result.cards.slice(index, index + result.columns);
+          for (const key of ["height", "titleTop", "priceTop"] as const) expect(Math.max(...row.map((card) => card[key])) - Math.min(...row.map((card) => card[key])), `${label}, ${key}`).toBeLessThan(1);
+        }
+        if (zoom === "100%") await page.locator(".edition-grid").screenshot({ path: `test-results/bookcard-mixed-offers-${scheme}-${width}.png`, style: "header { visibility: hidden; }" });
       }
     }
   });
@@ -180,7 +228,7 @@ for (const scheme of ["light", "dark"] as const) {
         columns: grid.getAttribute("data-presentation") === "rail" ? grid.children.length : getComputedStyle(grid).gridTemplateColumns.split(" ").length,
         cards: [...grid.querySelectorAll<HTMLElement>("[data-bookcard]")].map((card) => ({
           height: card.getBoundingClientRect().height,
-          tops: ["price", "availability"].map((part) => card.querySelector(`[data-bookcard-${part}]`)!.getBoundingClientRect().top),
+          tops: [card.querySelector("[data-bookcard-price]")!.getBoundingClientRect().top, card.querySelector("[data-bookcard-availability]")!.getBoundingClientRect().top - (card.querySelector("[data-bookcard-offer]") ?? card.querySelector("[data-bookcard-price]")!.parentElement!).getBoundingClientRect().bottom],
         })),
         favoriteFits: [...grid.querySelectorAll<HTMLElement>('[data-bookcard-favorite]')].every((button) => { const box = button.getBoundingClientRect(); const card = button.closest('[data-bookcard]')!.getBoundingClientRect(); return box.width >= 44 && box.height >= 44 && box.right <= card.right + 0.5 && box.left >= card.left - 0.5; }),
         targets: [...grid.querySelectorAll("a, button")].map((element) => ({ width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height })),
@@ -191,7 +239,7 @@ for (const scheme of ["light", "dark"] as const) {
       for (let index = 0; index < result.cards.length; index += result.columns) {
         const row = result.cards.slice(index, index + result.columns);
         expect(Math.max(...row.map((card) => card.height)) - Math.min(...row.map((card) => card.height))).toBeLessThan(1);
-        for (let part = 0; part < 2; part++) expect(Math.max(...row.map((card) => card.tops[part])) - Math.min(...row.map((card) => card.tops[part])), `200% text, ${width}px, ${["price", "availability"][part]}`).toBeLessThan(1);
+        for (let part = 0; part < 2; part++) expect(Math.max(...row.map((card) => card.tops[part])) - Math.min(...row.map((card) => card.tops[part])), `200% text, ${width}px, ${["price", "stock gap"][part]}`).toBeLessThan(1);
       }
       for (const target of result.targets) { expect(target.width).toBeGreaterThanOrEqual(44); expect(target.height).toBeGreaterThanOrEqual(44); }
     }
