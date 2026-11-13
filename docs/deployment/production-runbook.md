@@ -671,6 +671,10 @@ the helper's `start` command does this.
 On 2026-11-01, attempt 1 waited only for inactive and caused about 1.5 minutes of
 downtime before a manual restart.
 
+With `SuccessExitStatus=143`, a backend drained by SIGTERM reports
+`ActiveState=inactive`, `Result=success` instead of failed; the tolerant drain
+checks above remain valid.
+
 **Early-failure recovery.** Any failure before the temporary owner GRANT must
 restore the previous release's availability: leave pointers unchanged, verify the
 exact original Flyway history (V073 for the 2026-11-01 attempt) and section 5's

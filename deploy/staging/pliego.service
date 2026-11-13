@@ -13,6 +13,7 @@ WorkingDirectory=/opt/pliego/current
 EnvironmentFile=/etc/pliego/pliego.env
 ExecStart=/usr/bin/java -Xms256m -Xmx1280m -XX:+ExitOnOutOfMemoryError -jar /opt/pliego/current/pliego-backend-0.1.0-SNAPSHOT.jar --server.address=127.0.0.1 --server.port=8080 --server.forward-headers-strategy=native --server.tomcat.remoteip.internal-proxies=127[.]0[.]0[.]1 --server.tomcat.remoteip.remote-ip-header=X-Forwarded-For --server.tomcat.remoteip.protocol-header=X-Forwarded-Proto --server.tomcat.remoteip.host-header=X-Forwarded-Host --server.tomcat.remoteip.port-header=X-Forwarded-Port --server.tomcat.threads.max=50 --server.tomcat.threads.min-spare=5 --server.tomcat.max-connections=1024 --server.tomcat.connection-timeout=10s --spring.datasource.hikari.maximum-pool-size=8 --spring.datasource.hikari.minimum-idle=2 --spring.datasource.hikari.connection-timeout=10000 --spring.datasource.hikari.validation-timeout=3000
 Restart=on-failure
+SuccessExitStatus=143
 RestartSec=10s
 TimeoutStartSec=180s
 TimeoutStopSec=45s
