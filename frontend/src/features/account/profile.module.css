@@ -13,29 +13,98 @@
 .name { max-width: 20ch; margin: 0; color: var(--acc-ink); font: 700 clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem)/1.04 var(--acc-display); letter-spacing: -.05em; overflow-wrap: anywhere; text-wrap: balance; }
 .tagline { margin: 0; color: var(--acc-muted); font-size: 1rem; line-height: 1.45; text-wrap: balance; }
 
-/* Read-only facts: one paper sheet; on desktop each field is one line — label, value, action.
+/* Read-only facts: one white Account card; on desktop each field is one line — label, value, action.
    Nombres, Apellidos, Cédula, Correo, Teléfono and Contraseña share it. */
-.facts { display: grid; width: min(100%, 760px); min-width: 0; margin: 0; padding: 4px clamp(16px, 3vw, 28px); border-radius: 24px; background: var(--acc-sheet); box-shadow: inset 0 0 0 1.5px var(--acc-line); list-style: none; }
+.facts { display: grid; width: min(100%, 760px); min-width: 0; margin: 0; padding: 4px clamp(16px, 3vw, 28px); border: 1px solid var(--acc-card-edge); border-radius: var(--acc-card-radius); background: var(--acc-card); list-style: none; }
 .fact {
   display: grid; grid-template-columns: minmax(8.5rem, 10rem) minmax(0, 1fr) auto; grid-template-areas: "label value action" ". feedback feedback";
   align-items: center; column-gap: 20px; min-width: 0; min-height: 60px; padding: 8px 0;
 }
 .fact + .fact { border-top: 1.5px solid color-mix(in srgb, var(--acc-line) 70%, transparent); }
+/* A row with a detail block (a change, a correction): label, value and action share the first line, so the label
+   names the value rather than floating beside the middle of the block. */
+.fact[data-expanded] { align-items: start; padding-block: 8px 14px; }
+.fact[data-expanded] .factLabel { padding-top: 12px; }
+.fact[data-expanded] .factValue { padding-top: 10px; }
 .factLabel { grid-area: label; color: var(--acc-muted); font-size: .875rem; font-weight: 600; }
 .factValue { grid-area: value; margin: 0; min-width: 0; color: var(--acc-ink); font-size: 1.0625rem; font-weight: 500; line-height: 1.35; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
 .factValue[data-empty] { color: var(--acc-muted); font-weight: 400; }
 .mask { letter-spacing: .12em; }
-/* An absent value names its state with one small chip (the Ofertas chip grammar: flat, 8px radius) and says whether
-   it is needed. Required uses the shared pale red; optional the quiet neutral. Never a second action colour. */
+/* States in the sheet speak with different weights, because they mean different things (the Ofertas chip grammar:
+   flat, 8px radius, never a second action colour):
+   - pale red chip: something the customer must fix — a cédula needed to buy, an address that does not receive mail,
+     an unverified address;
+   - faint ultramar chip: the customer's next move — a new address "Por confirmar";
+   - no chip, a muted `schedule` line: PLIEGO's move — a correction "En revisión";
+   - plain muted text: nothing is wrong — an optional value "Sin registrar". */
 .missing { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
 .missingChip {
-  --missing-required-bg: #fce8e6; --missing-required-ink: #8c1d18; --missing-optional-bg: #ecebe4; --missing-optional-ink: #4a4b5c;
+  --missing-required-bg: #fce8e6; --missing-required-ink: #8c1d18;
+  --pending-bg: color-mix(in srgb, var(--acc-blue) 10%, var(--acc-card)); --pending-ink: var(--acc-blue);
   display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 8px; font-size: .8125rem; font-weight: 600; line-height: 1.4; white-space: nowrap;
 }
-:global([data-mantine-color-scheme="dark"]) .missingChip { --missing-required-bg: #4a2225; --missing-required-ink: #ffd9d5; --missing-optional-bg: #33354f; --missing-optional-ink: #d9d6e6; }
+:global([data-mantine-color-scheme="dark"]) .missingChip { --missing-required-bg: #4a2225; --missing-required-ink: #ffd9d5; --pending-bg: #33395f; --pending-ink: #d6dcff; }
 .missingChip[data-tone="required"] { background: var(--missing-required-bg); color: var(--missing-required-ink); }
-.missingChip[data-tone="optional"] { background: var(--missing-optional-bg); color: var(--missing-optional-ink); }
+.missingChip[data-tone="pending"] { background: var(--pending-bg); color: var(--pending-ink); }
+.missingText { color: var(--acc-muted); font-weight: 400; }
+.missingText ~ .missingHint::before { content: "·" / ""; margin-right: 10px; }
 .missingHint { color: var(--acc-muted); font-size: .9375rem; font-weight: 400; }
+/* "En uso": tells the address in use apart from a requested one below it, without a chip. */
+.valueNote { margin-left: 10px; color: var(--acc-muted); font-size: .8125rem; font-weight: 600; white-space: nowrap; }
+/* A state under a stored value (a correction in review, a recent decision): one quiet line, the value stays first. */
+.valueDetail { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 4px 10px; margin-top: 4px; color: var(--acc-muted); font-size: .9375rem; font-weight: 400; line-height: 1.4; }
+.valueDetail > :global(.material-symbol) { flex: none; margin-top: 2px; color: var(--acc-blue); }
+.valueDetail > span:last-child { flex: 1 1 18ch; min-width: 0; }
+.detailNumber { color: var(--acc-ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+.detailLink { display: inline-flex; align-items: center; min-height: 44px; margin-block: -12px; color: var(--acc-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+.detailLink:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }
+
+/* A requested email change: one process, bounded by a quiet inset (ink ≈4%, 12px — the decision notice's family) so
+   the new address, what happens next and the actions that belong to it read as one thing under the address in use. */
+.change { display: grid; justify-items: start; gap: 2px; margin-top: 10px; padding: 12px 14px 6px; border-radius: 12px; background: color-mix(in srgb, var(--acc-ink) 4%, transparent); font-size: .9375rem; font-weight: 400; line-height: 1.4; }
+.changeHead { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; color: var(--acc-ink); font-size: .875rem; font-weight: 600; }
+.changeHead > :global(.material-symbol) { flex: none; color: var(--acc-blue); }
+.changeAddress { margin-top: 4px; color: var(--acc-ink); font-size: 1.0625rem; font-weight: 500; overflow-wrap: anywhere; }
+.changeText { max-width: 56ch; color: var(--acc-muted); text-wrap: pretty; }
+.changeActions { display: flex; flex-wrap: wrap; align-items: center; gap: 0 4px; margin: 4px 0 0 -10px; }
+.changeAction {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px; border: 0; border-radius: 999px; background: transparent;
+  color: var(--acc-blue); font: inherit; font-weight: 600; cursor: pointer; transition: background-color 140ms var(--acc-ease);
+}
+@media (hover: hover) { .changeAction:hover:not([aria-disabled="true"]) { background: var(--acc-hover); } }
+.changeAction:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; }
+.changeAction[aria-disabled="true"] { cursor: progress; }
+.changeFeedback { display: flex; align-items: flex-start; gap: 6px; margin: 0 0 6px; color: var(--acc-ink); font-size: .875rem; }
+.changeFeedback > :global(.material-symbol) { flex: none; margin-top: 2px; color: var(--acc-blue); }
+.changeFeedback.feedbackError > :global(.material-symbol) { color: currentColor; }
+/* A decided correction: news read once. One quiet neutral field (ink ≈5%, like the order's cancellation strip;
+   never green or red) with the outcome in one sentence and a round close control; closing acknowledges it. */
+.decision { display: grid; gap: 4px; margin-top: 6px; }
+.decisionBody {
+  display: flex; align-items: flex-start; gap: 8px; padding: 8px 4px 8px 12px; border-radius: 12px;
+  background: color-mix(in srgb, var(--acc-ink) 5%, transparent); color: var(--acc-ink); font-size: .9375rem; line-height: 1.4;
+}
+.decisionBody > :global(.material-symbol) { flex: none; margin-top: 1px; color: var(--acc-blue); }
+.decisionBody > span { flex: 1 1 auto; min-width: 0; padding-top: 0; text-wrap: pretty; }
+.decisionLink { color: var(--acc-blue); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+.decisionClose {
+  flex: none; display: inline-grid; place-items: center; width: 44px; height: 44px; margin: -12px 0 -12px 0; padding: 0;
+  border: 0; border-radius: 999px; background: transparent; color: var(--acc-muted); cursor: pointer;
+}
+.decisionClose[aria-disabled="true"] { cursor: progress; }
+.decisionClose:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: -6px; }
+@media (hover: hover) { .decisionClose:hover { background: color-mix(in srgb, var(--acc-ink) 7%, transparent); color: var(--acc-ink); } }
+.decisionError { color: var(--error, #b3261e); font-size: .875rem; }
+
+/* A pending correction: the chip and its `info` toggletip as one status; the explanation is portalled, so it
+   reads the global PLIEGO tokens rather than the Account's. */
+.reviewStatus { display: inline-flex; align-items: center; gap: 6px; color: var(--acc-muted); }
+.reviewStatus > :global(.material-symbol) { flex: none; color: var(--acc-muted); }
+.reviewText { color: var(--acc-ink); font-size: .875rem; font-weight: 600; }
+.reviewStatus > button { margin-left: -4px; color: var(--acc-muted); }
+.requestPanel.requestPanel { display: grid; gap: 2px; text-align: left; hyphens: manual; -webkit-hyphens: manual; }
+.requestLabel { color: var(--pliego-text-muted, #595a6e); font-size: .8125rem; font-weight: 600; }
+.requestNumber { margin-bottom: 6px; font: 650 1.125rem/1.3 var(--store-display); letter-spacing: .02em; font-variant-numeric: tabular-nums; }
 @media (forced-colors: active) { .missingChip { border: 1px solid CanvasText; } }
 
 .edit.edit {
@@ -52,7 +121,8 @@
 .fact[data-editing] { align-items: start; }
 .fact[data-editing] .factLabel { padding-top: 11px; color: var(--acc-blue); }
 .inlineFields { display: grid; gap: 6px; min-width: 0; max-width: 26rem; }
-.inlineActions { display: flex; align-items: center; gap: 4px; margin-right: -10px; min-height: 44px; }
+/* Guardar/Cancelar travel together in the action slot, never apart. */
+.inlineActions { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 20px; margin-right: -10px; min-height: 44px; white-space: nowrap; }
 .inlineActionGroup { display: grid; gap: 6px; align-content: start; }
 
 /* The value becomes a rounded field in the same place: the PLIEGO pill (as the header's search field),
@@ -70,6 +140,13 @@
 /* A second field's label speaks like the row labels; every helper line (note, help, error, draft) like one helper. */
 .subLabel { margin-top: 6px; color: var(--acc-muted); font-size: .875rem; font-weight: 600; }
 .inlineNote { margin: 2px 0 0; color: var(--acc-muted); font-size: .8125rem; line-height: 1.4; }
+/* The one choice a correction request asks for: two plain options on one line, wrapping on narrow rows. */
+.reasons { min-width: 0; margin: 0; padding: 0; border: 0; }
+.reasons > legend { padding: 0; }
+.reasonOptions { display: flex; flex-wrap: wrap; align-items: center; gap: 0 20px; }
+.reason { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--acc-ink); font-size: .9375rem; cursor: pointer; }
+.reason > input { width: 18px; height: 18px; margin: 0; accent-color: var(--acc-blue); }
+.reason > input:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; }
 .securityDisclosure { color: var(--acc-muted); font-size: .8125rem; line-height: 1.4; }
 .securityDisclosure > summary { width: fit-content; min-height: 44px; padding-block: 12px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .securityDisclosure > summary:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 3px; }
@@ -111,13 +188,15 @@
 
 /* Phones: label over value; the action stays on the label line. Editing keeps the same rhythm. */
 @media (max-width: 639px) {
-  .facts { border-radius: 20px; padding-inline: 16px; }
+  .facts { padding-inline: 16px; }
   .fact { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "label action" "value value" "feedback feedback"; row-gap: 2px; min-height: 0; padding: 12px 0; }
   .inline { grid-column: 1 / -1; grid-row: 2; grid-template-columns: minmax(0, 1fr); row-gap: 8px; }
   .inlineFields { max-width: none; }
   .input, .phone :global(.international-phone) { width: 100%; margin-left: 0; }
   .inlineActions { justify-content: flex-start; margin: 0 0 0 -8px; }
   .fact[data-editing] .factLabel { padding-top: 0; }
+  .fact[data-expanded] .factValue { padding-top: 0; }
+  .change { padding-inline: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { .edit.edit, .input, .save, .cancel { transition: none; } }
 @media (forced-colors: active) {
@@ -126,10 +205,8 @@
   .save, .cancel { border: 1px solid ButtonText; }
 }
 
-/* The one email action outside the Correo row: a quiet line under the sheet, on the same axis. */
-.verification { justify-self: center; width: min(100%, 760px); margin: -8px 0 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.5; text-align: center; text-wrap: pretty; }
-.verification a { display: inline-flex; align-items: center; min-height: 44px; color: var(--acc-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
-.verification a:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }
+/* Phones: a state's chip sits above its sentence, so an address in it gets the full row width instead of breaking mid-word. */
+@media (max-width: 599px) { .valueDetail { flex-direction: column; align-items: flex-start; gap: 6px; } .valueDetail > span:last-child { flex: none; } }
 
 /* An action that waits for current data reads as unavailable, not as working. */
 .save[aria-disabled="true"]:not([aria-busy="true"]) { opacity: .55; cursor: not-allowed; }

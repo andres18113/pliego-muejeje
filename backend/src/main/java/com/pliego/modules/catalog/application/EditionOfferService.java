@@ -13,5 +13,10 @@ public class EditionOfferService {
         gateway.set(actorId, editionId, command);
     }
     @Transactional
+    public void createIfAbsent(long actorId, long editionId, EditionOfferCommand command,
+            EditionOfferPrecondition precondition) {
+        gateway.createIfAbsent(actorId, editionId, command, precondition);
+    }
+    @Transactional
     public void clear(long actorId, long editionId) { gateway.clear(actorId, editionId); }
 }

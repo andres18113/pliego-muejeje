@@ -6,7 +6,10 @@ Java 25 / Spring Boot backend for the approved PLIEGO REST and PostgreSQL Databa
 
 V071–V073 add private profile identification, billed checkout and asynchronous
 PDF/XML artifacts. V074 (ADR 0040) makes the identification required to buy: every
-checkout submits `billingIdentity`, `buyerName` and an independent `billingAddress`, and
+checkout submits `billingIdentity`, `buyerName` and an independent `billingAddress` with
+`provinceId`/`cityId` from the public geographic catalog. During the documented SPA
+rollout window, the complete legacy `city`/`province` pair resolves strictly through
+the same catalog; it is never persisted as free text. The billing address and
 the number must match the customer's own (the first billed purchase registers it). V075
 (ADR 0041) accepts a cédula or a RUC with the full Ecuadorian algorithm (province, third
 digit, modulo 10/11, establishment). The identification is never removed or freely
@@ -20,8 +23,11 @@ refunded purchases preserve the invoice and append one full credit note.
 `PLIEGO_BILLING_ENABLED` defaults to `true`, `PLIEGO_BILLING_POLL_INTERVAL` to `PT5S`,
 and `PLIEGO_BILLING_BATCH_SIZE` to `4` (1–100). Restart after changing settings.
 Disable the worker while deliberately starting historical Flyway targets before V073.
-Derived files use private immutable PostgreSQL bytea storage, a 10 MiB cap, SHA-256,
-leased claims and at most five attempts. Download through authenticated invoice endpoints;
+Derived files use private immutable storage, a 10 MiB cap, SHA-256, leased claims
+and at most five attempts. Production uses R2 since 2026-11-01; historical PostgreSQL
+bytea remains streamable and is the code default when R2 is disabled
+([ADR-0046](../docs/adr/0046-academic-invoice-pdf-email-and-storage.md)).
+Download through authenticated invoice endpoints;
 never expose storage keys. A generation error does not repeat or undo the purchase.
 
 These are academic documents with no fiscal validity: no SRI calls, signature or certificate.
@@ -146,6 +152,11 @@ Flyway runs `classpath:db/migration` on startup. It keeps its history in Postgre
 
 Run the complete PostgreSQL 18 CI-equivalent gate from a disposable PostgreSQL 18 database after building the app with `mvn verify`. The `src/test/postgres18/run_ci_gates.sh` runner checks the required environment, starts the application, verifies Flyway, runs SQL and concurrency checks, then exercises the live HTTP API. GitHub Actions also runs this PostgreSQL 18 gate on pushes and pull requests to `main`; it uses the native PostgreSQL packages and does not use Docker. H2 is not a substitute for PostgreSQL verification.
 
+Set `PLIEGO_TEST_DISPOSABLE_DB=1` explicitly for this isolated test database.
+The runner now validates all 98 migrations and includes registration continuation,
+pickup timing/notification concurrency and guarded campaign application gates.
+It must never target a production database or a forwarded production connection.
+
 ## Build and run
 
 From this directory, with Java 25 and Maven installed:
@@ -199,3 +210,27 @@ V033 backfills physical shipments from purchased formats and recorded state hist
 V034 adds typed invoice/document extension tables without fabricating old invoices.
 The CI gate now expects 43 migrations. See [API amendment v1.0.8](../docs/api-amendments/0008-post-purchase-v1.0.8.md)
 and [ADR-0017](../docs/adr/0017-post-purchase-lifecycle-and-documents.md).
+
+### Public order references and verified store pickup (V088–V089)
+
+Orders expose an immutable random `orderReference` (`PL-NNNN-NNNN`) alongside the unchanged string `orderId`, including checkout receipts/replays and customer/admin projections. New mail snapshots and newly rendered invoice PDFs use that reference; existing invoice rows and stored artifacts remain untouched. `GET /api/v1/admin/orders` accepts normalized reference search through `q`.
+
+ADMIN pickup operations are `POST /api/v1/admin/pickups/lookup` (`{code}` in the body), `GET /api/v1/admin/pickups?state=&q=&page=0&pageSize=20` (max50), and `POST /api/v1/admin/orders/{orderId}/pickup/collect` (`{pickupCode,identityVerified:true}`). Collection now returns `200 PickupView`, requires database-owned READY, and rejects repeat collection with 409. Pickup views include registered billing identity for staff verification and never include the pickup code. New codes use a CSPRNG; historical codes remain valid. READY follows approved payment, the six-minute cancellation deadline, and `readyAt`.
+
+The admin billing correction list adds `customerHasBilledInvoices` and nullable `decidedByEmail`; decisions remain `APPROVE|REJECT`, with a rejection reason required. See the [complete endpoint, JSON and error contract](../docs/api-amendments/2026-11-01-public-order-references-and-verified-pickup.md) and [ADR-0047](../docs/adr/0047-public-order-references-and-verified-pickup.md). PostgreSQL gates include reference upgrade/backfill preservation, code generation, state transitions, verified collection concurrency and restricted runtime ACLs.
+
+## Offer expiration and refresh
+
+ADR0058 / V106 keep current pricing authoritative at read time and capture one
+database wall-clock pricing instant after checkout locks. A dedicated Spring
+worker observes starts/ends every second and enqueues durable catalog hints;
+`PLIEGO_OFFERS_SCHEDULER_ENABLED=false` disables observation only, never expiry.
+The default is enabled. No cron installation or replacement promotions are used.
+
+Public clients can read `GET /api/v1/catalog/offer-refresh` before content and
+schedule refresh from `serverTime`, `nextTransitionAt` and
+`revalidateAfterSeconds`. Signed-in clients also receive
+`catalog.offers.changed` in the existing stream. Claude owns view invalidation.
+`fn_offer_lifecycle_status()` / `OfferLifecycleService.status()` expose durable
+last-run and lag state for the separate monitoring integration. See ADR0058 and
+`docs/testing/2026-11-04-offer-expiration.md` for bindings and evidence.

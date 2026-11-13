@@ -1,0 +1,1 @@
+PASS: four PostgreSQL lock-barrier races; one create winner, base/stock changes refused, inventory command completes without deadlock.

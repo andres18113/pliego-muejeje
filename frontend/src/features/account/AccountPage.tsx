@@ -1,10 +1,12 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { useQuery, type QueryObserverResult } from "@tanstack/react-query";
+import { useQuery, useQueryClient, type QueryObserverResult } from "@tanstack/react-query";
 import { z } from "zod";
 import { parsePhoneNumberFromString } from "libphonenumber-js/max";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/app/session";
-import { billingIdentityQueryKey, changeEmail, EmailChangeOutcomeUnknown, getBillingIdentity, getProfile, profileQueryKey, patchProfile, type ProfileField, type CustomerProfile } from "@/shared/api/customer";
+import { acknowledgeBillingIdentityCorrection, billingIdentityQueryKey, cancelEmailChange, changeEmail, resendEmailChange, EmailChangeOutcomeUnknown, getBillingIdentity, getProfile, profileQueryKey, patchProfile, type ProfileField, type CustomerProfile } from "@/shared/api/customer";
+import type { BillingIdentityCorrectionRequest, StoredBillingIdentity } from "@/shared/api/billing";
+import { orderShortDateLabel } from "@/features/purchase/purchaseText";
 import { personNameSchema, personNameError, phoneError, normalizePhonePresentation } from "@/shared/validation/person";
 import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
 import { FieldMessage } from "@/shared/ui/Field";
@@ -12,10 +14,12 @@ import { ReadFailure } from "@/features/purchase/CartPage";
 import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { CustomerOnly, PurchasePage } from "@/features/purchase/PurchaseChrome";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
+import { InfoToggletip } from "@/shared/ui/InfoToggletip";
 import { PersonNameInput } from "@/shared/ui/PersonNameInput";
 import { InternationalPhoneField } from "@/shared/ui/InternationalPhoneField";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CedulaEditor } from "./CedulaEditor";
+import { identityCorrectionPath, type IdentityCorrectionState } from "./IdentityCorrectionPage";
 import { EditorFrame, type Result } from "./EditorFrame";
 import { PasswordRecoveryEditor, usePasswordCooldown } from "./PasswordRecovery";
 import { AccountShell } from "./AccountShell";
@@ -60,20 +64,97 @@ function AccountContent() {
 }
 
 type IdentityState = {
-  data: import("@/shared/api/billing").BillingIdentity | null | undefined;
+  data: StoredBillingIdentity | null | undefined;
   pending: boolean;
   failed: boolean;
-  refetch: () => Promise<{ data?: import("@/shared/api/billing").BillingIdentity | null; isError: boolean }>;
+  refetch: () => Promise<{ data?: StoredBillingIdentity | null; isError: boolean }>;
 };
+
+/**
+ * A correction request under the number, in one quiet line: pending is PLIEGO's work, not the customer's, so it reads
+ * as a muted `schedule` status ("En revisión", never a chip) with an `info` toggletip holding what was asked and when
+ * we answer. A decision is news, not history: it reads once as a small
+ * dismissible notice (it can arrive while the page is open), and once closed the row returns to its normal
+ * presentation — the server stops returning an acknowledged decision (ADR 0055). Withdrawn requests need no line.
+ */
+function CorrectionStatus({ request, onDismissed }: { request: BillingIdentityCorrectionRequest | null; onDismissed: () => void }) {
+  if (!request || request.status === "WITHDRAWN") return null;
+  if (request.status === "PENDING") return <span className={classes.valueDetail}>
+    <span className={classes.reviewStatus}>
+      <MaterialSymbol name="schedule" aria-hidden="true" size={18} />
+      <span className={classes.reviewText}>En revisión</span>
+      <InfoToggletip label="Detalles de la corrección en revisión" panelClassName={classes.requestPanel}>
+        <span className={classes.requestLabel}>{request.proposedType === "EC_RUC" ? "RUC solicitado" : "Cédula solicitada"}</span>
+        <span className={classes.requestNumber}>{request.proposedNumber}</span>
+        <span>Te responderemos antes del {orderShortDateLabel(request.dueAt)}. Mientras tanto, tus compras usan tu identificación actual.</span>
+      </InfoToggletip>
+    </span>
+  </span>;
+  return <CorrectionDecision key={request.id} request={request} onDismissed={onDismissed} />;
+}
+
+function CorrectionDecision({ request, onDismissed }: { request: BillingIdentityCorrectionRequest; onDismissed: () => void }) {
+  const queryClient = useQueryClient();
+  const [state, setState] = useState<"idle" | "sending" | "failed">("idle");
+  const approved = request.status === "APPROVED";
+  const document = request.proposedType === "EC_RUC" ? "RUC" : "cédula";
+  const dismiss = async () => {
+    if (state === "sending") return;
+    setState("sending");
+    try {
+      await acknowledgeBillingIdentityCorrection(request.id);
+    } catch {
+      setState("failed");
+      return;
+    }
+    // Hide it now; the refetch (and the stream, in other tabs) confirms the server's projection.
+    queryClient.setQueryData<StoredBillingIdentity | null>(billingIdentityQueryKey, current =>
+      current?.correctionRequest?.id === request.id ? { ...current, correctionRequest: null } : current);
+    onDismissed();
+    void queryClient.invalidateQueries({ queryKey: billingIdentityQueryKey });
+  };
+  return <span className={classes.decision} data-outcome={approved ? "approved" : "rejected"}>
+    <span className={classes.decisionBody}>
+      <MaterialSymbol name={approved ? "check_circle" : "info"} aria-hidden="true" size={18} />
+      <span>{approved
+        ? <>Aprobamos tu corrección. Tus próximas facturas usan esta {document === "RUC" ? "identificación" : "cédula"}.</>
+        : <>No aplicamos tu corrección a <span className={classes.detailNumber}>{request.proposedNumber}</span>. <Link className={classes.decisionLink} to={identityCorrectionPath}>Ver motivo</Link></>}</span>
+      <button type="button" className={classes.decisionClose} onClick={() => void dismiss()} aria-disabled={state === "sending" || undefined}
+        aria-label={approved ? "Cerrar aviso de corrección aprobada" : "Cerrar aviso de corrección no aplicada"}>
+        <MaterialSymbol name="close" aria-hidden="true" size={18} />
+      </button>
+    </span>
+    {state === "failed" && <span className={classes.decisionError} role="alert">No pudimos cerrar el aviso. Inténtalo otra vez.</span>}
+  </span>;
+}
+
+/** Announces a decision that arrives while Mi perfil is open (a refetch from the stream), never one already there. */
+function useDecisionAnnouncement(request: BillingIdentityCorrectionRequest | null | undefined) {
+  const seen = useRef<string | null | undefined>(undefined);
+  const [message, setMessage] = useState("");
+  const decided = request && (request.status === "APPROVED" || request.status === "REJECTED") ? `${request.id}:${request.status}` : null;
+  useEffect(() => {
+    if (request === undefined) return;
+    if (seen.current !== undefined && decided && decided !== seen.current)
+      setMessage(request?.status === "APPROVED" ? "Aprobamos tu corrección de cédula o RUC." : "Revisamos tu corrección de cédula o RUC y no la aplicamos.");
+    seen.current = decided;
+  }, [decided, request]);
+  return message;
+}
 
 /**
  * Identity first and read-only: the reader's avatar and name, then each piece of data as plain text.
  * One field opens for editing at a time, in place; saving or cancelling returns focus to its action.
  */
 function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordReadCurrent }: { profile: CustomerProfile; readCurrent: boolean; refetch: Refetch; onExpired: () => void; identity: IdentityState; passwordReadCurrent: boolean }) {
-  const [editing, setEditing] = useState<FieldKey | null>(() => restoredProfileField(profile.customerId));
-  const [feedback, setFeedback] = useState<Feedback | null>(null);
-  const editButtons = useRef<Partial<Record<FieldKey, HTMLButtonElement | null>>>({});
+  const location = useLocation();
+  const navigate = useNavigate();
+  // A direct correction returns here from its page: its outcome reads on the cédula row, once (navigation itself
+  // places focus on the page heading, as on every route).
+  const returned = (location.state as IdentityCorrectionState | null)?.identityFeedback;
+  const [editing, setEditing] = useState<FieldKey | null>(() => returned ? null : restoredProfileField(profile.customerId));
+  const [feedback, setFeedback] = useState<Feedback | null>(() => returned ? { field: "cedula", message: returned, error: false } : null);
+  const editButtons = useRef<Partial<Record<FieldKey, HTMLElement | null>>>({});
   const password = usePasswordCooldown();
   const fullName = `${profile.firstNames} ${profile.lastNames}`.trim();
   const phone = profile.phone ? parsePhoneNumberFromString(profile.phone)?.formatInternational() ?? profile.phone : null;
@@ -83,24 +164,55 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
     setFeedback(null);
     setEditing(field);
   }
+  /**
+   * The action focus returns to, kept until the person acts again: an action replaced by a later render (Agregar
+   * becomes the Corregir link once the stored cédula arrives) still receives focus, which never leaves for the page.
+   */
+  const refocus = useRef<FieldKey | null>(null);
   function close(field: FieldKey, result?: Result) {
     setEditing(null);
     if (result) setFeedback({ field, ...result });
+    refocus.current = field;
     requestAnimationFrame(() => editButtons.current[field]?.focus({ preventScroll: true }));
   }
   const editorProps = (field: FieldKey) => ({ profile, refetch, onExpired, onDone: (result?: Result) => close(field, result) });
+  useEffect(() => {
+    const field = refocus.current, active = document.activeElement;
+    if (field && editing === null && (!active || active === document.body)) editButtons.current[field]?.focus({ preventScroll: true });
+  });
+  useEffect(() => {
+    const settle = () => { refocus.current = null; };
+    document.addEventListener("pointerdown", settle, true);
+    document.addEventListener("keydown", settle, true);
+    return () => { document.removeEventListener("pointerdown", settle, true); document.removeEventListener("keydown", settle, true); };
+  }, []);
+  useEffect(() => {
+    // Read once on arrival; a reload starts clean.
+    if (returned) navigate(".", { replace: true, state: null });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const cedula: Row = identity.pending
     ? { field: "cedula", label: "Cédula o RUC", value: null, empty: "Consultando…", disabled: true, editor: null }
     : identity.failed
       ? { field: "cedula", label: "Cédula o RUC", value: null, empty: "No pudimos consultarla.", action: "Volver a consultar", icon: "refresh", onAction: () => void identity.refetch(), editor: null }
-      : { field: "cedula", label: "Cédula o RUC", value: identity.data?.number ?? null, missing: { tone: "required", hint: "Necesaria para comprar" }, action: identity.data ? "Corregir" : "Agregar",
-          editor: <CedulaEditor customerId={profile.customerId} identity={identity.data ?? null} refetch={identity.refetch} onExpired={onExpired} onDone={(result) => close("cedula", result)} /> };
+      // The add editor stays mounted until it reports, even once the refetch returns the stored number.
+      : identity.data && editing !== "cedula"
+        // A stored number is corrected on its own page, never in this sheet: the row only says where it stands and
+        // leads there — to correct it, or to the request staff are reviewing.
+        ? { field: "cedula", label: "Cédula o RUC", value: identity.data.number, expanded: Boolean(identity.data.correctionRequest && identity.data.correctionRequest.status !== "WITHDRAWN"), detail: <CorrectionStatus request={identity.data.correctionRequest} onDismissed={() => requestAnimationFrame(() => editButtons.current.cedula?.focus({ preventScroll: true }))} />, to: identityCorrectionPath, editor: null,
+            ...identity.data.correctionRequest?.status === "PENDING" ? { action: "Ver solicitud", actionName: "de corrección de la cédula o RUC" } : { action: "Corregir" } }
+        : { field: "cedula", label: "Cédula o RUC", value: identity.data?.number ?? null, missing: { tone: "required", hint: "Necesaria para comprar" }, action: "Agregar",
+            editor: <CedulaEditor customerId={profile.customerId} refetch={identity.refetch} onExpired={onExpired} onDone={(result) => close("cedula", result)} /> };
   const rows: Row[] = [
     { field: "firstNames", label: "Nombres", value: profile.firstNames, editor: <NameEditor field="firstNames" label="nombres" {...editorProps("firstNames")} /> },
     { field: "lastNames", label: "Apellidos", value: profile.lastNames, editor: <NameEditor field="lastNames" label="apellidos" {...editorProps("lastNames")} /> },
     cedula,
-    { field: "email", label: "Correo electrónico", value: profile.email, editor: <EmailEditor {...editorProps("email")} /> },
+    { field: "email", label: "Correo electrónico", value: profile.email, valueNote: profile.pendingEmail ? "En uso" : undefined,
+      expanded: Boolean(profile.pendingEmail || profile.emailDelivery?.status === "UNDELIVERABLE" || (!verified && readCurrent)),
+      detail: <EmailStatus profile={profile} verified={verified} readCurrent={readCurrent} refetch={refetch} onExpired={onExpired}
+        feedback={feedback?.field === "email" ? feedback : null} onResult={(result) => setFeedback({ field: "email", ...result })} />,
+      editor: <EmailEditor {...editorProps("email")} /> },
     { field: "phone", label: "Teléfono", value: phone, missing: { tone: "optional", hint: "Opcional" }, editor: <PhoneEditor {...editorProps("phone")} /> },
     verified
       ? { field: "password", label: "Contraseña", value: "Contraseña configurada", masked: true, action: "Cambiar", icon: "lock", disabled: !passwordReadCurrent, waiting: password.cooling,
@@ -108,7 +220,9 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
       : { field: "password", label: "Contraseña", value: null, empty: "Verifica tu correo para cambiarla", action: "Cambiar", icon: "lock", disabled: true, editor: null },
   ];
 
+  const decisionAnnouncement = useDecisionAnnouncement(identity.pending || identity.failed ? undefined : identity.data?.correctionRequest ?? null);
   return <section className={classes.profile} aria-label="Perfil y datos personales">
+    <p className="visually-hidden" aria-live="polite">{decisionAnnouncement}</p>
     <header className={classes.identity}>
       <AccountMonogram firstNames={profile.firstNames} lastNames={profile.lastNames} size={76} />
       <div className={classes.identityCopy}>
@@ -122,40 +236,113 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
         const isEditing = editing === row.field && row.editor !== null;
         const rowFeedback = feedback?.field === row.field ? feedback : null;
         const labelsInput = row.field !== "email" && row.field !== "password";
-        return <li key={row.field} className={classes.fact} data-editing={isEditing || undefined}>
+        // A pending email change owns its feedback: it reads inside the change, next to the actions it answers.
+        const feedbackInChange = row.field === "email" && Boolean(profile.pendingEmail);
+        return <li key={row.field} className={classes.fact} data-editing={isEditing || undefined} data-expanded={(!isEditing && row.value && row.expanded) || undefined}>
           {/* While editing, the row's own label names the input; nothing else on the page moves. */}
           {isEditing && labelsInput
             ? <label className={classes.factLabel} htmlFor={`profile-${row.field}-input`}>{row.label}</label>
             : <span className={classes.factLabel} id={`profile-${row.field}-label`}>{row.label}</span>}
           {isEditing ? row.editor : <>
-            <p className={classes.factValue} data-empty={!row.value || undefined}>
+            <div className={classes.factValue} data-empty={!row.value || undefined}>
               {row.masked && row.value
                 // A fixed mask, never the password's length; the row still reads its state aloud.
                 ? <><span className={classes.mask} aria-hidden="true">{PASSWORD_MASK}</span><span className="visually-hidden">{row.value}</span></>
                 : row.value ?? (row.missing
-                // Not registered yet: a chip names the state; the hint says whether and when it is needed.
-                ? <span className={classes.missing}><span className={classes.missingChip} data-tone={row.missing.tone}>Sin registrar</span><span className="visually-hidden">. </span><span className={classes.missingHint}>{row.missing.hint}</span></span>
+                // Not registered yet. Only a required value earns a chip (pale red: something to fix before buying);
+                // an optional one is plain muted text, since nothing is wrong.
+                ? <span className={classes.missing}>{row.missing.tone === "required"
+                  ? <span className={classes.missingChip} data-tone="required">Sin registrar</span>
+                  : <span className={classes.missingText}>Sin registrar</span>}<span className="visually-hidden">. </span><span className={classes.missingHint}>{row.missing.hint}</span></span>
                 : row.empty)}
-            </p>
-            <Button
+              {row.value && row.valueNote && <><span className="visually-hidden">, </span><span className={classes.valueNote}>{row.valueNote}</span></>}
+              {row.value && row.detail}
+            </div>
+            {row.to && editing === null
+              // Leaves the sheet for another page: the text-link grammar, its chevron after the words.
+              ? <Link to={row.to} ref={(element: HTMLAnchorElement | null) => { editButtons.current[row.field] = element; }} className={classes.edit}>
+                {row.action}{" "}<span className="visually-hidden">{row.actionName ?? row.label[0].toLowerCase() + row.label.slice(1)}</span><MaterialSymbol name="chevron_right" aria-hidden="true" size={18} />
+              </Link>
+              : <Button
               ref={(element: HTMLButtonElement | null) => { editButtons.current[row.field] = element; }}
               variant="text" type="button" className={classes.edit}
               disabled={row.disabled || (!row.onAction && !readCurrent) || (editing !== null && !isEditing)}
               // Waiting keeps the action focusable, so focus can return to it after a request.
               aria-disabled={row.waiting || undefined}
               onClick={() => { if (row.waiting) return; if (row.onAction) row.onAction(); else open(row.field); }}
-            ><MaterialSymbol name={row.icon ?? (row.value ? "edit" : "add")} aria-hidden="true" size={18} />{row.action ?? (row.value ? "Editar" : "Agregar")}{" "}<span className="visually-hidden">{row.label[0].toLowerCase() + row.label.slice(1)}</span></Button>
+            >{!row.to && <MaterialSymbol name={row.icon ?? (row.value ? "edit" : "add")} aria-hidden="true" size={18} />}{row.action ?? (row.value ? "Editar" : "Agregar")}{" "}<span className="visually-hidden">{row.actionName ?? row.label[0].toLowerCase() + row.label.slice(1)}</span>{row.to && <MaterialSymbol name="chevron_right" aria-hidden="true" size={18} />}</Button>}
           </>}
-          {rowFeedback && !isEditing && <p className={`${classes.feedback} ${rowFeedback.error ? classes.feedbackError : ""}`} role={rowFeedback.error ? "alert" : "status"}>
+          {rowFeedback && !isEditing && !feedbackInChange && <p className={`${classes.feedback} ${rowFeedback.error ? classes.feedbackError : ""}`} role={rowFeedback.error ? "alert" : "status"}>
             <MaterialSymbol name={rowFeedback.error ? "info" : "check_circle"} aria-hidden="true" size={16} />{rowFeedback.message}
           </p>}
         </li>;
       })}
     </ul>
-    {!verified && readCurrent && <p className={classes.verification}>
-      Tu correo está pendiente de verificación. <Link to="/reenviar-verificacion" state={{ email: profile.email }}>Reenviar verificación de correo</Link>
-    </p>}
   </section>;
+}
+
+type EmailStatusProps = { profile: CustomerProfile; verified: boolean; readCurrent: boolean; refetch: Refetch; onExpired: () => void; feedback: Result | null; onResult: (result: Result) => void };
+
+/**
+ * Everything about the email lives in the Correo row. Under the address in use: at most one line about that address
+ * (it stopped accepting mail, or it is not verified yet), then a requested change as one bounded process — the new
+ * address, what happens next, its own actions and their feedback — so the two addresses never read as one.
+ */
+function EmailStatus({ profile, verified, readCurrent, refetch, onExpired, feedback, onResult }: EmailStatusProps) {
+  return <>
+    {profile.emailDelivery?.status === "UNDELIVERABLE" && <span className={classes.valueDetail}>
+      <span className={classes.missingChip} data-tone="required">No recibe correos</span>
+      <span>No pudimos entregarte mensajes. Corrígela para recibir los avisos de tus pedidos.</span>
+    </span>}
+    {!verified && readCurrent && <span className={classes.valueDetail}>
+      <span className={classes.missingChip} data-tone="required">Sin verificar</span>
+      <span><Link className={classes.detailLink} to="/reenviar-verificacion" state={{ email: profile.email }}>Reenviar verificación de correo</Link></span>
+    </span>}
+    {profile.pendingEmail && <PendingEmailChange profile={profile} readCurrent={readCurrent} refetch={refetch} onExpired={onExpired} feedback={feedback} onResult={onResult} />}
+  </>;
+}
+
+/**
+ * A requested address waiting for its link, as one quiet inset inside the Correo row: "Nuevo correo" with its state
+ * (an ultramar "Por confirmar" — the customer's move — or the pale red "No recibe correos" when the link could not be
+ * delivered), the address, one sentence on what happens next, then the actions that belong to this change only.
+ * The address in use is the row's value above it, tagged "En uso"; nothing else on the page talks about the change.
+ */
+function PendingEmailChange({ profile, readCurrent, refetch, onExpired, feedback, onResult }: Omit<EmailStatusProps, "verified">) {
+  const [busy, setBusy] = useState<"resend" | "cancel" | null>(null);
+  const pending = profile.pendingEmail!;
+  const undeliverable = pending.delivery === "UNDELIVERABLE";
+  async function act(kind: "resend" | "cancel") {
+    if (busy) return;
+    setBusy(kind);
+    try {
+      await (kind === "resend" ? resendEmailChange() : cancelEmailChange());
+      await refetch();
+      onResult({ message: kind === "resend" ? "Te enviamos otro enlace. Si no lo ves en unos minutos, revisa la carpeta de spam." : `Cancelamos el cambio. Sigues usando ${profile.email}.`, error: false });
+    } catch (failure) {
+      if (failure instanceof ApiRequestError && failure.status === 401) { onExpired(); return; }
+      onResult({ message: failure instanceof ApiRequestError ? `${failure.title}. ${failure.detail}` : "No pudimos completarlo. Inténtalo otra vez.", error: true });
+    } finally { setBusy(null); }
+  }
+  return <span className={classes.change} role="group" aria-label="Cambio de correo" data-tone={undeliverable ? "problem" : undefined}>
+    <span className={classes.changeHead}>
+      <MaterialSymbol name="mail" aria-hidden="true" size={18} />
+      <span className={classes.changeTitle}>Nuevo correo</span>
+      <span className="visually-hidden">: </span>
+      <span className={classes.missingChip} data-tone={undeliverable ? "required" : "pending"}>{undeliverable ? "No recibe correos" : "Por confirmar"}</span>
+    </span>
+    <span className={classes.changeAddress}>{pending.address}</span>
+    <span className={classes.changeText}>{undeliverable
+      ? "No pudimos enviarle el enlace. Corrige la dirección con Editar o cancela el cambio; tu correo en uso no cambia."
+      : "Confirma el cambio con el enlace que te enviamos a esa dirección. Mientras tanto, tu correo en uso no cambia."}</span>
+    {readCurrent && <span className={classes.changeActions}>
+      {!undeliverable && <button type="button" className={classes.changeAction} aria-disabled={busy !== null || undefined} onClick={() => void act("resend")}>{busy === "resend" ? "Reenviando…" : "Reenviar enlace"}</button>}
+      <button type="button" className={classes.changeAction} aria-disabled={busy !== null || undefined} onClick={() => void act("cancel")}>{busy === "cancel" ? "Cancelando…" : "Cancelar cambio"}</button>
+    </span>}
+    {feedback && <span className={`${classes.changeFeedback} ${feedback.error ? classes.feedbackError : ""}`} role={feedback.error ? "alert" : "status"}>
+      <MaterialSymbol name={feedback.error ? "info" : "check_circle"} aria-hidden="true" size={16} />{feedback.message}
+    </span>}
+  </span>;
 }
 
 const PASSWORD_MASK = "••••••••";
@@ -169,6 +356,16 @@ type Row = {
   masked?: boolean;
   /** `lock` marks the security action of the password row. */
   action?: string; icon?: "add" | "edit" | "lock" | "refresh"; disabled?: boolean; waiting?: boolean; onAction?: () => void;
+  /** The action leads to another page (the cédula's correction): a link with a trailing chevron, not an edit in place. */
+  to?: string;
+  /** What the action acts on when it is not the row itself, for its accessible name ("Ver solicitud de corrección…"). */
+  actionName?: string;
+  /** A state line under the value, such as a correction request in review. */
+  detail?: ReactNode;
+  /** A quiet word right after the value that tells it apart from a detail below ("En uso" beside a pending email). */
+  valueNote?: string;
+  /** The row carries a detail block: label, value and action align on the first line instead of centring. */
+  expanded?: boolean;
 };
 
 interface EditorProps {
@@ -291,7 +488,6 @@ function PhoneEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
  */
 function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
   const scope = useSessionOperationScope(`${profile.customerId}:email`);
-  const { session, updateEmailForSession } = useSession();
   const emailId = useId(), passwordId = useId();
   const draft = useProfileDraft(profile, "email", "");
   const { value: email, setValue: setEmail } = draft;
@@ -303,10 +499,9 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
   const { saving, saved, run } = useProfileSaving(profile.customerId, "email");
   useEffect(() => { emailRef.current?.focus(); }, []);
 
-  function confirmed(stored: string): Result {
-    if (session && session.user.email !== stored) updateEmailForSession(session, stored);
-    return { message: `Correo actualizado. Revisa ${stored} para verificarlo.`, error: false };
-  }
+  // Nothing changes yet: the address in use stays (and so does the session's) until the new one is confirmed. The
+  // row's change panel names both addresses, so the confirmation only says what just happened and what to look for.
+  const sentFeedback: Result = { message: "Te enviamos el enlace. Si no lo ves en unos minutos, revisa la carpeta de spam.", error: false };
 
   return <EditorFrame label="Cambiar correo electrónico" saving={saving} saved={saved} error={error} notice={draft.notice} onCancel={() => { draft.cancel(); onDone(); }} onSubmit={() => void run(async () => {
     const submitted = email;
@@ -322,11 +517,11 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
     const requested = parsed.data;
     try {
       scope.assertCurrent();
-      const stored = await changeEmail(requested, password);
+      await changeEmail(requested, password);
       if (!scope.isCurrent()) return false;
       const current = await refetch();
       if (!scope.isCurrent()) return false;
-      const feedback = confirmed(stored);
+      const feedback = sentFeedback;
       const passwordChanged = passwordRef.current?.value !== submittedPassword;
       setPassword(latest => latest === submittedPassword ? "" : latest);
       if (draft.complete(submitted, current.isError ? undefined : current.data, passwordChanged)) { onDone(feedback); return true; }
@@ -348,14 +543,14 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
       if (failure instanceof EmailChangeOutcomeUnknown) {
         const current = await refetch();
         if (!scope.isCurrent()) return false;
-        if (!current.isError && current.data && current.data.email.toLowerCase() === requested.toLowerCase()) {
-          const feedback = confirmed(current.data.email);
+        if (!current.isError && current.data?.pendingEmail?.address.toLowerCase() === requested.toLowerCase()) {
+          const feedback = sentFeedback;
           const passwordChanged = passwordRef.current?.value !== submittedPassword;
           setPassword(latest => latest === submittedPassword ? "" : latest);
           if (draft.complete(submitted, current.data, passwordChanged)) { onDone(feedback); return true; }
           return false;
         }
-        setError("No pudimos confirmar si tu correo cambió. Revisa el correo que aparece en tu perfil antes de intentarlo otra vez.");
+        setError("No pudimos confirmar si se envió el enlace. Revisa tu perfil antes de intentarlo otra vez.");
         return false;
       }
       throw failure;
@@ -366,7 +561,7 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
       aria-invalid={Boolean(errors.email) || undefined} aria-describedby={errors.email ? `${emailId}-error` : `${emailId}-note`}
       onChange={(event) => { setEmail(event.target.value); setErrors(current => ({ ...current, email: undefined })); }} />
     {errors.email && <FieldMessage id={`${emailId}-error`} tone="error">{errors.email}</FieldMessage>}
-    {!errors.email && <p className={classes.inlineNote} id={`${emailId}-note`}>Te enviaremos un enlace para verificar el nuevo correo.</p>}
+    {!errors.email && <p className={classes.inlineNote} id={`${emailId}-note`}>Te enviaremos un enlace a la dirección nueva. Tu correo actual sigue en uso hasta que lo confirmes.</p>}
     <label className={classes.subLabel} htmlFor={passwordId}>Contraseña actual</label>
     <PasswordInput ref={passwordRef} id={passwordId} className={classes.input} autoComplete="current-password" value={password}
       aria-invalid={Boolean(errors.password) || undefined} aria-describedby={errors.password ? `${passwordId}-error` : undefined}
@@ -374,7 +569,7 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
     {errors.password && <FieldMessage id={`${passwordId}-error`} tone="error">{errors.password}</FieldMessage>}
     <details className={classes.securityDisclosure}>
       <summary>Seguridad del cambio</summary>
-      <p>Te pedimos tu contraseña para proteger tu cuenta. Cuando tu sesión termine, tendrás que iniciar sesión de nuevo en tus dispositivos.</p>
+      <p>Te pedimos tu contraseña para proteger tu cuenta. También avisaremos a tu correo actual, desde donde se puede cancelar el cambio. Al confirmar la dirección nueva cerraremos tus sesiones y entrarás con ella.</p>
     </details>
   </EditorFrame>;
 }

@@ -77,12 +77,16 @@ public class SecurityConfiguration {
                         .authenticationEntryPoint(entryPoint)
                         .accessDeniedHandler(deniedHandler))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.GET, "/api/v1/auth/events").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/webhooks/mailtrap").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/register", "/api/v1/auth/login",
-                                "/api/v1/auth/refresh", "/api/v1/auth/logout", "/api/v1/auth/verify-email",
-                                "/api/v1/auth/resend-verification", "/api/v1/auth/forgot-password", "/api/v1/auth/reset-password").permitAll()
+                                "/api/v1/auth/refresh", "/api/v1/auth/logout", "/api/v1/auth/registration-session", "/api/v1/auth/verify-email",
+                                "/api/v1/auth/resend-verification", "/api/v1/auth/forgot-password", "/api/v1/auth/reset-password",
+                                "/api/v1/auth/email-change/confirm", "/api/v1/auth/email-change/cancel").permitAll()
                         .requestMatchers("/api/v1/catalog/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/storefront/**", "/api/v1/help/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/reference/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/geo/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/pickup-locations").permitAll()
                         .requestMatchers("/v3/api-docs", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**")
                         .permitAll()
@@ -113,8 +117,8 @@ public class SecurityConfiguration {
         configuration.setAllowedOrigins(origins);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Idempotency-Key",
-                AuthSessionRequestFilter.HEADER_NAME));
-        configuration.setExposedHeaders(List.of("X-Trace-Id"));
+                AuthSessionRequestFilter.HEADER_NAME, "Last-Event-ID"));
+        configuration.setExposedHeaders(List.of("X-Trace-Id", HttpHeaders.RETRY_AFTER));
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

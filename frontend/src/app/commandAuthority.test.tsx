@@ -1,4 +1,4 @@
-import { act, screen, waitFor } from "@testing-library/react";
+import { act, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { QueryClient } from "@tanstack/react-query";
 import type { ReactNode } from "react";
@@ -107,6 +107,7 @@ describe("commands issued by a previous account", () => {
     const { queryClient } = renderPurchaseRoute([{ path: "/cart", element: <IdentityShell><CartPage /></IdentityShell> }], "/cart");
     const completion = mutationCompletion(queryClient), user = userEvent.setup();
     await user.click(await screen.findByRole("button", { name: "Quitar Cien años de soledad del carrito" }));
+    await user.click(within(await screen.findByRole("dialog", { name: "¿Quitar del carrito?" })).getByRole("button", { name: "Quitar" }));
     await waitFor(() => expect(api.count("DELETE", "/api/v1/cart/items/100")).toBe(1));
     await switchToB(user);
     await settle(response, completion, expired());

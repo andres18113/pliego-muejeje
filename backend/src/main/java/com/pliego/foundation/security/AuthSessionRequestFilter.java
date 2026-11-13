@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.UrlPathHelper;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -27,8 +28,16 @@ public final class AuthSessionRequestFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         if (!"POST".equalsIgnoreCase(request.getMethod())) return true;
-        String path = request.getRequestURI().substring(request.getContextPath().length());
-        return !"/api/v1/auth/refresh".equals(path) && !"/api/v1/auth/logout".equals(path);
+        // Decode the application path as MVC dispatch does. StrictHttpFirewall
+        // rejects ambiguous separators/parameters before this filter runs.
+        String path = UrlPathHelper.defaultInstance.getPathWithinApplication(request);
+        if ("/api/v1/auth/verify-email".equals(path) && request.getCookies()!=null) {
+            for (var cookie:request.getCookies()) {
+                if ("pliego_registration".equals(cookie.getName())) return false;
+            }
+        }
+        return !"/api/v1/auth/refresh".equals(path) && !"/api/v1/auth/logout".equals(path)
+                && !"/api/v1/auth/registration-session".equals(path);
     }
 
     @Override

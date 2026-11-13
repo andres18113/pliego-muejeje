@@ -1,0 +1,14 @@
+# Non-secret reviewed settings; install root:postgres 0640.
+PGHOST=/var/run/postgresql
+PGPORT=5432
+PGUSER=postgres
+PGDATABASE=pliego
+BACKUP_ENDPOINT=https://REPLACE_WITH_32_HEX_ACCOUNT_ID.r2.cloudflarestorage.com
+BACKUP_REGION=auto
+BACKUP_BUCKET=pliego-db-backups
+BACKUP_STATE_DIR=/var/lib/pliego-backup
+BACKUP_PUBLIC_KEYRING=/etc/pliego-backup/recipients.gpg
+BACKUP_RECIPIENT=REPLACE_WITH_FULL_OFFLINE_VERIFIED_FINGERPRINT
+# Optional dead-man integration: install optional-heartbeat.conf.example as a
+# service drop-in after owner approval. Disabled without that drop-in.
+# BACKUP_HEARTBEAT_ENABLED=1  # enable only with reviewed credential drop-in

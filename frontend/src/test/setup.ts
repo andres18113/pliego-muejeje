@@ -14,9 +14,12 @@ if (!window.matchMedia) {
   });
 }
 
-// jsdom has no Web Locks. Serialize this browser boundary as Chromium does in E2E.
+// jsdom has no Web Locks. Serialize this browser boundary as Chromium does in E2E. Each test is a fresh browser:
+// a request a test deliberately leaves unanswered must not hold the next test's lock (Chromium's deadline would).
+const lockQueues = new Map<string, Promise<unknown>>();
+afterEach(() => lockQueues.clear());
 if (!navigator.locks) {
-  const queues = new Map<string, Promise<unknown>>();
+  const queues = lockQueues;
   Object.defineProperty(navigator, "locks", { configurable: true, value: {
     request: <T,>(name: string, optionsOrCallback: LockOptions | (() => T | Promise<T>), suppliedCallback?: () => T | Promise<T>) => {
       const callback = typeof optionsOrCallback === "function" ? optionsOrCallback : suppliedCallback!;

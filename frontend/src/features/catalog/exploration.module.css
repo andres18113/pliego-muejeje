@@ -4,8 +4,6 @@
 .page { min-height: 65vh; }
 :global(html):has(.surface), :global(body):has(.surface) { background: var(--pliego-surface); }
 .shell { width: min(calc(100% - 96px), 1440px); margin-inline: auto; padding-block: 4px 96px; }
-/* As on the edition page: the view's back arrow under the header, on the shelf's left edge. */
-.wayfinding { margin-bottom: 4px; }
 .surface :global([data-bookcard-link]), .surface :global([data-bookcard-favorite]), .surface :global([data-bookcard-cart]) { scroll-margin-top: 104px; }
 
 /* Opening: a real catalog heading, not a banner. The collection's name in ink display type, the
@@ -109,7 +107,7 @@
 .pagination { display: flex; align-items: center; justify-content: center; gap: 8px 20px; margin-top: 24px; }
 .pageStep { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding-inline: 14px; border-radius: 999px; color: var(--store-link); font-size: .9375rem; font-weight: 600; text-decoration: none; }
 a.pageStep:hover { background: var(--explore-quiet); }
-.pageStep[data-disabled] { color: var(--pliego-control-border); visibility: visible; }
+.pageStep[data-disabled] { color: #6b6980; visibility: visible; } /* inactive, still legible: 4.86:1 on paper */
 .pageList { display: flex; align-items: center; gap: 4px; margin: 0; padding: 0; list-style: none; }
 .pageNumber { display: grid; place-items: center; min-width: 44px; height: 44px; padding-inline: 6px; border-radius: 999px; color: var(--pliego-text); font-size: .9375rem; font-weight: 600; font-variant-numeric: tabular-nums; text-decoration: none; }
 .pageNumber:hover:not([aria-current]) { background: var(--explore-quiet); }

@@ -9,7 +9,7 @@ CEDULA = "0912345675"
 BILLING = {
     "billingIdentity": {"type": "EC_CEDULA", "number": CEDULA},
     "buyerName": "Cliente Prueba",
-    "billingAddress": {"line1": "Calle Fiscal", "city": "Quito", "province": "Pichincha", "countryCode": "EC"},
+    "billingAddress": {"line1": "Calle Fiscal", "provinceId": "17", "cityId": "893", "countryCode": "EC"},
 }
 
 

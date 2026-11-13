@@ -39,8 +39,8 @@ class TransactionalMailTest {
     "items":[{"title":"Libro <script> & \\"lectura\\"","quantity":2,"unitPrice":"17.50","subtotal":"35.00"}],
     "delivery":{"recipient":"Ana <Pérez>","line1":"Calle 1","city":"Quito","province":"Pichincha","country":"EC"}}
    """));
-  assertEquals("Tu pedido N.º 42 está confirmado",msg.subject());
-  assertTrue(msg.text().contains("¡Gracias por tu compra!")); assertTrue(msg.text().contains("Pedido: N.º 42")); assertTrue(msg.text().contains("Cantidad: 2"));
+  assertEquals("Tu pedido #42 está confirmado",msg.subject());
+  assertTrue(msg.text().contains("¡Gracias por tu compra!")); assertTrue(msg.text().contains("Pedido: #42")); assertTrue(msg.text().contains("Cantidad: 2"));
   assertTrue(msg.text().contains("Fecha de compra: 4 de octubre de 2026"));
   assertTrue(msg.text().contains("Total pagado: $ 35,00")); assertTrue(msg.text().contains("Calle 1"));
   assertTrue(msg.text().contains("Entrega a domicilio:")); assertFalse(msg.text().contains("Mi biblioteca"));
@@ -61,6 +61,28 @@ class TransactionalMailTest {
   assertTrue(verify.text().contains("vence el 5 de octubre de 2026, 07:00")); assertTrue(verify.text().contains("Si no creaste esta cuenta, puedes ignorar este mensaje."));
   assertTrue(verify.html().contains("copia este enlace")); assertTrue(reset.text().contains("Restablecer contraseña: "));
  }
+ @Test void invoiceIssuedTemplateEscapesGreetingAndUsesStableInvoicePageLink() throws Exception {
+  var message=preview("invoice-issued",templates().render("INVOICE_ISSUED",json.readTree("""
+   {"customerName":"Ana <b> & \\"Luz\\"","documentNumber":"999-999-000000001","orderId":"42"}
+   """)));
+  assertEquals("Tu factura académica 999-999-000000001",message.subject());
+  assertTrue(message.html().contains("Estimado(a) Ana &lt;b&gt; &amp; &quot;Luz&quot;"));
+  assertFalse(message.html().contains("<b>"));
+  assertTrue(message.text().contains("Estimado(a) Ana <b> & \"Luz\""));
+  assertTrue(message.text().replace("\u2060", "").contains("Tienes una nueva factura académica N.° 999-999-000000001, disponible para su visualización y descarga."));
+  assertTrue(message.text().contains("999-\u2060999-\u2060000000001"));
+  assertTrue(message.text().contains("Visualizar documento: https://pliego.example/orders/42/invoice"));
+  assertTrue(message.html().contains("href=\"https://pliego.example/orders/42/invoice\""));
+  assertTrue(message.html().contains("white-space:nowrap") && message.html().contains("999-999-000000001</span>"));
+  assertTrue(message.html().contains("simulación académica sin validez tributaria"));
+  assertEquals(1,message.html().split("<a ",-1).length-1);
+  for(String forbidden:new String[]{"accessKey","identityNumber","identificacion","CLAVE DE ACCESO","NÚMERO DE AUTORIZACIÓN","r2.cloudflarestorage.com"}) {
+   assertFalse(message.html().contains(forbidden)); assertFalse(message.text().contains(forbidden));
+  }
+  var samples=java.nio.file.Path.of("/tmp/claude-1000/-home-andres18123-PLIEGO/a47bcd7b-ad29-480d-9eb9-444e650de42e/scratchpad/samples");
+  java.nio.file.Files.createDirectories(samples);
+  java.nio.file.Files.writeString(samples.resolve("invoice-email.html"),message.html(),StandardCharsets.UTF_8);
+ }
  @Test void emailActionKeepsSafeReturnContextSeparateFromTheFragmentCredential() {
   var credential=tokens.issue("VERIFY_EMAIL");
   var data=json.createObjectNode().put("nonce",credential.nonce()).put("returnTo","/cart?source=edition#items");
@@ -72,6 +94,19 @@ class TransactionalMailTest {
    assertFalse(templates().render("VERIFY_EMAIL",data).text().contains("?from="));
   }
  }
+ @Test void orderReferencesAreVisibleWhileActionLinksKeepInternalIdsAndLegacyPayloadsStillRender() {
+  for (String type : new String[]{"ORDER_CONFIRMED", "ORDER_STATUS", "ORDER_CANCELLED", "INVOICE_ISSUED"}) {
+   var data=json.createObjectNode().put("orderId","229").put("orderReference","PL-0123-4567")
+    .put("method","STORE_PICKUP").put("state","READY").put("customerName","Ana")
+    .put("documentNumber","999-999-000000001");
+   var current=assertDoesNotThrow(()->templates().render(type,data));
+   assertTrue(current.text().contains("#PL-0123-4567"),type+" must expose the public reference");
+   assertTrue(current.text().contains("https://pliego.example/orders/229"),type+" must preserve the numeric route");
+   assertFalse(current.text().contains("#229"));
+   data.remove("orderReference");
+   assertTrue(templates().render(type,data).text().contains("#229"),type+" must keep legacy snapshots readable");
+  }
+ }
  private MailTemplates templates() { return new MailTemplates(settings(URI.create("http://127.0.0.1/api/send")),tokens,json); }
  /** Writes the rendered message next to the build so its HTML can be opened and checked by eye. */
  private static MailMessage preview(String name,MailMessage message) throws Exception {
@@ -80,19 +115,19 @@ class TransactionalMailTest {
   return message;
  }
  private static final String ITEMS="""
-  "items":[{"title":"50 experimentos imprescindibles para entender la psicología social y otras preguntas que no sabías que tenías","authors":"Rodríguez, Armando (coord.); Morales Domínguez, José Francisco (coord.); Delgado, Naira","format":"PAPERBACK","quantity":2,"unitPrice":"63.96","subtotal":"127.92","originalSubtotal":"159.90","lineSavings":"31.98","coverUrl":"https://covers.example/a.webp"},
+  "items":[{"title":"50 experimentos imprescindibles para entender la psicología social y otras preguntas que no sabías que tenías","authors":"Rodríguez, Armando (coord.); Morales Domínguez, José Francisco (coord.); Delgado, Naira","format":"PAPERBACK","quantity":2,"unitPrice":"63.96","subtotal":"127.92","originalSubtotal":"159.90","lineSavings":"31.98","coverUrl":"https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000390-d2c065f3dcad.webp"},
    {"title":"Administración de proyectos de informática","authors":"Toro López, Francisco J.","format":"EBOOK","quantity":1,"unitPrice":"17.99","subtotal":"17.99","originalSubtotal":"17.99","lineSavings":"0.00"}]""";
  @Test void discountedMixedConfirmationShowsServerSavingsAndBothDestinations() throws Exception {
   var msg=preview("order-confirmed-mixed-discount",templates().render("ORDER_CONFIRMED",json.readTree("{\"orderId\":\"229\",\"date\":\"2026-10-05T15:00:00Z\",\"subtotal\":\"145.91\",\"originalSubtotal\":\"177.89\",\"savingsTotal\":\"31.98\",\"taxRate\":\"15.00\",\"taxAmount\":\"21.89\",\"shippingAmount\":\"3.50\",\"total\":\"171.30\","+ITEMS
    +",\"delivery\":{\"recipient\":\"Ana Pérez\",\"line1\":\"Av. Principal 123\",\"line2\":null,\"city\":\"Quito\",\"province\":\"Pichincha\",\"country\":\"EC\",\"postalCode\":\"170150\"}}")));
-  assertTrue(msg.text().contains("Tu pedido N.º 229 está confirmado.")); assertTrue(msg.text().contains("Subtotal: $ 177,89")); assertTrue(msg.text().contains("Ahorro total: -$ 31,98"));
+  assertTrue(msg.text().contains("Tu pedido #229 está confirmado.")); assertTrue(msg.text().contains("Subtotal: $ 177,89")); assertTrue(msg.text().contains("Ahorro total: -$ 31,98"));
   assertTrue(msg.text().contains("IVA (15 %): $ 21,89")); assertTrue(msg.text().contains("Envío: $ 3,50")); assertTrue(msg.text().contains("Total pagado: $ 171,30"));
   // The saving is the server's line figure; a line without one shows no previous price.
   assertTrue(msg.text().contains("Precio: $ 127,92 (antes $ 159,90)")); assertTrue(msg.text().contains("Ahorraste $ 31,98")); assertFalse(msg.text().contains("(antes $ 17,99)"));
   assertTrue(msg.text().contains("Rodríguez, Armando; Morales Domínguez, José Francisco; Delgado, Naira")); assertFalse(msg.text().contains("(coord.)"));
   assertTrue(msg.text().contains("Libro, Cantidad: 2")); assertTrue(msg.text().contains("eBook, Cantidad: 1"));
   assertTrue(msg.text().contains("Quito, Pichincha, Ecuador")); assertTrue(msg.text().contains("Tus eBooks y audiolibros de este pedido están en Mi biblioteca."));
-  assertTrue(msg.html().contains("src=\"https://covers.example/a.webp\"")); assertTrue(msg.html().contains("<s>$&nbsp;159,90</s>"));
+  assertTrue(msg.html().contains("src=\"https://covers.pliegolibros.com/covers/editions/email-v1/PLG-BK-000390-d2c065f3dcad.jpg\"")); assertTrue(msg.html().contains("<s>$&nbsp;159,90</s>"));
   assertTrue(msg.text().contains("Ver pedido: https://pliego.example/orders/229")); assertTrue(msg.text().contains("Ir a Mi biblioteca: https://pliego.example/biblioteca"));
  }
  @Test void digitalOnlyConfirmationHasNoShippingAndPointsToTheLibrary() throws Exception {
@@ -103,17 +138,18 @@ class TransactionalMailTest {
   assertFalse(msg.text().contains("Envío")); assertFalse(msg.text().contains("Entrega a domicilio")); assertFalse(msg.text().contains("Retiro en tienda"));
   assertTrue(msg.text().contains("Tu compra es digital: la encuentras en Mi biblioteca, sin envío.")); assertTrue(msg.text().contains("Total pagado: $ 20,69"));
   // No cover in the snapshot: a quiet block stands in, never a broken image. The only image is the logo.
-  assertEquals(1,msg.html().split("<img",-1).length-1); assertTrue(msg.html().contains("<img src=\"https://pliego.example/brand/pliego-logo.png\" width=\"129\" height=\"30\" alt=\"PLIEGO\""));
+  assertEquals(1,msg.html().split("<img",-1).length-1); // The email lockup on its own white plate, so clients that darken a message keep it legible.
+  assertTrue(msg.html().contains("<img src=\"https://pliego.example/brand/pliego-logo-email.png\" width=\"141\" height=\"42\" alt=\"PLIEGO\""));
  }
  @Test void statusMessagesShareOneSystemAndRefuseUnknownStates() throws Exception {
   String delivery="\"delivery\":{\"recipient\":\"Ana Pérez\",\"line1\":\"Av. Principal 123\",\"city\":\"Quito\",\"province\":\"Pichincha\",\"country\":\"EC\"}";
   var expected=java.util.Map.of("PREPARING","Estamos preparando tu pedido","IN_TRANSIT","Tu pedido está en camino","OUT_FOR_DELIVERY","Tu pedido está en reparto","DELIVERED","Tu pedido fue entregado");
   for(var entry:expected.entrySet()) {
    var msg=preview("order-status-delivery-"+entry.getKey().toLowerCase(),templates().render("ORDER_STATUS",json.readTree("{\"orderId\":\"229\",\"method\":\"HOME_DELIVERY\",\"state\":\""+entry.getKey()+"\",\"carrier\":\"Servientrega\",\"trackingCode\":\"SV-123\","+ITEMS+","+delivery+"}")));
-   assertTrue(msg.text().contains(entry.getValue())); assertTrue(msg.text().contains("Pedido: N.º 229")); assertTrue(msg.text().contains("Guía de seguimiento: SV-123"));
+   assertTrue(msg.text().contains(entry.getValue())); assertTrue(msg.text().contains("Pedido: #229")); assertTrue(msg.text().contains("Guía de seguimiento: SV-123"));
    assertTrue(msg.text().contains("Ver pedido: https://pliego.example/orders/229")); assertFalse(msg.text().contains("Total pagado"));
   }
-  assertEquals("Pedido N.º 229: entregado",templates().render("ORDER_STATUS",json.readTree("{\"orderId\":\"229\",\"method\":\"HOME_DELIVERY\",\"state\":\"DELIVERED\"}")).subject());
+  assertEquals("Pedido #229: entregado",templates().render("ORDER_STATUS",json.readTree("{\"orderId\":\"229\",\"method\":\"HOME_DELIVERY\",\"state\":\"DELIVERED\"}")).subject());
   String pickup="\"pickup\":{\"location\":{\"name\":\"PLIEGO Centro\",\"address\":\"Av. 12 de Octubre\",\"city\":\"Quito\",\"province\":\"Pichincha\",\"countryCode\":\"EC\",\"timezone\":\"America/Guayaquil\"},\"readyAt\":\"2026-10-04T18:25:00Z\",\"pickupCode\":\"P-ABC234\"}";
   var waiting=preview("order-status-pickup-pending",templates().render("ORDER_STATUS",json.readTree("{\"orderId\":\"12\",\"method\":\"STORE_PICKUP\",\"state\":\"PENDING\","+pickup+"}")));
   assertTrue(waiting.text().contains("Tu pedido está pendiente de retiro")); assertTrue(waiting.text().contains("PLIEGO Centro")); assertTrue(waiting.text().contains("Código de retiro: P-ABC234"));
@@ -132,9 +168,21 @@ class TransactionalMailTest {
   assertThrows(IllegalArgumentException.class,()->templates().render("ORDER_STATUS",json.readTree("{\"orderId\":\"229\",\"method\":\"HOME_DELIVERY\",\"state\":\"TELEPORTED\"}")));
   assertThrows(IllegalArgumentException.class,()->templates().render("ORDER_STATUS",json.readTree("{\"orderId\":\"229\",\"method\":\"STORE_PICKUP\",\"state\":\"DELIVERED\"}")));
  }
+ @Test void pickupPolicyExplainsTotalTenMinutesWithoutInventingHistoricalTiming() throws Exception {
+  var data=json.createObjectNode().put("orderId","12").put("method","STORE_PICKUP").put("state","PREPARING");
+  var pickup=data.putObject("pickup").put("preparationMinutes",10).put("readyAt","2026-11-01T15:10:00Z").put("pickupCode","P-AB234567");
+  pickup.putObject("location").put("name","Centro").put("timezone","America/Guayaquil");
+  var message=templates().render("ORDER_STATUS",data);
+  assertTrue(message.text().contains("10 minutos desde la aprobación del pago"));
+  assertTrue(message.text().contains("6 minutos para cancelar y 4 minutos adicionales de preparación"));
+  assertTrue(message.text().contains("próxima apertura"));
+  assertTrue(message.text().contains("https://pliego.example/orders/12"));
+  pickup.put("preparationMinutes",25);
+  assertFalse(templates().render("ORDER_STATUS",data).text().contains("10 minutos desde"));
+ }
  @Test void cancellationSpeaksOfTheOrderAndTheMoneyOnly() throws Exception {
   var msg=preview("order-cancelled-refunded",templates().render("ORDER_CANCELLED",json.readTree("{\"orderId\":\"229\",\"paymentState\":\"REFUNDED\",\"refundAmount\":\"171.30\",\"actionPath\":\"/orders/229\","+ITEMS+"}")));
-  assertEquals("Pedido N.º 229 cancelado",msg.subject());
+  assertEquals("Pedido #229 cancelado",msg.subject());
   assertTrue(msg.text().contains("Tu pedido fue cancelado")); assertTrue(msg.text().contains("El pago fue reembolsado.")); assertTrue(msg.text().contains("No necesitas realizar ninguna acción adicional."));
   assertTrue(msg.text().contains("Reembolso: $ 171,30"));
   // A refunded purchase saved nothing: the titles keep what was paid, without the saving or the previous price.
@@ -146,7 +194,7 @@ class TransactionalMailTest {
  @Test void longAndHostileContentStaysEscapedInBothParts() throws Exception {
   var msg=preview("order-confirmed-long-hostile",templates().render("ORDER_CONFIRMED",json.readTree("""
    {"orderId":"987654321","date":"2026-10-05T15:00:00Z","originalSubtotal":"12345.67","savingsTotal":"1234.56","taxRate":"15.00","taxAmount":"1666.67","shippingAmount":"3.50","total":"12781.28",
-    "items":[{"title":"Fundamentosdeelectromagnetismoparaingenieríaconaplicacionesindustrialesavanzadasyejerciciosresueltos <b>negrita</b> & \\"comillas\\" 'simples'","authors":"Apellido Muy Largo de Prueba, Nombre Compuesto Extenso (coord.); Otro Autor Con Nombre Bastante Largo, María Fernanda (ed.); Tercero, Juan","format":"HARDCOVER","quantity":10,"unitPrice":"1111.11","subtotal":"11111.11","originalSubtotal":"12345.67","lineSavings":"1234.56","coverUrl":"https://covers.example/a.webp"},
+    "items":[{"title":"Fundamentosdeelectromagnetismoparaingenieríaconaplicacionesindustrialesavanzadasyejerciciosresueltos <b>negrita</b> & \\"comillas\\" 'simples'","authors":"Apellido Muy Largo de Prueba, Nombre Compuesto Extenso (coord.); Otro Autor Con Nombre Bastante Largo, María Fernanda (ed.); Tercero, Juan","format":"HARDCOVER","quantity":10,"unitPrice":"1111.11","subtotal":"11111.11","originalSubtotal":"12345.67","lineSavings":"1234.56","coverUrl":"https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000390-d2c065f3dcad.webp"},
      {"title":"<img src=x onerror=alert(1)>","authors":"<script>alert(1)</script>","format":"AUDIOBOOK","quantity":1,"unitPrice":"0.00","subtotal":"0.00","coverUrl":"javascript:alert(1)"}],
     "delivery":{"recipient":"María Fernanda de los Ángeles Rodríguez-Echeverría y Montenegro <ana@example.com>","line1":"Urbanización Los Álamos del Valle, Avenida de los Granados N45-123 y Eloy Alfaro, Edificio Torre Central, piso 12, oficina 1204","line2":"Referencia: \\"frente al parque\\" & <portón azul>","city":"Quito","province":"Pichincha","country":"EC","postalCode":"170150"}}
    """)));
@@ -154,7 +202,7 @@ class TransactionalMailTest {
   for(String raw:new String[]{"<b>","<script>","onerror=alert(1)>","javascript:","<portón","<ana@example.com>"}) assertFalse(html.contains(raw),raw);
   assertTrue(html.contains("&lt;b&gt;negrita&lt;/b&gt; &amp; &quot;comillas&quot; &#39;simples&#39;")); assertTrue(html.contains("&lt;img src=x onerror=alert(1)&gt;"));
   // Only the logo and the one https cover are drawn; the unsafe cover address is left out.
-  assertEquals(2,html.split("<img",-1).length-1); assertTrue(html.contains("src=\"https://covers.example/a.webp\""));
+  assertEquals(2,html.split("<img",-1).length-1); assertTrue(html.contains("src=\"https://covers.pliegolibros.com/covers/editions/email-v1/PLG-BK-000390-d2c065f3dcad.jpg\""));
   assertTrue(msg.text().contains("<b>negrita</b> & \"comillas\" 'simples'")); assertTrue(msg.text().contains("Quito, Pichincha, Ecuador"));
   assertTrue(msg.text().contains("Ahorro total: -$ 1.234,56")); assertTrue(msg.text().contains("Total pagado: $ 12.781,28")); assertTrue(msg.text().contains("Ver pedido: https://pliego.example/orders/987654321"));
  }
@@ -186,7 +234,7 @@ class TransactionalMailTest {
    """));
   assertTrue(message.text().contains("PUCE <principal>"));assertTrue(message.html().contains("PUCE &lt;principal&gt;"));
   assertTrue(message.text().contains("13:25"));assertTrue(message.text().contains("P-ABC234"));
-  assertTrue(message.text().contains("Presenta esta confirmación"));assertTrue(message.text().contains("IVA (15 %): $ 1,50"));
+  assertTrue(message.text().contains("Al retirar, muestra tu código de retiro y tu documento de identidad."));assertTrue(message.text().contains("IVA (15 %): $ 1,50"));
   assertTrue(message.text().contains("Envío: $ 0,00"));assertFalse(message.text().contains("Entrega a domicilio:"));
   assertTrue(message.text().contains("Hora estimada de retiro: 4 de octubre de 2026, 13:25"));assertTrue(message.text().contains("Código de retiro: P-ABC234"));
  }
@@ -261,7 +309,16 @@ class TransactionalMailTest {
   assertThrows(IllegalArgumentException.class,()->new MailProperties(true,URI.create("https://send.api.mailtrap.io/api/send"),"token",
     "x@example.com","PLIEGO",URI.create("http://pliego.example"),false,Duration.ofSeconds(1),Duration.ofSeconds(5),5));
  }
+ @Test void workerHoldsKnownUndeliverableWithoutCallingProviderOrCompletingAsSent() {
+  var gateway=new FakeOutbox(); gateway.deliverable=false;
+  var worker=new MailOutboxWorker(new MailOutboxService(gateway),
+    (to,message,type,id)->{throw new AssertionError("No debe enviar a un destinatario bloqueado");},
+    templates(),settings(URI.create("http://127.0.0.1/api/send")),json);
+  worker.process(); assertNull(gateway.outcome);
+ }
  static class FakeOutbox implements MailOutboxGateway {
+  boolean deliverable=true;
+  public boolean prepareSend(OutboxMail mail) { return deliverable; }
   int claims; String outcome; String error; String providerMessageId; boolean staleCompletion;
   public OutboxMail claim() { if(claims>0)return null; claims++; return new OutboxMail(42,UUID.randomUUID(),"ORDER_CONFIRMED","reader@example.com",1,
     "{\"orderId\":\"42\",\"date\":\"2026-10-04\",\"total\":\"5.00\",\"items\":[]}"); }

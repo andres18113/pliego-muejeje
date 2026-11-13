@@ -100,8 +100,7 @@ def main():
     status, headers, problem = request("/api/v1/auth/register", method="POST", body={
         "email": email, "password": "Secreta-journey-1",
         "firstNames": "Cliente", "lastNames": "Journey"})
-    assert status == 409, (status, problem)
-    assert_spanish_problem(status, headers, problem, "P1101")
+    assert status == 201 and problem == {"state": "PENDING_VERIFICATION"}, (status, problem)
     status, _, session = request("/api/v1/auth/login", method="POST", body={
         "email": email, "password": "Secreta-journey-1"})
     assert status == 200 and session["tokenType"] == "Bearer", (status, session)
@@ -139,13 +138,13 @@ def main():
     assert status == 200 and profile["lastNames"] == "Journey Doe", (status, profile)
     status, _, created = request("/api/v1/me/addresses", customer, method="POST", body={
         "alias": "Casa", "recipient": "Cliente Journey", "line1": "Calle 1", "line2": None,
-        "city": "Quito", "province": "Pichincha", "countryCode": "EC",
+        "provinceId": "17", "cityId": "893", "countryCode": "EC",
         "postalCode": "170101", "reference": None, "phone": "+59325550134", "makePrimary": True})
     assert status == 201, (status, created)
     casa = created["addressId"]
     status, _, created = request("/api/v1/me/addresses", customer, method="POST", body={
         "alias": "Oficina", "recipient": "Cliente Journey", "line1": "Calle 2", "line2": None,
-        "city": "Quito", "province": "Pichincha", "countryCode": "EC",
+        "provinceId": "17", "cityId": "893", "countryCode": "EC",
         "postalCode": None, "reference": None, "phone": "+59325550134", "makePrimary": False})
     assert status == 201, (status, created)
     oficina = created["addressId"]
@@ -153,7 +152,7 @@ def main():
     assert status == 200 and len(listed) == 2, (status, listed)
     assert [a["alias"] for a in listed if a["primary"]] == ["Casa"]
     status, headers, problem = request("/api/v1/me/addresses", customer, method="POST", body={
-        "alias": "X", "recipient": "X", "line1": "X", "city": "X", "province": "X",
+        "alias": "X", "recipient": "X", "line1": "X", "provinceId": "17", "cityId": "893",
         "countryCode": "EC", "phone": "+59325550134", "makePrimary": False, "actorUserId": 1})
     assert status == 400, (status, problem)
     assert_spanish_problem(status, headers, problem, "MALFORMED_JSON")
@@ -165,7 +164,7 @@ def main():
     assert status == 204, (status, none)
     status, _, none = request(f"/api/v1/me/addresses/{casa}", customer, method="PUT", body={
         "alias": "Casa", "recipient": "Cliente Journey", "line1": "Calle 1 norte", "line2": None,
-        "city": "Quito", "province": "Pichincha", "countryCode": "EC",
+        "provinceId": "17", "cityId": "893", "countryCode": "EC",
         "postalCode": "170101", "reference": None, "phone": "+59325550134"})
     assert status == 204 and none is None, (status, none)
     status, _, listed = request("/api/v1/me/addresses", customer)

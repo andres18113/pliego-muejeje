@@ -1,0 +1,2 @@
+Vitest:103 files passed;1257 tests passed.
+TypeScript typecheck and Vite production build passed.

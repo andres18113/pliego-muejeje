@@ -9,6 +9,8 @@ import { acquiredDateLabel, editionFacts, mediaSymbol, titlesCountLabel } from "
 import { useOwnedItem, useOwnedItems } from "./libraryQuery";
 import { libraryFilters, libraryRoutes, type OwnedItemViewModel } from "./libraryViewModel";
 import classes from "./library.module.css";
+import { ParentLink } from "@/shared/ui/ParentLink";
+import { orderReference } from "@/features/purchase/purchaseText";
 
 /** Ownership verification only. Reader/player/content capabilities are explicitly outside scope. */
 export function LibraryPage() {
@@ -103,7 +105,7 @@ function OwnedItemDetail({ ownedItemId }: { ownedItemId: string }) {
   const query = useOwnedItem(ownedItemId);
   const state = query.viewState;
   return <div className={`account-page ${classes.page}`} data-storefront-surface>
-    <Link to={libraryRoutes.list} className={classes.back}><MaterialSymbol name="arrow_back" /><span>Volver a Mi biblioteca</span></Link>
+    <ParentLink to={libraryRoutes.list}>Volver a Mi biblioteca</ParentLink>
 
     {state.status === "loading" && <>
       <p className="visually-hidden" role="status">Cargando adquisición…</p>
@@ -111,10 +113,12 @@ function OwnedItemDetail({ ownedItemId }: { ownedItemId: string }) {
     </>}
 
     {state.status === "error" && <section className={classes.notice} role="alert">
-      <h1>{state.httpStatus === 404 ? "Adquisición no disponible" : state.title}</h1>
-      <p>{state.detail}</p>
+      {/* Mi biblioteca holds only what the customer owns now (ADR 0055): a title whose order was cancelled answers
+          like an unknown one. The order, its refund and the title's history stay in Mis pedidos. */}
+      <h1>{state.httpStatus === 404 ? "Este título no está en tu biblioteca" : state.title}</h1>
+      <p>{state.httpStatus === 404 ? "Si cancelaste su pedido, el título salió de Mi biblioteca. El pedido y su reembolso siguen en Mis pedidos." : state.detail}</p>
       {state.httpStatus === 404
-        ? <ButtonLink variant="secondary" to={libraryRoutes.list}>Ir a Mi biblioteca</ButtonLink>
+        ? <div className={classes.noticeActions}><ButtonLink variant="secondary" to={libraryRoutes.list}>Ir a Mi biblioteca</ButtonLink><Link className={classes.noticeLink} to="/orders">Ver mis pedidos</Link></div>
         : <Button variant="secondary" type="button" onClick={() => void query.refetch()}>Reintentar</Button>}
     </section>}
 
@@ -125,6 +129,9 @@ function OwnedItemDetail({ ownedItemId }: { ownedItemId: string }) {
 function OwnedItemArticle({ item }: { item: OwnedItemViewModel }) {
   const owned = item.ownershipState === "OWNED";
   const facts = editionFacts(item);
+  // The server's actions, each where it belongs: help beside the title, the order inside its own purchase record.
+  const help = item.availableActions.find(action => action.type === "HELP");
+  const orderLink = (orderId: string) => item.availableActions.find(action => action.type === "VIEW_ORDER" && action.href === `/orders/${orderId}`);
   return <article className={classes.detail} data-ownership={item.ownershipState}>
     <div className={classes.scene}>
       <div className={classes.jacket}><BookCover url={item.coverUrl} license={null} attribution={null} title={item.title} size="detail" loading="eager" /></div>
@@ -133,12 +140,11 @@ function OwnedItemArticle({ item }: { item: OwnedItemViewModel }) {
         <h1 className={classes.title} data-long={item.title.length > 60 || undefined}>{item.title}</h1>
         {item.authors && <p className={classes.authors}>{item.authors}</p>}
         <div className={classes.ownership}>
-          <p className={classes.ownershipState}><MaterialSymbol name={owned ? "check_circle" : "block"} fill={owned} size={22} /><span>{item.ownershipLabel}</span></p>
-          <p>Adquirido el <time dateTime={item.acquiredAt}>{acquiredDateLabel(item.acquiredAt)}</time></p>
+          {/* The title is the subject: owned, and what it is for — reading or listening — in the reader's words. */}
+          <p className={classes.ownershipState}><MaterialSymbol name={owned ? "check_circle" : "block"} fill={owned} size={22} /><span>{owned ? (item.productType === "EBOOK" ? "Tuyo para leer" : "Tuyo para escuchar") : item.ownershipLabel}</span></p>
+          <p>{owned ? "En tu biblioteca desde el" : "Adquirido el"} <time dateTime={item.acquiredAt}>{acquiredDateLabel(item.acquiredAt)}</time></p>
         </div>
-        {item.availableActions.length > 0 && <nav className={classes.actions} aria-label="Acciones de la adquisición">
-          {item.availableActions.map((action, index) => <Link key={`${action.type}-${index}`} to={action.href} className={classes.action} data-action={action.type}>{action.label}</Link>)}
-        </nav>}
+        {help && <Link className={classes.helpLink} to={help.href}><MaterialSymbol name="help" size={20} aria-hidden="true" /><span>{help.label}</span></Link>}
       </div>
     </div>
 
@@ -150,13 +156,14 @@ function OwnedItemArticle({ item }: { item: OwnedItemViewModel }) {
       <section className={classes.purchases} aria-labelledby="library-purchases-heading">
         <h2 id="library-purchases-heading">Información de compra</h2>
         <ul>{item.sourcePurchases.map(source => <li key={source.orderItemId} className={classes.purchase} data-grant={source.grantState}>
-          <p className={classes.purchaseOrder}>Pedido N.° {source.orderId}</p>
+          <p className={classes.purchaseOrder}>Pedido {orderReference(source)}</p>
           <p className={classes.purchaseDate}><time dateTime={source.acquiredAt}>{acquiredDateLabel(source.acquiredAt)}</time></p>
           <dl>
             <div><dt>Pedido</dt><dd>{source.orderStateLabel}</dd></div>
             <div><dt>Pago</dt><dd>{source.paymentStateLabel}</dd></div>
             <div><dt>Titularidad</dt><dd>{source.grantStateLabel}</dd></div>
           </dl>
+          {orderLink(source.orderId) && <Link className={classes.purchaseLink} to={orderLink(source.orderId)!.href} aria-label={`${orderLink(source.orderId)!.label} ${orderReference(source)}`}>{orderLink(source.orderId)!.label}<MaterialSymbol name="chevron_right" size={20} aria-hidden="true" /></Link>}
         </li>)}</ul>
       </section>
     </div>

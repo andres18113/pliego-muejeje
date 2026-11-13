@@ -66,6 +66,55 @@ class CustomerOrderApiIntegrationTest {
     @BeforeEach void reset() { gateway.reset(); }
 
     @Test
+    void customerListAndDetailExposeTheSamePublicReference() throws Exception {
+        var detail = gateway.detail;
+        gateway.detail = new Detail(detail.orderId(), detail.orderState(), detail.subtotal(), detail.total(),
+                detail.createdAt(), detail.updatedAt(), detail.items(), detail.address(), detail.payment(),
+                detail.stateHistory(), detail.postPurchase(), "PL-0123-4567");
+        gateway.page = new Page(List.of(new Summary("700", detail.createdAt(), detail.orderState(), detail.total(),
+                "APPROVED", summaryExtras("CONFIRMED"), "PL-0123-4567")), 1);
+        mvc.perform(get("/api/v1/orders").header("Authorization", token("42", "CUSTOMER")))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.items[0].orderReference").value("PL-0123-4567"));
+        mvc.perform(get("/api/v1/orders/700").header("Authorization", token("42", "CUSTOMER")))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.orderReference").value("PL-0123-4567"));
+    }
+
+    @Test
+    void digitalAccessContractIsSourceSpecificAndPhysicalLinesRemainNull() throws Exception {
+        mvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderItem.properties.digitalAccess.type[0]").value("object"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderItem.properties.digitalAccess.type[1]").value("null"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderItem.properties.digitalAccess.properties.state.enum[1]").value("AVAILABLE"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderItem.properties.digitalAccess.properties.state.enum[0]").value("PENDING_PAYMENT"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderItem.properties.digitalAccess.properties.ownedItemId").exists());
+        String body = mvc.perform(get("/api/v1/orders/700").header("Authorization", token("42", "CUSTOMER")))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        assertTrue(body.contains("\"digitalAccess\":null"));
+    }
+
+    @Test
+    void digitalLineReturnsOnlyItsProjectedLibraryIdentityForEveryAccessState() throws Exception {
+        var detail = gateway.detail;
+        for (String state : List.of("PENDING_PAYMENT", "AVAILABLE", "REVOKED", "UNAVAILABLE")) {
+            var digital = new Item("801", "251", "DIGITAL-SKU", null, "Digital", "Autora", "Editorial",
+                    "EBOOK", "es", BigDecimal.TEN, 1, BigDecimal.TEN, false, null, null, null, null, false,
+                    new com.pliego.modules.sales.application.OrderModels.DigitalAccess(state,
+                            "AVAILABLE".equals(state) ? "9007199254740993" : null));
+            gateway.detail = new Detail(detail.orderId(), detail.orderState(), detail.subtotal(), detail.total(),
+                    detail.createdAt(), detail.updatedAt(), List.of(detail.items().getFirst(), digital),
+                    detail.address(), detail.payment(), detail.stateHistory(), detail.postPurchase());
+            mvc.perform(get("/api/v1/orders/700").header("Authorization", token("42", "CUSTOMER")))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.items[0].digitalAccess").value(org.hamcrest.Matchers.nullValue()))
+                    .andExpect(jsonPath("$.items[1].requiresPhysicalFulfillment").value(false))
+                    .andExpect(jsonPath("$.items[1].digitalAccess.state").value(state))
+                    .andExpect(jsonPath("$.items[1].digitalAccess.ownedItemId").value(
+                            "AVAILABLE".equals(state) ? org.hamcrest.Matchers.is("9007199254740993") : org.hamcrest.Matchers.nullValue()));
+        }
+    }
+
+    @Test
     void onlyCustomerMayUseEachEndpoint() throws Exception {
         for (var request : List.of(get("/api/v1/orders"), get("/api/v1/orders/700"),
                 post("/api/v1/orders/700/cancel"))) {

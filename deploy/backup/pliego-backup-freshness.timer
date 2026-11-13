@@ -1,0 +1,7 @@
+[Unit]
+Description=Check PLIEGO backup freshness hourly
+[Timer]
+OnCalendar=hourly
+Persistent=yes
+[Install]
+WantedBy=timers.target

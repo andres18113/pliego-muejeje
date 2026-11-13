@@ -20,4 +20,8 @@ public class JdbcMailOutboxGateway extends JdbcGatewaySupport implements MailOut
    s.setLong(1,mail.id());s.setObject(2,mail.owner());s.setString(3,outcome);s.setString(4,error);s.setString(5,providerMessageId);
   },rs->rs.next() && rs.getBoolean(1)));
  }
+ public boolean prepareSend(OutboxMail mail) {
+  return withDatabaseErrorTranslation(()->Boolean.TRUE.equals(jdbc.queryForObject(
+   "SELECT pliego.fn_mail_outbox_prepare_send(?,?)",Boolean.class,mail.id(),mail.owner())));
+ }
 }

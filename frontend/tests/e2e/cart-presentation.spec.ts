@@ -31,6 +31,10 @@ async function install(page: Page) {
     return { cartId: "40", requiresPhysicalFulfillment: true, physicalItemCount: items.length, digitalItemCount: 0, state: "ACTIVE", items,
       totalCurrent: "146.42", originalSubtotal: "178.40", savingsTotal: "31.97", currentSubtotal: "146.42", subtotal: "146.42", taxRate: "15.00", taxAmount: "21.96", shippingAmount: "0.00", total: "168.38" };
   };
+  const saved = () => {
+    const { cartItemId: _cartItemId, ...savedLine } = line(2, { editionId: "77", title: "Pedro Páramo", authors: "Juan Rulfo", currentPrice: "12.00", currentSubtotal: "12.00" });
+    return state.restored ? { items: [], totalCount: 0 } : { items: [{ ...savedLine, savedItemId: "501" }], totalCount: 1 };
+  };
   await page.addInitScript(() => localStorage.setItem("mantine-color-scheme-value", "light"));
   await page.route("**/api/v1/**", async (route) => {
     const request = route.request();
@@ -39,6 +43,9 @@ async function install(page: Page) {
     if (path === "/api/v1/auth/refresh") return route.fulfill({ json: { accessToken: "cart-token", tokenType: "Bearer", expiresInSeconds: 1800, user: { userId: "100", email: "ana@example.com", role: "CUSTOMER" } } });
     if (path === "/api/v1/me") return route.fulfill({ json: { customerId: "100", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" } });
     if (path === "/api/v1/cart") return route.fulfill({ json: cart() });
+    // Guardado para después (ADR 0045): its own list, answered with both lists after a move.
+    if (path === "/api/v1/cart/saved") return route.fulfill({ json: saved() });
+    if (path === "/api/v1/cart/saved/501/move-to-cart" && method === "POST") { state.posts++; state.restored = true; return route.fulfill({ json: { cart: cart(), saved: saved() } }); }
     if (path === "/api/v1/cart/items" && method === "POST") { state.posts++; state.restored = true; return route.fulfill({ status: 201, json: { cartId: "40", cartItemId: "177", quantity: 1 } }); }
     if (path === "/api/v1/cart/items/100" && method === "PUT") { const quantity = (request.postDataJSON() as { quantity: number }).quantity; state.quantityPuts.push(quantity); return route.fulfill({ json: { cartId: "40", cartItemId: "100", quantity } }); }
     if (path === "/api/v1/me/favorites/status") return route.fulfill({ json: [{ editionId: "77", favorite: true }] });
@@ -143,7 +150,7 @@ async function expectApprovedCart(page: Page, width: number) {
   // Guardado para después: its books are white cards too.
   const saved = page.locator("[data-cart-saved]");
   await expect(saved.getByRole("heading", { name: "Guardado para después" })).toBeVisible();
-  const savedCard = saved.locator("[data-favorite-row]");
+  const savedCard = saved.locator("[data-saved-item]");
   await expect(savedCard).toHaveCount(1);
   expect(isPaperWhite(await style(savedCard, "background-color")), "saved book is a card").toBe(true);
   expect(parseFloat(await style(savedCard, "border-top-left-radius"))).toBeGreaterThanOrEqual(12);
@@ -171,7 +178,7 @@ test("the approved Cart holds at 200% text", async ({ page }) => {
   await page.addStyleTag({ content: "html { font-size: 200% !important; }" });
   const summary = page.getByRole("complementary", { name: "Resumen del pedido" });
   for (const card of [page.locator("[data-cart-line]").first(), summary]) expect(await style(card, "background-color")).toBe(WHITE);
-  expect(isPaperWhite(await style(page.locator("[data-cart-saved] [data-favorite-row]"), "background-color"))).toBe(true);
+  expect(isPaperWhite(await style(page.locator("[data-cart-saved] [data-saved-item]"), "background-color"))).toBe(true);
   expect(await style(summary.getByRole("link", { name: "Continuar con la compra" }), "background-color")).toBe(ULTRAMAR);
   await expect(summary.getByRole("link", { name: "Continuar con la compra" })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
@@ -220,7 +227,7 @@ test("Cart controls work and hover or press without lavender or legacy green", a
   await expect.poll(() => state.quantityPuts).toEqual([3]);
 
   // Restore: the saved book returns to the cart as a normal white line.
-  await page.locator("[data-cart-saved] [data-favorite-row]").getByRole("button", { name: /carrito/i }).click();
+  await page.locator("[data-cart-saved] [data-saved-item]").getByRole("button", { name: "Mover Pedro Páramo al carrito" }).click();
   await expect.poll(() => state.posts).toBe(1);
   await expect(page.locator("[data-cart-line]")).toHaveCount(3);
   expect(await style(page.locator("[data-cart-line]").nth(2), "background-color")).toBe(WHITE);

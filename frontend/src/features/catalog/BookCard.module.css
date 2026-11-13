@@ -38,23 +38,13 @@
 /* Facts: price in display type (as in the Home scenes) with its stock directly beneath. */
 .commercial { display: var(--bookcard-layout, flex); flex-direction: column; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; min-width: 0; padding-top: 14px; }
 .price { min-width: 0; margin: 0; overflow-wrap: anywhere; color: var(--card-ink); font: 650 1.375rem/1.2 var(--store-display); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
-/* An offer reads in buying order: today's price with the previous one struck beside it, the saving in
-   ultramar, the offer's own message, then how long it lasts. Only an offer about to end takes the yellow. */
+/* An offer reads as it does on Ofertas: today's price with the previous one struck beside it, then the shared
+   pale-green saving (`OfferChips`). The pale-red days left (only when the server's `daysRemaining` is five or
+   fewer) sits on the stage of a shelf card (see below); a card without a stage keeps it beside the saving. */
 .pricing { min-width: 0; }
 .priceLine { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; min-width: 0; }
 .was { margin: 0; color: var(--pliego-text-muted); font-size: .9375rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
-.saving { margin: 2px 0 0; color: var(--card-brand); font-size: .875rem; font-weight: 600; line-height: 1.35; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
-.offer { display: grid; justify-items: start; gap: 4px; min-width: 0; margin: 10px 0 6px; font-size: .8125rem; line-height: 1.4; }
-.offer p { margin: 0; overflow-wrap: anywhere; }
-.offerCopy { display: -webkit-box; overflow: hidden; color: var(--card-ink); font-size: .875rem; font-weight: 500; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; }
-.offerTime { display: inline-flex; align-items: center; gap: 5px; color: var(--pliego-text-muted); }
-.offerTime[data-ending-soon] { margin: 2px 0 2px -2px; padding: 3px 10px 3px 7px; border-radius: 999px; background: var(--card-saved); color: var(--store-ink, #252740); font-weight: 600; }
-.offerEnds { color: var(--pliego-text-muted); font-variant-numeric: tabular-nums; }
-.terms { min-width: 0; }
-.terms summary { display: inline-flex; align-items: center; min-height: 32px; color: var(--card-ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; list-style: none; }
-.terms summary::-webkit-details-marker { display: none; }
-.terms summary:focus-visible { outline: 2px solid var(--card-brand); outline-offset: 2px; border-radius: 4px; }
-.terms p { padding: 2px 0 4px; color: var(--pliego-text-muted); }
+.offerChips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; margin: 6px 0 2px; }
 .edition.edition { margin-top: 4px; color: var(--pliego-text-muted); font-size: .8125rem; line-height: 1.4; overflow-wrap: anywhere; }
 .availability { min-width: 0; margin: 3px 0 14px; font-size: .8125rem; line-height: 1.4; }
 .availability { --stock-mark-color: var(--card-brand); }
@@ -123,8 +113,13 @@
 .card[data-media][data-unavailable] .shelf :global(.book-cover) { opacity: .72; }
 .card[data-media] .identity { padding-top: 14px; }
 .card[data-media] .bookTitle { font-size: 1.1875rem; line-height: 1.2; }
-.card[data-media] .commercial { padding-top: 10px; }
-.card[data-media] .availability { margin: 2px 0 0; }
+/* Prices still start on one line across a shelf row (the block keeps its subgrid tracks), but inside it the stock
+   follows whatever the price says: directly under the price line, or under the saving when there is an offer.
+   A shared stock track would open an empty band under every regular price beside an offer; the difference falls
+   below the stock instead, where a fieldless browse card shows nothing. */
+.card[data-media] .commercial { display: flex; flex-direction: column; padding-top: 10px; }
+.card[data-media] .offerChips { margin: 6px 0 0; }
+.card[data-media] .availability { margin: 4px 0 0; }
 
 /* Favorite: a quiet paper disc in the stage's top-right corner — a sibling of the product link, never
    inside it — that takes the yellow "this one" fill with an ultramar heart when saved. */
@@ -135,6 +130,17 @@
 @media (hover: hover) { .card[data-media] .favorite.favorite:hover:not(:disabled):not([aria-pressed="true"]) { background: #fff; color: var(--card-brand); } }
 .card[data-media] .favorite.favorite:focus-visible { outline: 3px solid var(--card-brand); outline-offset: 2px; }
 @media (max-width: 599px) { .card[data-media] { --card-pad: 0px; border-radius: 0; } .card[data-media] .bookTitle { font-size: 1.0625rem; } }
+
+/* Urgency on the stage, as on Ofertas: the shared pale-red chip at the top-left, centred on the favorite's line so
+   the two corners read as one band, while the saving stays with the price. Only an urgent card changes its stage:
+   the chip takes a row of its own (as tall as the favorite, taller only if its words must wrap beside it) and the
+   jacket is sized from the room left below, over a 6% floor — the Ofertas sizing rule — so they never touch. */
+.card[data-urgent] .shelf { display: flex; flex-direction: column; align-items: stretch; }
+.urgencyRow { display: flex; align-items: center; align-self: flex-start; flex: none; min-height: 2.75rem; max-width: calc(100% - 68px); margin: 8px 0 0 8px; }
+.urgencyRow > p { white-space: normal; overflow-wrap: anywhere; text-wrap: balance; }
+.urgentCover { flex: 1 1 0; min-height: 0; display: grid; place-items: center; padding: 2px 0 5%; container-type: size; }
+.card[data-urgent] .shelf :global(.book-cover) { width: min(56cqi, calc(100cqh * 2 / 3)); }
+@media (max-width: 599px) { .urgencyRow { max-width: calc(100% - 62px); margin-left: 6px; } .urgencyRow > p { padding: 2px 5px; font-size: .75rem; } }
 
 .loadingShelf { aspect-ratio: 2 / 3; width: 72%; justify-self: center; align-self: end; border-radius: 4px; }
 .loadingActions.loadingActions { height: 44px; }

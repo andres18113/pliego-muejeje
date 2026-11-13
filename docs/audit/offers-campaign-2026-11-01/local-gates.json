@@ -1,0 +1,28 @@
+{
+  "scope": "LOCAL_DISPOSABLE_FIXTURE_ONLY",
+  "counts": {
+    "PHYSICAL": 7,
+    "EBOOK": 7,
+    "AUDIOBOOK": 7
+  },
+  "endingSoonCount": 6,
+  "previousExpiredOffersRecreated": 23,
+  "oldOffersPreserved": true,
+  "cartPricesVerified": 21,
+  "cartEmpty": true,
+  "noOrdersCreated": true,
+  "catalogueAndInventoryUnchanged": true,
+  "expiryRollbackVerified": 21,
+  "anonymousWriteStatus": 401,
+  "customerWriteStatus": 403,
+  "rerunRefused": true,
+  "dryRunCatalogueUnchanged": true,
+  "publicFilterSortCombinations": 12,
+  "conditionalPartialHeaderCases": 6,
+  "conditionalRaceStatuses": [
+    204,
+    400
+  ],
+  "failedPreconditionsCode": "P1001",
+  "sourceDate": "2026-11-02T01:48:22.278235+00:00"
+}

@@ -25,7 +25,9 @@ public final class EmailActionTokens {
   return new Credential(nonce,hash(derive(purpose,nonce)));
  }
  public String derive(String purpose,String nonce) {
-  if(!("VERIFY_EMAIL".equals(purpose)||"RESET_PASSWORD".equals(purpose)) || nonce==null || !nonce.matches("[A-Za-z0-9_-]{43}"))
+  if(!("VERIFY_EMAIL".equals(purpose)||"RESET_PASSWORD".equals(purpose)
+    ||"EMAIL_CHANGE_CONFIRM".equals(purpose)||"EMAIL_CHANGE_CANCEL".equals(purpose))
+    || nonce==null || !nonce.matches("[A-Za-z0-9_-]{43}"))
    throw new IllegalArgumentException("Acción de correo inválida.");
   try {
    Mac mac=Mac.getInstance("HmacSHA256"); mac.init(new SecretKeySpec(secret,"HmacSHA256"));

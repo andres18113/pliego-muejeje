@@ -107,7 +107,7 @@ def main():
             password = 'Mail-fixture-2026'
             status, _, registered = request(base, '/api/v1/auth/register', {'email': email, 'password': password, 'firstNames': 'Ana', 'lastNames': 'Pérez'})
             assert status == 201 and registered['state'] == 'PENDING_VERIFICATION'
-            uid = int(registered['userId'])
+            uid = int(query(f"SELECT usuario_id FROM pliego.usuario WHERE email_normalizado='{email}'"))
             assert query(f"SELECT count(*) FROM pliego.correo_outbox WHERE usuario_id={uid} AND tipo='VERIFY_EMAIL'") == '1'
             wait_for(lambda: any(p['category'] == 'VERIFY_EMAIL' and p['to'][0]['email'] == email for _, p, _ in MailtrapStub.deliveries))
             assert query(f"SELECT estado||':'||intentos||':'||ultimo_error FROM pliego.correo_outbox WHERE usuario_id={uid}") == 'PENDING:1:MAILTRAP_HTTP_503'
@@ -191,7 +191,10 @@ def main():
                          if status == 200 and p.get('custom_variables', {}).get('pliego_outbox_id') == prep_id]
             assert len(prep_mail) == 1
             assert prep_mail[0][0]['category'] == 'ORDER_STATUS'
-            assert prep_mail[0][0]['subject'] == f'Pedido N.º {oid}: en preparación'
+            # Customers see the public reference (V088), never the internal order id.
+            reference = query(f"SELECT referencia_publica FROM pliego.pedido WHERE pedido_id={oid}")
+            assert reference and reference.startswith('PL-')
+            assert prep_mail[0][0]['subject'] == f'Pedido #{reference}: en preparación'
             assert 'Estamos preparando tu pedido' in prep_mail[0][0]['text']
             assert query(f"SELECT id_mensaje_proveedor FROM pliego.correo_outbox WHERE correo_id={prep_id}") == prep_mail[0][1]
             assert 'Cantidad: 1' in accepted_payload['text'] and 'Total pagado: $ 7,25' in accepted_payload['text']
@@ -210,11 +213,13 @@ def main():
             assert status == 201 and pickup_order['total'] == '7.25'
             pickup_id = pickup_order['orderId']
             wait_for(lambda: query(f"SELECT estado FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:{pickup_id}'") == 'SENT')
-            mails = [p for status, p, _ in MailtrapStub.deliveries if status == 200 and p['subject'] == f'Tu pedido N.º {pickup_id} está confirmado']
+            pickup_reference = query(f"SELECT referencia_publica FROM pliego.pedido WHERE pedido_id={pickup_id}")
+            mails = [p for status, p, _ in MailtrapStub.deliveries if status == 200 and p['subject'] == f'Tu pedido #{pickup_reference} está confirmado']
             assert len(mails) == 1
             assert location['name'] in mails[0]['text'] and location['address'] in mails[0]['text']
             assert pickup_order['fulfillment']['pickup']['pickupCode'] in mails[0]['text']
-            assert 'Presenta esta confirmación' in mails[0]['text'] and 'IVA (0 %): $ 0,00' in mails[0]['text']
+            # The counter checks the code and the customer's identity document (verified pickup, V089).
+            assert 'Al retirar, muestra tu código de retiro y tu documento de identidad.' in mails[0]['text'] and 'IVA (0 %): $ 0,00' in mails[0]['text']
             print('Transactional email HTTP gate passed: verification/reset/BCrypt/session revocation/concurrent single-use/checkout isolation/outbox retry/provider stub/server restart catch-up/lifecycle status snapshot')
         finally:
             backend.terminate()

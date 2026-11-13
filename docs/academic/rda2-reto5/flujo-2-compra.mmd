@@ -1,0 +1,24 @@
+flowchart TD
+    PAN([Panel lateral Tu carrito]) -->|Ver carrito| CAR[Carrito<br/>cantidad, quitar,<br/>guardar para después]
+    PAN -->|Continuar con la compra| CHK
+    CAR -->|Continuar con la compra| CHK[Finalizar compra]
+    CHK --> F{¿Incluye libros<br/>impresos?}
+    F -->|Sí, entrega| DIR[Elegir o añadir<br/>dirección]
+    F -->|Sí, retiro| PUN[Elegir punto<br/>de retiro]
+    F -->|No, solo digital| FAC
+    DIR --> FAC[Datos de factura<br/>cédula o RUC]
+    PUN --> FAC
+    FAC --> P{Pago simulado}
+    P -->|Tarjeta| TAR[Ventana modal<br/>de tarjeta]
+    P -->|Transferencia| TRA[Datos de<br/>transferencia]
+    TAR --> HP[Hacer pedido]
+    TRA --> HP
+    HP -->|Faltan datos| CHK
+    HP -->|Pedido creado| CON[Confirmación]
+    CON --> DPE[Detalle del pedido]
+    CON -->|Compras digitales| BIB[Mi biblioteca]
+    DPE -->|Dentro del plazo| CAN[Cancelar pedido]
+    DPE --> FCT[Factura]
+    MC([Menú de cuenta]) --> PER[Perfil y direcciones]
+    MC --> PEDS[Mis pedidos] --> DPE
+    MC --> BIB

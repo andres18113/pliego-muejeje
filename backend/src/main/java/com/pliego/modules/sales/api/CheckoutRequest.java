@@ -32,7 +32,11 @@ public record CheckoutRequest(
         @jakarta.validation.constraints.NotBlank(message = "Escribe el nombre para la factura.")
         @jakarta.validation.constraints.Size(max = 240, message = "El nombre del comprador no puede superar 240 caracteres.") String buyerName,
         @NotNull(message = "Completa la dirección de facturación.")
-        @jakarta.validation.Valid PostPurchaseRequests.BillingAddress billingAddress) {
+        @jakarta.validation.Valid PostPurchaseRequests.BillingAddress billingAddress,
+        @Pattern(regexp = "ACCOUNT|OTHER", message = "El destinatario de la factura no es válido.")
+        @Schema(defaultValue = "ACCOUNT", allowableValues = {"ACCOUNT", "OTHER"},
+                description = "ACCOUNT factura a la cuenta; OTHER guarda estos datos solo en la factura.")
+        String billingRecipient) {
 
     @com.pliego.foundation.validation.ValidEcuadorianIdentification
     public record BillingIdentity(
@@ -46,11 +50,12 @@ public record CheckoutRequest(
     public CheckoutRequest(String addressId, String paymentMethod, String simulationOutcome, String cardNumber,
             String expectedCartId, String fulfillmentMethod, String pickupLocationId, String expectedQuoteFingerprint) {
         this(addressId, paymentMethod, simulationOutcome, cardNumber, expectedCartId, fulfillmentMethod,
-                pickupLocationId, expectedQuoteFingerprint, null, null, null);
+                pickupLocationId, expectedQuoteFingerprint, null, null, null, null);
     }
 
     public CheckoutRequest {
         fulfillmentMethod = fulfillmentMethod == null ? "HOME_DELIVERY" : fulfillmentMethod;
+        billingRecipient = billingRecipient == null ? "ACCOUNT" : billingRecipient;
     }
 
     @AssertTrue(message = "Selecciona los datos de entrega física o compra digital sin dirección ni retiro.")

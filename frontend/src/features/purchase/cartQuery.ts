@@ -56,3 +56,11 @@ export function cartQuantityChoices(line: CartLine) {
   if (!choices.includes(line.quantity)) choices.push(line.quantity);
   return choices;
 }
+
+/**
+ * A digital line the server keeps at one (`quantityEditable` false): one licence per account, so the cart says so
+ * instead of showing a count that cannot change. A malformed digital quantity stays editable to be repaired to one.
+ */
+export function isSingleDigitalCopy(line: Pick<CartLine, "requiresPhysicalFulfillment" | "quantityEditable" | "quantity">) {
+  return !line.requiresPhysicalFulfillment && !line.quantityEditable && line.quantity === 1;
+}

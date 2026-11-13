@@ -10,7 +10,7 @@
 
 .row {
   display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "identity commerce" "identity actions" "feedback feedback";
-  align-items: start; gap: 10px 18px; width: 100%; min-width: 0; padding: 14px 16px 14px 14px; border-radius: 18px; background: var(--acc-sheet);
+  align-items: start; gap: 10px 18px; width: 100%; min-width: 0; padding: 14px 16px 14px 14px; border-radius: var(--acc-card-radius); background: var(--acc-card);
   transition: opacity 200ms var(--acc-ease);
 }
 .row[data-removed] .identityLink, .row[data-removed] .commerce { opacity: .55; }
@@ -54,9 +54,12 @@
 
 .pagination { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
-.empty { justify-items: start; gap: 12px; padding: clamp(28px, 4vw, 48px); }
-.empty h2 { margin: 0; color: var(--acc-blue); font: 650 clamp(1.5rem, 1.2rem + 1vw, 2rem)/1.1 var(--acc-display); letter-spacing: -.04em; }
-.empty p { max-width: 52ch; margin: 0; color: var(--acc-ink); }
+/* An empty collection is a compact field on the page's centre axis, not the full-width list field: mark, heading,
+   one line of guidance and the action read as one group, with the action set slightly apart. */
+.collection.empty { justify-items: center; gap: 0; width: min(100%, 520px); margin-inline: auto; padding: clamp(28px, 4vw, 40px) clamp(20px, 4vw, 40px); text-align: center; }
+.empty h2 { margin: 16px 0 0; color: var(--acc-blue); font: 650 clamp(1.375rem, 1.2rem + .6vw, 1.625rem)/1.15 var(--acc-display); letter-spacing: -.035em; text-wrap: balance; }
+.empty p { max-width: 38ch; margin: 8px 0 0; color: var(--acc-muted); font-size: 1rem; line-height: 1.45; text-wrap: pretty; }
+.empty > :is(a, button) { margin-top: 24px; }
 .emptyMark { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--acc-paper); color: var(--acc-blue); }
 
 /* Narrow rows: the cover and identity lead; price, stock and actions follow under the text. */
@@ -75,9 +78,20 @@
 @media (forced-colors: active) {
   .row { border: 1px solid CanvasText; }
   .cart, .favorite { border: 1px solid ButtonText; }
+  .cart[data-in-cart] { border-color: LinkText; color: LinkText; }
   .favorite[aria-pressed="true"] { border: 2px solid Highlight; }
 }
 
 .cart[aria-disabled="true"]:not(:disabled) { cursor: progress; }
 
 .feedback .cartQuantity { color: var(--acc-ink); font-size: .9375rem; font-weight: 600; line-height: 1.4; }
+/* Already in the cart: the state reads once as a quiet line (the edition page's settled note), and the cart action
+   steps down from the solid ultramar fill to a faint ultramar wash that leads to the cart, chevron last. */
+.cart[data-in-cart] { gap: 2px; padding: 8px 8px 8px 14px; background: color-mix(in srgb, var(--acc-blue) 9%, transparent); color: var(--acc-blue); }
+.cart[data-in-cart]:hover { background: color-mix(in srgb, var(--acc-blue) 15%, transparent); }
+.feedback .inCart { display: inline-flex; align-items: center; gap: 6px; color: var(--acc-ink); font-size: .9375rem; font-weight: 600; line-height: 1.4; }
+.feedback .inCart > :global(.material-symbol) { flex: none; color: var(--acc-blue); }
+.feedback .cartQuantity { display: flex; flex-wrap: wrap; align-items: center; gap: 0 12px; }
+.feedback a.cartLink { display: inline-flex; align-items: center; gap: 2px; min-height: 44px; margin-block: -12px; color: var(--acc-blue); font-size: .875rem; font-weight: 600; text-decoration: none; }
+@media (hover: hover) { .feedback a.cartLink:hover { text-decoration: underline; text-underline-offset: 3px; } }
+.feedback a.cartLink:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }

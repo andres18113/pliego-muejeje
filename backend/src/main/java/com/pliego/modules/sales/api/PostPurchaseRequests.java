@@ -5,8 +5,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.DecimalMax;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /** Explicit administrative input; invoice amounts and purchased lines are server-owned. */
@@ -25,10 +27,38 @@ public final class PostPurchaseRequests {
     public record BillingAddress(
             @NotBlank(message="La dirección de cobro es obligatoria.") @Size(max=200,message="La dirección no puede superar 200 caracteres.") String line1,
             @Size(max=200,message="La dirección adicional no puede superar 200 caracteres.") String line2,
-            @NotBlank(message="La ciudad es obligatoria.") @Size(max=100,message="La ciudad no puede superar 100 caracteres.") String city,
-            @NotBlank(message="La provincia es obligatoria.") @Size(max=100,message="La provincia no puede superar 100 caracteres.") String province,
-            @NotBlank(message="El país es obligatorio.") @Pattern(regexp="[A-Za-z]{2}",message="El país debe tener un código de dos letras.") String countryCode,
-            @Size(max=20,message="El código postal no puede superar 20 caracteres.") String postalCode) { }
+            @Pattern(regexp="^[1-9][0-9]{0,18}$",message="La provincia seleccionada no es válida.")
+            @DecimalMax(value="9223372036854775807",message="La provincia seleccionada no es válida.")
+            @Schema(description="ID del catálogo geográfico. Envíalo junto con cityId, o usa city/province durante la transición.") String provinceId,
+            @Pattern(regexp="^[1-9][0-9]{0,18}$",message="La ciudad seleccionada no es válida.")
+            @DecimalMax(value="9223372036854775807",message="La ciudad seleccionada no es válida.")
+            @Schema(description="ID del catálogo geográfico. Envíalo junto con provinceId, o usa city/province durante la transición.") String cityId,
+            @NotBlank(message="El país es obligatorio.") @Pattern(regexp="^EC$",message="La dirección de cobro debe pertenecer a Ecuador.") String countryCode,
+            @Size(max=20,message="El código postal no puede superar 20 caracteres.") String postalCode,
+            @Size(max=120,message="La ciudad no puede superar 120 caracteres.")
+            @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)
+            @Schema(deprecated=true,nullable=true,description="Compatibilidad temporal para clientes anteriores; el nombre se resuelve contra el catálogo y nunca se guarda como texto libre.") String city,
+            @Size(max=120,message="La provincia no puede superar 120 caracteres.")
+            @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)
+            @Schema(deprecated=true,nullable=true,description="Compatibilidad temporal para clientes anteriores; el nombre se resuelve contra el catálogo y nunca se guarda como texto libre.") String province) {
+        public BillingAddress {
+            countryCode = countryCode == null ? null : countryCode.strip().toUpperCase(java.util.Locale.ROOT);
+        }
+
+        @AssertTrue(message="Envía provinceId y cityId juntos, o ciudad y provincia juntos.")
+        @com.fasterxml.jackson.annotation.JsonIgnore
+        @Schema(hidden=true)
+        public boolean isGeographicChoiceValid() {
+            boolean ids = hasText(provinceId) && hasText(cityId);
+            boolean names = hasText(city) && hasText(province);
+            boolean anyId = hasText(provinceId) || hasText(cityId);
+            boolean anyName = hasText(city) || hasText(province);
+            return (ids && !anyName) || (names && !anyId);
+        }
+
+        public boolean usesLegacyNames() { return hasText(city) && hasText(province); }
+        private static boolean hasText(String value) { return value != null && !value.isBlank(); }
+    }
     @Schema(name="IssueOrderInvoiceRequest")
     public record Invoice(
             @NotBlank(message="El número de documento es obligatorio.") @Size(max=80,message="El número no puede superar 80 caracteres.") String documentNumber,

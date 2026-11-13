@@ -27,6 +27,7 @@ def main():
     assert schemas['CustomerOrderDetail']['properties']['items']['items']['$ref'].endswith('/CustomerOrderItem')
     assert 'requiresPhysicalFulfillment' in schemas['CustomerOrderItem']['required']
     assert 'requiresPhysicalFulfillment' not in schemas['Item'].get('properties',{})
+    assert schemas['LibrarySourcePurchase']['properties']['orderReference']['type']=='string'
     suffix=uuid.uuid4().hex[:12]
     query(f"INSERT INTO pliego.usuario(email_normalizado,password_hash,rol,estado) VALUES('lib-admin-{suffix}@example.invalid','fixture','ADMIN','ACTIVE')")
     actor=int(query(f"SELECT usuario_id FROM pliego.usuario WHERE email_normalizado='lib-admin-{suffix}@example.invalid'"))
@@ -72,19 +73,25 @@ def main():
     assert owned['editionId']==editions['EBOOK'] and owned['ownershipState']=='OWNED' and owned['accessState']=='OWNERSHIP_ONLY'
     assert owned['contentAccessSupported'] is False and [a['type'] for a in owned['availableActions']]==['VIEW_ORDER','HELP']
     assert owned['sourcePurchases'][0]['orderId']==order['orderId'] and len(owned['sourcePurchases'])==1
+    assert owned['sourcePurchases'][0]['orderReference']==order['orderReference']
+    assert owned['sourcePurchases'][0]['orderReference']==query(
+        f"SELECT referencia_publica FROM pliego.pedido WHERE pedido_id={order['orderId']}")
     assert ok('/api/v1/me/library/'+owned['ownedItemId'],customer)==owned
     problem('/api/v1/me/library/'+owned['ownedItemId'],other,'GET',None,'P6001',404)
     assert ok('/api/v1/me/library',other)['items']==[]
     problem('/api/v1/me/library?productType=PHYSICAL',customer,'GET',None,'VALIDATION_ERROR')
     assert ok('/api/v1/me/library?page=100',customer)['totalCount']=='1'
-    # Cancel/refund revokes only this source and retains detail/history.
+    # Cancel/refund retains commercial history but removes customer library access.
     ok('/api/v1/orders/'+order['orderId']+'/cancel',customer,'POST',{},200)
-    revoked=ok('/api/v1/me/library/'+owned['ownedItemId'],customer)
-    assert revoked['ownershipState']=='REVOKED' and revoked['sourcePurchases'][0]['grantState']=='REVOKED'
+    problem('/api/v1/me/library/'+owned['ownedItemId'],customer,'GET',None,'P6001',404)
+    empty=ok('/api/v1/me/library',customer)
+    assert empty['items']==[] and empty['totalCount']=='0'
+    assert ok('/api/v1/me/library?page=100',customer)['totalCount']=='0'
+    assert ok('/api/v1/orders/'+order['orderId'],customer)['orderReference']==order['orderReference']
     ok('/api/v1/cart/items',customer,'POST',{'editionId':editions['EBOOK'],'quantity':1})
     status,rejected=checkout(customer,{'fulfillmentMethod':'DIGITAL_ONLY','paymentMethod':'TRANSFER','simulationOutcome':'REJECTED'},str(uuid.uuid4()))
     assert status==201 and rejected['paymentState']=='REJECTED'
-    assert ok('/api/v1/me/library/'+owned['ownedItemId'],customer)['ownershipState']=='REVOKED'
+    problem('/api/v1/me/library/'+owned['ownedItemId'],customer,'GET',None,'P6001',404)
     # Rejected checkout leaves the cart active; add audiobook+physical and purchase one mixed order.
     ok('/api/v1/cart/items',customer,'POST',{'editionId':editions['AUDIOBOOK'],'quantity':1})
     ok('/api/v1/cart/items',customer,'POST',{'editionId':editions['PAPERBACK'],'quantity':1})
@@ -93,7 +100,7 @@ def main():
     assert len(physical_cart)==1 and physical_cart[0]['editionId']==editions['PAPERBACK'] and physical_cart[0]['quantityEditable'] is True
     assert all(line['quantityEditable'] is False for line in cart['items'] if not line['requiresPhysicalFulfillment'])
     address=ok('/api/v1/me/addresses',customer,'POST',{'alias':'Casa','recipient':'Cliente Biblioteca','line1':'Calle Biblioteca',
-        'line2':None,'city':'Quito','province':'Pichincha','countryCode':'EC','postalCode':None,'reference':None,'phone':'+59325550134','makePrimary':True},201)['addressId']
+        'line2':None,'provinceId':'17','cityId':'893','countryCode':'EC','postalCode':None,'reference':None,'phone':'+59325550134','makePrimary':True},201)['addressId']
     status,mixed=checkout(customer,{'fulfillmentMethod':'HOME_DELIVERY','addressId':address,'paymentMethod':'TRANSFER','simulationOutcome':'APPROVED'},str(uuid.uuid4()))
     assert status==201,(status,mixed)
     mixed_detail=ok('/api/v1/orders/'+mixed['orderId'],customer)
@@ -102,7 +109,13 @@ def main():
     assert len(physical_snapshot)==1 and physical_snapshot[0]['editionId']==editions['PAPERBACK']
     assert query(f"SELECT count(*) FROM pliego.movimiento_inventario WHERE pedido_id={mixed['orderId']} AND tipo='SALE'")=='1'
     library=ok('/api/v1/me/library',customer); assert library['totalCount']=='2' and all(i['ownershipState']=='OWNED' for i in library['items'])
-    assert len(ok('/api/v1/me/library/'+owned['ownedItemId'],customer)['sourcePurchases'])==2
+    for item in library['items']:
+        assert ok('/api/v1/me/library/'+item['ownedItemId'],customer)==item
+        expected={mixed['orderId']:(mixed['orderReference'],'ACTIVE')}
+        if item['productType']=='EBOOK': expected[order['orderId']]=(order['orderReference'],'REVOKED')
+        assert {source['orderId']:(source['orderReference'],source['grantState'])
+                for source in item['sourcePurchases']}==expected
+        assert len(item['sourcePurchases'])==len(expected)
     audio=ok('/api/v1/me/library?productType=AUDIOBOOK',customer)['items'][0]
     assert audio['metadata']['audioDurationSeconds']==3600 and audio['metadata']['narrators']==['Voz Biblioteca']
     query(f"UPDATE pliego.edicion SET estado='INACTIVE' WHERE edicion_id={editions['AUDIOBOOK']}")
@@ -111,7 +124,8 @@ def main():
         path=os.environ['PLIEGO_LIBRARY_FIXTURE_PATH']; fd=os.open(path,os.O_CREAT|os.O_TRUNC|os.O_WRONLY,0o600)
         with os.fdopen(fd,'w') as output:
             json.dump({'email':email,'password':password,'ebookOwnedItemId':owned['ownedItemId'],'audioOwnedItemId':audio['ownedItemId'],
-                'ebookEditionId':editions['EBOOK'],'audioEditionId':editions['AUDIOBOOK'],'digitalOrderId':order['orderId'],'mixedOrderId':mixed['orderId']},output)
-    print('Library checkout HTTP passed: digital-only/mixed snapshots, authoritative cart requirements, retry/conflict, isolation, ownership metadata, rejected/refunded access and inactive edition.')
+                'ebookEditionId':editions['EBOOK'],'audioEditionId':editions['AUDIOBOOK'],'digitalOrderId':order['orderId'],'mixedOrderId':mixed['orderId'],
+                'mixedOrderReference':mixed['orderReference']},output)
+    print('Library checkout HTTP passed: digital-only/mixed snapshots, authoritative cart requirements, retry/conflict, isolation, ownership metadata, public order references in list/detail and revoked/repurchased sources, rejected/refunded access and inactive edition.')
 
 if __name__=='__main__': main()

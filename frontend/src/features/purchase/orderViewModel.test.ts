@@ -44,7 +44,7 @@ describe("Mis pedidos view model", () => {
 
   it("exposes only purchased summaries, exact amounts and the data presentation needs", () => {
     expect(toMisPedidosOrder(orderSummaryFixture(),orderDetailFixture())).toEqual({
-      orderId: "700", date: "2026-10-04T15:00:00Z", state: { source: "SHIPMENT", code: "PREPARING", label: "En preparación" },
+      orderId: "700", orderReference: null, date: "2026-10-04T15:00:00Z", state: { source: "SHIPMENT", code: "PREPARING", label: "En preparación" },
       items: [{ orderItemId: "1", title: "Cien años de soledad", format: "PAPERBACK", quantity: 2 }], units: 2,
       pricing: { subtotal: "37.00", tax: "5.55", shipping: "0.00", total: "42.55" }, fulfillmentType: "HOME_DELIVERY",
       availableActions: { cancel: true, changeShippingAddress: false },
@@ -57,7 +57,7 @@ describe("Mis pedidos view model", () => {
     expect(toMisPedidosOrder(orderSummaryFixture(),orderDetailFixture("IN_TRANSIT")).availableActions.cancel).toBe(true);
   });
 
-  it.each([["PENDING", "Pendiente de retiro"], ["COLLECTED", "Retirado"], ["CANCELLED", "Pedido cancelado"]])("keeps STORE_PICKUP %s separate", (code,label) => {
+  it.each([["PENDING", "En preparación"], ["READY", "Listo para retirar"], ["COLLECTED", "Retirado"], ["CANCELLED", "Pedido cancelado"]])("keeps STORE_PICKUP %s separate", (code,label) => {
     const detail = { ...pickupOrder, fulfillment: { ...pickupOrder.fulfillment, state: code },
       orderState: code === "COLLECTED" ? "DELIVERED" : code === "CANCELLED" ? "CANCELLED" : "CONFIRMED",
       purchaseState: code === "CANCELLED" ? "CANCELLED" : "CONFIRMED" };

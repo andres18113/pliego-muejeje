@@ -40,3 +40,11 @@ it("permits recovery by reducing an insufficient quantity, and only removal for 
   expect(resolveStockStatus({ available: false, unavailabilityReason: "P3002" })).toMatchObject({ canAddToCart: false, canChangeQuantity: true, canIncreaseQuantity: false });
   expect(resolveStockStatus({ available: false, unavailabilityReason: "P2042" })).toMatchObject({ canAddToCart: false, canChangeQuantity: false, canIncreaseQuantity: false });
 });
+
+it.each([
+  ["P6002", "Ya está en tu biblioteca"],
+  ["P6003", "Tienes un pedido abierto con esta edición"],
+] as const)("explains %s consistently for reads and command conflicts", (code, message) => {
+  expect(availabilityConflictMessage(code)).toBe(message);
+  expect(resolveStockStatus({ available: false, unavailabilityReason: code })).toMatchObject({ explanation: message, canAddToCart: false, canChangeQuantity: false });
+});

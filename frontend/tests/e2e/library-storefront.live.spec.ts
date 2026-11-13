@@ -11,6 +11,8 @@ interface LibraryFixture {
   ebookOwnedItemId: string;
   audioOwnedItemId: string;
   mixedOrderId: string;
+  /** The customer-facing order reference (ADR 0047); the internal id never appears on the page. */
+  mixedOrderReference: string;
 }
 
 test("real purchase ownership supports list, media filters, detail, purchase and Help", async ({ page }) => {
@@ -32,18 +34,19 @@ test("real purchase ownership supports list, media filters, detail, purchase and
   await expect(page.locator(`a[href="/biblioteca/${fixture.ebookOwnedItemId}"]`)).toBeVisible();
   await expect(page.locator(`a[href="/biblioteca/${fixture.audioOwnedItemId}"]`)).toHaveCount(0);
   await page.locator(`a[href="/biblioteca/${fixture.ebookOwnedItemId}"]`).click();
-  await expect(page.getByText("Pertenece a tu cuenta", { exact: true })).toBeVisible();
+  await expect(page.getByText("Tuyo para leer", { exact: true })).toBeVisible();
   await expect(page.getByText("EPUB", { exact: true })).toBeVisible();
-  await expect(page.getByRole("region", { name: "Información de compra" })).toContainText(fixture.mixedOrderId);
+  expect(fixture.mixedOrderReference).toMatch(/^PL-\d{4}-\d{4}$/);
+  await expect(page.getByRole("region", { name: "Información de compra" })).toContainText(fixture.mixedOrderReference);
   await expect(page.getByRole("link", { name: /^(Leer|Escuchar|Continuar leyendo|Continuar escuchando|Descargar)$/ })).toHaveCount(0);
   await page.getByRole("link", { name: "Volver a Mi biblioteca" }).click();
   await page.getByRole("group", { name: "Mostrar" }).getByRole("button", { name: "Audiolibros" }).click();
   await page.locator(`a[href="/biblioteca/${fixture.audioOwnedItemId}"]`).click();
   await expect(page.getByText("Voz Biblioteca", { exact: true })).toBeVisible();
-  await expect(page.getByText("Pertenece a tu cuenta", { exact: true })).toBeVisible();
-  const actions = page.getByRole("navigation", { name: "Acciones de la adquisición" });
-  await expect(actions.getByRole("link", { name: "Ver pedido" })).toHaveAttribute("href", `/orders/${fixture.mixedOrderId}`);
-  await actions.getByRole("link", { name: "Ayuda" }).click();
+  await expect(page.getByText("Tuyo para escuchar", { exact: true })).toBeVisible();
+  const purchases = page.getByRole("region", { name: "Información de compra" });
+  await expect(purchases.getByRole("link", { name: /^Ver pedido/ })).toHaveAttribute("href", `/orders/${fixture.mixedOrderId}`);
+  await page.getByRole("article").getByRole("link", { name: "Ayuda", exact: true }).click();
   await expect(page).toHaveURL(/\/ayuda\/audiolibros$/);
   await expect(page.getByRole("heading", { name: "Audiolibros", exact: true })).toBeVisible();
   await page.goto("/ayuda");
