@@ -75,7 +75,7 @@ current. Revalidate the live environment before each deployment.
 | Backend | `/opt/pliego/releases/<release>/pliego-backend-0.1.0-SNAPSHOT.jar` |
 | Backend pointer | `/opt/pliego/current` → versioned release |
 | Service | `pliego.service`; Spring binds only `127.0.0.1:8080` |
-| Unit policy | `Restart=on-failure`, `TimeoutStartSec=3min`, `TimeoutStopSec=45s`; systemd `EnvironmentFile`, no drop-ins |
+| Unit policy | `Restart=on-failure`, `TimeoutStartSec=3min`, `TimeoutStopSec=45s`; `Wants=` + `After=postgresql@18-main.service`, with no PostgreSQL `Requires=`/`BindsTo=`/`PartOf=`/`Upholds=` dependency; systemd `EnvironmentFile`, no drop-ins |
 | Secrets | `/etc/pliego/pliego.env`, `root:pliego`, `0640` |
 | Mail | `PLIEGO_MAIL_ENABLED=true` at the verified deployment |
 | Frontend | `/var/www/pliego/releases/<release>/`, only built static assets |

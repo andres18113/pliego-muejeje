@@ -1,8 +1,7 @@
 [Unit]
 Description=PLIEGO backend
-Requires=postgresql@18-main.service
 After=network-online.target postgresql@18-main.service
-Wants=network-online.target
+Wants=network-online.target postgresql@18-main.service
 StartLimitIntervalSec=300
 StartLimitBurst=3
 
