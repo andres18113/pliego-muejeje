@@ -2,15 +2,9 @@ import createClient from "openapi-fetch";
 import type { Middleware } from "openapi-fetch";
 import type { paths } from "./generated";
 import { SessionRenewedError } from "./errors";
+import { apiOriginFrom } from "./apiOrigin";
 
-/**
- * The API origin from VITE_API_BASE_URL, which may name the origin (`https://api.pliegolibros.com`, as production
- * builds do) or the versioned base (`/api/v1`, the local default; `https://host/api/v1/`). Every request path,
- * including the realtime stream's, is built from this one value: never append a path to the raw variable.
- */
-export function apiOriginFrom(configured: string | undefined) {
-  return (configured || "/api/v1").replace(/\/+$/, "").replace(/\/api\/v1$/, "");
-}
+export { apiOriginFrom };
 
 const apiOrigin = apiOriginFrom(import.meta.env.VITE_API_BASE_URL);
 

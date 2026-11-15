@@ -61,4 +61,22 @@ describe("prefetchInitialPublicReads", () => {
     expect(navigation).toHaveBeenCalledTimes(1);
     expect(home.prefetch).not.toHaveBeenCalled();
   });
+
+  it("reads a Help article and its topics at once, without waiting for the offer clock (no prices)", async () => {
+    const { prefetch, done } = keysPrefetched("/ayuda/entrega-a-domicilio/");
+    await Promise.resolve();
+    const keys = prefetch.mock.calls.map(([options]) => (options as { queryKey: unknown[] }).queryKey);
+    expect(keys).toEqual([["help", "article", "entrega-a-domicilio"], ["help", "categories"]]);
+    expect(navigation).not.toHaveBeenCalled();
+    releaseClock(); await done;
+    expect(navigation).toHaveBeenCalledTimes(1);
+  });
+
+  it("reads no Help article for the Help landing or a malformed address", async () => {
+    for (const path of ["/ayuda", "/ayuda/%E0%A4%A"]) {
+      const { prefetch, done } = keysPrefetched(path);
+      releaseClock(); await done;
+      expect(prefetch).not.toHaveBeenCalled();
+    }
+  });
 });

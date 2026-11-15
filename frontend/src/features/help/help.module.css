@@ -9,6 +9,9 @@
   --help-card: #fff; --help-line: color-mix(in srgb, var(--store-ink, #252740) 12%, transparent);
   --help-ease: cubic-bezier(.32, .94, .6, 1);
   display: grid; align-content: start; gap: 20px; max-width: 920px; min-width: 0; padding-top: clamp(20px, 3.4vw, 44px); padding-bottom: clamp(40px, 6vw, 56px); color: var(--help-ink);
+  /* At least one screen, loading or loaded: the footer never sits in the first view, so the arriving article cannot
+     push it out (0.19 CLS on phones), and the page already scrolls, so a scrollbar appearing cannot move it sideways. */
+  min-height: 100svh;
 }
 :global([data-mantine-color-scheme="dark"]) .page { --help-blue: var(--store-link, #c5bcff); --help-blue-hover: #d8d1ff; --help-on-blue: var(--store-ink, #252740); --help-card: #26283f; --help-line: rgb(255 255 255 / 12%); }
 .page:focus { outline: none; }

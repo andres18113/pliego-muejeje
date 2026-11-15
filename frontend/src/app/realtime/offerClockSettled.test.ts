@@ -38,4 +38,41 @@ describe("offerClockSettled", () => {
     await flush();
     expect(settled).toHaveBeenCalledTimes(1);
   });
+
+  describe("index.html's early request", () => {
+    afterEach(() => { delete window.__pliegoOfferClock; });
+
+    it("is adopted with the moment it arrived instead of asking again, and settles the clock", async () => {
+      window.__pliegoOfferClock = Promise.resolve({ ok: true, status: 200, body: JSON.stringify(clockBody), receivedAt: 1234.5 });
+      const { primeOfferRefreshClock, offerClockSettled } = await import("./offerRefresh");
+      await expect(primeOfferRefreshClock()).resolves.toEqual({ clock: clockBody, receivedAt: 1234.5 });
+      await offerClockSettled();
+      expect(fetch).not.toHaveBeenCalled();
+      expect(window.__pliegoOfferClock).toBeUndefined();
+    });
+
+    it("is asked again from the bundle when the early request never arrived", async () => {
+      window.__pliegoOfferClock = Promise.resolve(null);
+      const { primeOfferRefreshClock, offerClockSettled } = await import("./offerRefresh");
+      primeOfferRefreshClock();
+      const settled = vi.fn();
+      void offerClockSettled().then(settled);
+      await flush();
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/api/v1/catalog/offer-refresh"), expect.objectContaining({ credentials: "omit", cache: "no-store" }));
+      expect(settled).not.toHaveBeenCalled();
+      answer!(new Response(JSON.stringify(clockBody), { status: 200 }));
+      await flush();
+      expect(settled).toHaveBeenCalledTimes(1);
+    });
+
+    it("settles without a clock when the early answer is a problem, exactly as a failed bundle request", async () => {
+      window.__pliegoOfferClock = Promise.resolve({ ok: false, status: 503, body: JSON.stringify({ code: "DATABASE_ERROR", title: "Servicio no disponible", detail: "Inténtalo otra vez." }), receivedAt: 10 });
+      const { primeOfferRefreshClock, offerClockSettled, isOfferClockSettled } = await import("./offerRefresh");
+      await expect(primeOfferRefreshClock()).rejects.toMatchObject({ status: 503 });
+      await offerClockSettled();
+      expect(isOfferClockSettled()).toBe(true);
+      expect(fetch).not.toHaveBeenCalled();
+    });
+  });
 });

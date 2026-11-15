@@ -65,6 +65,22 @@ hard latency guarantee). REST remains authoritative. Stream resync must also
 invalidate mounted public price views. Guests use the refresh clock and bounded
 metadata revalidation, without authentication or a public SSE endpoint.
 
+### Amendment (2026-11-15): the first clock request leaves from index.html
+
+The bundle sent the first clock request only after the whole entry graph had
+downloaded and run (≈3.5 s on a slow phone), and the first render and every price
+read wait for its answer. The build (`frontend/build/earlyOfferClock.ts`) now
+inlines the same request into `index.html`, ahead of any stylesheet: public,
+`no-store`, credentials omitted. It leaves the answer as text on
+`window.__pliegoOfferClock`, together with the moment it arrived on the page's
+monotonic clock. `primeOfferRefreshClock` adopts that answer, so the schedule still
+counts the time since receipt, and asks again only if the early request never
+arrived. The order is unchanged: price reads start only after this first answer
+(or its failure). For a cross-origin API the page also preconnects the credentialed
+connection (`crossorigin="use-credentials"`) that the session restore and the data
+reads use. There is no Content-Security-Policy today; adding one requires a hash for
+this inline script.
+
 ## Monitoring, recovery and limits
 
 `fn_offer_lifecycle_status()` and the catalog lifecycle service expose durable

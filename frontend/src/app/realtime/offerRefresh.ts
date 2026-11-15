@@ -1,5 +1,10 @@
 import type { QueryClient } from "@tanstack/react-query";
-import { getOfferRefreshClock, type OfferRefreshClock } from "@/shared/api/offerRefresh";
+import { getOfferRefreshClock, readOfferRefreshAnswer, type OfferRefreshClock } from "@/shared/api/offerRefresh";
+import type { EarlyOfferClockAnswer } from "@/shared/api/offerRefreshRequest";
+
+declare global {
+  interface Window { __pliegoOfferClock?: Promise<EarlyOfferClockAnswer | null> }
+}
 import { isOfferPriceKey } from "./realtimeInvalidation";
 
 /**
@@ -37,6 +42,17 @@ export async function readTimedOfferClock(signal?: AbortSignal): Promise<TimedCl
   return { clock, receivedAt: performance.now() };
 }
 
+/**
+ * index.html's own clock request (build/earlyOfferClock.ts), sent while the entry code downloads; taken once. Its
+ * `receivedAt` is the moment the answer arrived on this page's monotonic clock, so the schedule counts the time since.
+ */
+function takeEarlyOfferClock() {
+  if (typeof window === "undefined") return undefined;
+  const early = window.__pliegoOfferClock;
+  delete window.__pliegoOfferClock;
+  return early;
+}
+
 let primed: Promise<TimedClock> | null = null;
 let firstClockSettled: Promise<void> = Promise.resolve();
 let firstClockAnswered = true;
@@ -44,10 +60,13 @@ let firstClockAnswered = true;
 /**
  * Asks for the clock before the app renders, so the server observes it before any price read: a boundary after that
  * instant is then always the clock's `nextTransitionAt`, and a page can never keep a price read across an unseen change.
+ * The first answer is index.html's early request when there is one; only if that never arrived does this ask again.
  */
 export function primeOfferRefreshClock() {
   if (!primed) {
-    const request = readTimedOfferClock();
+    const early = takeEarlyOfferClock();
+    const request = early ? early.then(answer => answer ? { clock: readOfferRefreshAnswer(answer), receivedAt: answer.receivedAt } : readTimedOfferClock())
+      : readTimedOfferClock();
     request.catch(() => undefined);
     primed = request;
     firstClockAnswered = false;

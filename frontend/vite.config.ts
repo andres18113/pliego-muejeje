@@ -2,6 +2,7 @@ import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { initialLoadBudget } from "./build/initialLoadBudget";
+import { earlyOfferClock } from "./build/earlyOfferClock";
 
 /**
  * One identifier per build, stamped into the bundle and emitted as /version.json, so an open tab can tell that a
@@ -20,7 +21,7 @@ export default defineConfig(({ command }) => ({
   cacheDir: process.env.PLIEGO_VITE_CACHE_DIR || "node_modules/.vite",
   // Only production builds carry an ID: under `vite serve` the version check stays inert (no fetch, no listeners).
   define: command === "build" ? { __PLIEGO_BUILD_ID__: JSON.stringify(buildId) } : {},
-  plugins: [tailwindcss(), react(), buildVersion, initialLoadBudget()],
+  plugins: [tailwindcss(), react(), earlyOfferClock(), buildVersion, initialLoadBudget()],
   resolve: {
     alias: {
       "@": new URL("./src", import.meta.url).pathname,
