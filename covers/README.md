@@ -193,6 +193,44 @@ not configure public access or the domain. Do not delete historical CDN objects
 merely to satisfy its strict unexpected-key listing check. No upload is part of
 the preparation command.
 
+## Responsive variants (`responsive-v1`)
+
+The storefront asks for smaller copies of each active cover when the frontend is
+built with `VITE_COVER_VARIANTS_BASE=https://covers.pliegolibros.com/covers/editions/responsive-v1/`
+(`frontend/src/features/catalog/coverSources.ts`). For every manifest record
+`covers/editions/v2/<SKU>-<hash12>.webp` the stage writes the same image, never
+re-cropped, at 160, 240, 360 and 480 px wide (WebP Q86, method 6) as
+`covers/editions/responsive-v1/<SKU>-<hash12>-w<width>.webp`. The 720 px original
+stays the largest candidate. Any cover outside that exact host and path keeps a
+single URL.
+
+Run it after every normalization or digital batch that adds or changes active
+covers, and publish its objects **before** the originals they belong to reach the
+API: a missing variant still renders (the browser falls back to the original once),
+but costs a failed request first.
+
+```bash
+uv run --cache-dir /tmp/pliego-cover-uv-cache --no-project \
+  --with-requirements scripts/requirements-covers.txt \
+  python scripts/generate_responsive_images.py covers \
+  --manifest covers/generated/manifest-normalized.json \
+  --source-root covers/generated/r2-normalized \
+  --output-root covers/generated/r2-responsive \
+  --output-manifest covers/generated/r2-responsive/manifest.json
+```
+
+Use the pinned requirements: the stage refuses to replace a derivative whose bytes
+differ, so a different encoder would conflict with published objects. A different
+recipe needs a new prefix, never a rewrite of `responsive-v1`. Upload is additive,
+dry-run unless `--execute` is given, and limited to that prefix in `pliego-covers`:
+
+```bash
+uv run --no-project --with-requirements scripts/requirements-r2.txt \
+  python3 scripts/upload-r2-covers.py --variants \
+  --manifest covers/generated/r2-responsive/manifest.json \
+  --assets-dir covers/generated/r2-responsive          # add --execute only when authorized
+```
+
 ## Rendiciones JPEG para correo
 
 Desde la raíz del repositorio, preparar los archivos sin red ni credenciales:

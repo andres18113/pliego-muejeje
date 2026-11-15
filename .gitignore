@@ -28,6 +28,7 @@ frontend/blob-report/
 __pycache__/
 *.py[cod]
 /covers/generated/email-v1/
+/covers/generated/r2-responsive/
 
 # Local Impeccable state
 .impeccable/

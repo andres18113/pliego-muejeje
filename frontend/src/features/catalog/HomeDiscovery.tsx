@@ -12,16 +12,27 @@ import { readCatalogCriteria } from "./catalogUrl";
 import { formatUsd } from "./formatters";
 import classes from "./homeDiscovery.module.css";
 import audiobooksPhoto from "./assets/discovery-audiolibros.webp";
+import audiobooksPhoto480 from "./assets/discovery-audiolibros-480w.webp";
+import audiobooksPhoto800 from "./assets/discovery-audiolibros-800w.webp";
 import booksPhoto from "./assets/discovery-libros.webp";
+import booksPhoto480 from "./assets/discovery-libros-480w.webp";
+import booksPhoto800 from "./assets/discovery-libros-800w.webp";
 import ebooksPhoto from "./assets/discovery-ebooks.webp";
+import ebooksPhoto480 from "./assets/discovery-ebooks-480w.webp";
+import ebooksPhoto800 from "./assets/discovery-ebooks-800w.webp";
 
 type MediaKey = "PHYSICAL" | "EBOOK" | "AUDIOBOOK";
 /** Wording, photograph and glyph only: which sections exist, their names, destinations and titles come from the projection. */
-const mediaCopy: Record<MediaKey, { line: string; action: string; symbol: MaterialSymbolName; photo: string }> = {
-  PHYSICAL: { line: "En papel, para tener cerca.", action: "Explorar libros", symbol: "menu_book", photo: booksPhoto },
-  EBOOK: { line: "En pantalla, donde estés.", action: "Explorar eBooks", symbol: "menu_book", photo: ebooksPhoto },
-  AUDIOBOOK: { line: "En voz alta, para escuchar.", action: "Explorar audiolibros", symbol: "headphones", photo: audiobooksPhoto },
+const mediaCopy: Record<MediaKey, { line: string; action: string; symbol: MaterialSymbolName; photo: string; photoSet: string }> = {
+  PHYSICAL: { line: "En papel, para tener cerca.", action: "Explorar libros", symbol: "menu_book", photo: booksPhoto, photoSet: `${booksPhoto480} 480w, ${booksPhoto800} 800w, ${booksPhoto} 1200w` },
+  EBOOK: { line: "En pantalla, donde estés.", action: "Explorar eBooks", symbol: "menu_book", photo: ebooksPhoto, photoSet: `${ebooksPhoto480} 480w, ${ebooksPhoto800} 800w, ${ebooksPhoto} 1200w` },
+  AUDIOBOOK: { line: "En voz alta, para escuchar.", action: "Explorar audiolibros", symbol: "headphones", photo: audiobooksPhoto, photoSet: `${audiobooksPhoto480} 480w, ${audiobooksPhoto800} 800w, ${audiobooksPhoto} 1200w` },
 };
+/**
+ * The photograph's rendered width per layout in homeDiscovery.module.css (the same 4:3 files, scaled down; nothing
+ * re-cropped): a 112px square under 680px (88px under 360px) covered by a 4:3 image, then one third of the tiles row.
+ */
+const photoSizes = "(max-width: 359px) 118px, (max-width: 679px) 150px, (max-width: 1199px) calc((100vw - 96px) / 3), (max-width: 1375px) calc((100vw - 144px) / 3), 411px";
 const isMedia = (section: StorefrontSection): section is StorefrontSection & { key: MediaKey } => section.key in mediaCopy;
 const mediaSections = (sections: StorefrontSection[] | undefined) => (sections ?? []).filter(isMedia);
 
@@ -31,7 +42,7 @@ function DiscoveryVisual({ section }: { section: StorefrontSection & { key: Medi
   const copy = mediaCopy[section.key];
   const cover = section.featured[0];
   return <div className={classes.visual} aria-hidden="true">
-    {!failed ? <img className={classes.photo} src={copy.photo} alt="" width={1200} height={900} decoding="async" onError={() => setFailed(true)} />
+    {!failed ? <img className={classes.photo} src={copy.photo} srcSet={copy.photoSet} sizes={photoSizes} alt="" width={1200} height={900} decoding="async" onError={() => setFailed(true)} />
       : cover ? <BookCover url={cover.coverUrl} license={null} attribution={null} title={cover.title} size="card" loading="eager" decorative />
       : <MaterialSymbol name={copy.symbol} size={48} className={classes.glyph} />}
   </div>;

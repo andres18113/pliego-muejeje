@@ -3,6 +3,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { useDelayedPending } from "@/shared/hooks/useDelayedPending";
 import { Skeleton } from "@mantine/core";
 import classes from "./BookCover.module.css";
+import { coverSizes, coverSrcSet } from "./coverSources";
 
 // Tracks decoded URL state for this SPA session; the browser owns the image bytes and HTTP cache.
 const decodedCoverFits = new Map<string, "cover" | "contain">();
@@ -31,8 +32,11 @@ export function BookCover({
   const imageRef = useRef<HTMLImageElement>(null);
   const [decodedUrl, setDecodedUrl] = useState<string | null>(null);
   const [failedUrl, setFailedUrl] = useState<string | null>(null);
+  // A cover whose responsive variant failed falls back to its original URL once before reading as unavailable.
+  const [variantFailedUrl, setVariantFailedUrl] = useState<string | null>(null);
 
   const canShowCover = canDisplayCover(url) && failedUrl !== url;
+  const srcSet = variantFailedUrl === url ? undefined : coverSrcSet(url);
   const isDecoded = url !== null && (decodedUrl === url || decodedCoverFits.has(url));
   const isLoading = canShowCover && !isDecoded;
   const showSkeleton = useDelayedPending(isLoading, 120);
@@ -51,7 +55,8 @@ export function BookCover({
   function finishImageLoad(image: HTMLImageElement) {
     if (!url) return;
     if (image.naturalWidth === 0) {
-      setFailedUrl(url);
+      if (srcSet) setVariantFailedUrl(url);
+      else setFailedUrl(url);
       return;
     }
     decodedCoverFits.set(url, fitForCover(image));
@@ -86,16 +91,18 @@ export function BookCover({
               </div>
             ))}
             <img
-              key={url}
+              key={srcSet ? `${url} variants` : url}
               ref={imageRef}
               className={`cover-image${isLoading ? " cover-image--loading" : ""}${imageFit === "cover" ? " cover-image--cover" : ""}`}
               src={url}
+              srcSet={srcSet}
+              sizes={srcSet ? coverSizes(size, loading) : undefined}
               alt={decorative ? "" : `Portada de ${title}`}
               loading={loading}
               decoding="async"
               referrerPolicy="no-referrer"
               onLoad={(event) => handleImageLoad(event.currentTarget)}
-              onError={() => url && setFailedUrl(url)}
+              onError={() => { if (!url) return; if (srcSet) setVariantFailedUrl(url); else setFailedUrl(url); }}
             />
           </>
         ) : (
