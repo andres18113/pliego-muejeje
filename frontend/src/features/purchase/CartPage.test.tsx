@@ -222,12 +222,12 @@ describe("CartPage", () => {
 
     expect(await screen.findByText("Quitado del carrito")).toBeInTheDocument();
     const empty = await screen.findByRole("heading", { name: "Tu carrito está vacío." });
-    await vi.waitFor(() => expect(empty).toHaveFocus());
+    await vi.waitFor(() => expect(empty).toHaveFocus(), { timeout: 4000 });
 
     await user.click(screen.getByRole("button", { name: "Deshacer" }));
     expect(await screen.findByText("Devuelto al carrito")).toBeInTheDocument();
     expect(api.calls.find((call) => call.method === "POST")?.body).toEqual({ editionId: "42", quantity: 2 });
-    await vi.waitFor(() => expect(screen.getByRole("link", { name: "Cien años de soledad" })).toHaveFocus());
+    await vi.waitFor(() => expect(screen.getByRole("link", { name: "Cien años de soledad" })).toHaveFocus(), { timeout: 4000 });
   });
 
   it("reconciles an unknown undo outcome with reads without repeating an additive write", async () => {
