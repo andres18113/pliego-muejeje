@@ -3843,6 +3843,27 @@
         ]
       }
     },
+    "/api/v1/storefront/sitemap.xml": {
+      "get": {
+        "tags": [
+          "sitemap-controller"
+        ],
+        "summary": "Consultar el sitemap público de la tienda",
+        "operationId": "getStorefrontSitemap",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/xml;charset=UTF-8": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/storefront/navigation": {
       "get": {
         "tags": [

@@ -352,6 +352,13 @@ VITE_API_BASE_URL=https://api.pliegolibros.com npm run build
 npm run test:e2e
 ```
 
+Responsive cover variants are opt-in at build time. Add
+`VITE_COVER_VARIANTS_BASE=https://covers.pliegolibros.com/covers/editions/responsive-v1/`
+to the release build only after the `responsive-v1` objects for every active cover
+are published and verified (200, `image/webp`, the manifest's SHA-256 and the
+immutable cache header; see `covers/README.md`). Without it, covers keep one URL.
+Record whether the release sets it; a rollback build may omit it safely.
+
 The frontend build includes typecheck. Run the lint/check commands actually defined
 by the target revision; do not invent a lint script. Follow Playwright prerequisites
 and the target tests' fixture/opt-in setup. Keep registration, payment, mail and DB
@@ -1287,3 +1294,92 @@ this change adds none. Any customer email resend requires separate authorization
 
 See [ADR 0048](../adr/0048-mailtrap-delivery-outcomes.md) and the
 [API amendment](../api-amendments/2026-11-01-email-delivery-status.md).
+
+## Storefront sitemap and robots routing (pending review; not deployed)
+
+For a future authorized release, publish the backend containing
+`GET /api/v1/storefront/sitemap.xml`. It reads the existing public catalog/help
+Database API; there is no migration or database privilege change. Confirm
+`PLIEGO_APP_PUBLIC_URL` is the canonical storefront origin (`https://pliegolibros.com`,
+without a path, query or fragment); this is also the email link configuration.
+The sitemap contains only locations, caches for one hour per application instance,
+and fails with the standard Spanish problem response if generation fails or exceeds
+50,000 URLs / 50 MB. A failed refresh retries after one minute. Catalog/help changes
+can take up to one hour to enter a newly generated document; a downstream cached
+copy can remain valid for another hour.
+
+Back up `/etc/nginx/sites-available/pliegolibros.com` privately, then add these exact
+locations **inside the existing storefront server block**, preserving its
+`root /var/www/pliego/current`, TLS/AOP, security headers and SPA location. The
+loopback backend and forwarded-header policy match the API proxy documented above.
+The sitemap location must never fall through to the SPA or intercept backend errors.
+
+```nginx
+location = /sitemap.xml {
+    proxy_pass http://127.0.0.1:8080/api/v1/storefront/sitemap.xml;
+    proxy_http_version 1.1;
+    proxy_set_header Host api.pliegolibros.com;
+    proxy_set_header X-Forwarded-Host api.pliegolibros.com;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Forwarded-Port 443;
+    proxy_set_header X-Forwarded-For $http_cf_connecting_ip;
+    proxy_set_header X-Real-IP $http_cf_connecting_ip;
+    proxy_set_header Forwarded "";
+    proxy_set_header Connection "";
+    proxy_set_header Cookie "";
+    proxy_set_header Authorization "";
+    proxy_connect_timeout 5s;
+    proxy_send_timeout 30s;
+    proxy_read_timeout 60s;
+    proxy_intercept_errors off;
+    proxy_cache off;
+}
+
+location = /robots.txt {
+    try_files $uri =404;
+    default_type text/plain;
+    expires 5m;
+}
+```
+
+The candidate frontend's **static** `robots.txt` must contain
+`Sitemap: https://pliegolibros.com/sitemap.xml`. Verify the deployed file exists
+under `/var/www/pliego/current/robots.txt`; do not substitute the SPA shell.
+For the future authorized release, save the vhost before editing:
+
+```bash
+sitemap_backup="/etc/nginx/sites-available/pliegolibros.com.sitemap-backup.$(date -u +%Y%m%dT%H%M%SZ)"
+sudo cp -a /etc/nginx/sites-available/pliegolibros.com "$sitemap_backup"
+# Apply the two exact locations above, after publishing the verified backend/static robots artifacts.
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+Record the backup path. A failed syntax test must not reload.
+To undo routing, restore the saved vhost, test it and reload; the backend change
+has no schema rollback requirement.
+
+Post-release acceptance (these are review commands, not evidence of a live release):
+
+```bash
+curl --fail --silent --show-error -D /tmp/pliego-sitemap.headers \
+  https://pliegolibros.com/sitemap.xml -o /tmp/pliego-sitemap.xml
+cat /tmp/pliego-sitemap.headers
+python3 - <<'PY'
+import xml.etree.ElementTree as ET
+root = ET.parse('/tmp/pliego-sitemap.xml').getroot()
+ns = '{http://www.sitemaps.org/schemas/sitemap/0.9}'
+assert root.tag == ns + 'urlset'
+locations = [node.text for node in root.findall('*/' + ns + 'loc')]
+assert 'https://pliegolibros.com/' in locations
+assert all(url.startswith('https://pliegolibros.com/') for url in locations)
+print('<loc>' + locations[0] + '</loc>')
+PY
+curl --fail --silent --show-error -D - https://pliegolibros.com/robots.txt
+```
+
+Require `200`, `Content-Type: application/xml; charset=UTF-8`,
+`Cache-Control: max-age=3600, public`, a parseable urlset and a canonical sample
+`<loc>https://pliegolibros.com/</loc>`. Require robots `200 text/plain`, five-minute
+caching and the Sitemap line. Check a published help slug and a listable edition
+against anonymous public API reads; exclude drafts/retired/unlisted editions.
+A missing static robots file must produce `404`, never `200 text/html`.

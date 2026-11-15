@@ -1,0 +1,22 @@
+# PLIEGO: the storefront (Home, catálogo, ediciones, ofertas, ayuda) is public.
+# Account, purchase, administration and one-time email-link pages are not useful in search results.
+# This is crawl guidance only; access control lives in the API.
+User-agent: *
+Disallow: /account
+Disallow: /admin
+Disallow: /biblioteca
+Disallow: /cart
+Disallow: /checkout
+Disallow: /favorites
+Disallow: /orders
+Disallow: /sign-in
+Disallow: /register
+Disallow: /verificar-correo
+Disallow: /confirmar-correo
+Disallow: /cancelar-cambio-correo
+Disallow: /reenviar-verificacion
+Disallow: /recuperar-contrasena
+Disallow: /restablecer-contrasena
+Disallow: /dev/
+
+Sitemap: https://pliegolibros.com/sitemap.xml

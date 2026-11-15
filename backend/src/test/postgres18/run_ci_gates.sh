@@ -22,6 +22,7 @@ fi
 export no_proxy="127.0.0.1,localhost"
 export NO_PROXY="$no_proxy"
 export PLIEGO_MAIL_ENABLED=false
+export PLIEGO_APP_PUBLIC_URL="${PLIEGO_APP_PUBLIC_URL:-https://storefront.example.invalid}"
 
 server_version_num="$(psql -X -v ON_ERROR_STOP=1 -At -c 'SHOW server_version_num')"
 if (( server_version_num < 180000 )); then
@@ -175,7 +176,7 @@ application_pid=''
 start_backend true
 
 for gate in geo_catalog_http_gate.py geo_alias_http_gate.py checkout_http_gate.py customer_orders_http_gate.py admin_orders_http_gate.py \
-    admin_customers_http_gate.py full_journey_http_gate.py digital_editions_http_gate.py post_purchase_http_gate.py p1_integrity_http_gate.py accepted_quote_http_gate.py person_validation_http_gate.py numeric_validation_http_gate.py store_pickup_http_gate.py admin_pickup_handover_http_gate.py home_delivery_http_gate.py offers_http_gate.py offer_refresh_http_gate.py cart_order_offer_http_gate.py library_checkout_http_gate.py storefront_help_http_gate.py automatic_billing_http_gate.py checkout_billing_recipient_http_gate.py billing_identity_corrections_http_gate.py digital_single_copy_http_gate.py digital_mixed_single_copy_http_gate.py cart_saved_for_later_http_gate.py catalog_search_fold_http_gate.py post_purchase_digital_access_http_gate.py post_purchase_invoice_http_gate.py; do
+    admin_customers_http_gate.py full_journey_http_gate.py digital_editions_http_gate.py post_purchase_http_gate.py p1_integrity_http_gate.py accepted_quote_http_gate.py person_validation_http_gate.py numeric_validation_http_gate.py store_pickup_http_gate.py admin_pickup_handover_http_gate.py home_delivery_http_gate.py offers_http_gate.py offer_refresh_http_gate.py cart_order_offer_http_gate.py library_checkout_http_gate.py storefront_help_http_gate.py sitemap_http_gate.py automatic_billing_http_gate.py checkout_billing_recipient_http_gate.py billing_identity_corrections_http_gate.py digital_single_copy_http_gate.py digital_mixed_single_copy_http_gate.py cart_saved_for_later_http_gate.py catalog_search_fold_http_gate.py post_purchase_digital_access_http_gate.py post_purchase_invoice_http_gate.py; do
     printf 'Running %s\n' "$gate"
     timeout 180s python3 "$script_dir/$gate"
 done

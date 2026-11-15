@@ -77,6 +77,7 @@ public class SecurityConfiguration {
                         .authenticationEntryPoint(entryPoint)
                         .accessDeniedHandler(deniedHandler))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.GET, "/api/v1/storefront/sitemap.xml").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/auth/events").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/webhooks/mailtrap").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/register", "/api/v1/auth/login",

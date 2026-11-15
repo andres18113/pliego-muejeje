@@ -19,6 +19,10 @@ class OpenApiContractProfileIntegrationTest extends OpenApiHttpTestSupport {
         assertThat(contract.path("info").path("title").asText()).isEqualTo("PLIEGO API");
         assertThat(contract.path("paths").has("/api/v1/catalog/editions")).isTrue();
         assertThat(contract.path("paths").has("/api/v1/admin/orders")).isTrue();
+        assertThat(contract.path("paths").path("/api/v1/storefront/sitemap.xml").path("get")
+                .path("operationId").asText()).isEqualTo("getStorefrontSitemap");
+        assertThat(contract.path("paths").path("/api/v1/storefront/sitemap.xml").path("get")
+                .path("responses").path("200").path("content").has("application/xml;charset=UTF-8")).isTrue();
         assertThat(contract.path("components").path("schemas").size()).isGreaterThan(20);
         var output = Path.of(System.getProperty("pliego.openapi.evidence", "target/openapi-contract.json"));
         Files.createDirectories(output.toAbsolutePath().getParent());
