@@ -14,7 +14,6 @@ import { ReadFailure } from "@/features/purchase/CartPage";
 import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { CustomerOnly, PurchasePage } from "@/features/purchase/PurchaseChrome";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
-import { InfoToggletip } from "@/shared/ui/InfoToggletip";
 import { PersonNameInput } from "@/shared/ui/PersonNameInput";
 import { InternationalPhoneField } from "@/shared/ui/InternationalPhoneField";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -72,8 +71,9 @@ type IdentityState = {
 
 /**
  * A correction request under the number, in one quiet line: pending is PLIEGO's work, not the customer's, so it reads
- * as a muted `schedule` status ("En revisión", never a chip) with an `info` toggletip holding what was asked and when
- * we answer. A decision is news, not history: it reads once as a small
+ * as a muted `schedule` status ("En revisión", never a chip) followed by when we answer — the one fact worth seeing at
+ * a glance. One icon, nothing hidden: what was asked lives on the request's own page ("Ver solicitud ›" on the same
+ * row). A decision is news, not history: it reads once as a small
  * dismissible notice (it can arrive while the page is open), and once closed the row returns to its normal
  * presentation — the server stops returning an acknowledged decision (ADR 0055). Withdrawn requests need no line.
  */
@@ -83,11 +83,7 @@ function CorrectionStatus({ request, onDismissed }: { request: BillingIdentityCo
     <span className={classes.reviewStatus}>
       <MaterialSymbol name="schedule" aria-hidden="true" size={18} />
       <span className={classes.reviewText}>En revisión</span>
-      <InfoToggletip label="Detalles de la corrección en revisión" panelClassName={classes.requestPanel}>
-        <span className={classes.requestLabel}>{request.proposedType === "EC_RUC" ? "RUC solicitado" : "Cédula solicitada"}</span>
-        <span className={classes.requestNumber}>{request.proposedNumber}</span>
-        <span>Te responderemos antes del {orderShortDateLabel(request.dueAt)}. Mientras tanto, tus compras usan tu identificación actual.</span>
-      </InfoToggletip>
+      <span className={classes.reviewDue}><span aria-hidden="true">·</span><span className="visually-hidden">.</span> Respuesta antes del {orderShortDateLabel(request.dueAt)}</span>
     </span>
   </span>;
   return <CorrectionDecision key={request.id} request={request} onDismissed={onDismissed} />;
@@ -142,6 +138,50 @@ function useDecisionAnnouncement(request: BillingIdentityCorrectionRequest | nul
   return message;
 }
 
+/** How long a confirmation reads before it leaves on its own, and the fade that takes it. */
+export const FEEDBACK_LIFETIME_MS = 12_000;
+const FEEDBACK_FADE_MS = 240;
+/** After the pointer leaves a confirmation it rested on, it still reads for this long. */
+const FEEDBACK_LINGER_MS = 4_000;
+
+/**
+ * A confirmation is news about one action, not a state of the account: it reads for a while, then leaves on its own
+ * (it waits while the pointer rests on it, and while `hold` says its subject is still current). Errors stay until
+ * the person acts again; account states — a requested address, an unverified one, a correction — are not feedback
+ * and never time out.
+ */
+function useFeedbackLifetime(feedback: Feedback | null, setFeedback: (update: (current: Feedback | null) => Feedback | null) => void, hold: boolean) {
+  // Each piece of state names the confirmation it belongs to, so a new one always starts fresh.
+  const [heldFor, setHeldFor] = useState<Feedback | null>(null);
+  const [leavingFor, setLeavingFor] = useState<Feedback | null>(null);
+  const [deadline, setDeadline] = useState<{ for: Feedback; at: number } | null>(null);
+  const held = feedback !== null && heldFor === feedback;
+  useEffect(() => {
+    if (!feedback || feedback.error) return;
+    // The clock starts when the confirmation appears, even while something holds it.
+    if (deadline?.for !== feedback) { setDeadline({ for: feedback, at: Date.now() + FEEDBACK_LIFETIME_MS }); return; }
+    if (held || hold) return;
+    const at = deadline.at;
+    let fade: ReturnType<typeof setTimeout> | undefined;
+    const timer = setTimeout(() => {
+      setLeavingFor(feedback);
+      fade = setTimeout(() => setFeedback(current => current === feedback ? null : current), FEEDBACK_FADE_MS);
+    }, Math.max(0, at - Date.now()));
+    return () => { clearTimeout(timer); clearTimeout(fade); };
+  }, [feedback, held, hold, deadline, setFeedback]);
+  return {
+    leaving: feedback !== null && leavingFor === feedback && !held,
+    onPointerEnter: () => { if (feedback && !feedback.error) { setHeldFor(feedback); setLeavingFor(null); } },
+    onPointerLeave: () => {
+      if (!feedback || heldFor !== feedback) return;
+      const at = Math.max(deadline?.for === feedback ? deadline.at : 0, Date.now() + FEEDBACK_LINGER_MS);
+      setDeadline({ for: feedback, at });
+      setHeldFor(null);
+    },
+  };
+}
+type FeedbackLifetime = ReturnType<typeof useFeedbackLifetime>;
+
 /**
  * Identity first and read-only: the reader's avatar and name, then each piece of data as plain text.
  * One field opens for editing at a time, in place; saving or cancelling returns focus to its action.
@@ -156,6 +196,8 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
   const [feedback, setFeedback] = useState<Feedback | null>(() => returned ? { field: "cedula", message: returned, error: false } : null);
   const editButtons = useRef<Partial<Record<FieldKey, HTMLElement | null>>>({});
   const password = usePasswordCooldown();
+  // The password's confirmation explains its one-minute wait, so it stays while the wait lasts.
+  const lifetime = useFeedbackLifetime(feedback, setFeedback, feedback?.field === "password" && password.cooling);
   const fullName = `${profile.firstNames} ${profile.lastNames}`.trim();
   const phone = profile.phone ? parsePhoneNumberFromString(profile.phone)?.formatInternational() ?? profile.phone : null;
   const verified = profile.emailVerified !== false;
@@ -211,7 +253,7 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
     { field: "email", label: "Correo electrónico", value: profile.email, valueNote: profile.pendingEmail ? "En uso" : undefined,
       expanded: Boolean(profile.pendingEmail || profile.emailDelivery?.status === "UNDELIVERABLE" || (!verified && readCurrent)),
       detail: <EmailStatus profile={profile} verified={verified} readCurrent={readCurrent} refetch={refetch} onExpired={onExpired}
-        feedback={feedback?.field === "email" ? feedback : null} onResult={(result) => setFeedback({ field: "email", ...result })} />,
+        feedback={feedback?.field === "email" ? feedback : null} lifetime={lifetime} onResult={(result) => setFeedback({ field: "email", ...result })} />,
       editor: <EmailEditor {...editorProps("email")} /> },
     { field: "phone", label: "Teléfono", value: phone, missing: { tone: "optional", hint: "Opcional" }, editor: <PhoneEditor {...editorProps("phone")} /> },
     verified
@@ -272,7 +314,8 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
               onClick={() => { if (row.waiting) return; if (row.onAction) row.onAction(); else open(row.field); }}
             >{!row.to && <MaterialSymbol name={row.icon ?? (row.value ? "edit" : "add")} aria-hidden="true" size={18} />}{row.action ?? (row.value ? "Editar" : "Agregar")}{" "}<span className="visually-hidden">{row.actionName ?? row.label[0].toLowerCase() + row.label.slice(1)}</span>{row.to && <MaterialSymbol name="chevron_right" aria-hidden="true" size={18} />}</Button>}
           </>}
-          {rowFeedback && !isEditing && !feedbackInChange && <p className={`${classes.feedback} ${rowFeedback.error ? classes.feedbackError : ""}`} role={rowFeedback.error ? "alert" : "status"}>
+          {rowFeedback && !isEditing && !feedbackInChange && <p className={`${classes.feedback} ${rowFeedback.error ? classes.feedbackError : ""}`} role={rowFeedback.error ? "alert" : "status"}
+            data-leaving={lifetime.leaving || undefined} onPointerEnter={lifetime.onPointerEnter} onPointerLeave={lifetime.onPointerLeave}>
             <MaterialSymbol name={rowFeedback.error ? "info" : "check_circle"} aria-hidden="true" size={16} />{rowFeedback.message}
           </p>}
         </li>;
@@ -281,14 +324,14 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
   </section>;
 }
 
-type EmailStatusProps = { profile: CustomerProfile; verified: boolean; readCurrent: boolean; refetch: Refetch; onExpired: () => void; feedback: Result | null; onResult: (result: Result) => void };
+type EmailStatusProps = { profile: CustomerProfile; verified: boolean; readCurrent: boolean; refetch: Refetch; onExpired: () => void; feedback: Result | null; lifetime: FeedbackLifetime; onResult: (result: Result) => void };
 
 /**
  * Everything about the email lives in the Correo row. Under the address in use: at most one line about that address
  * (it stopped accepting mail, or it is not verified yet), then a requested change as one bounded process — the new
  * address, what happens next, its own actions and their feedback — so the two addresses never read as one.
  */
-function EmailStatus({ profile, verified, readCurrent, refetch, onExpired, feedback, onResult }: EmailStatusProps) {
+function EmailStatus({ profile, verified, readCurrent, refetch, onExpired, feedback, lifetime, onResult }: EmailStatusProps) {
   return <>
     {profile.emailDelivery?.status === "UNDELIVERABLE" && <span className={classes.valueDetail}>
       <span className={classes.missingChip} data-tone="required">No recibe correos</span>
@@ -298,7 +341,7 @@ function EmailStatus({ profile, verified, readCurrent, refetch, onExpired, feedb
       <span className={classes.missingChip} data-tone="required">Sin verificar</span>
       <span><Link className={classes.detailLink} to="/reenviar-verificacion" state={{ email: profile.email }}>Reenviar verificación de correo</Link></span>
     </span>}
-    {profile.pendingEmail && <PendingEmailChange profile={profile} readCurrent={readCurrent} refetch={refetch} onExpired={onExpired} feedback={feedback} onResult={onResult} />}
+    {profile.pendingEmail && <PendingEmailChange profile={profile} readCurrent={readCurrent} refetch={refetch} onExpired={onExpired} feedback={feedback} lifetime={lifetime} onResult={onResult} />}
   </>;
 }
 
@@ -308,7 +351,7 @@ function EmailStatus({ profile, verified, readCurrent, refetch, onExpired, feedb
  * delivered), the address, one sentence on what happens next, then the actions that belong to this change only.
  * The address in use is the row's value above it, tagged "En uso"; nothing else on the page talks about the change.
  */
-function PendingEmailChange({ profile, readCurrent, refetch, onExpired, feedback, onResult }: Omit<EmailStatusProps, "verified">) {
+function PendingEmailChange({ profile, readCurrent, refetch, onExpired, feedback, lifetime, onResult }: Omit<EmailStatusProps, "verified">) {
   const [busy, setBusy] = useState<"resend" | "cancel" | null>(null);
   const pending = profile.pendingEmail!;
   const undeliverable = pending.delivery === "UNDELIVERABLE";
@@ -339,7 +382,8 @@ function PendingEmailChange({ profile, readCurrent, refetch, onExpired, feedback
       {!undeliverable && <button type="button" className={classes.changeAction} aria-disabled={busy !== null || undefined} onClick={() => void act("resend")}>{busy === "resend" ? "Reenviando…" : "Reenviar enlace"}</button>}
       <button type="button" className={classes.changeAction} aria-disabled={busy !== null || undefined} onClick={() => void act("cancel")}>{busy === "cancel" ? "Cancelando…" : "Cancelar cambio"}</button>
     </span>}
-    {feedback && <span className={`${classes.changeFeedback} ${feedback.error ? classes.feedbackError : ""}`} role={feedback.error ? "alert" : "status"}>
+    {feedback && <span className={`${classes.changeFeedback} ${feedback.error ? classes.feedbackError : ""}`} role={feedback.error ? "alert" : "status"}
+      data-leaving={lifetime.leaving || undefined} onPointerEnter={lifetime.onPointerEnter} onPointerLeave={lifetime.onPointerLeave}>
       <MaterialSymbol name={feedback.error ? "info" : "check_circle"} aria-hidden="true" size={16} />{feedback.message}
     </span>}
   </span>;
@@ -561,15 +605,13 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
       aria-invalid={Boolean(errors.email) || undefined} aria-describedby={errors.email ? `${emailId}-error` : `${emailId}-note`}
       onChange={(event) => { setEmail(event.target.value); setErrors(current => ({ ...current, email: undefined })); }} />
     {errors.email && <FieldMessage id={`${emailId}-error`} tone="error">{errors.email}</FieldMessage>}
-    {!errors.email && <p className={classes.inlineNote} id={`${emailId}-note`}>Te enviaremos un enlace a la dirección nueva. Tu correo actual sigue en uso hasta que lo confirmes.</p>}
+    {/* One line, the one thing to know before Guardar. That the address in use stays is said by the change's own
+        inset once requested; that sessions close is said where it happens, on confirmation. */}
+    {!errors.email && <p className={classes.inlineNote} id={`${emailId}-note`}>Te enviaremos un enlace a esa dirección.</p>}
     <label className={classes.subLabel} htmlFor={passwordId}>Contraseña actual</label>
     <PasswordInput ref={passwordRef} id={passwordId} className={classes.input} autoComplete="current-password" value={password}
       aria-invalid={Boolean(errors.password) || undefined} aria-describedby={errors.password ? `${passwordId}-error` : undefined}
       onChange={(event) => { setPassword(event.target.value); setErrors(current => ({ ...current, password: undefined })); }} />
     {errors.password && <FieldMessage id={`${passwordId}-error`} tone="error">{errors.password}</FieldMessage>}
-    <details className={classes.securityDisclosure}>
-      <summary>Seguridad del cambio</summary>
-      <p>Te pedimos tu contraseña para proteger tu cuenta. También avisaremos a tu correo actual, desde donde se puede cancelar el cambio. Al confirmar la dirección nueva cerraremos tus sesiones y entrarás con ella.</p>
-    </details>
   </EditorFrame>;
 }

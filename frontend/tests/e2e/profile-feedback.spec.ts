@@ -88,22 +88,23 @@ for (const width of [320, 768, 1280]) for (const theme of ["light", "dark"]) {
     await page.goto("/account");
     await page.getByRole("button", { name: "Editar correo electrónico", exact: true }).click();
     const email = page.getByRole("form", { name: "Cambiar correo electrónico" });
-    await expect(email.getByText("Te enviaremos un enlace a la dirección nueva. Tu correo actual sigue en uso hasta que lo confirmes.")).toBeVisible();
+    await expect(email.getByText("Te enviaremos un enlace a esa dirección.")).toBeVisible();
+    await expect(email.locator("details")).toHaveCount(0);
     await expect(email.getByText("Cambios sin guardar", { exact: true })).toHaveCount(0);
     await email.getByLabel("Nuevo correo").fill("nueva@example.invalid");
     await email.getByLabel("Contraseña actual").fill("synthetic-incorrect-password");
     await email.getByRole("button", { name: "Guardar", exact: true }).click();
     await expect(email.getByLabel("Contraseña actual")).toHaveAttribute("aria-invalid", "true");
     await expect(email.locator(".field-error:visible")).toHaveCount(1);
-    await expect(email.getByRole("group", { name: "Acciones de edición" }).getByRole("status")).toContainText("Cambios sin guardar");
-    await expect(email.locator("details")).not.toHaveAttribute("open");
+    // The draft state closes the fields column, aligned with their text; Guardar/Cancelar keep their slot alone.
+    const actions = email.getByRole("group", { name: "Acciones de edición" });
+    await expect(actions.getByText("Cambios sin guardar")).toHaveCount(0);
+    const notice = email.getByRole("status").filter({ hasText: "Cambios sin guardar" });
+    await expect(notice).toBeVisible();
+    const [noticeBox, passwordBox, actionsBox] = await Promise.all([notice.boundingBox(), email.getByLabel("Contraseña actual").boundingBox(), actions.boundingBox()]);
+    expect(noticeBox!.y).toBeGreaterThan(passwordBox!.y + passwordBox!.height - 1);
+    if (width >= 640) expect(noticeBox!.x + noticeBox!.width).toBeLessThanOrEqual(actionsBox!.x);
     await page.screenshot({ path: `/tmp/pliego-ihc-email-${width}-${theme}.png`, fullPage: true });
-    await email.getByText("Seguridad del cambio", { exact: true }).click();
-    // The disclosure names the recovery path (the current address can cancel) and when sessions close (on confirmation).
-    await expect(email.getByText(/avisaremos a tu correo actual, desde donde se puede cancelar el cambio/)).toBeVisible();
-    await expect(email.getByText(/Al confirmar la dirección nueva cerraremos tus sesiones/)).toBeVisible();
-    await email.locator("summary").press("Enter");
-    await expect(email.locator("details")).not.toHaveAttribute("open");
     expect(writes.filter(write => write.path === "/me/email")).toHaveLength(1);
     await email.getByRole("button", { name: "Cancelar", exact: true }).click();
 

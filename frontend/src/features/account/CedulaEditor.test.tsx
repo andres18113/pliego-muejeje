@@ -84,9 +84,10 @@ it("states a request in review in one quiet line and leads to it, with nothing t
   expect(await screen.findByText("0912345675")).toBeVisible();
   expect(within(row()).getByText("En revisión")).toBeVisible();
   expect(within(row()).queryByText(/Pediste cambiarla a/)).toBeNull();
-  // The requested number is the info toggletip's description, heard unopened and shown on hover, focus or press.
-  const info = within(row()).getByRole("button", { name: "Detalles de la corrección en revisión" });
-  await waitFor(() => expect(info).toHaveAccessibleDescription(/Cédula solicitada\s*1710034065/));
+  // One icon and nothing hidden: the status says when we answer; what was asked lives on the request's page.
+  expect(within(row()).getByText(/Respuesta antes del 9 nov 2026/)).toBeVisible();
+  expect(within(row()).queryByRole("button", { name: /Detalles/ })).not.toBeInTheDocument();
+  expect(within(row()).queryByText("1710034065")).not.toBeInTheDocument();
   expect(screen.getByRole("link", { name: "Ver solicitud de corrección de la cédula o RUC" })).toHaveAttribute("href", "/account/identity");
   expect(screen.queryByRole("button", { name: /Retirar/ })).not.toBeInTheDocument();
   expect(screen.queryByRole("link", { name: "Corregir cédula o RUC" })).not.toBeInTheDocument();

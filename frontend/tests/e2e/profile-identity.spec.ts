@@ -146,16 +146,12 @@ for (const width of [320, 768, 1280]) {
     await expect(sheet.getByText("En revisión")).toBeVisible();
     await expect(sheet.getByRole("button", { name: /Retirar/ })).toHaveCount(0);
     await page.screenshot({ path: testInfo.outputPath(`profile-request-pending-${width}.png`), fullPage: true });
-    // The requested number lives in the chip's info toggletip: shown on hover, inside the viewport, closed by Escape.
+    // One icon and nothing hidden: the status says when we answer; the requested number lives on the request's page.
     await expect(sheet.getByText(/Pediste cambiarla/)).toHaveCount(0);
-    await sheet.getByRole("button", { name: "Detalles de la corrección en revisión" }).hover();
-    const tip = page.getByRole("tooltip").filter({ hasText: "Cédula solicitada" });
-    await expect(tip).toBeVisible();
-    await expect(tip).toContainText("1710034065");
+    await expect(sheet.getByText(/Respuesta antes del/)).toBeVisible();
+    await expect(sheet.getByRole("button", { name: /Detalles/ })).toHaveCount(0);
+    await expect(sheet.getByText("1710034065")).toHaveCount(0);
     expect(await fitsWidth(page)).toBe(true);
-    await page.screenshot({ path: testInfo.outputPath(`profile-request-info-${width}.png`) });
-    await page.keyboard.press("Escape");
-    await expect(tip).toBeHidden();
     await page.getByRole("link", { name: "Ver solicitud de corrección de la cédula o RUC" }).click();
 
     const withdraw = page.getByRole("button", { name: "Retirar solicitud", exact: true });

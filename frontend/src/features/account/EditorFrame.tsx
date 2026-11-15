@@ -18,17 +18,16 @@ export function EditorFrame({ label, onSubmit, onCancel, saving, saved, children
     <div className={classes.inlineFields}>
       {children}
       {error && <p className={`${classes.feedback} ${classes.feedbackError}`} role="alert"><MaterialSymbol name="info" aria-hidden="true" size={16} />{error}</p>}
+      {/* The draft's state belongs to what was typed: the last helper line of the fields, aligned with their text,
+          never under the actions (where it would push Guardar/Cancelar off their line). */}
+      {notice && !saving && <p className={classes.draftNotice} role="status">{notice}</p>}
     </div>
-    <div className={classes.inlineActionGroup} role="group" aria-label="Acciones de edición">
-      <div className={classes.inlineActions}>
-        <button type="submit" className={classes.save} aria-disabled={saving || blocked || undefined} aria-busy={saving || undefined}>
-          <TransactionButtonLabel state={saving ? "pending" : saved ? "success" : "idle"} idle={submit.idle} pending={submit.pending} success={submit.success} />
-        </button>
-        <button type="button" className={classes.cancel} aria-disabled={saving || undefined} onClick={() => { if (!saving) onCancel(); }}>Cancelar</button>
-      </div>
-      {(saving || notice) && <p className={saving ? "visually-hidden" : classes.draftNotice} role="status">
-        {saving ? "Guardando cambios." : <><MaterialSymbol name="edit" size={14} aria-hidden="true" />{notice}</>}
-      </p>}
+    <div className={classes.inlineActions} role="group" aria-label="Acciones de edición">
+      <button type="submit" className={classes.save} aria-disabled={saving || blocked || undefined} aria-busy={saving || undefined}>
+        <TransactionButtonLabel state={saving ? "pending" : saved ? "success" : "idle"} idle={submit.idle} pending={submit.pending} success={submit.success} />
+      </button>
+      <button type="button" className={classes.cancel} aria-disabled={saving || undefined} onClick={() => { if (!saving) onCancel(); }}>Cancelar</button>
+      {saving && <span className="visually-hidden" role="status">Guardando cambios.</span>}
     </div>
   </form>;
 }
