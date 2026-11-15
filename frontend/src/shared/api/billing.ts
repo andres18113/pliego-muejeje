@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { identificationError, identificationType, isValidIdentification, normalizeIdentification } from "@/shared/validation/identification";
-import { personNameError } from "@/shared/validation/person";
+import { personNameError } from "@/shared/validation/personName";
 import { apiClient } from "./client";
 import { toApiRequestError } from "./errors";
 

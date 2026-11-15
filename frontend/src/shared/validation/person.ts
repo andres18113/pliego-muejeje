@@ -2,33 +2,12 @@ import { z } from "zod";
 import { parsePhoneNumberFromString } from "libphonenumber-js/max";
 import rules from "../../../../shared/validation/person-rules.json";
 
-const namePattern = new RegExp(rules.namePattern, "u");
+export * from "./personName";
+
 const spaces = new RegExp(rules.spaceSeparatorPattern, "gu");
 const outerWhitespace = new RegExp(rules.outerWhitespacePattern, "gu");
 const phonePresentation = new RegExp(rules.phonePresentationPattern);
 const canonicalPhone = new RegExp(rules.canonicalPhonePattern);
-export const maxRecipientLength = rules.maxRecipientCodePoints;
-export const recipientEmptyMessage = rules.messages.recipientEmpty;
-export const recipientTooLongMessage = rules.messages.recipientTooLong;
-
-export function normalizePersonName(value: string) {
-  return value.normalize("NFC").replace(spaces, " ").replace(outerWhitespace, "");
-}
-
-export function personNameError(value: string, label: "nombres" | "apellidos") {
-  const normalized = normalizePersonName(value);
-  const message = !normalized ? rules.messages.nameEmpty
-    : [...normalized].length > rules.maxNameCodePoints ? rules.messages.nameTooLong
-    : !namePattern.test(normalized) ? rules.messages.nameCharacters : null;
-  return message?.replace("{label}", label) ?? null;
-}
-
-export const personNameSchema = (label: "nombres" | "apellidos") => z.string()
-  .transform(normalizePersonName)
-  .superRefine((value, context) => {
-    const message = personNameError(value, label);
-    if (message) context.addIssue({ code: "custom", message });
-  });
 
 export function normalizePhonePresentation(value: string) {
   const normalized = value.replace(spaces, " ").replace(outerWhitespace, "");
@@ -61,20 +40,7 @@ export function phoneError(value: string, required = false) {
     ? null : rules.messages.phoneInvalid;
 }
 
-/** Allow partial names while editing, preserving the pinned Unicode repertoire. */
-export function personNameInputError(value: string, maxLength = rules.maxNameCodePoints) {
-  if ([...value.normalize("NFC")].length > maxLength) return `No puedes escribir más de ${maxLength} caracteres.`;
-  const letters = normalizePersonName(value).replace(/[ '’‐‑-]/gu, "");
-  return letters && !namePattern.test(letters) ? "Usa solo letras, espacios, apóstrofes y guiones." : null;
-}
-
 export const optionalPhoneSchema = z.string().superRefine((value, context) => {
   const message = phoneError(value);
   if (message) context.addIssue({ code: "custom", message });
 }).transform(normalizePhonePresentation);
-
-export function recipientError(value: string) {
-  if (!value.trim()) return recipientEmptyMessage;
-  if ([...normalizePersonName(value)].length > maxRecipientLength) return recipientTooLongMessage;
-  return namePattern.test(normalizePersonName(value)) ? null : rules.messages.recipientCharacters;
-}

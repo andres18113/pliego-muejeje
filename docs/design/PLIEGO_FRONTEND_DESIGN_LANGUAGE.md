@@ -18,7 +18,7 @@ accent, big confident type, and real books as the product evidence.
 | Quiet neutral `#ecebe4` | Stages behind covers, hover rows, footer ground. | `--home-quiet` (Home) |
 | Bricolage Grotesque | Expressive display: headlines, book titles in scenes, prices in scenes, wordmark. Tight tracking (≈ −0.04 to −0.055em), short line-height. | `--store-display` |
 | Roboto Flex | Everything functional: body, labels, metadata, controls. | Mantine theme `fontFamily` |
-| Material Symbols | All interface icons. Only names in `MaterialSymbolName` exist in the subset. | `shared/ui/MaterialSymbol` |
+| Material Symbols | All interface icons. Only names in `MaterialSymbolName` exist in the self-hosted subset (`src/assets/fonts/material-symbols-outlined.woff2`, preloaded by `index.html`); after adding or removing a name run `node scripts/update-material-symbols.mjs` from `frontend/`. | `shared/ui/MaterialSymbol` |
 | Mantine | Component foundation (Buttons, ActionIcon, Modal, Menu, Skeleton…), restyled with CSS modules. | `theme/pliegoTheme.ts` |
 
 **The logo.** A folded-sheet P — ultramar body, one yellow folded corner — beside the ultramar Bricolage wordmark.
