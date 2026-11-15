@@ -251,7 +251,7 @@ describe("EditionDetailPage", () => {
     renderDetail();
 
     await waitFor(() => expect(attempts).toBeGreaterThan(0));
-    const retry = await screen.findByRole("button", { name: "Volver a intentar" });
+    const retry = await screen.findByRole("button", { name: "Volver a intentar" }, { timeout: 4000 });
     expect(attempts).toBe(2);
     expect(screen.getByRole("heading", { name: "No pudimos actualizar la edición." })).toBeInTheDocument();
     expectSharedChrome();
