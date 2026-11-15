@@ -54,7 +54,7 @@ function CartAction() {
 function FavoriteAction() {
   const { session } = useSession();
   const control = useFavoriteControl({ editionId: "42", isFavorite: false, ready: true,
-    queryKey: ["customer-favorite-status", session?.user.userId, ["42"]], returnHref: "/catalog", onFeedback: () => undefined });
+    queryKey: ["customer-favorite-status", session?.user.userId, ["42"]], returnHref: "/catalog", onFeedback: () => undefined, confirmation: { kind: "inline" } });
   return <button type="button" onClick={"onPress" in control ? control.onPress : undefined}>Guardar favorito</button>;
 }
 

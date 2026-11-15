@@ -48,7 +48,7 @@ export function FavoriteRow({ edition, detailHref, returnHref, queryKey, onRemov
   const confirmedQuantity = confirmedAdd && confirmedAdd.scope === scope && cartQuery.dataUpdatedAt <= confirmedAdd.readAt
     ? confirmedAdd.quantity : cartQuery.data?.items.find(line => line.editionId === book.id)?.quantity ?? 0;
   const digitalInCart = isDigitalFormat(edition.format) && confirmedQuantity >= 1;
-  const favorite = useFavoriteControl({ editionId: book.id, isFavorite: true, ready: true, queryKey, returnHref, onFeedback: setFeedback, onChanged: (saved) => { if (!saved) onRemoved?.(); } });
+  const favorite = useFavoriteControl({ editionId: book.id, isFavorite: true, ready: true, queryKey, returnHref, onFeedback: setFeedback, confirmation: { kind: "inline" }, onChanged: (saved) => { if (!saved) onRemoved?.(); } });
   const cart = useCartControl({ editionId: book.id, available: book.available, format: edition.format, returnHref, onFeedback: cartFeedback, quantity: cartQuantity, onConfirmedAddition: addition => {
     setConfirmedAdd({ scope, quantity: addition.quantity, readAt: cartQuery.dataUpdatedAt });
     onCartConfirmed?.(addition);

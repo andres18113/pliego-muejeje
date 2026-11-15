@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { CartPreviewProvider } from "@/features/purchase/CartPreview";
+import { FavoriteSnackbar } from "@/features/favorites/favoriteSnackbar";
 import { Outlet, RouterProvider, ScrollRestoration, createBrowserRouter, isRouteErrorResponse, redirect, useLocation, useNavigation, useNavigationType, useRouteError } from "react-router-dom";
 import { CatalogHomePage } from "@/features/catalog/CatalogHomePage";
 import { SiteHeader } from "./navigation/SiteHeader";
@@ -277,6 +278,7 @@ function ApplicationLayout() {
       {showRoutePending && <div className="route-pending" role="status" aria-live="polite">{label}</div>}
       {purchaseFocused ? <PurchaseHeader /> : <SiteHeader />}
       <CartPreviewProvider><Outlet /></CartPreviewProvider>
+      <FavoriteSnackbar />
       <ScrollRestoration />
     </>
   );

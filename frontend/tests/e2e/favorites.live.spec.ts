@@ -187,7 +187,7 @@ test("reconciles a lost successful DELETE using the real authoritative favorite 
   });
   await remove.focus(); await page.keyboard.press("Enter");
   await expect(card.getByRole("button", { name: `Agregar a favoritos: ${edition.title}` })).toHaveAttribute("aria-pressed", "false");
-  await expect(card.locator("[data-bookcard-feedback]")).toContainText("Quitado de favoritos.");
+  await expect(page.locator("[data-undo-toast]")).toContainText("Quitado de favoritos");
   const state = await (await request.get(`${api}/me/favorites/status?editionIds=${edition.editionId}`, { headers: { Authorization: `Bearer ${login.accessToken}` } })).json();
   expect(state).toEqual([{ editionId: edition.editionId, favorite: false }]);
   expect(deletes).toBe(1);

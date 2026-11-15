@@ -27,7 +27,7 @@ test("lost successful favorite response reconciles the server result once", asyn
   const favorite = page.locator(".edition-item").first().locator("[data-bookcard-favorite]");
   await favorite.focus(); await page.keyboard.press("Enter");
   await expect(favorite).toHaveAttribute("aria-pressed", "false");
-  await expect(page.locator(".edition-item").first().getByRole("status")).toContainText("Quitado de favoritos.");
+  await expect(page.locator("[data-undo-toast]")).toContainText("Quitado de favoritos");
   expect(deletes).toBe(1); expect(reads).toBeGreaterThan(1);
 });
 test("keyboard removal moves focus to a surviving row then the empty heading", async ({ page }) => {

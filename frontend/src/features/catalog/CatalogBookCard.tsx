@@ -20,14 +20,14 @@ export function CatalogBookCard(props: CatalogBookCardProps) {
 function BrowseBookCard({ edition, detailHref, returnHref, isFavorite, favoriteReady, favoriteQueryKey, catalogReturn = false, showEdition = false, media, onOpen }: CatalogBookCardProps) {
   const [feedback, setFeedback] = useState<BookCardFeedback | null>(null);
   const book = toBookCardData(edition);
-  const favorite = useFavoriteControl({ editionId: book.id, isFavorite, ready: favoriteReady, queryKey: favoriteQueryKey, returnHref, onFeedback: setFeedback });
+  const favorite = useFavoriteControl({ editionId: book.id, isFavorite, ready: favoriteReady, queryKey: favoriteQueryKey, returnHref, onFeedback: setFeedback, confirmation: { kind: "snackbar", title: book.title } });
   return <BookCard book={book} to={detailHref} navigationState={bookCardNavigationState(book, catalogReturn, mediaOfFormat(edition.format))} onNavigate={onOpen} favorite={favorite} feedback={feedback} showEdition={showEdition} media={media} />;
 }
 
 function PurchasableBookCard({ edition, detailHref, returnHref, isFavorite, favoriteReady, favoriteQueryKey, catalogReturn = false, showEdition = false, onOpen }: CatalogBookCardProps) {
   const [feedback, setFeedback] = useState<BookCardFeedback | null>(null);
   const book = toBookCardData(edition);
-  const favorite = useFavoriteControl({ editionId: book.id, isFavorite, ready: favoriteReady, queryKey: favoriteQueryKey, returnHref, onFeedback: setFeedback });
+  const favorite = useFavoriteControl({ editionId: book.id, isFavorite, ready: favoriteReady, queryKey: favoriteQueryKey, returnHref, onFeedback: setFeedback, confirmation: { kind: "snackbar", title: book.title } });
   const cart = useCartControl({ editionId: book.id, available: book.available, format: edition.format, returnHref, onFeedback: setFeedback });
   return <BookCard book={book} to={detailHref} navigationState={bookCardNavigationState(book, catalogReturn, mediaOfFormat(edition.format))} onNavigate={onOpen} favorite={favorite} cart={cart} feedback={feedback} showEdition={showEdition} />;
 }

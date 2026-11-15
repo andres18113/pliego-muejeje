@@ -15,7 +15,7 @@ export function FavoriteButton({ editionId, title, isFavorite, ready, queryKey, 
 }) {
   const uid = useId();
   const [feedback, setFeedback] = useState<BookCardFeedback | null>(null);
-  const control = useFavoriteControl({ editionId, isFavorite, ready, queryKey, returnHref, onFeedback: setFeedback });
+  const control = useFavoriteControl({ editionId, isFavorite, ready, queryKey, returnHref, onFeedback: setFeedback, confirmation: { kind: "snackbar", title } });
   const selected = "selected" in control ? control.selected : undefined;
   const label = favoriteActionLabel(control);
   const common = {

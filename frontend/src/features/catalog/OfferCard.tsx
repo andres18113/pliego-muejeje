@@ -29,7 +29,7 @@ export function OfferCard({ edition, detailHref, returnHref, isFavorite, favorit
   const [feedback, setFeedback] = useState<BookCardFeedback | null>(null);
   const book = toBookCardData(edition);
   const media = mediaOfFormat(edition.format);
-  const favorite = useFavoriteControl({ editionId: book.id, isFavorite, ready: favoriteReady, queryKey: favoriteQueryKey, returnHref, onFeedback: setFeedback });
+  const favorite = useFavoriteControl({ editionId: book.id, isFavorite, ready: favoriteReady, queryKey: favoriteQueryKey, returnHref, onFeedback: setFeedback, confirmation: { kind: "snackbar", title: book.title } });
   const favoriteLabel = favoriteActionLabel(favorite);
   const selected = "selected" in favorite ? favorite.selected : undefined;
   const reason = "reason" in favorite && favorite.reason !== feedback?.message ? favorite.reason : null;
