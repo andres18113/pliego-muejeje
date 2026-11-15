@@ -32,6 +32,10 @@ def literal(value):
     return "'" + str(value).replace("'", "''") + "'"
 
 
+# Public sitemap scans (JdbcSitemapGateway): measured like the catalog/help reads they page through.
+SITEMAP_PAGE_QUERIES = {"JdbcSitemapGateway.fn_catalog_search", "JdbcSitemapGateway.fn_help_search"}
+
+
 def gateway_queries():
     """Read Java strings so changing a gateway cannot leave an old copy green."""
     excluded = {"JdbcAdminCatalogGateway", "JdbcAdminCustomerGateway",
@@ -238,6 +242,9 @@ def cases(data):
         function = re.search(r"pliego\.(fn_\w+)", sql)[1]
         if name.endswith(".offers"):
             params = search[:8] + [null, "'RELEVANCE'", "0", "20"]
+        elif name in SITEMAP_PAGE_QUERIES:
+            # The sitemap pages the anonymous catalog/help listing; its only parameter is the page number.
+            params = ["0"]
         else:
             params = bindings[function].copy()  # Fail closed on an unreviewed new SELECT.
             if name.endswith(".product_type"):

@@ -12,8 +12,8 @@ import com.pliego.foundation.database.JdbcGatewaySupport;
 /** Projects identifiers from the same public API as anonymous catalog/help reads. */
 @Repository
 public class JdbcSitemapGateway extends JdbcGatewaySupport implements SitemapGateway {
-    static final String EDITIONS = "SELECT edition_id::text AS key, total_count FROM "
-            + "pliego.fn_catalog_search(NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'TITLE_ASC',?,50,NULL)";
+    // One literal per query: the PostgreSQL plan gate reads gateway SQL from source and binds it by name.
+    static final String EDITIONS = "SELECT edition_id::text AS key, total_count FROM pliego.fn_catalog_search(NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'TITLE_ASC',?,50,NULL)";
     static final String HELP = "SELECT slug AS key, total_count FROM pliego.fn_help_search(NULL,NULL,NULL,?,50)";
     private final JdbcTemplate jdbc;
 
