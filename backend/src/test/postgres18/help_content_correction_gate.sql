@@ -1,4 +1,4 @@
--- PostgreSQL 18, Flyway through V087. Read-only Help correction contract.
+-- PostgreSQL 18, Flyway through V107. Read-only Help correction contract.
 BEGIN;
 DO $gate$
 BEGIN
@@ -26,7 +26,7 @@ BEGIN
 
  IF NOT EXISTS (
   SELECT 1 FROM pliego.fn_help_article('cedula-o-ruc') article
-  WHERE position('Te respondemos en un plazo de 15 días. Mientras tanto, tu solicitud aparece como En revisión.' IN article.body)>0
+  WHERE position('Te respondemos en un plazo de 15 días. Mientras tanto, tu solicitud aparece como «En revisión».' IN article.body)>0
  ) THEN RAISE EXCEPTION 'Cédula o RUC Help response-time copy was not restored'; END IF;
 END $gate$;
 ROLLBACK;

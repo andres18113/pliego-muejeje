@@ -1,4 +1,4 @@
--- PostgreSQL 18, Flyway through V087. All fixtures roll back.
+-- PostgreSQL 18, Flyway through V107. All fixtures roll back.
 BEGIN;
 CREATE FUNCTION pg_temp.purchase(p_customer BIGINT,p_edition BIGINT,p_at TIMESTAMPTZ,p_quantity INTEGER DEFAULT 1,
  p_payment VARCHAR DEFAULT 'APPROVED',p_order_state VARCHAR DEFAULT 'CONFIRMED') RETURNS BIGINT LANGUAGE plpgsql AS $$
@@ -107,12 +107,12 @@ BEGIN
  IF NOT EXISTS(SELECT 1 FROM pliego.fn_help_article('cedula-o-ruc') a
   WHERE a.slug='cedula-o-ruc' AND a.category_slug='cedula-o-ruc' AND a.title='Cédula o RUC'
    AND a."position"=10 AND a.applicability='GENERAL') THEN RAISE EXCEPTION 'Cédula o RUC Help article metadata is incorrect'; END IF;
- -- V087 records the checksum-drift correction, while the full copy below remains the V086 contract.
+ -- V087 records the checksum-drift correction, while the full copy below includes subsequent migrations.
  IF NOT EXISTS (
   SELECT 1 FROM public.flyway_schema_history
   WHERE version='087' AND description='restore committed help guidance' AND success
  ) THEN RAISE EXCEPTION 'V087 Help copy restoration was not recorded by Flyway'; END IF;
- -- Exact summaries and bodies persisted by committed V086 and restored by V087.
+ -- Exact summaries and bodies after V107.
  IF EXISTS (
   SELECT 1
   FROM (VALUES
@@ -130,7 +130,7 @@ No. Cada cuenta tiene una sola copia de cada eBook. Si ya lo tienes, la página 
 
 ## ¿Y si cancelo el pedido?
 
-El eBook sale de Mi biblioteca. El pedido cancelado y su reembolso siguen en [Mis pedidos](/orders). Mira cuándo puedes cancelar en [Cancelaciones y reembolsos](/ayuda/cancelaciones-y-reembolsos).$expected_ebooks$),
+El eBook sale de [Mi biblioteca](/biblioteca). El pedido cancelado y su reembolso siguen en [Mis pedidos](/orders). Mira cuándo puedes cancelar en [Cancelaciones y reembolsos](/ayuda/cancelaciones-y-reembolsos).$expected_ebooks$),
   ('audiolibros','Dónde encuentras los audiolibros que compras y qué incluye tu compra.',$expected_audiolibros$## ¿Dónde está mi audiolibro?
 
 Aparece en [Mi biblioteca](/biblioteca) en cuanto haces el pedido. Entra con la misma cuenta con la que compraste.
@@ -141,7 +141,7 @@ No. PLIEGO registra el audiolibro en tu cuenta, pero no incluye un reproductor n
 
 ## ¿Cuánto dura y quién lo narra?
 
-En la página del audiolibro, Formato muestra su duración y Narración dice quién lo narra.
+En la página del audiolibro, «Formato» muestra su duración y «Narración» dice quién lo narra.
 
 ## ¿Puedo comprarlo dos veces?
 
@@ -149,16 +149,16 @@ No. Cada cuenta tiene una sola copia de cada audiolibro. Si ya lo tienes, la pá
 
 ## ¿Y si cancelo el pedido?
 
-El audiolibro sale de Mi biblioteca. El pedido cancelado y su reembolso siguen en [Mis pedidos](/orders). Mira cuándo puedes cancelar en [Cancelaciones y reembolsos](/ayuda/cancelaciones-y-reembolsos).$expected_audiolibros$),
+El audiolibro sale de [Mi biblioteca](/biblioteca). El pedido cancelado y su reembolso siguen en [Mis pedidos](/orders). Mira cuándo puedes cancelar en [Cancelaciones y reembolsos](/ayuda/cancelaciones-y-reembolsos).$expected_audiolibros$),
   ('compras','Cómo hacer un pedido, qué necesitas y dónde ves tu factura.',$expected_compras$## Cómo hacer un pedido
 
 Necesitas iniciar sesión y tener tu cédula o RUC en [Mi perfil](/account).
 
-1. Agrega libros a tu [carrito](/cart) y selecciona Continuar con la compra.
-2. Para libros impresos, elige Entrega a domicilio o Retiro en tienda.
+1. Agrega libros a tu [carrito](/cart) y selecciona «Continuar con la compra».
+2. Para libros impresos, elige «Entrega a domicilio» o «Retiro en tienda».
 3. Revisa a nombre de quién sale la factura.
 4. Elige cómo pagar: tarjeta o transferencia bancaria.
-5. Selecciona Hacer pedido.
+5. Selecciona «Hacer pedido».
 
 Te enviamos un correo de confirmación y el pedido aparece en [Mis pedidos](/orders).
 
@@ -168,33 +168,33 @@ Puedes combinarlos. Los eBooks y audiolibros aparecen en [Mi biblioteca](/biblio
 
 ## Tu factura
 
-Sale a tu nombre con tu cédula o RUC. Para hacerla a nombre de otra persona o empresa, elige Otra persona o empresa al finalizar la compra; tu perfil no cambia.
+Sale a tu nombre con tu cédula o RUC. Para hacerla a nombre de otra persona o empresa, al finalizar la compra selecciona «Cambiar datos de factura» y elige «Otra persona o empresa»; tu perfil no cambia.
 
-Cuando está lista, te avisamos por correo y en el detalle del pedido aparece Ver factura. Es un comprobante de compra en PDF, sin validez tributaria.$expected_compras$),
+Cuando está lista, te avisamos por correo y en el detalle del pedido aparece «Ver factura». Es un comprobante de compra en PDF, sin validez tributaria.$expected_compras$),
   ('entrega-a-domicilio','Cómo recibir tus libros impresos en casa y seguir tu envío.',$expected_entrega_a_domicilio$## Dónde y cuánto cuesta
 
 Entregamos libros impresos en Ecuador, en las ciudades que puedes elegir al guardar tu dirección. El envío es gratis.
 
 ## Cómo pedirlo
 
-1. Al finalizar la compra, elige Entrega a domicilio.
+1. Al finalizar la compra, elige «Entrega a domicilio».
 2. Elige una de tus direcciones o agrega una nueva: provincia, ciudad, dirección, quién recibe y un teléfono.
-3. Revisa la dirección y selecciona Hacer pedido.
+3. Revisa la dirección y selecciona «Hacer pedido».
 
 Después de hacer el pedido, su dirección ya no se puede cambiar. Tus direcciones guardadas se editan en [Direcciones](/account/addresses).
 
 ## Sigue tu envío
 
-En [Mis pedidos](/orders) ves en qué etapa está: Pedido confirmado, En preparación, En camino, En reparto y Entregado. Te avisamos por correo cuando cambia de etapa, y el detalle del pedido guarda el historial del envío.
+En [Mis pedidos](/orders) ves en qué etapa está: «Pedido confirmado», «En preparación», «En camino», «En reparto» y «Entregado». Te avisamos por correo cuando cambia de etapa, y el detalle del pedido guarda el historial del envío.
 
 ## Cancelar
 
-Puedes cancelarlo mientras está En preparación, desde el detalle del pedido. Después ya está en camino y no se puede cancelar.$expected_entrega_a_domicilio$),
+Puedes cancelarlo mientras está «En preparación», desde el detalle del pedido. Cuando pasa a «En camino», ya no se puede cancelar.$expected_entrega_a_domicilio$),
   ('retiro','Cómo elegir un punto de retiro y recoger tu pedido.',$expected_retiro$## Cómo pedirlo
 
-1. Al finalizar la compra, elige Retiro en tienda.
+1. Al finalizar la compra, elige «Retiro en tienda».
 2. Elige un punto de la lista: verás su dirección y su horario de atención.
-3. Selecciona Hacer pedido.
+3. Selecciona «Hacer pedido».
 
 El retiro es para libros impresos. Si el pedido también tiene eBooks o audiolibros, esos aparecen en [Mi biblioteca](/biblioteca).
 
@@ -202,13 +202,13 @@ El retiro es para libros impresos. Si el pedido también tiene eBooks o audiolib
 
 Los pedidos nuevos están listos 10 minutos después de aprobarse el pago: 6 minutos para cancelar y 4 minutos adicionales de preparación. Si el punto está cerrado al cumplirse ese plazo, puedes retirarlo desde la próxima apertura. El retiro solo está disponible dentro del horario del punto.
 
-En el detalle del pedido, en [Mis pedidos](/orders), ves la hora de retiro y tu código, que empieza con P-. Te avisamos por correo cuando está listo. Los pedidos anteriores conservan la hora indicada en su detalle.
+En el detalle del pedido, en [Mis pedidos](/orders), ves la hora de retiro y tu código, que empieza con «P-». Te avisamos por correo cuando está listo. Los pedidos anteriores conservan la hora indicada en su detalle.
 
-Ve al punto dentro de su horario de atención y presenta el código y tu documento de identidad. Cuando lo recoges, el pedido pasa a Retirado y recibes una confirmación por correo.
+Ve al punto dentro de su horario de atención y presenta el código y tu documento de identidad. Cuando lo recoges, el pedido pasa a «Retirado» y recibes una confirmación por correo.
 
 ## Cancelar
 
-Tienes 6 minutos desde que se aprueba el pago para cancelarlo, desde su detalle en Mis pedidos.$expected_retiro$),
+Tienes 6 minutos desde que se aprueba el pago para cancelarlo, desde su detalle en [Mis pedidos](/orders).$expected_retiro$),
   ('pagos','Con qué puedes pagar y cómo hacerlo con tarjeta o transferencia.',$expected_pagos$## Formas de pago
 
 - Tarjeta de crédito o débito: Visa, Mastercard, American Express o Diners Club.
@@ -218,16 +218,16 @@ Los precios están en dólares estadounidenses. Los libros tienen IVA 0 %.
 
 ## Pagar con tarjeta
 
-1. En Finalizar compra, elige Tarjeta de crédito o débito.
-2. Escribe el número, la caducidad (MM/AA) y el código de seguridad, y selecciona Usar esta tarjeta.
-3. Selecciona Hacer pedido.
+1. En «Finalizar compra», elige «Tarjeta de crédito o débito».
+2. Escribe el número, la caducidad (MM/AA) y el código de seguridad, y selecciona «Usar esta tarjeta».
+3. Selecciona «Hacer pedido».
 
 ## Pagar por transferencia
 
-1. En Finalizar compra, elige Transferencia bancaria.
+1. En «Finalizar compra», elige «Transferencia bancaria».
 2. Copia los datos que aparecen: banco, número de cuenta, beneficiario, identificación, monto exacto y referencia.
 3. Transfiere el monto exacto e incluye la referencia.
-4. Selecciona Hacer pedido.
+4. Selecciona «Hacer pedido».
 
 ## ¿Dónde veo lo que pagué?
 
@@ -235,21 +235,21 @@ En el detalle de cada pedido, en [Mis pedidos](/orders): el método de pago, el 
   ('cancelaciones-y-reembolsos','Cuándo puedes cancelar un pedido y qué pasa con tu pago.',$expected_cancelaciones_y_reembolsos$## Cuándo puedes cancelar
 
 - Pedidos de eBooks, audiolibros o retiro en tienda: durante los primeros 6 minutos desde que se aprueba el pago.
-- Pedidos con entrega a domicilio: mientras están En preparación.
+- Pedidos con entrega a domicilio: mientras están «En preparación».
 
-Mientras puedes cancelar, el detalle del pedido muestra Cancelar pedido.
+Mientras puedes cancelar, el detalle del pedido muestra «Cancelar pedido».
 
 ## Cómo cancelar
 
 1. Abre el pedido en [Mis pedidos](/orders).
-2. Selecciona Cancelar pedido.
-3. Selecciona Confirmar cancelación.
+2. Selecciona «Cancelar pedido».
+3. Selecciona «Confirmar cancelación».
 
 Se cancela el pedido completo; no puedes cancelar solo algunos libros.
 
 ## Qué pasa después
 
-- Reembolsamos el total del pedido y el pago aparece como Reembolsado.
+- Reembolsamos el total del pedido y el pago aparece como «Reembolsado».
 - Los eBooks y audiolibros del pedido salen de [Mi biblioteca](/biblioteca).
 - Si el pedido ya tenía factura, verás en su detalle la nota de crédito que la anula.
 - Te avisamos por correo de la cancelación.$expected_cancelaciones_y_reembolsos$),
@@ -263,7 +263,7 @@ Al [crear tu cuenta](/register) te enviamos un enlace de verificación; ábrelo 
 2. Abre el enlace que te enviamos. Vale 15 minutos.
 3. Crea una contraseña nueva.
 
-Con la sesión iniciada, también puedes pedir ese enlace desde [Mi perfil](/account), con Cambiar en Contraseña.
+Con la sesión iniciada, también puedes pedir ese enlace desde [Mi perfil](/account), con «Cambiar» en «Contraseña».
 
 ## Cambiar tus datos
 
@@ -273,39 +273,64 @@ Para tu cédula o RUC, lee [Cédula o RUC](/ayuda/cedula-o-ruc).
 
 ## Tus compras son de tu cuenta
 
-Tus pedidos, facturas y Mi biblioteca están en la cuenta con la que compraste. Entra siempre con ese correo.$expected_cuenta_y_correo$),
+Tus pedidos, facturas y [Mi biblioteca](/biblioteca) están en la cuenta con la que compraste. Entra siempre con ese correo.$expected_cuenta_y_correo$),
   ('cedula-o-ruc','Por qué lo solicitamos y cómo corregirlo.',$expected_cedula_o_ruc$## Por qué te la pedimos
 
 La necesitas para comprar: identifica al comprador en el comprobante de compra. Si tu número está incompleto o es incorrecto, puedes pedir que lo corrijamos.
 
 ## Cómo agregarla
 
-1. En [Mi perfil](/account), selecciona Agregar en Cédula o RUC.
-2. Escribe el número y selecciona Guardar.
-3. Revisa el número y selecciona Confirmar cédula o Confirmar RUC.
+1. En [Mi perfil](/account), selecciona «Agregar» en «Cédula o RUC».
+2. Escribe el número y selecciona «Guardar».
+3. Revisa el número y selecciona «Confirmar cédula» o «Confirmar RUC».
 
 ## Cómo corregirla
 
-1. En Mi perfil, selecciona Corregir en Cédula o RUC.
+1. En [Mi perfil](/account), selecciona «Corregir» en «Cédula o RUC».
 2. En [Cédula o RUC](/account/identity), escribe el número correcto.
-3. La página te dice si el cambio se aplica al momento o si lo revisamos. Confirma con Sí, corregir o con Enviar solicitud.
+3. La página te dice si el cambio se aplica al momento o si lo revisamos. Confirma con «Sí, corregir» o con «Enviar solicitud».
 
 Se aplica al momento si tu número todavía no aparece en ninguna factura, o si cambias entre tu cédula y tu RUC (tu cédula seguida de 001). Los demás cambios los revisamos.
 
 ## Mientras la revisamos
 
-Te respondemos en un plazo de 15 días. Mientras tanto, tu solicitud aparece como En revisión. Cuando la revisemos, te avisamos por correo y en Mi perfil.
+Te respondemos en un plazo de 15 días. Mientras tanto, tu solicitud aparece como «En revisión». Cuando la revisemos, te avisamos por correo y en [Mi perfil](/account).
 
 Tus compras siguen usando tu número actual. Las facturas ya emitidas no cambian.
 
 ## Si ya no quieres el cambio
 
-Selecciona Retirar solicitud en [Cédula o RUC](/account/identity). Tu número actual no cambia. Si más adelante quieres corregirlo, envía una solicitud nueva.$expected_cedula_o_ruc$)
+Selecciona «Retirar solicitud» en [Cédula o RUC](/account/identity). Tu número actual no cambia. Si más adelante quieres corregirlo, envía una solicitud nueva.$expected_cedula_o_ruc$)
   ) AS expected(slug, summary, body)
   LEFT JOIN LATERAL pliego.fn_help_article(expected.slug) a ON TRUE
   WHERE a.slug IS NULL OR a.summary IS DISTINCT FROM expected.summary OR a.body IS DISTINCT FROM expected.body
- ) THEN RAISE EXCEPTION 'Published Help content differs from the committed V086 copy'; END IF;
+ ) THEN RAISE EXCEPTION 'Published Help content differs from the final V107 copy'; END IF;
  UPDATE pliego.ayuda_categoria SET estado='DRAFT' WHERE slug='ebooks';
  IF EXISTS(SELECT 1 FROM pliego.fn_help_article('ebooks')) THEN RAISE EXCEPTION 'Unpublished parent category leaked article'; END IF;
+END $gate$;
+ROLLBACK;
+
+-- Reapply the real migration against a committed sentence and a staff-edited article.
+BEGIN;
+UPDATE pliego.ayuda_articulo SET cuerpo='El eBook sale de Mi biblioteca.' WHERE slug='ebooks';
+UPDATE pliego.ayuda_articulo SET cuerpo='Texto revisado por el personal: consulta tu pedido.' WHERE slug='audiolibros';
+\ir ../../main/resources/db/migration/V107__help_interface_label_readability.sql
+DO $gate$
+BEGIN
+ IF (SELECT cuerpo FROM pliego.ayuda_articulo WHERE slug='ebooks') IS DISTINCT FROM
+  'El eBook sale de [Mi biblioteca](/biblioteca).' THEN
+  RAISE EXCEPTION 'V107 did not replace the original sentence'; END IF;
+ IF (SELECT cuerpo FROM pliego.ayuda_articulo WHERE slug='audiolibros') IS DISTINCT FROM
+  'Texto revisado por el personal: consulta tu pedido.' THEN
+  RAISE EXCEPTION 'V107 overwrote a staff-edited article'; END IF;
+END $gate$;
+CREATE TEMP TABLE help_after_v107 ON COMMIT DROP AS SELECT slug,cuerpo FROM pliego.ayuda_articulo;
+\ir ../../main/resources/db/migration/V107__help_interface_label_readability.sql
+DO $gate$
+BEGIN
+ IF EXISTS (
+  SELECT 1 FROM help_after_v107 expected FULL JOIN pliego.ayuda_articulo actual USING(slug)
+  WHERE expected.cuerpo IS DISTINCT FROM actual.cuerpo
+ ) THEN RAISE EXCEPTION 'V107 is not idempotent'; END IF;
 END $gate$;
 ROLLBACK;

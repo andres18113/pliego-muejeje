@@ -185,8 +185,8 @@ stop_backend() {
 start_backend migration
 flyway_state="$(admin_psql "$database_name" -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '106:106' ]]; then
-    printf 'Expected Spring Boot Flyway startup as pliego_app to apply 106 migrations; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '107:107' ]]; then
+    printf 'Expected Spring Boot Flyway startup as pliego_app to apply 107 migrations; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'Runtime privilege CI stage: Spring Boot migration Flyway=%s as pliego_app\n' "$flyway_state"
