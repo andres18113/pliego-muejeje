@@ -14,6 +14,8 @@ import { SessionProvider, useSession } from "./session";
 import { RealtimeSync } from "./realtime/RealtimeSync";
 import { OfferRefreshSync } from "./realtime/OfferRefreshSync";
 import { BuildUpdateNotice } from "./version/BuildUpdateNotice";
+import { focusReadingPosition } from "@/shared/ui/readingPosition";
+import { useOfferClockSettled } from "./realtime/useOfferClockSettled";
 
 const catalogCriteriaKeys = ["que", "category", "minPrice", "maxPrice", "language", "format", "productType", "sort", "page", "pageSize"];
 
@@ -221,23 +223,29 @@ export const router = createBrowserRouter([
 ]);
 
 export function App() {
-  return <RouterProvider router={router} />;
+  // The session restore needs no router, so it starts as the app mounts, beside the opening route's code, instead of
+  // after the router has loaded it. The restore itself and the gate below are unchanged.
+  return <SessionProvider><RouterProvider router={router} /></SessionProvider>;
 }
 
 function RootSessionLayout() {
   return (
-    <SessionProvider>
+    <>
       <RealtimeSync />
       <OfferRefreshSync />
       <BuildUpdateNotice />
       <BackNavigationProvider><RootLayout /></BackNavigationProvider>
-    </SessionProvider>
+    </>
   );
 }
 
 function RootLayout() {
   const { restoreState, retryRestore } = useSession();
+  const clockSettled = useOfferClockSettled();
   if (restoreState === "restoring") return <InitialRouteFallback label="Comprobando tu sesión…" />;
+  // ADR 0058: price views mount only once the server has answered the offer clock (it normally answered long before
+  // the session restore finishes, so this rarely waits).
+  if (!clockSettled) return <InitialRouteFallback />;
   if (restoreState === "unavailable") {
     return (
       <main className="initial-route-loading" role="alert">
@@ -345,12 +353,8 @@ function usePageHeadingFocus() {
       // Late content supplies the reading position only while navigation still owns focus.
       // A user who has moved to another connected control keeps that position.
       if (active !== startingFocus && active !== document.body && active?.isConnected) return true;
-      heading.tabIndex = -1;
-    // The heading is only a reading position for assistive technology, never a control: mark this focus so
-    // it draws no ring (styles.css). The mark leaves with the focus; keyboard focus on controls is unchanged.
-      heading.setAttribute("data-route-focus", "");
-      heading.addEventListener("blur", () => heading.removeAttribute("data-route-focus"), { once: true });
-      heading.focus({ preventScroll: true });
+      // The heading is only a reading position for assistive technology, never a control (no ring).
+      focusReadingPosition(heading);
       return true;
     };
     if (focusHeading()) return;

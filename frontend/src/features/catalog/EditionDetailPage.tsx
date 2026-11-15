@@ -7,7 +7,6 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { addEditionToCart, getActiveCart } from "@/shared/api/cart";
 import { ApiRequestError, describeApiError } from "@/shared/api/errors";
-import { getPublicEdition } from "@/shared/api/catalog";
 import { isDigitalFormat } from "@/shared/api/editionFormats";
 import { authLocation } from "@/features/auth/authLocation";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
@@ -30,7 +29,9 @@ import { mediaOfProductType, type CatalogMedia } from "./catalogMedia";
 import { StockStatus } from "./StockStatus";
 import { SavingsChip, UrgencyChip } from "./OfferChips";
 import { offerUrgencyLabel } from "./offersPresentation";
-import { availabilityConflictMessage, resolveStockStatus, stockReadOptions } from "./stockStatusModel";
+import { availabilityConflictMessage, resolveStockStatus } from "./stockStatusModel";
+import { isEditionId, publicEditionQuery } from "./publicCatalogQueries";
+import { focusReadingPosition } from "@/shared/ui/readingPosition";
 import classes from "./editionDetail.module.css";
 import { formatAudioDuration, formatEdition, formatLanguage, formatNarrators, formatPageCount, formatPublicationDate, formatUsd } from "./formatters";
 import { catalogHref, readCatalogCriteria, safeCatalogReturnHref, safeExternalHttpHref } from "./catalogUrl";
@@ -120,14 +121,7 @@ export function EditionDetailPage() {
   const customerCart = useCustomerCart(Boolean(customerId), { fresh: false });
   const unitsInCart = customerCart.data?.items.find((item) => item.editionId === editionId)?.quantity ?? 0;
   useFavoriteSessionFailure(favoriteQuery.error, clearSession);
-  const detailQuery = useQuery({
-    queryKey: ["public-catalog", "edition", editionId],
-    ...stockReadOptions,
-    queryFn: ({ signal }) => getPublicEdition(editionId, signal),
-    enabled: isValidEditionId,
-    staleTime: 30_000,
-    retry: (failureCount, error) => !(error instanceof ApiRequestError && error.status === 404) && failureCount < 1,
-  });
+  const detailQuery = useQuery({ ...publicEditionQuery(editionId), enabled: isValidEditionId });
   const digitalCustomer = Boolean(customerId && isDigitalFormat(detailQuery.data?.format));
   const eligibilityQuery = useDigitalEligibility(digitalCustomer ? [editionId] : []);
   const digitalState = digitalCustomer ? digitalEditionState(eligibilityQuery.byEdition.get(editionId)) : null;
@@ -254,8 +248,10 @@ export function EditionDetailPage() {
 
   useEffect(() => {
     document.title = detail?.title ? `${detail.title} · PLIEGO` : "Edición · PLIEGO";
-    if (detail?.title && document.activeElement === document.body) {
-      detailHeadingRef.current?.focus({ preventScroll: true });
+    // The loading view's heading held the reading position and left with it: hand it to the title, still without a
+    // ring (a reading position, not a control).
+    if (detail?.title && document.activeElement === document.body && detailHeadingRef.current) {
+      focusReadingPosition(detailHeadingRef.current);
     }
   }, [detail?.title]);
 
@@ -282,7 +278,9 @@ export function EditionDetailPage() {
     return (
       <>
         <main className={`detail-route page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1} aria-busy="true" data-media={loadingMedia ?? undefined} data-loading>
-          <div className={classes.wayfinding}>
+          {/* Keyed like the loaded page's row so React keeps this node when the record arrives: matched by position
+              instead, the row would take over another node and the browser would report a layout shift. */}
+          <div key="wayfinding" className={classes.wayfinding}>
             <InPageBackButton headerScrollsAway />
             <nav className={classes.trail} aria-label="Ruta de navegación">
               <Link to="/catalog">Catálogo</Link>
@@ -556,7 +554,7 @@ export function EditionDetailPage() {
           price={detail.price ? formatUsd(detail.price) : null} originalPrice={detail.offer ? formatUsd(detail.offer.originalPrice) : null}
           action={contextAction} onHiddenWithFocus={focusPageBack} />
         {/* As on product pages: the back arrow under the header, on the content's own edge — never beside the wordmark. */}
-        <div className={classes.wayfinding} ref={wayfinding}>
+        <div key="wayfinding" className={classes.wayfinding} ref={wayfinding}>
           <InPageBackButton headerScrollsAway />
           <nav className={classes.trail} aria-label="Ruta de navegación">
             <Link to="/catalog">Catálogo</Link>
@@ -725,13 +723,4 @@ function DetailErrorPage({
       <SiteFooter returnHref={returnHref} historyBack={historyBack} />
     </>
   );
-}
-
-function isEditionId(value: string) {
-  if (!/^[1-9][0-9]{0,18}$/.test(value)) return false;
-  try {
-    return BigInt(value) <= 9_223_372_036_854_775_807n;
-  } catch {
-    return false;
-  }
 }

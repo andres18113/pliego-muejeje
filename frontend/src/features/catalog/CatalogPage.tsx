@@ -1,4 +1,3 @@
-import { stockReadOptions } from "@/features/catalog/stockStatusModel";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate, useNavigationType } from "react-router-dom";
@@ -9,7 +8,7 @@ import classes from "./exploration.module.css";
 import { HomeFooter } from "./HomeFooter";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { describeApiError } from "@/shared/api/errors";
-import { getPublicCategories, getPublicCatalogFilterOptions, searchPublicEditions } from "@/shared/api/catalog";
+import { publicCategoriesQuery, publicEditionsQuery, publicFilterOptionsQuery } from "./publicCatalogQueries";
 import { CatalogFilterPanel, CatalogFilters, hasResettableFilters, resetFilters } from "./CatalogFilters";
 import { catalogFacets } from "./catalogFacets";
 import { mediaOfProductType, mediaTitle } from "./catalogMedia";
@@ -43,22 +42,9 @@ export function CatalogPage() {
   const desktop = useMediaQuery("(min-width: 64em)", false, { getInitialValueInEffect: false });
   // Filter choices navigate within the catalog; only leaving it (or reaching desktop) closes the drawer.
   useEffect(() => setFiltersOpen(false), [location.pathname, desktop]);
-  const categoriesQuery = useQuery({
-    queryKey: ["public-catalog", "categories", scope],
-    queryFn: ({ signal }) => getPublicCategories(signal, scope),
-    staleTime: 60_000,
-  });
-  const filterOptionsQuery = useQuery({
-    queryKey: ["public-catalog", "filter-options", scope],
-    queryFn: ({ signal }) => getPublicCatalogFilterOptions(signal, scope),
-    staleTime: 60_000,
-  });
-  const editionsQuery = useQuery({
-    queryKey: ["public-catalog", "editions", criteria],
-    ...stockReadOptions,
-    queryFn: ({ signal }) => searchPublicEditions(criteria, signal),
-    staleTime: 20_000,
-  });
+  const categoriesQuery = useQuery(publicCategoriesQuery(scope));
+  const filterOptionsQuery = useQuery(publicFilterOptionsQuery(scope));
+  const editionsQuery = useQuery(publicEditionsQuery(criteria));
 
   useEffect(() => {
     const media = mediaOfProductType(criteria.productType);

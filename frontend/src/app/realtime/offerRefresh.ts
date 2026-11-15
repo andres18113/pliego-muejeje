@@ -38,6 +38,8 @@ export async function readTimedOfferClock(signal?: AbortSignal): Promise<TimedCl
 }
 
 let primed: Promise<TimedClock> | null = null;
+let firstClockSettled: Promise<void> = Promise.resolve();
+let firstClockAnswered = true;
 
 /**
  * Asks for the clock before the app renders, so the server observes it before any price read: a boundary after that
@@ -48,8 +50,23 @@ export function primeOfferRefreshClock() {
     const request = readTimedOfferClock();
     request.catch(() => undefined);
     primed = request;
+    firstClockAnswered = false;
+    firstClockSettled = request.then(() => undefined, () => undefined).finally(() => { firstClockAnswered = true; });
   }
   return primed;
+}
+
+/**
+ * Settles once the first clock request has been answered (or failed): the server has then observed it, so a price
+ * read started afterwards cannot precede it. Reads that start before the session restore wait on this.
+ */
+export function offerClockSettled() {
+  return firstClockSettled;
+}
+
+/** Synchronous form of offerClockSettled; true when no clock was primed (nothing to wait for). */
+export function isOfferClockSettled() {
+  return firstClockAnswered;
 }
 
 /** The primed answer for the first observer (shared by StrictMode's remount), else a fresh read. */
