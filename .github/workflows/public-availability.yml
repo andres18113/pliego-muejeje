@@ -1,0 +1,70 @@
+name: Public availability
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '2-57/5 * * * *'
+
+permissions: {}
+
+concurrency:
+  group: public-availability
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check public API and storefront
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          probe_dir=$(mktemp -d)
+          trap 'rm -rf "$probe_dir"' EXIT
+          ua='Mozilla/5.0 (compatible; PLIEGO-Availability/1.0)'
+          check() {
+            local name="$1" url="$2" kind="$3"
+            local status attempt
+            for attempt in 1 2; do
+              if status=$(curl --silent --show-error \
+                --proto '=https' --tlsv1.2 \
+                --connect-timeout 5 --max-time 15 \
+                --user-agent "$ua" \
+                --header 'Cache-Control: no-cache' \
+                --output "$probe_dir/$name" \
+                --write-out '%{http_code}' "$url"); then
+                if [[ "$status" == 200 ]]; then
+                  case "$kind" in
+                    catalog)
+                      if jq -e '
+                        (.items | type == "array") and
+                        (.totalCount |
+                          type == "string" and test("^[0-9]+$") and (test("[^0-9]") | not))
+                      ' "$probe_dir/$name" >/dev/null 2>&1; then
+                        echo "$name: healthy"; return 0
+                      fi ;;
+                    version)
+                      if jq -e '.buildId |
+                        type == "string" and length > 0
+                      ' "$probe_dir/$name" >/dev/null 2>&1; then
+                        echo "$name: healthy"; return 0
+                      fi ;;
+                    html)
+                      if grep -Eiq '<title>[^<]*PLIEGO[^<]*</title>' "$probe_dir/$name"; then
+                        echo "$name: healthy"; return 0
+                      fi ;;
+                  esac
+                fi
+              fi
+              if [[ "$attempt" == 1 ]]; then sleep 15; fi
+            done
+            echo "::error::$name: public availability check failed"
+            return 1
+          }
+          failed=0
+          check catalog 'https://api.pliegolibros.com/api/v1/catalog/editions?pageSize=1' catalog || failed=1
+          check storefront 'https://pliegolibros.com/' html || failed=1
+          check version 'https://pliegolibros.com/version.json' version || failed=1
+          exit "$failed"

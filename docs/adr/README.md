@@ -67,3 +67,5 @@
 - [ADR 0058 — Offer expiration, checkout clocks and browser refresh](0058-offer-expiration-and-refresh.md)
 
 - [ADR 0059 — Opt-in loopback observability (Proposed)](0059-opt-in-loopback-observability.md)
+
+- [ADR 0060 — Backend PostgreSQL service dependency (Proposed)](0060-backend-postgresql-service-dependency.md)
