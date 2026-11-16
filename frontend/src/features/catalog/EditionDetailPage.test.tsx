@@ -194,6 +194,42 @@ describe("EditionDetailPage", () => {
     expect(screen.getByRole("link", { name: "Iniciar sesión para agregar" })).toBeInTheDocument();
   });
 
+  it("keeps the wayfinding row's node when the record arrives, so the browser reports no layout shift", async () => {
+    let releaseRequest: ((response: Response) => void) | undefined;
+    const pendingResponse = new Promise<Response>((resolve) => { releaseRequest = resolve; });
+    vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
+      const url = new URL(input instanceof Request ? input.url : String(input), "http://localhost");
+      return url.pathname.endsWith("/categories") ? Promise.resolve(new Response(JSON.stringify({ items: [] }), { headers: { "Content-Type": "application/json" } })) : pendingResponse;
+    }));
+
+    renderDetail();
+    const loadingRow = screen.getByRole("navigation", { name: "Ruta de navegación" }).parentElement;
+    releaseRequest?.(editionResponse());
+    await screen.findByRole("heading", { name: "Cien años de soledad" });
+
+    // Reused by position instead, the row would take over the loading layout's tall body node: a phantom shift.
+    expect(screen.getByRole("navigation", { name: "Ruta de navegación" }).parentElement).toBe(loadingRow);
+  });
+
+  it("hands the reading position to the title when the record arrives, as a reading position without a ring", async () => {
+    let releaseRequest: ((response: Response) => void) | undefined;
+    const pendingResponse = new Promise<Response>((resolve) => { releaseRequest = resolve; });
+    vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
+      const url = new URL(input instanceof Request ? input.url : String(input), "http://localhost");
+      return url.pathname.endsWith("/categories") ? Promise.resolve(new Response(JSON.stringify({ items: [] }), { headers: { "Content-Type": "application/json" } })) : pendingResponse;
+    }));
+
+    renderDetail();
+    expect(document.activeElement).toBe(document.body);
+    releaseRequest?.(editionResponse());
+    const title = await screen.findByRole("heading", { level: 1, name: "Cien años de soledad" });
+
+    await waitFor(() => expect(title).toHaveFocus());
+    expect(title).toHaveAttribute("data-route-focus");
+    title.blur();
+    expect(title).not.toHaveAttribute("data-route-focus");
+  });
+
   it("keeps the catalog cover visible while detail data loads", async () => {
     let releaseRequest: ((response: Response) => void) | undefined;
     const pendingResponse = new Promise<Response>((resolve) => { releaseRequest = resolve; });
@@ -251,7 +287,7 @@ describe("EditionDetailPage", () => {
     renderDetail();
 
     await waitFor(() => expect(attempts).toBeGreaterThan(0));
-    const retry = await screen.findByRole("button", { name: "Volver a intentar" });
+    const retry = await screen.findByRole("button", { name: "Volver a intentar" }, { timeout: 4000 });
     expect(attempts).toBe(2);
     expect(screen.getByRole("heading", { name: "No pudimos actualizar la edición." })).toBeInTheDocument();
     expectSharedChrome();

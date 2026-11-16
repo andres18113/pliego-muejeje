@@ -1,4 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
+import { expectLightAppearance, expectUnchangedByDarkPreference } from "./light-appearance";
 import { expect, test, type Page } from "@playwright/test";
 const env = (globalThis as { process?: { env: Record<string, string | undefined> } }).process?.env ?? {};
 test.skip(!env.PLIEGO_VISUAL_LIVE, "Set PLIEGO_VISUAL_LIVE=1 for the Home's real public catalog checks.");
@@ -19,6 +20,8 @@ for (const scheme of ["light", "dark"] as const) for (const width of [320, 390, 
       await page.emulateMedia({ colorScheme: scheme, reducedMotion: "reduce" });
       const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message)); page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
       await page.goto("/"); await ready(page);
+      // A dark system preference leaves the Home exactly as in light (one PLIEGO appearance).
+      await expectLightAppearance(page); if (scheme === "dark") await expectUnchangedByDarkPreference(page);
       // The Home is the opening, the popular row, the two ways onward, the four benefits and the closing card, then the footer.
       const main = page.getByRole("main");
       await expect(main.locator(":scope section")).toHaveCount(5);
@@ -86,6 +89,7 @@ for (const scheme of ["light", "dark"] as const) {
     const retry = hero.getByRole("button", { name: "Reintentar", exact: true }); await expect(retry).toBeVisible({ timeout: 20_000 });
     await expect(page.locator(popular)).toHaveCount(0);
     await page.evaluate(() => document.fonts.ready); await accessible(page);
+    await expectLightAppearance(page); if (scheme === "dark") await expectUnchangedByDarkPreference(page);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
     failed = false; await retry.click();
     await expect(hero.getByRole("link")).toHaveText([/^Explorar libros/, /^Explorar eBooks/, /^Explorar audiolibros/]); await ready(page); await accessible(page);

@@ -69,6 +69,23 @@ class AdminOrderApiIntegrationTest {
     @BeforeEach void reset() { gateway.reset(); }
 
     @Test
+    void adminSearchAcceptsReferenceQueryAndExposesReferencesOnListAndDetail() throws Exception {
+        var detail = gateway.detail;
+        gateway.detail = new Detail(detail.orderId(), detail.customerId(), detail.customerEmail(), detail.customerName(),
+                detail.orderState(), detail.subtotal(), detail.total(), detail.createdAt(), detail.updatedAt(), detail.items(),
+                detail.address(), detail.payment(), detail.stateHistory(), detail.inventoryMovements(), detail.postPurchase(),
+                "PL-0123-4567");
+        gateway.page = new Page(List.of(new Summary("700", "42", "Ana", detail.createdAt(), detail.orderState(),
+                detail.total(), "APPROVED", "PL-0123-4567")), 1);
+        mvc.perform(get("/api/v1/admin/orders").param("q", "#pl01234567")
+                .header("Authorization", token("7", "ADMIN"))).andExpect(status().isOk())
+                .andExpect(jsonPath("$.items[0].orderReference").value("PL-0123-4567"));
+        assertEquals("#pl01234567", gateway.search.q());
+        mvc.perform(get("/api/v1/admin/orders/700").header("Authorization", token("7", "ADMIN")))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.orderReference").value("PL-0123-4567"));
+    }
+
+    @Test
     void approvesPendingPaymentAsRealAdminAndTranslatesInvalidState() throws Exception {
         mvc.perform(post("/api/v1/admin/orders/700/approve-payment")
                 .header("Authorization", token("7", "ADMIN"))).andExpect(status().isNoContent());
@@ -161,6 +178,26 @@ class AdminOrderApiIntegrationTest {
         assertEquals(7L, gateway.actor);
         assertEquals(700L, gateway.orderId);
         assertEquals("detail", gateway.lastOperation);
+    }
+
+    @Test
+    void legacyAdminInvoiceAddressNamesReachTheStrictDatabaseAdapter() throws Exception {
+        mvc.perform(post("/api/v1/admin/orders/700/invoice")
+                        .header("Authorization", token("7", "ADMIN"))
+                        .header("Idempotency-Key", UUID.randomUUID().toString())
+                        .contentType("application/json")
+                        .content("""
+                                {"documentNumber":"LEGACY-1","buyerName":"Comprador anterior",
+                                 "identityType":"OTHER","identityNumber":"anterior",
+                                 "billingAddress":{"line1":"Calle fiscal","city":"Playas",
+                                 "province":"Guayas","countryCode":"EC"}}
+                                """))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.invoiceId").value("901"));
+        assertEquals("Playas", gateway.lastInvoice.billingAddress().city());
+        assertEquals("Guayas", gateway.lastInvoice.billingAddress().province());
+        assertEquals(null, gateway.lastInvoice.billingAddress().cityId());
+        assertEquals(null, gateway.lastInvoice.billingAddress().provinceId());
     }
 
     @Test
@@ -323,7 +360,12 @@ class AdminOrderApiIntegrationTest {
 
         @Override public void transitionShipment(long actor,long order,String state) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
         @Override public void updateTracking(long actor,long order,com.pliego.modules.sales.application.PostPurchaseModels.Tracking tracking) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
-        @Override public long issueInvoice(long actor,long order,com.pliego.modules.sales.application.PostPurchaseModels.IssueInvoice invoice) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
+        @Override public long issueInvoice(long actor,long order,com.pliego.modules.sales.application.PostPurchaseModels.IssueInvoice invoice) {
+            called("issue-invoice",actor);
+            orderId=order;
+            lastInvoice=invoice;
+            return 901;
+        }
         @Override public long issueCreditNote(long actor,long order,String number,String reason) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
         int calls;
         long actor;
@@ -333,6 +375,8 @@ class AdminOrderApiIntegrationTest {
         DatabaseException failure;
         Page page = new Page(List.of(), 0);
         Search search;
+        Detail detail;
+        com.pliego.modules.sales.application.PostPurchaseModels.IssueInvoice lastInvoice;
 
         void reset() {
             calls = 0;
@@ -343,6 +387,8 @@ class AdminOrderApiIntegrationTest {
             failure = null;
             page = new Page(List.of(), 0);
             search = null;
+            detail = sampleDetail();
+            lastInvoice = null;
         }
 
         private void called(String operation, long actorUserId) {
@@ -361,7 +407,7 @@ class AdminOrderApiIntegrationTest {
         @Override public Detail detail(long actorUserId, long requestedOrderId) {
             called("detail", actorUserId);
             orderId = requestedOrderId;
-            return sampleDetail();
+            return detail;
         }
 
         @Override public Transition transition(long actorUserId, long requestedOrderId, String targetState) {

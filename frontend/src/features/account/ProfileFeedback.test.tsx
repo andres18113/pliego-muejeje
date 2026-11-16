@@ -1,8 +1,8 @@
-import { fireEvent, screen, within } from "@testing-library/react";
+import { act, fireEvent, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, expect, it, vi } from "vitest";
-import { AccountPage } from "./AccountPage";
-import { json, renderPurchaseRoute, stubApi } from "@/test/purchase";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { AccountPage, FEEDBACK_LIFETIME_MS } from "./AccountPage";
+import { json, problem, renderPurchaseRoute, stubApi } from "@/test/purchase";
 
 const profile = { customerId: "2", email: "ana@example.invalid", firstNames: "Ana", lastNames: "Pérez", phone: "+593991234567", state: "ACTIVE", version: "0", emailVerified: true };
 function renderProfile() {
@@ -59,24 +59,23 @@ it("removes the pending-change notice when the user restores the original value"
   expect(within(form).queryByRole("status")).not.toBeInTheDocument();
 });
 
-it("keeps email verification help brief and separates it from the unsaved state", async () => {
+it("keeps the email change to one helper line and shows the draft state with the fields, not the actions", async () => {
   renderProfile(); const user = userEvent.setup();
   await user.click(await screen.findByRole("button", { name: "Editar correo electrónico" }));
   const form = screen.getByRole("form", { name: "Cambiar correo electrónico" });
-  expect(within(form).getByText("Te enviaremos un enlace para verificar el nuevo correo.")).toBeInTheDocument();
-  expect(within(form).queryByText(/sesiones anteriores|vence según su duración/)).not.toBeInTheDocument();
+  expect(screen.getByLabelText("Nuevo correo")).toHaveAccessibleDescription("Te enviaremos un enlace a esa dirección.");
+  // No security essay before a simple action: no disclosure, no session or cancellation paragraphs.
+  expect(form.querySelector("details")).toBeNull();
+  expect(within(form).queryByText(/sesiones|Seguridad del cambio|correo actual sigue en uso/)).not.toBeInTheDocument();
   expect(within(form).queryByText("Cambios sin guardar")).not.toBeInTheDocument();
   await user.type(screen.getByLabelText("Nuevo correo"), "nueva@example.invalid");
   expect(within(form).getAllByText("Cambios sin guardar")).toHaveLength(1);
   expect(within(form).getByRole("status")).toHaveTextContent("Cambios sin guardar");
+  // Guardar/Cancelar keep their slot to themselves; the draft state closes the fields column.
   const actions = within(form).getByRole("group", { name: "Acciones de edición" });
-  expect(within(actions).getByText("Cambios sin guardar")).toBeInTheDocument();
+  expect(within(actions).queryByText("Cambios sin guardar")).not.toBeInTheDocument();
+  expect(within(actions).getAllByRole("button")).toHaveLength(2);
   expect(within(form).queryByText(/Conservamos tu borrador si sales/)).not.toBeInTheDocument();
-  const disclosure = within(form).getByText("Seguridad del cambio");
-  expect(disclosure.closest("details")).not.toHaveAttribute("open");
-  await user.click(disclosure);
-  expect(disclosure.closest("details")).toHaveAttribute("open");
-  expect(within(form).getByText(/Cuando tu sesión termine, tendrás que iniciar sesión de nuevo/)).toBeVisible();
 });
 
 it("does not show a length error on each phone keystroke, but validates when leaving", async () => {
@@ -101,4 +100,61 @@ it("shows a rejected phone character without stacking the parent length error", 
   expect(form.querySelectorAll(".field-error")).toHaveLength(1);
   expect(input).toHaveAccessibleDescription(/solo.*(dígitos|números)/i);
   expect(within(form).queryByText(/debe tener 9 dígitos/)).not.toBeInTheDocument();
+});
+
+describe("feedback lifecycle", () => {
+  afterEach(() => { vi.useRealTimers(); });
+  function renderWith(routes: Parameters<typeof stubApi>[0]) {
+    stubApi({ "GET /api/v1/me": () => json(profile), "GET /api/v1/me/billing-identity": () => new Response(null, { status: 204 }), ...routes });
+    return renderPurchaseRoute([{ path: "/account", element: <AccountPage /> }], "/account");
+  }
+
+  it("lets a confirmation leave on its own after about twelve seconds, and waits while the pointer rests on it", async () => {
+    renderWith({ "PATCH /api/v1/me": () => new Response(null, { status: 204 }) });
+    fireEvent.click(await screen.findByRole("button", { name: "Editar nombres" }));
+    fireEvent.change(screen.getByLabelText("Nombres"), { target: { value: "Ana María" } });
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    fireEvent.click(screen.getByRole("button", { name: "Guardar" }));
+    const saved = await screen.findByText("Guardamos tus nombres.");
+    expect(saved).toHaveAttribute("role", "status");
+    await act(async () => vi.advanceTimersByTime(FEEDBACK_LIFETIME_MS - 2_000));
+    expect(saved).toBeInTheDocument();
+    fireEvent.pointerEnter(saved);
+    await act(async () => vi.advanceTimersByTime(30_000));
+    expect(saved).toBeInTheDocument();
+    fireEvent.pointerLeave(saved);
+    await act(async () => vi.advanceTimersByTime(3_000));
+    expect(saved).toBeInTheDocument();
+    await act(async () => vi.advanceTimersByTime(1_100));
+    expect(saved).toHaveAttribute("data-leaving");
+    await act(async () => vi.advanceTimersByTime(300));
+    expect(screen.queryByText("Guardamos tus nombres.")).not.toBeInTheDocument();
+    // Focus stays on the action it returned to; nothing else on the sheet moved.
+    expect(screen.getByRole("button", { name: "Editar nombres" })).toHaveFocus();
+  });
+
+  it("keeps an error until the person acts again", async () => {
+    renderWith({ "POST /api/v1/auth/forgot-password": () => problem(429, "RATE_LIMITED", "Demasiadas solicitudes", "Espera.") });
+    fireEvent.click(await screen.findByRole("button", { name: "Cambiar contraseña" }));
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    fireEvent.click(screen.getByRole("button", { name: "Enviar enlace" }));
+    const alert = await screen.findByRole("alert");
+    await act(async () => vi.advanceTimersByTime(FEEDBACK_LIFETIME_MS * 5));
+    expect(alert).toBeInTheDocument();
+    expect(alert).not.toHaveAttribute("data-leaving");
+  });
+
+  it("keeps the password confirmation while its one-minute wait lasts, then lets it go", async () => {
+    renderWith({ "POST /api/v1/auth/forgot-password": () => json({ message: "ok" }, 202) });
+    fireEvent.click(await screen.findByRole("button", { name: "Cambiar contraseña" }));
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    fireEvent.click(screen.getByRole("button", { name: "Enviar enlace" }));
+    const sent = await screen.findByText(/podrás pedir otro enlace en un minuto/);
+    await act(async () => vi.advanceTimersByTime(45_000));
+    expect(sent).toBeInTheDocument();
+    await act(async () => vi.advanceTimersByTime(16_000));
+    await act(async () => vi.advanceTimersByTime(300));
+    expect(screen.queryByText(/podrás pedir otro enlace en un minuto/)).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Cambiar contraseña" })).not.toHaveAttribute("aria-disabled");
+  });
 });

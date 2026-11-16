@@ -23,8 +23,13 @@ import com.pliego.modules.cart.api.CartRequests.Quantity;
 import com.pliego.modules.cart.api.CartResponses.Cart;
 import com.pliego.modules.cart.api.CartResponses.Item;
 import com.pliego.modules.cart.api.CartResponses.ItemMutation;
+import com.pliego.modules.cart.api.CartResponses.SavedForLater;
+import com.pliego.modules.cart.api.CartResponses.SavedItem;
+import com.pliego.modules.cart.api.CartResponses.SavedState;
 import com.pliego.modules.cart.application.CartModels.CartItem;
 import com.pliego.modules.cart.application.CartModels.CartItemResult;
+import com.pliego.modules.cart.application.CartModels.SavedForLaterList;
+import com.pliego.modules.cart.application.CartModels.SavedForLaterState;
 import com.pliego.modules.cart.application.CartService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,14 +58,43 @@ public class CartController {
     @Operation(summary = "Consultar carrito activo")
     @ApiResponse(responseCode = "200", description = "Carrito activo o representación vacía")
     public Cart get(@AuthenticationPrincipal Jwt jwt) {
-        var cart = service.get(actorId(jwt));
-        return new Cart(cart.cartId(), cart.state(), cart.items().stream().map(CartController::item).toList(),
-                money(cart.totalCurrent()),money(cart.amounts().subtotal()),money(cart.amounts().taxRate()),money(cart.amounts().taxAmount()),
-                money(cart.amounts().shippingAmount()),money(cart.amounts().total()),
-                cart.deliveryWindow() == null ? null : cart.deliveryWindow().from().toString(),
-                cart.deliveryWindow() == null ? null : cart.deliveryWindow().to().toString(),
-                cart.requiresPhysicalFulfillment(),cart.physicalItemCount(),cart.digitalItemCount(),
-                money(cart.originalSubtotal()), money(cart.savingsTotal()), money(cart.currentSubtotal()), cart.quoteFingerprint());
+        return cartResponse(service.get(actorId(jwt)));
+    }
+
+    @GetMapping("/saved")
+    @Operation(summary = "Consultar artículos guardados para después")
+    @ApiResponse(responseCode = "200", description = "Lista del cliente con precios y disponibilidad vigentes")
+    public SavedForLater getSavedForLater(@AuthenticationPrincipal Jwt jwt) {
+        return savedResponse(service.getSavedForLater(actorId(jwt)));
+    }
+
+    @PostMapping("/items/{cartItemId}/save-for-later")
+    @Operation(summary = "Mover un artículo del carrito a Guardado para después",
+            description = "La cantidad del carrito reemplaza la cantidad guardada de la misma edición. Devuelve el carrito y la lista actualizados.")
+    @ApiResponse(responseCode = "200", description = "Carrito y lista actualizados")
+    @ApiResponse(responseCode = "404", description = "El artículo ya no existe en el carrito", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    public SavedState saveForLater(@AuthenticationPrincipal Jwt jwt, @PathVariable @Positive long cartItemId) {
+        return savedState(service.saveForLater(actorId(jwt), cartItemId));
+    }
+
+    @PostMapping("/saved/{savedItemId}/move-to-cart")
+    @Operation(summary = "Restaurar en el carrito un artículo guardado",
+            description = "Valida la edición con las reglas de agregar al carrito; ante un error, el artículo permanece guardado.")
+    @ApiResponse(responseCode = "200", description = "Carrito y lista actualizados")
+    @ApiResponse(responseCode = "404", description = "Artículo guardado no encontrado", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "409", description = "La edición no puede agregarse al carrito", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    public SavedState moveSavedToCart(@AuthenticationPrincipal Jwt jwt, @PathVariable @Positive long savedItemId) {
+        return savedState(service.moveSavedToCart(actorId(jwt), savedItemId));
+    }
+
+    @DeleteMapping("/saved/{savedItemId}")
+    @Operation(summary = "Quitar un artículo de Guardado para después")
+    @ApiResponse(responseCode = "204", description = "Artículo eliminado")
+    @ApiResponse(responseCode = "404", description = "Artículo guardado no encontrado", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    public ResponseEntity<Void> removeSavedItem(@AuthenticationPrincipal Jwt jwt,
+            @PathVariable @Positive long savedItemId) {
+        service.removeSavedItem(actorId(jwt), savedItemId);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping(path = "/items", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -96,6 +130,34 @@ public class CartController {
                 item.quantity(), money(item.currentPrice()), money(item.currentSubtotal()), item.available(),
                 item.unavailabilityReason(), item.format(), item.requiresPhysicalFulfillment(), item.quantityEditable(),
                 money(item.originalPrice()), money(item.unitSavings()), money(item.originalSubtotal()), money(item.lineSavings()));
+    }
+
+    private static Cart cartResponse(com.pliego.modules.cart.application.CartModels.Cart cart) {
+        return new Cart(cart.cartId(), cart.state(), cart.items().stream().map(CartController::item).toList(),
+                money(cart.totalCurrent()), money(cart.amounts().subtotal()), money(cart.amounts().taxRate()),
+                money(cart.amounts().taxAmount()), money(cart.amounts().shippingAmount()), money(cart.amounts().total()),
+                cart.deliveryWindow() == null ? null : cart.deliveryWindow().from().toString(),
+                cart.deliveryWindow() == null ? null : cart.deliveryWindow().to().toString(),
+                cart.requiresPhysicalFulfillment(), cart.physicalItemCount(), cart.digitalItemCount(),
+                money(cart.originalSubtotal()), money(cart.savingsTotal()), money(cart.currentSubtotal()), cart.quoteFingerprint());
+    }
+
+    private static SavedForLater savedResponse(SavedForLaterList saved) {
+        return new SavedForLater(saved.items().stream().map(CartController::savedItem).toList(), saved.totalCount());
+    }
+
+    private static SavedState savedState(SavedForLaterState state) {
+        return new SavedState(cartResponse(state.cart()), savedResponse(state.saved()));
+    }
+
+    private static SavedItem savedItem(com.pliego.modules.cart.application.CartModels.SavedItem item) {
+        return new SavedItem(item.savedItemId(), item.editionId(), item.title(), item.authors(), item.sku(),
+                item.coverUrl(), item.quantity(), money(item.currentPrice()), money(item.currentSubtotal()),
+                item.available(), item.unavailabilityReason(), item.format(), item.requiresPhysicalFulfillment(),
+                item.quantityEditable(), money(item.originalPrice()), money(item.unitSavings()),
+                money(item.originalSubtotal()), money(item.lineSavings()),
+                item.savedAt() == null ? null : item.savedAt().toString(),
+                item.updatedAt() == null ? null : item.updatedAt().toString());
     }
 
     private static ItemMutation mutation(CartItemResult result) {

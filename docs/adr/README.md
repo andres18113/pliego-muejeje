@@ -45,3 +45,25 @@
 - [0039 — Safe internal back navigation](0039-safe-back-navigation.md)
 - [0040 — Identification required to buy, not editable, correctable with re-authentication](0040-required-correctable-cedula.md)
 - [0041 — Full cédula and RUC algorithm, validated live](0041-ecuador-cedula-ruc-algorithm.md)
+
+- [0042 — One active digital copy per customer account](0042-single-digital-copy-per-customer.md)
+- [0043 — Tiered billing identity corrections and separate invoice recipients](0043-tiered-billing-identity-and-invoice-recipients.md)
+- [0044 — INEC geographic catalog for editable Ecuadorian addresses](0044-ecuador-geographic-address-catalog.md)
+- [0045 — Saved for Later independiente de favoritos y del carrito activo](0045-customer-saved-for-later.md)
+- [0046 — PDF académico determinista, correo de entrega y puerto de almacenamiento privado](0046-academic-invoice-pdf-email-and-storage.md)
+- [0047 — Referencias públicas de pedidos y retiro verificado](0047-public-order-references-and-verified-pickup.md)
+- [0048 — Resultados de entrega y retención por destinatario](0048-mailtrap-delivery-outcomes.md)
+
+- [ADR 0049 — Cambio de correo pendiente de confirmación](0049-pending-email-change.md)
+- [ADR 0050 — Continuidad del registro y sesión tras verificar](0050-registration-session-continuation.md)
+- [ADR 0051 — Retiro a diez minutos y avisos durables](0051-pickup-readiness-and-durable-notifications.md)
+- [ADR 0052 — Creación condicional de ofertas sin reemplazar historia](0052-conditional-creation-for-edition-offers.md)
+- [ADR 0053 — Protección de intentos de inicio de sesión](0053-login-attempt-protection.md)
+- [ADR 0054 — Durable scoped server-sent invalidation events](0054-durable-scoped-server-sent-events.md)
+- [ADR 0055 — Avisos de corrección, acuse durable y biblioteca activa](0055-identity-decisions-and-active-library.md)
+- [ADR 0056 — Protección del registro sin enumeración](0056-registration-attempt-protection.md)
+- [ADR 0057 — Evidence-based foreign-key indexes](0057-evidence-based-foreign-key-indexes.md)
+
+- [ADR 0058 — Offer expiration, checkout clocks and browser refresh](0058-offer-expiration-and-refresh.md)
+
+- [ADR 0059 — Opt-in loopback observability (Proposed)](0059-opt-in-loopback-observability.md)

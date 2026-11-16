@@ -40,14 +40,15 @@ describe("STORE_PICKUP transport and checkout", () => {
     expect(screen.getByRole("tab", { name: "Retiro" })).toHaveFocus();
     await user.click(await screen.findByRole("radio", { name: /Punto de prueba Quito/ }));
     expect(screen.queryByText("Av. Principal 123")).not.toBeInTheDocument();
-    expect(screen.queryByTitle("Mapa de Punto de prueba Quito")).not.toBeInTheDocument();
-    expect(screen.getByText(/Preparación estimada: ~37 min/)).toBeInTheDocument();
+    expect(screen.queryByRole("img", { name: "Mapa de Punto de prueba Quito" })).not.toBeInTheDocument();
+    expect(screen.getByText("Listo unos 37 minutos después de aprobarse el pago, en horario de atención.", { selector: "strong" })).toBeInTheDocument();
+    expect(screen.getByText(/Si el punto está cerrado, estará listo cuando abra\. Al retirar, muestra tu código de retiro y tu documento de identidad\./)).toBeInTheDocument();
     expect(within(screen.getByRole("complementary")).queryByText(/Retiro en tienda|Punto de prueba Quito|Recepción/)).not.toBeInTheDocument();
     await user.click(delivery); expect(await screen.findByText("Av. Principal 123")).toBeInTheDocument();
     await user.click(screen.getByRole("tab", { name: "Retiro" }));
     expect(screen.getByRole("button", { name: "Cambiar punto" })).toBeInTheDocument();
     expect(screen.getByText("Punto de prueba Quito")).toBeInTheDocument();
-    expect(screen.queryByTitle("Mapa de Punto de prueba Quito")).not.toBeInTheDocument();
+    expect(screen.queryByRole("img", { name: "Mapa de Punto de prueba Quito" })).not.toBeInTheDocument();
   });
 
   it.each(["CARD", "TRANSFER"] as const)("checks out pickup with %s and no address, then shows the order snapshot", async (method) => {
@@ -63,24 +64,25 @@ describe("STORE_PICKUP transport and checkout", () => {
       await user.type(screen.getByLabelText("Nombre en la tarjeta"), "Ana Pérez");
       await user.click(screen.getByRole("button", { name: "Usar esta tarjeta" }));
     }
-    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    await fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     expect(await screen.findByText("P-ABC234")).toBeInTheDocument();
     const posts = transport.calls.filter(call => call.path === "/api/v1/checkout");
     expect(posts).toHaveLength(1);
     expect(posts[0].body).toEqual({ ...billingFixturePayload, fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", expectedCartId: "40", paymentMethod: method,
       simulationOutcome: "APPROVED", ...(method === "CARD" ? { cardNumber: "4111111111111111" } : {}) });
     expect(posts[0].headers.get("Idempotency-Key")).toMatch(/^[0-9a-f-]{36}$/);
-    expect(screen.getByText(/Presenta la confirmación enviada a tu correo/)).toBeInTheDocument();
+    expect(screen.getByText(/Al retirar, muestra tu código de retiro y tu documento de identidad/)).toBeInTheDocument();
     expect(screen.getByText(/19:32:12/)).toBeInTheDocument();
     expect(screen.queryByText(/America\/Guayaquil/)).not.toBeInTheDocument();
-    expect(screen.getByTitle("Mapa de Punto de prueba Quito")).toHaveAttribute("src", expect.stringContaining("marker=-0.22%2C-78.5"));
-    const summary = within(screen.getByRole("region", { name: "Tu pedido N.º 700" }));
-    expect(summary.getByText("IVA (15 %)" )).toBeInTheDocument();
-    expect(summary.getByText(/2[.,]78/)).toBeInTheDocument();
-    const immediate = within(screen.getByRole("complementary", { name: "Tu pedido" }));
-    expect(immediate.queryByText(/IVA|Total|Cien años/)).not.toBeInTheDocument();
+    expectLocationMap(screen, "Mapa de Punto de prueba Quito", "-0.22", "-78.5");
+    // The receipt once: totals beside the one way to the full order; the books stay with the pickup facts.
+    const receipt = within(screen.getByRole("complementary", { name: "Tu pedido" }));
+    expect(receipt.getByText("IVA (15 %)" )).toBeInTheDocument();
+    expect(receipt.getByText(/2[.,]78/)).toBeInTheDocument();
+    expect(receipt.queryByText(/Cien años/)).not.toBeInTheDocument();
+    expect(within(screen.getByRole("region", { name: "Retiro" })).getByText("P-ABC234")).toBeInTheDocument();
     expect(screen.queryByText(/Transportista|Seguimiento/)).not.toBeInTheDocument();
-    await user.click(immediate.getByRole("link", { name: "Ver pedido completo" }));
+    await user.click(receipt.getByRole("link", { name: "Ver pedido completo" }));
     await waitFor(() => expect(screen.getByRole("heading", { level: 1, name: "Detalle del pedido" })).toHaveFocus());
   });
 
@@ -89,12 +91,12 @@ describe("STORE_PICKUP transport and checkout", () => {
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
     await user.click(await screen.findByRole("tab", { name: "Retiro" }));
     const second = await screen.findByRole("radio", { name: /Segundo punto/ }); await transfer(user);
-    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    await fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     expect(await screen.findByText("Elige un punto de retiro.")).toBeInTheDocument();
     expect(transport.count("POST", "/api/v1/checkout")).toBe(0);
     expect(screen.getAllByRole("radio")[0]).toHaveFocus();
     await user.click(second); expect(screen.getByText("Segundo punto")).toBeInTheDocument();
-    expect(screen.queryByTitle("Mapa de Segundo punto")).not.toBeInTheDocument();
+    expect(screen.queryByRole("img", { name: "Mapa de Segundo punto" })).not.toBeInTheDocument();
   });
 
   it("announces loading, recovers a location error and handles an empty list", async () => {
@@ -144,10 +146,17 @@ describe("STORE_PICKUP transport and checkout", () => {
     const transport = api({ "POST /api/v1/checkout": () => { throw new TypeError("Failed to fetch"); },
       "POST /api/v1/checkout/attempts/*/resolve": () => json({ state: "CREATED", order: approved }) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout"); await selectPickup(user); await transfer(user);
-    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    await fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await user.click(await screen.findByRole("button", { name: /Consultar resultado/ }));
     expect(await screen.findByText("P-ABC234")).toBeInTheDocument();
     expect(transport.calls.filter(call => call.method === "POST" && call.path === "/api/v1/checkout")).toHaveLength(1);
     await waitFor(() => expect(screen.getByRole("heading", { level: 1 })).toHaveFocus());
   });
 });
+
+/** The pickup map: the point's map image, and a link to the full map at the exact backend coordinate. */
+function expectLocationMap(scope: Pick<typeof screen, "getByRole">, name: string, latitude: string, longitude: string) {
+  const map = scope.getByRole("img", { name }).closest("[data-location-map]")?.parentElement;
+  expect(map).toBeTruthy();
+  expect([...map!.querySelectorAll("a")].some((link) => link.getAttribute("href")?.includes(`mlat=${latitude}&mlon=${longitude}`))).toBe(true);
+}

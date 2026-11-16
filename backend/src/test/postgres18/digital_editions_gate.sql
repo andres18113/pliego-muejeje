@@ -93,8 +93,8 @@ BEGIN
     IF NOT EXISTS(SELECT 1 FROM pliego.fn_customer_favorites(user_id,0,50) WHERE edition_id=ebook AND available) THEN
         RAISE EXCEPTION 'Digital favorite unavailable'; END IF;
     CALL pliego.sp_cart_add_item(user_id,ebook,1,cart,item,quantity);
-    BEGIN CALL pliego.sp_cart_add_item(user_id,ebook,1,cart,item,quantity);
-        RAISE EXCEPTION 'Duplicate digital quantity accepted'; EXCEPTION WHEN SQLSTATE 'P4004' THEN NULL; END;
+    CALL pliego.sp_cart_add_item(user_id,ebook,1,cart,item,quantity);
+    IF quantity<>1 THEN RAISE EXCEPTION 'Repeated digital add changed quantity'; END IF;
     BEGIN CALL pliego.sp_cart_update_item(user_id,item,2,cart,item,quantity);
         RAISE EXCEPTION 'Digital quantity two accepted'; EXCEPTION WHEN SQLSTATE 'P4004' THEN NULL; END;
     CALL pliego.sp_edition_set_status(a,ebook,'INACTIVE');

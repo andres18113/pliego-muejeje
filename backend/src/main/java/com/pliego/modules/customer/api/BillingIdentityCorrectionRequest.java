@@ -19,9 +19,8 @@ public record BillingIdentityCorrectionRequest(
         @NotBlank(message = "Consulta tu identificación actual antes de corregirla.")
         @Size(max = 32, message = "Consulta tu identificación actual antes de corregirla.") String currentNumber,
         String number,
-        @NotBlank(message = "Escribe tu contraseña actual para confirmar la corrección.")
-        @Size(max = 256, message = "La contraseña actual no es válida.")
-        @Schema(format = "password", description = "Contraseña actual, para confirmar la corrección.", maxLength = 256) String currentPassword)
+        @Schema(format = "password", description = "Campo legado opcional. Se acepta por compatibilidad y se ignora.", maxLength = 256)
+        String currentPassword)
         implements ValidEcuadorianIdentification.Value {
     public BillingIdentityCorrectionRequest {
         currentNumber = EcuadorianIdentification.normalized(currentNumber);

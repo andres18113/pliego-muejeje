@@ -1,0 +1,115 @@
+Authorized implementation/domain-evidence scope; pre-existing PNGs and concurrent UI changes excluded.
+No staging performed. Report artifacts are excluded from these implementation counts.
+
+Tracked files: git diff --stat
+
+ .github/workflows/ci.yml                           |   1 +
+ backend/README.md                                  |   5 +
+ .../foundation/openapi/OpenApiConfiguration.java   |   5 +-
+ .../security/AuthSessionRequestFilter.java         |   8 +-
+ .../foundation/security/SecurityConfiguration.java |   2 +-
+ .../catalog/api/AdminCatalogController.java        |   2 +-
+ .../modules/catalog/api/AdminCatalogResponses.java |   3 +-
+ .../catalog/api/EditionOfferController.java        |  20 +-
+ .../catalog/application/AdminCatalogModels.java    |   2 +-
+ .../catalog/application/EditionOfferService.java   |   5 +
+ .../catalog/gateway/EditionOfferGateway.java       |   2 +
+ .../catalog/gateway/JdbcAdminCatalogGateway.java   |  11 +-
+ .../catalog/gateway/JdbcEditionOfferGateway.java   |  18 ++
+ .../modules/identity/api/AuthController.java       |  62 ++++--
+ .../identity/api/EmailActionController.java        |  26 ++-
+ .../notifications/application/MailTemplates.java   |   2 +
+ .../api/AdminCatalogApiIntegrationTest.java        |   3 +-
+ .../modules/catalog/api/OpenApiCoverageTest.java   |   4 +-
+ .../identity/api/AuthApiIntegrationTest.java       |  29 +++
+ .../notifications/TransactionalMailTest.java       |  12 ++
+ .../test/postgres18/order_email_covers_gate.sql    |   6 +
+ backend/src/test/postgres18/run_ci_gates.sh        |  24 ++-
+ .../postgres18/run_runtime_privileges_ci_gate.sh   |  10 +-
+ backend/src/test/postgres18/store_pickup_gate.sql  |  14 +-
+ .../src/test/postgres18/store_pickup_http_gate.py  |   9 +-
+ .../src/test/postgres18/storefront_help_gate.sql   |  10 +-
+ .../test/postgres18/storefront_help_http_gate.py   |  10 +-
+ docs/adr/README.md                                 |   5 +
+ docs/backend/store-pickup-and-pricing.md           |  12 +-
+ docs/backend/transactional-email.md                |   4 +-
+ frontend/openapi/openapi.json                      | 219 ++++++++++++++++++---
+ frontend/src/shared/api/generated.ts               | 138 +++++++++++--
+ 32 files changed, 573 insertions(+), 110 deletions(-)
+
+Untracked files (omitted by git diff --stat):
+
+backend/src/main/java/com/pliego/modules/catalog/application/EditionOfferPrecondition.java | +6 lines
+backend/src/main/java/com/pliego/modules/identity/api/RegistrationContinuationCookie.java | +23 lines
+backend/src/main/java/com/pliego/modules/identity/api/RegistrationSessionResponse.java | +14 lines
+backend/src/main/java/com/pliego/modules/identity/api/RegistrationSessionState.java | +6 lines
+backend/src/main/java/com/pliego/modules/identity/application/RegistrationContinuationService.java | +73 lines
+backend/src/main/java/com/pliego/modules/identity/gateway/RegistrationContinuationGateway.java | +48 lines
+backend/src/main/resources/db/migration/V096__registration_session_continuation.sql | +185 lines
+backend/src/main/resources/db/migration/V097__pickup_ten_minute_schedule_and_ready_notifications.sql | +324 lines
+backend/src/main/resources/db/migration/V098__admin_edition_offer_row_presence.sql | +59 lines
+backend/src/test/postgres18/offers_campaign_concurrency.py | +93 lines
+backend/src/test/postgres18/offers_campaign_gate.sql | +64 lines
+backend/src/test/postgres18/offers_campaign_http_gate.py | +225 lines
+backend/src/test/postgres18/pickup_notifications_concurrency.py | +64 lines
+backend/src/test/postgres18/pickup_timing_notifications_gate.sql | +167 lines
+backend/src/test/postgres18/pickup_timing_upgrade_gate.py | +103 lines
+backend/src/test/postgres18/registration_continuation_gate.py | +166 lines
+backend/src/test/postgres18/registration_continuation_http_gate.py | +128 lines
+docs/adr/0050-registration-session-continuation.md | +19 lines
+docs/adr/0051-pickup-readiness-and-durable-notifications.md | +17 lines
+docs/adr/0052-conditional-creation-for-edition-offers.md | +13 lines
+docs/api-amendments/2026-11-01-pickup-ten-minute-readiness.md | +15 lines
+docs/audit/offers-campaign-2026-11-01/README.md | +60 lines
+docs/audit/offers-campaign-2026-11-01/candidate-plan.json | +306 lines
+docs/audit/offers-campaign-2026-11-01/concurrency-gate.txt | +1 lines
+docs/audit/offers-campaign-2026-11-01/http-gate.txt | +2 lines
+docs/audit/offers-campaign-2026-11-01/local-applied.json | +1649 lines
+docs/audit/offers-campaign-2026-11-01/local-cart-prices.json | +86 lines
+docs/audit/offers-campaign-2026-11-01/local-expiration-gate.sql | +11 lines
+docs/audit/offers-campaign-2026-11-01/local-fixture-plan.json | +286 lines
+docs/audit/offers-campaign-2026-11-01/local-gates.json | +28 lines
+docs/audit/offers-campaign-2026-11-01/local-preflight.txt | +23 lines
+docs/audit/offers-campaign-2026-11-01/local-write-receipts.jsonl | +63 lines
+docs/audit/offers-campaign-2026-11-01/requirements-and-acceptance.md | +22 lines
+docs/audit/offers-campaign-2026-11-01/sql-gate.txt | +8 lines
+docs/audit/offers-campaign-2026-11-01/unit-tests.txt | +5 lines
+docs/audit/offers-campaign-2026-11-01/verification.json | +50 lines
+docs/testing/2026-11-01-backend-requirements-plan.md | +39 lines
+docs/testing/2026-11-01-registration-continuation.md | +28 lines
+docs/testing/pickup-ten-minute-readiness-and-notifications.md | +31 lines
+frontend/src/shared/api/registrationSession.test.ts | +24 lines
+frontend/src/shared/api/registrationSession.ts | +20 lines
+scripts/ops/offers-campaign/README.md | +37 lines
+scripts/ops/offers-campaign/campaign.py | +442 lines
+scripts/ops/offers-campaign/test_campaign.py | +234 lines
+
+Per-task totals, including new files:
+{
+  "Shared gates/documentation": {
+    "files": 7,
+    "insertions": 81,
+    "deletions": 7,
+    "newFiles": 1
+  },
+  "Task 2 registration": {
+    "files": 20,
+    "insertions": 1156,
+    "deletions": 67,
+    "newFiles": 12
+  },
+  "Task 1 offers": {
+    "files": 33,
+    "insertions": 3826,
+    "deletions": 13,
+    "newFiles": 24
+  },
+  "Task 3 pickup": {
+    "files": 16,
+    "insertions": 777,
+    "deletions": 23,
+    "newFiles": 7
+  }
+}
+
+Total files: 76; tracked 32; new 44.

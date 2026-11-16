@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { expectLightAppearance, expectUnchangedByDarkPreference } from "./light-appearance";
 import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
 
 const customerEmail = "ana@example.com";
@@ -124,6 +125,9 @@ async function signIn(page: import("@playwright/test").Page) {
   await page.getByLabel("Contraseña", { exact: true }).fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL(/\/catalog$/);
+  // The URL changes before the destination commits (a router transition). Arrival is when the catalog's heading
+  // takes the route focus (App's page-heading focus); interacting earlier would race that focus move.
+  await expect(page.locator("#contenido-principal h1")).toBeFocused();
 }
 
 const widths = [320, 375, 768, 1024, 1440, 1920];
@@ -132,6 +136,7 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of widths
     await page.emulateMedia({ colorScheme }); await page.setViewportSize({ width, height: 900 });
     await mockPublicCatalog(page); await page.goto("/");
     const header = page.getByTestId("site-header"); await expect(header).toBeVisible();
+    await expectLightAppearance(page); if (colorScheme === "dark") await expectUnchangedByDarkPreference(page, "no-preference");
     if (width >= 960) await expect(header.getByRole("link", { name: "Libros", exact: true })).toHaveAttribute("href", "/catalog?productType=PHYSICAL");
     else await expect(header.getByRole("button", { name: "Abrir navegación" })).toBeVisible();
     await expect(header.getByRole("button", { name: "Categorías" })).toHaveCount(0);
@@ -167,6 +172,8 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of widths
         await expect(page.getByRole("banner")).toHaveCount(1);
         await expect(page.getByRole("banner")).toContainText(route === "/cart" ? "Carrito" : "Finalizar Compra");
         await expect(page.getByRole("banner").getByRole("button", { name: /Buscar libros/ })).toHaveCount(0);
+        // Focused on the purchase: no account menu either.
+        await expect(page.getByRole("banner").getByRole("button", { name: "Menú de cuenta" })).toHaveCount(0);
         continue;
       }
       await expect(page.getByTestId("site-header")).toHaveCount(1);
@@ -179,7 +186,7 @@ test("account keyboard menu and cart remain coherent after navigation and logout
   const header = page.getByTestId("site-header");
   await expect(header.getByRole("link", { name: "Carrito, 3 unidades" })).toBeVisible();
   const account = header.getByRole("button", { name: "Menú de cuenta" });
-  await account.focus(); await page.keyboard.press("ArrowDown");
+  await account.focus(); await expect(account).toBeFocused(); await page.keyboard.press("ArrowDown");
   await expect(page.getByRole("menuitem", { name: "Perfil", exact: true })).toBeFocused();
   await page.keyboard.press("Escape"); await expect(account).toBeFocused();
   await account.click(); await page.getByRole("menuitem", { name: "Cerrar sesión" }).click();
@@ -236,6 +243,47 @@ test("compact navigation keeps the same server destinations with keyboard recove
   await menu.getByRole("link", { name: "Ayuda" }).click();
   await expect(page).toHaveURL(/\/ayuda$/);
   await expect(page.getByRole("heading", { level: 1, name: "Estamos aquí para ayudarte." })).toBeVisible();
+});
+
+test("phone sheet rows share one start edge, the here dot follows the current name and a tap leaves no hover disc", async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+  const page = await context.newPage();
+  await mockPublicCatalog(page);
+  // As in production: each medium has a menu (bestsellers and offers), so its row carries the chevron.
+  const withMenus = { sections: storefrontNavigationFixture.sections.map(section => ["PHYSICAL", "EBOOK", "AUDIOBOOK"].includes(section.key)
+    ? { ...section, bestSellingHref: `${section.href}&sort=BEST_SELLING`, offersHref: `/ofertas?productType=${section.key}`, activeOfferCount: "7" } : section) };
+  await page.route("**/api/v1/storefront/navigation", route => route.fulfill({ contentType: "application/json", body: JSON.stringify(withMenus) }));
+  await page.goto("/catalog?productType=PHYSICAL");
+  await page.getByRole("button", { name: "Abrir navegación" }).tap();
+  const menu = page.getByRole("dialog", { name: "Navegación", exact: true });
+  const rows = menu.getByRole("navigation", { name: "Navegación principal" }).locator(":scope > ul > li > a, :scope > ul > li > div:first-child > a");
+  await expect(rows).toHaveText(["Libros", "eBooks", "Audiolibros", "Ofertas", "Ayuda"]);
+  const current = menu.getByRole("link", { name: "Libros", exact: true });
+  await expect(current).toHaveAttribute("aria-current", "page");
+  const toggle = menu.getByRole("button", { name: "Menú de Libros" });
+  // The current section opens in place; one tap folds it again.
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+  await toggle.tap();
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+
+  const labels = await rows.evaluateAll(links => links.map(link => {
+    const range = document.createRange(); range.selectNodeContents(link);
+    const text = range.getBoundingClientRect(); const box = link.getBoundingClientRect();
+    return { left: text.left, right: text.right, height: box.height };
+  }));
+  for (const label of labels) {
+    expect(Math.abs(label.left - labels[1].left)).toBeLessThanOrEqual(0.5);
+    expect(label.height).toBeGreaterThanOrEqual(44);
+  }
+  const toggleBox = (await toggle.boundingBox())!;
+  expect(toggleBox.width).toBeGreaterThanOrEqual(44); expect(toggleBox.height).toBeGreaterThanOrEqual(44);
+  // The name stays at the start, not pushed against the chevron; the dot is drawn after it.
+  expect(toggleBox.x - labels[0].right).toBeGreaterThan(120);
+  expect(await current.evaluate(link => getComputedStyle(link, "::after").content)).not.toBe("none");
+  expect(await current.evaluate(link => getComputedStyle(link, "::before").content)).toBe("none");
+  // Touch keeps :hover after a tap: a folded section must not keep the hover disc.
+  expect(await toggle.evaluate(button => getComputedStyle(button).backgroundColor)).toBe("rgba(0, 0, 0, 0)");
+  await context.close();
 });
 
 test("larger text collapses the desktop bar to the compact menu instead of overlapping", async ({ page }) => {

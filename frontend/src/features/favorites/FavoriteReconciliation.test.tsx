@@ -2,12 +2,13 @@ import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, expect, it, vi } from "vitest";
 import { FavoriteButton } from "@/features/catalog/FavoriteButton";
+import { FavoriteSnackbar } from "@/features/favorites/favoriteSnackbar";
 import { favoriteStatusQueryKey } from "@/shared/api/favorites";
 import { json, problem, renderPurchaseRoute, stubApi } from "@/test/purchase";
 afterEach(() => vi.unstubAllGlobals());
 const key = favoriteStatusQueryKey("2", ["42"]);
 function renderFavorite(selected: boolean) {
-  return renderPurchaseRoute([{ path: "/catalog", element: <FavoriteButton editionId="42" title="Un libro" isFavorite={selected} ready queryKey={key} returnHref="/catalog" /> }], "/catalog");
+  return renderPurchaseRoute([{ path: "/catalog", element: <><FavoriteButton editionId="42" title="Un libro" isFavorite={selected} ready queryKey={key} returnHref="/catalog" /><FavoriteSnackbar /></> }], "/catalog");
 }
 it.each([true, false])("reconciles lost successful response with membership %s without repeating the mutation", async selected => {
   const method = selected ? "DELETE" : "PUT";
@@ -16,8 +17,8 @@ it.each([true, false])("reconciles lost successful response with membership %s w
   queryClient.setQueryData(key, [{ editionId: "42", favorite: selected }]);
   const user = userEvent.setup();
   await user.click(await screen.findByRole("button", { name: `${selected ? "Quitar de" : "Agregar a"} favoritos: Un libro` }));
-  expect(await screen.findByRole("status")).toHaveTextContent(selected ? "Quitado de favoritos." : "Agregado a favoritos.");
-  expect(screen.getByRole("button")).toHaveAttribute("aria-pressed", String(!selected));
+  expect(await screen.findByRole("status")).toHaveTextContent(selected ? "Quitado de favoritos: Un libro" : "Agregado a favoritos: Un libro");
+  expect(screen.getByRole("button", { name: /favoritos: Un libro$/ })).toHaveAttribute("aria-pressed", String(!selected));
   expect(queryClient.getQueryData(key)).toEqual([{ editionId: "42", favorite: !selected }]);
   expect(api.count(method, "/api/v1/me/favorites/42")).toBe(1);
   expect(api.count("GET", "/api/v1/me/favorites/status")).toBe(1);

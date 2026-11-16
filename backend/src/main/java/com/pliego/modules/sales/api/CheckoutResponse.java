@@ -12,11 +12,12 @@ public record CheckoutResponse(String orderId, String orderState, String payment
         @Schema(nullable = true, example = "40.00", description = "Subtotal pagado antes de impuestos, leído del pedido inmutable; cadena decimal con dos posiciones.")
         String currentSubtotal,
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "Indica si todas las líneas conservan el snapshot de precios originales y ahorros de la compra.")
-        boolean pricingSnapshotAvailable) {
+        boolean pricingSnapshotAvailable,
+        @Schema(nullable = true, example = "PL-0123-4567") String orderReference) {
     public CheckoutResponse(String orderId, String orderState, String paymentState, String total,
             String paymentReference, com.pliego.modules.sales.application.PostPurchaseModels.Fulfillment fulfillment,
             String subtotal, String taxRate, String taxAmount, String shippingAmount) {
         this(orderId, orderState, paymentState, total, paymentReference, fulfillment,
-                subtotal, taxRate, taxAmount, shippingAmount, null, null, null, false);
+                subtotal, taxRate, taxAmount, shippingAmount, null, null, null, false, null);
     }
 }

@@ -7,10 +7,30 @@
 .instructions p { margin: 0; line-height: 1.5; }
 .estimate { color: var(--pf-blue); }
 .map { display: grid; gap: 8px; min-width: 0; }
-.mapFrame { position: relative; min-width: 0; }
-.mapFrame iframe { display: block; }
-.mapCallout { position: absolute; inset: 14px auto auto 14px; width: min(18.75rem, calc(100% - 70px)); padding: 12px 16px; border-radius: 12px; background: var(--pf-sheet, var(--acc-sheet)); color: var(--pf-ink, var(--acc-ink)); box-shadow: 0 2px 10px rgb(37 39 64 / 14%); }
-.map iframe { width: 100%; height: 220px; border: 1px solid var(--pf-line, var(--acc-line)); border-radius: 16px; background: var(--pf-mist, var(--acc-mist)); }
+/* LocationMap: the point's own OSM tiles in a bounded frame. Surfaces set --map-height / --map-radius / --map-ground. */
+.mapFrame { position: relative; min-width: 0; height: var(--map-height, 220px); overflow: hidden; border: 1px solid var(--pf-line, var(--acc-line)); border-radius: var(--map-radius, 16px); background: var(--map-ground, color-mix(in srgb, var(--pf-ink, var(--acc-ink)) 6%, var(--pf-sheet, var(--acc-sheet)))); isolation: isolate; }
+.mapCanvas { position: absolute; inset: 0; }
+.mapTiles { position: absolute; inset: 0; opacity: 0; transition: opacity 220ms cubic-bezier(.32, .94, .6, 1); }
+.mapTiles[data-shown] { opacity: 1; }
+.mapTiles img { position: absolute; width: 256px; height: 256px; max-width: none; user-select: none; pointer-events: none; }
+/* The marker's tip is the exact coordinate (the glyph's point sits at ~92% of its box). */
+.mapMarker { position: absolute; left: 50%; z-index: 1; display: block; line-height: 0; color: var(--pf-blue, var(--acc-blue)); transform: translate(-50%, -92%); filter: drop-shadow(0 2px 2px rgb(37 39 64 / 35%)); }
+.mapStatus { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0; padding: 16px; color: var(--pf-muted, var(--acc-muted)); font-size: .9375rem; text-align: center; }
+.mapStatus[data-tone="error"] { color: var(--pf-ink, var(--acc-ink)); }
+.mapStatus[data-tone="error"] :global(.material-symbol) { flex: none; color: var(--mantine-color-red-8); }
+:global([data-mantine-color-scheme="dark"]) .mapStatus[data-tone="error"] :global(.material-symbol) { color: var(--mantine-color-red-3); }
+.mapZoom { position: absolute; top: 10px; right: 10px; z-index: 2; display: grid; overflow: hidden; border: 1px solid var(--pf-line, var(--acc-line)); border-radius: 12px; background: var(--pf-sheet, var(--acc-sheet)); box-shadow: 0 1px 6px rgb(37 39 64 / 14%); }
+.mapZoom button { display: grid; place-items: center; width: 44px; height: 40px; padding: 0; border: 0; background: transparent; color: var(--pf-ink, var(--acc-ink)); cursor: pointer; }
+.mapZoom button + button { border-top: 1px solid var(--pf-line, var(--acc-line)); }
+.mapZoom button:hover:not([aria-disabled]) { background: var(--store-lavender, #e4def4); }
+.mapZoom button[aria-disabled] { color: var(--pf-muted, var(--acc-muted)); opacity: .55; cursor: default; }
+.mapZoom button:focus-visible { outline: 3px solid var(--pf-blue, var(--acc-blue)); outline-offset: -3px; border-radius: 10px; }
+.mapNotice { position: absolute; left: 10px; bottom: 30px; z-index: 2; max-width: calc(100% - 20px); margin: 0; padding: 6px 10px; border-radius: 8px; background: var(--pf-sheet, var(--acc-sheet)); color: var(--pf-ink, var(--acc-ink)); font-size: .8125rem; }
+/* ODbL attribution, always on the map. */
+.mapAttribution { position: absolute; right: 0; bottom: 0; z-index: 2; padding: 2px 8px; border-top-left-radius: 8px; background: rgb(255 255 255 / 82%); color: #252740; font-size: .75rem; line-height: 1.4; text-underline-offset: 2px; }
+.mapAttribution:focus-visible { outline: 3px solid var(--pf-blue, var(--acc-blue)); outline-offset: -3px; }
+@media (prefers-reduced-motion: reduce) { .mapTiles { transition: none; } }
+.mapCallout { position: absolute; z-index: 2; inset: 14px auto auto 14px; width: min(18.75rem, calc(100% - 70px)); padding: 12px 16px; border-radius: 12px; background: var(--pf-sheet, var(--acc-sheet)); color: var(--pf-ink, var(--acc-ink)); box-shadow: 0 2px 10px rgb(37 39 64 / 14%); }
 .mapLink { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; width: fit-content; max-width: 100%; color: var(--pf-blue, var(--acc-blue)); text-underline-offset: 4px; overflow-wrap: anywhere; }
 .mapLink :global(.material-symbol) { flex: 0 0 auto; }
 .details { display: grid; gap: 20px; min-width: 0; }
@@ -19,4 +39,11 @@
 .details dt { color: var(--pf-muted, var(--acc-muted)); font-size: .9375rem; }
 .details dd { margin: 4px 0 0; font-weight: 600; overflow-wrap: anywhere; }
 .details p { margin: 0; max-width: 60ch; line-height: 1.5; }
-.details .code { display: inline-block; padding: 8px 12px; border-radius: 8px; background: var(--pf-yellow, var(--acc-yellow)); color: var(--pf-ink, var(--acc-ink)); font: 650 1.5rem/1.2 var(--pf-display, var(--acc-display)); }
+/* Pickup code: never broken at its hyphen. Letter-spaced so it can be read aloud character by character; only when
+   the cell is narrower than the code itself (large text on a phone) may it wrap rather than overflow. */
+.details .codeRow[data-usable] { grid-column: 1 / -1; }
+.details .codeCell { container-type: inline-size; }
+.details .code { display: inline-block; max-width: 100%; padding: 8px 14px; border-radius: 10px; background: var(--pf-yellow, var(--acc-yellow)); color: var(--pf-ink, var(--acc-ink)); font: 650 1.5rem/1.2 var(--pf-display, var(--acc-display)); letter-spacing: .07em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.details .codeRow:not([data-usable]) .code { padding: 0; background: none; font-size: 1.0625rem; letter-spacing: .05em; }
+/* Narrower than the code (large text on a phone): break at its own hyphen, tighter; mid-character only as a last resort. */
+@container (max-width: 13rem) { .details .code { padding: 6px 10px; letter-spacing: .02em; white-space: normal; overflow-wrap: anywhere; } }

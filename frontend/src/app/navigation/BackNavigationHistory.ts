@@ -35,7 +35,7 @@ export function backFallback(href: string, role: string | null): string {
   if (/^\/orders\/\d+\//.test(path)) return path.match(/^\/orders\/\d+/)![0];
   if (path.startsWith("/orders/")) return "/orders";
   if (path.startsWith("/account/addresses/")) return "/account/addresses";
-  if (path === "/account/addresses") return "/account";
+  if (path === "/account/addresses" || path === "/account/identity") return "/account";
   if (path.startsWith("/biblioteca/")) return "/biblioteca";
   if (path.startsWith("/ayuda/")) return "/ayuda";
   return "/";

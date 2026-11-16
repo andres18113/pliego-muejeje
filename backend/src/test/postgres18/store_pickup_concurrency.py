@@ -35,15 +35,15 @@ def main():
         assert query(f"SELECT stock_actual FROM pliego.inventario WHERE edicion_id={edition}") == '0'
         admin = query("SELECT usuario_id FROM pliego.usuario WHERE rol='ADMIN' AND estado='ACTIVE' ORDER BY usuario_id LIMIT 1")
         code = query(f'SELECT codigo FROM pliego.pedido_retiro WHERE pedido_id={original}')
-        commands = [f"CALL pliego.sp_pickup_collect({admin},{original},'{code}')",
+        commands = [f"CALL pliego.sp_pickup_collect({admin},{original},'{code}',TRUE)",
                     f'CALL pliego.sp_order_cancel({actor},{original},NULL,NULL,NULL,NULL,NULL)']
         with concurrent.futures.ThreadPoolExecutor(2) as pool:
             results = list(pool.map(lambda sql: subprocess.run(PSQL + ['-At', '-c', sql],capture_output=True,text=True), commands))
         assert sum(result.returncode == 0 for result in results) == 1
         failed = next(result for result in results if result.returncode != 0)
-        assert 'P5002' in failed.stderr or 'P5003' in failed.stderr
+        assert any(code in failed.stderr for code in ('P5002','P5003','P5018'))
         state = query(f'SELECT estado FROM pliego.pedido WHERE pedido_id={original}')
-        assert state in ['DELIVERED', 'CANCELLED']
+        assert state == 'CANCELLED', 'collection is prohibited while cancellation/preparation is pending'
         expected_stock = '0' if state == 'DELIVERED' else '1'
         expected_payment = 'APPROVED' if state == 'DELIVERED' else 'REFUNDED'
         assert query(f'SELECT stock_actual FROM pliego.inventario WHERE edicion_id={edition}') == expected_stock

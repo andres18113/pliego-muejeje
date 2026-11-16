@@ -1,0 +1,13 @@
+{
+  "java_version": "25.0.5+8",
+  "postgres_version": "18.6",
+  "ubuntu_version": "24.04.5",
+  "artifacts": {
+    "temurin-25.0.5+8.tar.gz": "REPLACE-SHA256",
+    "pliego-backend-0.1.0-SNAPSHOT.jar": "REPLACE-SHA256",
+    "frozen-sources.sha256": "REPLACE-SHA256"
+  },
+  "debs": [
+    "REPLACE-OFFLINE-PACKAGE.deb"
+  ]
+}

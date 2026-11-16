@@ -10,7 +10,7 @@ import { ApiRequestError } from "@/shared/api/errors";
 import type { OrderDetail, OrderSummary } from "@/shared/api/orders";
 import { ReadFailure } from "./CartPage";
 import { CustomerOnly, PurchasePage } from "./PurchaseChrome";
-import { booksLabel, deliveryWindowLabel, orderDateLabel, paymentStateLabel, unitsLabel } from "./purchaseText";
+import { booksLabel, deliveryWindowLabel, orderDateLabel, orderReference, paymentStateLabel, unitsLabel } from "./purchaseText";
 import { purchaseWindowView, storyFromState, type OrderStory, type PurchaseWindowView } from "./orderStory";
 import { useCustomerOrders, useRefetchAtCancellationDeadline } from "./ordersQuery";
 import type { MisPedidosOrder } from "./orderViewModel";
@@ -90,7 +90,7 @@ function presentOrder(order: OrderSummary, viewModel: MisPedidosOrder, detail?: 
     digitalOnly: viewModel.fulfillmentType === "DIGITAL_ONLY" || Boolean(detail && detail.fulfillment == null && !detail.items.some((item) => item.requiresPhysicalFulfillment)),
     pickup: viewModel.fulfillmentType === "STORE_PICKUP",
   });
-  // A finalized digital purchase is finished (Anteriores, with the check); inside its window it reads as confirmed.
+  // A finalized digital purchase is finished (Anteriores, as delivered); inside its window it reads as confirmed.
   const story: OrderStory = windowView === "digital-complete" ? { kind: "delivered", tone: "arrived", headline: "Compra completada" }
     : windowView === "digital-window" ? { ...baseStory, headline: "Compra confirmada" } : baseStory;
   return { order, viewModel, detail, paymentState, story, windowView, open: story.tone === "progress" || story.kind === "awaiting-payment" };
@@ -132,7 +132,7 @@ function OrderUnit({ order, viewModel, detail, paymentState, story, windowView, 
   return <Link className={classes.unit} data-group={group} data-outcome={group === "past" ? outcome : undefined} to={`/orders/${order.orderId}`} state={{ ordersPage: page }}>
     <span className={classes.what}>
     <span className={classes.story}>
-      <strong className={classes.state}>{group === "past" && outcome === "done" && <MaterialSymbol name="check" size={18} />}{story.headline}</strong>{" "}
+      <strong className={classes.state}>{story.headline}</strong>{" "}
       {note && <span className={classes.note}>{note}</span>}
     </span>{" "}
     {items.length > 0 && <span className={classes.books}>
@@ -148,10 +148,10 @@ function OrderUnit({ order, viewModel, detail, paymentState, story, windowView, 
     </span>{" "}
     <span className={classes.receipt}>
     <span className={classes.meta}>
-      <span>Pedido N.° {order.orderId}</span>{" "}
+      <span>Pedido {orderReference(order)}</span>{" "}
       {group === "past" && <><span>{placed}</span>{" "}</>}
-      {viewModel.units !== null && <span>{unitsLabel(viewModel.units)}</span>}{" "}
-      {(detail ? detail.invoice?.state === "ISSUED" : order.invoiceState === "ISSUED") && <span className={classes.document}>Factura emitida</span>}
+      {/* The invoice is a document on the order's own page, not a status every row repeats. */}
+      {viewModel.units !== null && <span>{unitsLabel(viewModel.units)}</span>}
     </span>{" "}
     {group === "open" && <><span className={classes.placed}><span className={classes.label}>Realizado </span>{placed}</span>{" "}</>}
     <span className={classes.total}><span className={classes.label}>Total </span>{formatUsd(viewModel.pricing.total)}

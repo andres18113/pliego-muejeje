@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { billingIdentitySchema, storedBillingIdentitySchema, type BillingIdentity } from "./billing";
+import { billingIdentityCorrectionRequestSchema, billingIdentitySchema, storedBillingIdentitySchema, type BillingIdentity, type BillingIdentityCorrectionRequest, type CorrectionReason, type StoredBillingIdentity } from "./billing";
 import type { components } from "./generated";
 import { apiClient } from "./client";
 import { toApiRequestError } from "./errors";
@@ -14,6 +14,10 @@ const profileSchema = z.object({
   customerId: z.string().min(1),
   email: z.string().email(),
   emailVerified: z.boolean().nullish(),
+  // A known permanent delivery failure (hard bounce or provider suppression); absent from older servers.
+  emailDelivery: z.object({ status: z.enum(["OK", "UNDELIVERABLE"]), since: z.string().nullable() }).nullish(),
+  // A requested address that is not in use until its owner confirms it from the link sent there.
+  pendingEmail: z.object({ address: z.string().email(), expiresAt: z.string(), delivery: z.enum(["OK", "UNDELIVERABLE"]).nullish() }).nullish(),
   firstNames: z.string(),
   lastNames: z.string(),
   phone: z.string().nullable(),
@@ -49,13 +53,17 @@ export class EmailChangeOutcomeUnknown extends Error {
   }
 }
 
-export async function changeEmail(newEmail: string, currentPassword: string): Promise<string> {
+const emailChangeRequestedSchema = z.object({ email: z.string().email(), pendingEmail: z.object({ address: z.string().email(), expiresAt: z.string() }) });
+export type EmailChangeRequested = z.infer<typeof emailChangeRequestedSchema>;
+
+/** Requests a change: the current address stays in use until the new one is confirmed from its link. */
+export async function changeEmail(newEmail: string, currentPassword: string): Promise<EmailChangeRequested> {
   const result = await apiClient.PUT("/api/v1/me/email", { body: { newEmail, currentPassword } })
     .catch(() => { throw new EmailChangeOutcomeUnknown(); });
   if (result.response.ok) {
-    const parsed = z.object({ email: z.string().min(3) }).safeParse(result.data);
-    if (!parsed.success) throw new EmailChangeOutcomeUnknown();
-    return parsed.data.email;
+    const parsed = emailChangeRequestedSchema.safeParse(result.data);
+    if (result.response.status !== 202 || !parsed.success) throw new EmailChangeOutcomeUnknown();
+    return parsed.data;
   }
   if (result.response.status >= 500) throw new EmailChangeOutcomeUnknown();
   throw toApiRequestError(result.response.status, result.error, "No pudimos cambiar tu correo", "Revisa los datos e inténtalo otra vez.");
@@ -69,6 +77,10 @@ const addressSchema = z.object({
   line2: z.string().nullable().catch(null),
   city: z.string(),
   province: z.string(),
+  /** Catalog ids (ADR 0044); null on an older address whose city did not match, which `cityNeedsReview` flags. */
+  cityId: z.string().nullable().optional().default(null),
+  provinceId: z.string().nullable().optional().default(null),
+  cityNeedsReview: z.boolean().optional().default(false),
   countryCode: z.string(),
   postalCode: z.string().nullable().catch(null),
   reference: z.string().nullable().catch(null),
@@ -158,7 +170,7 @@ export async function setPrimaryAddress(addressId: string): Promise<void> {
 }
 
 export const billingIdentityQueryKey = ["customer-billing-identity"] as const;
-export async function getBillingIdentity(signal?: AbortSignal): Promise<BillingIdentity | null> {
+export async function getBillingIdentity(signal?: AbortSignal): Promise<StoredBillingIdentity | null> {
   const { data, error, response } = await apiClient.GET("/api/v1/me/billing-identity", { signal });
   if (response.status === 204) return null;
   if (!response.ok) throw toApiRequestError(response.status, error, "No pudimos consultar tu cédula", "Comprueba tu conexión e inténtalo otra vez.");
@@ -183,12 +195,66 @@ export async function registerBillingIdentity(identity: BillingIdentity): Promis
   throw toApiRequestError(result.response.status, result.error, "No pudimos guardar tu cédula", "Revisa el dato e inténtalo otra vez.");
 }
 
-/** A correction names the number the customer saw and confirms the current password (ADR 0040). */
-export async function correctBillingIdentity(currentNumber: string, identity: BillingIdentity, currentPassword: string): Promise<void> {
+/**
+ * A direct correction names the number the customer saw (compare-and-set). It is allowed while the number is on no
+ * invoice, or to switch between the same person's cédula and RUC; otherwise the server answers P1107 (ADR 0043).
+ */
+export async function correctBillingIdentity(currentNumber: string, identity: BillingIdentity): Promise<void> {
   const { type, number } = billingIdentitySchema.parse(identity);
-  const result = await apiClient.POST("/api/v1/me/billing-identity/correction", { body: { type, currentNumber, number, currentPassword } })
+  const result = await apiClient.POST("/api/v1/me/billing-identity/correction", { body: { type, currentNumber, number } })
     .catch(() => { throw new BillingIdentityOutcomeUnknown(); });
   if (result.response.ok) return;
   if (result.response.status >= 500) throw new BillingIdentityOutcomeUnknown();
   throw toApiRequestError(result.response.status, result.error, "No pudimos corregir tu cédula", "Revisa los datos e inténtalo otra vez.");
+}
+
+/**
+ * Asks staff to correct an identification that is already on an invoice. Nothing changes until they decide; the
+ * key makes a retry of the same attempt return the original request instead of a second one.
+ */
+export async function requestBillingIdentityCorrection(currentNumber: string, identity: BillingIdentity, reasonCode: CorrectionReason, key: string): Promise<BillingIdentityCorrectionRequest> {
+  const { type, number } = billingIdentitySchema.parse(identity);
+  const result = await apiClient.POST("/api/v1/me/billing-identity/correction-requests", {
+    body: { type, currentNumber, number, reasonCode }, params: { header: { "Idempotency-Key": key } },
+  }).catch(() => { throw new BillingIdentityOutcomeUnknown(); });
+  if (result.response.status >= 500) throw new BillingIdentityOutcomeUnknown();
+  if (!result.response.ok) throw toApiRequestError(result.response.status, result.error, "No pudimos enviar la solicitud", "Revisa los datos e inténtalo otra vez.");
+  const parsed = billingIdentityCorrectionRequestSchema.safeParse(result.data);
+  if (!parsed.success) throw new BillingIdentityOutcomeUnknown();
+  return parsed.data;
+}
+
+/** Withdraws the customer's own pending request; the current identification stays as it is. */
+export async function withdrawBillingIdentityCorrection(requestId: string): Promise<void> {
+  const result = await apiClient.POST("/api/v1/me/billing-identity/correction-requests/{id}/withdraw", {
+    params: { path: { id: requestId as unknown as number } },
+  }).catch(() => { throw new BillingIdentityOutcomeUnknown(); });
+  if (result.response.ok) return;
+  if (result.response.status >= 500) throw new BillingIdentityOutcomeUnknown();
+  throw toApiRequestError(result.response.status, result.error, "No pudimos retirar la solicitud", "Consulta su estado e inténtalo otra vez.");
+}
+
+/**
+ * ADR 0055: the customer has read the decision on their correction. Idempotent (the first date is kept); afterwards
+ * the private projection no longer returns that decision. 404 (not theirs or unknown) and 409 (no longer decided)
+ * mean there is nothing left to acknowledge.
+ */
+export async function acknowledgeBillingIdentityCorrection(requestId: string): Promise<void> {
+  const result = await apiClient.POST("/api/v1/me/billing-identity/correction-requests/{id}/acknowledgment", {
+    params: { path: { id: requestId as unknown as number } },
+  });
+  if (result.response.ok || result.response.status === 404 || result.response.status === 409) return;
+  throw toApiRequestError(result.response.status, result.error, "No pudimos cerrar el aviso", "Inténtalo otra vez en unos segundos.");
+}
+
+/** Sends the pending change's confirmation link again (rate-limited by the server). */
+export async function resendEmailChange(): Promise<void> {
+  const { error, response } = await apiClient.POST("/api/v1/me/email-change/resend", {});
+  if (response.status !== 202) throw toApiRequestError(response.status, error, "No pudimos reenviar el enlace", "Inténtalo de nuevo en unos minutos.");
+}
+
+/** Withdraws the pending change; the current address was never replaced. Idempotent. */
+export async function cancelEmailChange(): Promise<void> {
+  const { error, response } = await apiClient.DELETE("/api/v1/me/email-change", {});
+  if (response.status !== 204) throw toApiRequestError(response.status, error, "No pudimos cancelar el cambio", "Inténtalo de nuevo.");
 }

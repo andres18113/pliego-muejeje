@@ -70,7 +70,7 @@ class CustomerValidationApiIntegrationTest {
     @Test void fullValidProfileNameFitsTheAddressRecipient() throws Exception {
         String recipient="A".repeat(120)+" "+"B".repeat(120);
         mvc.perform(post("/api/v1/me/addresses").header("Authorization",token()).header("Idempotency-Key",UUID.randomUUID().toString())
-                .contentType(MediaType.APPLICATION_JSON).content("{\"alias\":\"Casa\",\"recipient\":\""+recipient+"\",\"line1\":\"Calle 1\",\"city\":\"Quito\",\"province\":\"Pichincha\",\"countryCode\":\"EC\",\"phone\":\"+593991234567\",\"makePrimary\":true}"))
+                .contentType(MediaType.APPLICATION_JSON).content("{\"alias\":\"Casa\",\"recipient\":\""+recipient+"\",\"line1\":\"Calle 1\",\"provinceId\":\"17\",\"cityId\":\"801\",\"countryCode\":\"EC\",\"phone\":\"+593991234567\",\"makePrimary\":true}"))
                 .andExpect(status().isCreated());
     }
 }

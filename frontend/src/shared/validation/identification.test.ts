@@ -27,7 +27,9 @@ describe("cédula y RUC: algoritmo, sin afirmar existencia ni titularidad", () =
     expect(liveIdentificationCheck("1710034065001")).toMatchObject({ tone: "success", message: "RUC de persona natural válido." });
     expect(liveIdentificationCheck("1710034065000").message).toBe("El establecimiento del RUC no puede ser 000.");
     expect(liveIdentificationCheck("1790016919")).toMatchObject({ tone: "help", message: "RUC de sociedad: faltan 3 dígitos." });
-    expect(liveIdentificationCheck("1790016918").message).toBe("El dígito verificador del RUC no coincide. Revisa los números.");
+    // Company RUCs carry no check digit to judge (SRI, ADR 0043): a "wrong" one still only counts what is missing.
+    expect(liveIdentificationCheck("1790016918")).toMatchObject({ tone: "help", message: "RUC de sociedad: faltan 3 dígitos." });
+    expect(liveIdentificationCheck("1790016918001")).toMatchObject({ tone: "success", message: "RUC de sociedad válido." });
     expect(liveIdentificationCheck("1760001200001")).toMatchObject({ tone: "success", message: "RUC de entidad pública válido." });
     expect(liveIdentificationCheck("1760001200000").message).toBe("El establecimiento del RUC no puede ser 0000.");
     expect(liveIdentificationCheck("17100-3").message).toBe("Usa solo números, sin espacios ni guiones.");

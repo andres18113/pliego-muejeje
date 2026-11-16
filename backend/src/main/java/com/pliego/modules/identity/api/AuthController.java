@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pliego.foundation.web.ProblemResponse;
 import com.pliego.modules.identity.application.AuthService;
 import com.pliego.modules.identity.application.AuthService.LoginResult;
-import com.pliego.modules.identity.gateway.RegistrationResult;
+import com.pliego.modules.identity.application.RegistrationContinuationService;
+import jakarta.servlet.http.HttpServletRequest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -36,23 +37,31 @@ public class AuthController {
     private final AuthService authService;
     private final AuthSessionCookie sessionCookie;
 
-    public AuthController(AuthService authService, AuthSessionCookie sessionCookie) {
+    private final RegistrationContinuationService continuation;
+    private final RegistrationContinuationCookie continuationCookie;
+
+    public AuthController(AuthService authService, AuthSessionCookie sessionCookie,
+            RegistrationContinuationService continuation, RegistrationContinuationCookie continuationCookie) {
+        this.continuation=continuation;
+        this.continuationCookie=continuationCookie;
         this.authService = authService;
         this.sessionCookie = sessionCookie;
     }
 
     @PostMapping(path = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Registrar una cuenta CUSTOMER", description = "Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Confirma el enlace antes de iniciar sesión.")
-    @ApiResponse(responseCode = "201", description = "Cuenta de cliente creada", content = @Content(schema = @Schema(implementation = RegisterResponse.class)))
+    @Operation(summary = "Registrar una cuenta CUSTOMER", description = "Respuesta neutral 201 tanto para correo nuevo como existente, sin identificadores de cuenta. Permite 120 registros por IP/hora y 5 por correo normalizado/hora antes de BCrypt. Una continuidad neutral de un correo existente nunca autoriza la cuenta. Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Establece una credencial HttpOnly independiente, válida como máximo 24 horas, para continuar en este navegador después de verificar; no concede acceso por sí sola.")
+    @ApiResponse(responseCode = "201", description = "Cuenta de cliente creada", headers=@Header(name="Set-Cookie",description="Continuidad HttpOnly, Secure, SameSite=Strict, host-only; máximo 24 horas"), content = @Content(schema = @Schema(implementation = RegisterResponse.class)))
     @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
-    @ApiResponse(responseCode = "409", description = "Correo ya registrado", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "429", description = "Demasiados intentos (AUTH_REGISTER_RATE_LIMITED). No revela si la cuenta existe.",
+            headers = @Header(name = "Retry-After", description = "Segundos hasta el próximo intento", schema = @Schema(type = "integer", minimum = "1", maximum = "3600")),
+            content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     @ApiResponse(responseCode = "500", description = "Error interno", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
-    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
-        RegistrationResult result = authService.register(request.email(), request.password(), request.firstNames(),
-                request.lastNames(), request.phone(), request.returnTo());
-        RegisterResponse response = new RegisterResponse(Long.toString(result.userId()),
-                Long.toString(result.customerId()), result.state());
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request, HttpServletRequest servletRequest) {
+        var registered = continuation.register(request.email(), request.password(), request.firstNames(),
+                request.lastNames(), request.phone(), request.returnTo(), servletRequest.getRemoteAddr());
+        RegisterResponse response = new RegisterResponse("PENDING_VERIFICATION");
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header(HttpHeaders.SET_COOKIE, continuationCookie.issueRegistration(registered.secret())).body(response);
     }
 
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -63,10 +72,13 @@ public class AuthController {
     @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     @ApiResponse(responseCode = "401", description = "Credenciales inválidas", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     @ApiResponse(responseCode = "403", description = "Correo pendiente de verificación (EMAIL_NOT_VERIFIED)", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "429", description = "Demasiados intentos (AUTH_LOGIN_RATE_LIMITED). Conserva las credenciales y reintenta después de la espera; no revela si la cuenta existe.",
+            headers = @Header(name = "Retry-After", description = "Segundos hasta el próximo intento", schema = @Schema(type = "integer", minimum = "1", maximum = "3600")),
+            content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     @ApiResponse(responseCode = "500", description = "Error interno", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
-        LoginResult result = authService.login(request.email(), request.password());
-        return loginResponse(result);
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request, HttpServletRequest servletRequest) {
+        LoginResult result = continuation.login(request.email(), request.password(), servletRequest.getRemoteAddr());
+        return loginResponse(result, true);
     }
 
     @PostMapping(path = "/refresh")
@@ -88,7 +100,31 @@ public class AuthController {
         if (result == null) {
             return ResponseEntity.noContent().header(HttpHeaders.SET_COOKIE, sessionCookie.clear()).build();
         }
-        return loginResponse(result);
+        return loginResponse(result, false);
+    }
+
+    @PostMapping(path="/registration-session")
+    @Operation(operationId="registrationSession",summary="Continuar el registro verificado",
+            description="La cookie de continuidad no concede acceso. Devuelve 202 mientras falta verificar; una cuenta verificada consume la credencial y crea una única familia de sesión. Una repetición durante cinco minutos devuelve REFRESH_REQUIRED: renovar mediante /refresh, reintentando brevemente si otra pestaña aún no recibió la cookie. Cuotas: 1200 intentos por IP/hora y 600 por credencial/hora. Si se agota una cuota, devuelve 202 con RETRY_LATER y Retry-After en segundos, sin consumir la continuidad ni enviar Set-Cookie; reintentar con la misma cookie después de la espera indicada.")
+    @ApiResponse(responseCode="200",description="Sesión creada; destino local validado",headers=@Header(name="Set-Cookie",description="Sesión HttpOnly y eliminación de la continuidad"),content=@Content(schema=@Schema(implementation=RegistrationSessionResponse.class)))
+    @ApiResponse(responseCode="202",description="Verificación pendiente, sesión creada por otra petición o cuota agotada; en REFRESH_REQUIRED llamar a refresh y en RETRY_LATER conservar la cookie y reintentar después, sin Set-Cookie",headers=@Header(name="Retry-After",description="Segundos hasta el próximo intento cuando el estado es RETRY_LATER",schema=@Schema(type="integer",minimum="1")),content=@Content(schema=@Schema(implementation=RegistrationSessionState.class)))
+    @ApiResponse(responseCode="204",description="Continuidad ausente, inválida, vencida o consumida fuera de la ventana; cookie eliminada",content=@Content)
+    @ApiResponse(responseCode="403",description="Marcador de sesión requerido",content=@Content(schema=@Schema(implementation=ProblemResponse.class)))
+    @SecurityRequirement(name="registrationContinuationCookie")
+    @Parameter(name="X-PLIEGO-SESSION-REQUEST",in=ParameterIn.HEADER,required=true,description="Valor requerido: 1")
+    public ResponseEntity<?> registrationSession(
+            @Parameter(hidden=true) @CookieValue(name=RegistrationContinuationCookie.NAME,required=false) String secret,
+            HttpServletRequest request) {
+        var result=continuation.exchange(secret,request.getRemoteAddr());
+        if(result==null)return ResponseEntity.noContent().header(HttpHeaders.SET_COOKIE,continuationCookie.clear()).build();
+        if(result.session()==null) {
+            var response=ResponseEntity.accepted();
+            if(result.retryAfterSeconds()!=null)response.header(HttpHeaders.RETRY_AFTER,result.retryAfterSeconds().toString());
+            return response.body(new RegistrationSessionState(result.state()));
+        }
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,
+                sessionCookie.issue(result.session().refreshToken(),result.session().sessionExpiresAt()),continuationCookie.clear())
+                .body(RegistrationSessionResponse.from(result.session(),result.returnTo()));
     }
 
     @PostMapping(path = "/logout")
@@ -102,17 +138,19 @@ public class AuthController {
             description = "Marcador requerido para autorizar la petición de sesión desde el cliente PLIEGO.")
     public ResponseEntity<Void> logout(
             @Parameter(hidden = true)
-            @CookieValue(name = AuthSessionCookie.NAME, required = false) String refreshToken) {
-        authService.logout(refreshToken);
-        return ResponseEntity.noContent().header(HttpHeaders.SET_COOKIE, sessionCookie.clear()).build();
+            @CookieValue(name = AuthSessionCookie.NAME, required = false) String refreshToken,
+            @Parameter(hidden=true) @CookieValue(name=RegistrationContinuationCookie.NAME,required=false) String registrationSecret) {
+        continuation.logout(refreshToken,registrationSecret);
+        return ResponseEntity.noContent().header(HttpHeaders.SET_COOKIE, sessionCookie.clear(),continuationCookie.clear()).build();
     }
 
-    private ResponseEntity<LoginResponse> loginResponse(LoginResult result) {
+    private ResponseEntity<LoginResponse> loginResponse(LoginResult result, boolean clearContinuation) {
         LoginResponse response = new LoginResponse(result.accessToken(), "Bearer",
                 Math.toIntExact(result.expiresInSeconds()),
                 new LoginResponse.AuthenticatedUser(Long.toString(result.userId()), result.email(), result.role()));
-        return ResponseEntity.status(HttpStatus.OK)
-                .header(HttpHeaders.SET_COOKIE, sessionCookie.issue(result.refreshToken(), result.sessionExpiresAt()))
-                .body(response);
+        var builder = ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,
+                sessionCookie.issue(result.refreshToken(), result.sessionExpiresAt()));
+        if (clearContinuation) builder.header(HttpHeaders.SET_COOKIE, continuationCookie.clear());
+        return builder.body(response);
     }
 }

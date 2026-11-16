@@ -10,7 +10,8 @@ public final class AdminOrderResponses {
 
     @Schema(name="AdminOrderSummary")
     public record Summary(String orderId, String customerId, String customerName,
-            String createdAt, String orderState, String total, String paymentState) { }
+            String createdAt, String orderState, String total, String paymentState,
+            @Schema(nullable = true, example = "PL-0123-4567") String orderReference) { }
 
     @Schema(name="AdminOrderDetail")
     public record Detail(String orderId, String customerId, String customerEmail, String customerName,
@@ -19,7 +20,8 @@ public final class AdminOrderResponses {
             List<InventoryMovement> inventoryMovements, String purchaseState,
             @Schema(nullable=true) PostPurchaseModels.Fulfillment fulfillment, @Schema(nullable=true) PostPurchaseModels.Shipment shipment,
             PostPurchaseResponses.Invoice invoice, List<PostPurchaseResponses.CreditNote> creditNotes,
-            PostPurchaseModels.Actions availableActions, String taxRate, String taxAmount, String shippingAmount) {
+            PostPurchaseModels.Actions availableActions, String taxRate, String taxAmount, String shippingAmount,
+            @Schema(nullable = true, example = "PL-0123-4567") String orderReference) {
         public Detail {
             items = List.copyOf(items);
             stateHistory = List.copyOf(stateHistory);

@@ -44,7 +44,7 @@ const cartDetailSchema = z.object({
     requiresPhysicalFulfillment: z.boolean(),
     quantityEditable: z.boolean(),
     format: editionFormatSchema.optional(),
-    unavailabilityReason: z.enum(stockUnavailabilityReasons).nullable().catch(null),
+    unavailabilityReason: z.enum([...stockUnavailabilityReasons, "P6002", "P6003"]).nullable().catch(null),
   })),
   totalCurrent: moneySchema,
   /** Subtotal before offers, total savings and discounted subtotal, all supplied by the Database API. */
@@ -71,6 +71,20 @@ const cartDetailSchema = z.object({
 });
 
 export type CartDetail = z.infer<typeof cartDetailSchema>;
+
+/**
+ * Saved for Later (ADR 0045): the customer's own list beside the cart, independent of Favoritos. A saved item
+ * carries the same commercial projection as a cart line and the quantity it will return with; it never counts
+ * in the cart's totals.
+ */
+const savedItemSchema = cartDetailSchema.shape.items.element.omit({ cartItemId: true }).extend({ savedItemId: z.string().min(1) });
+const savedListSchema = z.object({ items: z.array(savedItemSchema), totalCount: z.number().int().nonnegative() });
+/** A move answers with both lists as the server now holds them, so the page updates without another read. */
+const savedMoveSchema = z.object({ cart: cartDetailSchema, saved: savedListSchema });
+export type SavedItem = z.infer<typeof savedItemSchema>;
+export type SavedList = z.infer<typeof savedListSchema>;
+export type SavedMove = z.infer<typeof savedMoveSchema>;
+export const savedForLaterQueryKey = ["customer-saved-for-later"] as const;
 export type CartLine = CartDetail["items"][number];
 
 export async function addEditionToCart(editionId: string, quantity = 1) {
@@ -126,6 +140,43 @@ export async function getCartDetail(signal?: AbortSignal): Promise<CartDetail> {
   const parsed = cartDetailSchema.safeParse(data);
   if (!parsed.success) throw invalidCartResponse();
   return parsed.data;
+}
+
+export async function getSavedForLater(signal?: AbortSignal): Promise<SavedList> {
+  const { data, error, response } = await apiClient.GET("/api/v1/cart/saved", { signal });
+  if (!response.ok) throw toApiRequestError(response.status, error, "No pudimos consultar tus libros guardados", "Comprueba tu conexión e inténtalo otra vez.");
+  const parsed = savedListSchema.safeParse(data);
+  if (!parsed.success) throw invalidCartResponse();
+  return parsed.data;
+}
+
+/** Moves a cart line, with its quantity, to Saved for Later in one server transaction. */
+export async function saveCartItemForLater(cartItemId: string): Promise<SavedMove> {
+  const { data, error, response } = await apiClient.POST("/api/v1/cart/items/{cartItemId}/save-for-later", {
+    params: { path: { cartItemId: cartItemId as unknown as number } },
+  });
+  if (!response.ok) throw toApiRequestError(response.status, error, "No pudimos guardarlo para después", "Comprueba tu conexión e inténtalo otra vez.");
+  const parsed = savedMoveSchema.safeParse(data);
+  if (!parsed.success) throw invalidCartResponse();
+  return parsed.data;
+}
+
+/** Returns a saved item to the cart through the cart's own validation; it leaves the list only on success. */
+export async function moveSavedItemToCart(savedItemId: string): Promise<SavedMove> {
+  const { data, error, response } = await apiClient.POST("/api/v1/cart/saved/{savedItemId}/move-to-cart", {
+    params: { path: { savedItemId: savedItemId as unknown as number } },
+  });
+  if (!response.ok) throw toApiRequestError(response.status, error, "No pudimos moverlo al carrito", "Comprueba tu conexión e inténtalo otra vez.");
+  const parsed = savedMoveSchema.safeParse(data);
+  if (!parsed.success) throw invalidCartResponse();
+  return parsed.data;
+}
+
+export async function removeSavedItem(savedItemId: string) {
+  const { error, response } = await apiClient.DELETE("/api/v1/cart/saved/{savedItemId}", {
+    params: { path: { savedItemId: savedItemId as unknown as number } },
+  });
+  if (!response.ok) throw toApiRequestError(response.status, error, "No pudimos quitar este libro guardado", "Comprueba tu conexión e inténtalo otra vez.");
 }
 
 /** PUT sets an absolute quantity, so the contract treats it as idempotent. */

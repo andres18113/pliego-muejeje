@@ -27,22 +27,21 @@ async function mockStateApi(page: Page, state: State) {
 }
 
 for (const width of [320, 390, 768, 1280]) {
-  test(`PUB-02 related help has another published resource at ${width}px`, async ({ page }) => {
+  test(`PUB-02 an article closes on the other published topics at ${width}px`, async ({ page }) => {
     const state: State = { anotherResource: false };
     await mockStateApi(page, state);
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/ayuda/ebooks");
     await expect(page.getByRole("heading", { level: 1, name: "eBooks" })).toBeVisible();
-    await expect(page.getByRole("main").getByRole("link", { name: "eBooks", exact: true })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Más sobre eBooks" })).toHaveCount(0);
-    await expect(page.getByRole("link", { name: "Ver todos los recursos de Ayuda" })).toBeVisible();
+    // The topic repeats the title, so it is not shown; with no other article there is nothing to list.
+    await expect(page.getByRole("main").getByRole("link", { name: "eBooks", exact: true })).toHaveCount(0);
+    await expect(page.getByRole("navigation", { name: "Otros temas de Ayuda" })).toHaveCount(0);
     state.anotherResource = true;
     await page.reload();
-    const related = page.getByRole("link", { name: "Más sobre eBooks" });
-    await expect(related).toBeVisible();
-    await related.click();
-    await expect(page).toHaveURL(/\/ayuda\?category=ebooks$/);
-    await expect(page.getByRole("link", { name: "Descargar eBooks" })).toBeVisible();
+    const onward = page.getByRole("navigation", { name: "Otros temas de Ayuda" });
+    await expect(onward.getByRole("link", { name: "eBooks", exact: true })).toHaveCount(0);
+    await onward.getByRole("link", { name: "Descargar eBooks" }).click();
+    await expect(page).toHaveURL(/\/ayuda\/descargas$/);
     await page.screenshot({ path: test.info().outputPath(`related-help-${width}.png`), fullPage: true });
   });
 

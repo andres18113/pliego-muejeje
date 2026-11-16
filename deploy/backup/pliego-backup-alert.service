@@ -1,0 +1,15 @@
+[Unit]
+Description=Notify approved receiver about PLIEGO backup failure
+ConditionPathExists=/etc/pliego-backup/alert.curl
+[Service]
+Type=oneshot
+User=postgres
+Group=postgres
+LoadCredential=alert.curl:/etc/pliego-backup/alert.curl
+ExecStart=/opt/pliego/backup/alert.sh
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6

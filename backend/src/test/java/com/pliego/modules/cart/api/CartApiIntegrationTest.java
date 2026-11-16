@@ -41,6 +41,8 @@ import com.pliego.foundation.security.JwtTokenIssuer;
 import com.pliego.modules.cart.application.CartModels.Cart;
 import com.pliego.modules.cart.application.CartModels.CartItem;
 import com.pliego.modules.cart.application.CartModels.CartItemResult;
+import com.pliego.modules.cart.application.CartModels.SavedForLaterList;
+import com.pliego.modules.cart.application.CartModels.SavedItem;
 import com.pliego.modules.cart.gateway.CartGateway;
 
 @org.springframework.test.context.TestPropertySource(properties = "pliego.mail.enabled=false")
@@ -103,10 +105,65 @@ class CartApiIntegrationTest {
     }
 
     @Test
+    void customerCanReadSavedForLaterListAndMutationsReturnFreshCartAndSavedSnapshots() throws Exception {
+        gateway.saved = new SavedForLaterList(List.of(new SavedItem("200", "250", "1984", "George Orwell",
+                "PLG-LIT-001", null, 2, new BigDecimal("19.90"), new BigDecimal("39.80"), true, null,
+                "PAPERBACK", true, true, new BigDecimal("22.15"), new BigDecimal("2.26"),
+                new BigDecimal("44.30"), new BigDecimal("4.52"), Instant.parse("2026-10-25T12:00:00Z"),
+                Instant.parse("2026-10-25T12:30:00Z"))), 1);
+        mvc.perform(get("/api/v1/cart/saved").header("Authorization", customerToken("42")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items[0].savedItemId").value("200"))
+                .andExpect(jsonPath("$.items[0].editionId").value("250"))
+                .andExpect(jsonPath("$.items[0].title").value("1984"))
+                .andExpect(jsonPath("$.items[0].authors").value("George Orwell"))
+                .andExpect(jsonPath("$.items[0].coverUrl").value(org.hamcrest.Matchers.nullValue()))
+                .andExpect(jsonPath("$.items[0].format").value("PAPERBACK"))
+                .andExpect(jsonPath("$.items[0].quantity").value(2))
+                .andExpect(jsonPath("$.items[0].currentPrice").value("19.90"))
+                .andExpect(jsonPath("$.items[0].currentSubtotal").value("39.80"))
+                .andExpect(jsonPath("$.items[0].available").value(true))
+                .andExpect(jsonPath("$.items[0].requiresPhysicalFulfillment").value(true))
+                .andExpect(jsonPath("$.items[0].originalPrice").value("22.15"))
+                .andExpect(jsonPath("$.totalCount").value(1));
+
+        mvc.perform(post("/api/v1/cart/items/100/save-for-later")
+                        .header("Authorization", customerToken("42")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.cart.items").isArray())
+                .andExpect(jsonPath("$.saved.items").isArray());
+
+        mvc.perform(post("/api/v1/cart/saved/200/move-to-cart")
+                        .header("Authorization", customerToken("42")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.cart.items").isArray())
+                .andExpect(jsonPath("$.saved.items").isArray());
+
+        mvc.perform(delete("/api/v1/cart/saved/200").header("Authorization", customerToken("42")))
+                .andExpect(status().isNoContent()).andExpect(content().string(""));
+    }
+
+    @Test
+    void movingANonexistentCartLineToSavedUsesTheExistingSpanishCartNotFoundError() throws Exception {
+        gateway.failure = databaseFailure("P4003");
+        mvc.perform(post("/api/v1/cart/items/987654/save-for-later")
+                        .header("Authorization", customerToken("42")))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code").value("P4003"))
+                .andExpect(jsonPath("$.title").value("Artículo del carrito no encontrado"))
+                .andExpect(jsonPath("$.detail")
+                        .value("El artículo solicitado no existe o no está disponible en tu carrito."));
+    }
+
+    @Test
     void publicAndAdminActorsCannotAccessAnyCartEndpoint() throws Exception {
         List<Endpoint> endpoints = List.of(
                 new Endpoint("GET", "/api/v1/cart", null),
+                new Endpoint("GET", "/api/v1/cart/saved", null),
                 new Endpoint("POST", "/api/v1/cart/items", ADD_BODY),
+                new Endpoint("POST", "/api/v1/cart/items/100/save-for-later", null),
+                new Endpoint("POST", "/api/v1/cart/saved/200/move-to-cart", null),
+                new Endpoint("DELETE", "/api/v1/cart/saved/200", null),
                 new Endpoint("PUT", "/api/v1/cart/items/100", UPDATE_BODY),
                 new Endpoint("DELETE", "/api/v1/cart/items/100", null));
         for (Endpoint endpoint : endpoints) {
@@ -270,6 +327,21 @@ class CartApiIntegrationTest {
     }
 
     @Test
+    void missingSavedItemReturnsSpanishNotFoundWithoutDatabaseDetails() throws Exception {
+        gateway.failure = databaseFailure("P4006");
+        String body = mvc.perform(delete("/api/v1/cart/saved/987654")
+                        .header("Authorization", customerToken("42")))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code").value("P4006"))
+                .andExpect(jsonPath("$.title").value("Artículo guardado no encontrado"))
+                .andExpect(jsonPath("$.detail")
+                        .value("El artículo guardado no existe o no está disponible en tu lista."))
+                .andReturn().getResponse().getContentAsString();
+        assertFalse(body.contains("private postgres"));
+        assertFalse(body.contains("constraint"));
+    }
+
+    @Test
     void fractionalQuantitiesAreRejectedBeforeAnyCartMutation() throws Exception {
         for (String quantity : List.of("1.5", "-1.5", "1.0000000000000001", "1e-1")) {
             for (Endpoint endpoint : List.of(
@@ -316,6 +388,23 @@ class CartApiIntegrationTest {
                             .contentType(MediaType.APPLICATION_JSON).content("{\"quantity\":" + example.json() + "}"))
                     .andExpect(status().isOk());
             assertEquals(example.expected(), gateway.lastQuantity);
+        }
+    }
+
+    @Test
+    void digitalOwnershipConflictsUseStableCodesAndSpanishFeedback() throws Exception {
+        String[][] cases = {
+                {"P6002", "Ya tienes esta edición digital", "Esta edición digital ya está en tu biblioteca. Puedes consultarla sin volver a comprarla."},
+                {"P6003", "Compra digital pendiente", "Ya tienes un pedido abierto con esta edición digital. Revisa ese pedido antes de intentar otra compra."}
+        };
+        for (String[] error : cases) {
+            gateway.failure = databaseFailure(error[0]);
+            mvc.perform(post("/api/v1/cart/items").header("Authorization", customerToken("42"))
+                            .contentType(MediaType.APPLICATION_JSON).content(ADD_BODY))
+                    .andExpect(status().isConflict())
+                    .andExpect(jsonPath("$.code").value(error[0]))
+                    .andExpect(jsonPath("$.title").value(error[1]))
+                    .andExpect(jsonPath("$.detail").value(error[2]));
         }
     }
 
@@ -421,6 +510,20 @@ class CartApiIntegrationTest {
                 .andExpect(jsonPath("$.components.schemas.CartItem.properties.unavailabilityReason.enum[0]").value("P2043"));
     }
 
+    @Test
+    void openApiDocumentsSavedForLaterRoutesAndCommercialProjection() throws Exception {
+        mvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.paths['/api/v1/cart/saved'].get").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/cart/items/{cartItemId}/save-for-later'].post").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/cart/saved/{savedItemId}/move-to-cart'].post").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/cart/saved/{savedItemId}'].delete").exists())
+                .andExpect(jsonPath("$.components.schemas.SavedForLaterItem.properties.savedItemId.type").value("string"))
+                .andExpect(jsonPath("$.components.schemas.SavedForLaterItem.properties.currentPrice.type").value("string"))
+                .andExpect(jsonPath("$.components.schemas.SavedForLaterItem.properties.available.type").value("boolean"))
+                .andExpect(jsonPath("$.components.schemas.SavedForLaterItem.properties.requiresPhysicalFulfillment.type").value("boolean"));
+    }
+
     private DatabaseException databaseFailure(String state) {
         return exceptionTranslator.translate(new SQLException("private postgres SQL and constraint detail", state));
     }
@@ -470,6 +573,7 @@ class CartApiIntegrationTest {
         private long lastCartItemId;
         private int lastQuantity;
         private Cart cart = new Cart(null, null, List.of(), new BigDecimal("0.00"));
+        private SavedForLaterList saved = new SavedForLaterList(List.of(), 0);
         private CartItemResult nextResult = new CartItemResult("40", "100", 2);
 
         void reset() {
@@ -480,6 +584,7 @@ class CartApiIntegrationTest {
             lastCartItemId = 0;
             lastQuantity = -1;
             cart = new Cart(null, null, List.of(), new BigDecimal("0.00"));
+            saved = new SavedForLaterList(List.of(), 0);
             nextResult = new CartItemResult("40", "100", 2);
         }
 
@@ -517,6 +622,30 @@ class CartApiIntegrationTest {
         @Override public void removeItem(long actorId, long cartItemId) {
             called("remove", actorId);
             lastCartItemId = cartItemId;
+            failIfNeeded();
+        }
+
+        @Override public SavedForLaterList getSavedForLater(long actorId) {
+            called("saved", actorId);
+            failIfNeeded();
+            return saved;
+        }
+
+        @Override public void saveForLater(long actorId, long cartItemId) {
+            called("save", actorId);
+            lastCartItemId = cartItemId;
+            failIfNeeded();
+        }
+
+        @Override public void moveSavedToCart(long actorId, long savedItemId) {
+            called("restore", actorId);
+            lastCartItemId = savedItemId;
+            failIfNeeded();
+        }
+
+        @Override public void removeSavedItem(long actorId, long savedItemId) {
+            called("removeSaved", actorId);
+            lastCartItemId = savedItemId;
             failIfNeeded();
         }
     }

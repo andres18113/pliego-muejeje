@@ -15,6 +15,21 @@ class DatabaseExceptionTranslatorTest {
     private final DatabaseExceptionTranslator translator = new DatabaseExceptionTranslator();
 
     @Test
+    void pickupErrorsPreserveGeographicCodesAndTranslateTheNewStates() {
+        for (String[] expected : new String[][]{
+                {"P5016", "PICKUP_NOT_FOUND", "404"},
+                {"P5017", "PICKUP_ALREADY_COLLECTED", "409"},
+                {"P5018", "PICKUP_NOT_READY", "409"},
+                {"P5014", "GEO_CITY_PROVINCE_INVALID", "400"},
+                {"P5015", "GEO_CITY_UNAVAILABLE", "400"}}) {
+            var translated = translator.translate(new SQLException("private pickup details", expected[0]));
+            org.assertj.core.api.Assertions.assertThat(translated.error().code()).isEqualTo(expected[1]);
+            org.assertj.core.api.Assertions.assertThat(translated.error().httpStatus().value())
+                    .isEqualTo(Integer.parseInt(expected[2]));
+        }
+    }
+
+    @Test
     void ownershipLookupKeepsItsStableNotFoundWireCode() {
         var translated = translator.translate(new SQLException("private ownership detail", "P6001"));
         assertEquals(HttpStatus.NOT_FOUND, translated.error().httpStatus());

@@ -1,0 +1,63 @@
+{"stage": "attempt", "editionId": "25", "sku": "PLG-BK-900001", "request": {"offerPrice": "8.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-04T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "25"}
+{"stage": "public-verified", "editionId": "25"}
+{"stage": "attempt", "editionId": "26", "sku": "PLG-BK-900002", "request": {"offerPrice": "16.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-08T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "26"}
+{"stage": "public-verified", "editionId": "26"}
+{"stage": "attempt", "editionId": "27", "sku": "PLG-BK-900003", "request": {"offerPrice": "23.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-06T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "27"}
+{"stage": "public-verified", "editionId": "27"}
+{"stage": "attempt", "editionId": "28", "sku": "PLG-BK-900004", "request": {"offerPrice": "8.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-08T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "28"}
+{"stage": "public-verified", "editionId": "28"}
+{"stage": "attempt", "editionId": "29", "sku": "PLG-BK-900005", "request": {"offerPrice": "16.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-04T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "29"}
+{"stage": "public-verified", "editionId": "29"}
+{"stage": "attempt", "editionId": "30", "sku": "PLG-BK-900006", "request": {"offerPrice": "23.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-08T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "30"}
+{"stage": "public-verified", "editionId": "30"}
+{"stage": "attempt", "editionId": "31", "sku": "PLG-BK-900007", "request": {"offerPrice": "8.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-06T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "31"}
+{"stage": "public-verified", "editionId": "31"}
+{"stage": "attempt", "editionId": "34", "sku": "PLG-BK-900010", "request": {"offerPrice": "6.79", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-04T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "34"}
+{"stage": "public-verified", "editionId": "34"}
+{"stage": "attempt", "editionId": "35", "sku": "PLG-BK-900011", "request": {"offerPrice": "10.39", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-08T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "35"}
+{"stage": "public-verified", "editionId": "35"}
+{"stage": "attempt", "editionId": "36", "sku": "PLG-BK-900012", "request": {"offerPrice": "14.99", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-06T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "36"}
+{"stage": "public-verified", "editionId": "36"}
+{"stage": "attempt", "editionId": "37", "sku": "PLG-BK-900013", "request": {"offerPrice": "6.79", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-08T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "37"}
+{"stage": "public-verified", "editionId": "37"}
+{"stage": "attempt", "editionId": "38", "sku": "PLG-BK-900014", "request": {"offerPrice": "10.39", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-04T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "38"}
+{"stage": "public-verified", "editionId": "38"}
+{"stage": "attempt", "editionId": "39", "sku": "PLG-BK-900015", "request": {"offerPrice": "14.99", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-08T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "39"}
+{"stage": "public-verified", "editionId": "39"}
+{"stage": "attempt", "editionId": "40", "sku": "PLG-BK-900016", "request": {"offerPrice": "6.79", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-06T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "40"}
+{"stage": "public-verified", "editionId": "40"}
+{"stage": "attempt", "editionId": "43", "sku": "PLG-BK-900019", "request": {"offerPrice": "8.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-04T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "43"}
+{"stage": "public-verified", "editionId": "43"}
+{"stage": "attempt", "editionId": "44", "sku": "PLG-BK-900020", "request": {"offerPrice": "16.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-08T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "44"}
+{"stage": "public-verified", "editionId": "44"}
+{"stage": "attempt", "editionId": "45", "sku": "PLG-BK-900021", "request": {"offerPrice": "23.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-06T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "45"}
+{"stage": "public-verified", "editionId": "45"}
+{"stage": "attempt", "editionId": "46", "sku": "PLG-BK-900022", "request": {"offerPrice": "8.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-08T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "46"}
+{"stage": "public-verified", "editionId": "46"}
+{"stage": "attempt", "editionId": "47", "sku": "PLG-BK-900023", "request": {"offerPrice": "16.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-04T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "47"}
+{"stage": "public-verified", "editionId": "47"}
+{"stage": "attempt", "editionId": "48", "sku": "PLG-BK-900024", "request": {"offerPrice": "23.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-08T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "48"}
+{"stage": "public-verified", "editionId": "48"}
+{"stage": "attempt", "editionId": "49", "sku": "PLG-BK-900025", "request": {"offerPrice": "8.96", "startsAt": "2026-11-01T20:48:21-05:00", "endsAt": "2026-11-06T20:48:21-05:00", "offerCopy": null, "terms": null}}
+{"stage": "http-204", "editionId": "49"}
+{"stage": "public-verified", "editionId": "49"}

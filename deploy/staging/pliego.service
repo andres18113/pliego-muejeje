@@ -1,0 +1,44 @@
+[Unit]
+Description=PLIEGO backend
+Requires=postgresql@18-main.service
+After=network-online.target postgresql@18-main.service
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=3
+
+[Service]
+Type=simple
+User=pliego
+Group=pliego
+WorkingDirectory=/opt/pliego/current
+EnvironmentFile=/etc/pliego/pliego.env
+ExecStart=/usr/bin/java -Xms256m -Xmx1280m -XX:+ExitOnOutOfMemoryError -jar /opt/pliego/current/pliego-backend-0.1.0-SNAPSHOT.jar --server.address=127.0.0.1 --server.port=8080 --server.forward-headers-strategy=native --server.tomcat.remoteip.internal-proxies=127[.]0[.]0[.]1 --server.tomcat.remoteip.remote-ip-header=X-Forwarded-For --server.tomcat.remoteip.protocol-header=X-Forwarded-Proto --server.tomcat.remoteip.host-header=X-Forwarded-Host --server.tomcat.remoteip.port-header=X-Forwarded-Port --server.tomcat.threads.max=50 --server.tomcat.threads.min-spare=5 --server.tomcat.max-connections=1024 --server.tomcat.connection-timeout=10s --spring.datasource.hikari.maximum-pool-size=8 --spring.datasource.hikari.minimum-idle=2 --spring.datasource.hikari.connection-timeout=10000 --spring.datasource.hikari.validation-timeout=3000
+Restart=on-failure
+RestartSec=10s
+TimeoutStartSec=180s
+TimeoutStopSec=45s
+KillSignal=SIGTERM
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=pliego
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+MemoryHigh=1700M
+MemoryMax=2G
+TasksMax=256
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { safeAuthReturnHref } from "@/features/auth/authLocation";
-import { detectCardBrand, formatCardNumber, isLuhnValid, normalizeCardNumber } from "./purchaseText";
+import { detectCardBrand, digitalDeliveryCopy, formatCardNumber, isLuhnValid, normalizeCardNumber } from "./purchaseText";
 
 describe("purchase text and validation", () => {
   it("validates card numbers with Luhn and the 12–19 digit contract", () => {
@@ -76,5 +76,14 @@ describe("deliveryDateRangeLabel", () => {
     expect(deliveryDateRangeLabel("2026-10-05", undefined)).toBeNull();
     expect(deliveryDateRangeLabel("2026-13-05", "2026-10-07")).toBeNull();
     expect(deliveryDateRangeLabel("05/10/2026", "07/10/2026")).toBeNull();
+  });
+});
+
+describe("digital delivery copy", () => {
+  it("says where and when, for the formats and payment chosen", () => {
+    expect(digitalDeliveryCopy(["EBOOK"], "CARD")).toEqual({ subject: "Tu eBook se añadirá", when: "Estará disponible en cuanto se apruebe el pago." });
+    expect(digitalDeliveryCopy(["AUDIOBOOK"], "TRANSFER")).toEqual({ subject: "Tu audiolibro se añadirá", when: "Estará disponible cuando confirmemos tu transferencia." });
+    expect(digitalDeliveryCopy(["EBOOK", "EBOOK"], undefined).subject).toBe("Tus 2 eBooks se añadirán");
+    expect(digitalDeliveryCopy(["EBOOK", "AUDIOBOOK", "EBOOK"], "TRANSFER")).toEqual({ subject: "Tus 3 títulos digitales se añadirán", when: "Estarán disponibles cuando confirmemos tu transferencia." });
   });
 });

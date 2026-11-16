@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { json, problem, renderPurchaseRoute, stubApi as stubPurchaseApi } from "@/test/purchase";
 import { pickupOrder } from "@/test/pickup";
 import { OrderPage } from "./OrderPage";
+import { cancellationClockLabel } from "./cancellationPolicy";
 
 const stubApi = (routes: Parameters<typeof stubPurchaseApi>[0]) => stubPurchaseApi({"GET /api/v1/orders/700/invoice": () => new Response(null, {status:404}), ...routes});
 
@@ -52,10 +53,34 @@ const refunded = { paymentId: "9", method: "CARD", state: "REFUNDED", amount: "3
 describe("OrderPage", () => {
   afterEach(() => vi.unstubAllGlobals());
 
-  const digitalOrder = (actions: Record<string, unknown>) => order({
+  const owned = { state: "AVAILABLE", ownedItemId: "81" };
+  const digitalOrder = (actions: Record<string, unknown>, digitalAccess: Record<string, unknown> = owned) => order({
     fulfillment: null, shipment: null, address: null,
-    items: [{ ...order().items[0], requiresPhysicalFulfillment: false, format: "EBOOK", quantity: 1, subtotal: "18.50" }],
+    items: [{ ...order().items[0], requiresPhysicalFulfillment: false, format: "EBOOK", quantity: 1, subtotal: "18.50", digitalAccess }],
     availableActions: { cancel: false, changeShippingAddress: false, ...actions },
+  });
+
+  it("identifies the order by its public reference, never by the internal id (ADR 0047)", async () => {
+    stubApi({ "GET /api/v1/orders/700": () => json(order({ orderReference: "PL-4827-1093" })) });
+    renderPurchaseRoute(routes, "/orders/700");
+    expect(await screen.findByText("#PL-4827-1093")).toBeInTheDocument();
+    expect(screen.getByText("Pedido", { selector: "dt" }).nextSibling).toHaveTextContent("#PL-4827-1093");
+    await userEvent.click(screen.getByRole("button", { name: "Cancelar pedido" }));
+    expect(await screen.findByRole("dialog", { name: "¿Cancelar el pedido #PL-4827-1093?" })).toBeInTheDocument();
+    expect(document.body.textContent).not.toMatch(/N\.[°º] 700|#700/);
+  });
+
+  it("states when a home-delivery order can be cancelled right under its state, before a long list of books", async () => {
+    const many = Array.from({ length: 12 }, (_, index) => ({ ...order().items[0], orderItemId: `9${index}`, title: `Libro ${index + 1}` }));
+    stubApi({ "GET /api/v1/orders/700": () => json(order({ items: many })) });
+    renderPurchaseRoute(routes, "/orders/700");
+    const rule = await screen.findByText("Puedes cancelarlo mientras lo preparamos, antes de que salga hacia tu dirección.");
+    const cancel = screen.getByRole("button", { name: "Cancelar pedido" });
+    const books = screen.getByRole("list", { name: "Libros del pedido" });
+    // Reading order: the rule and its action come before the books, however many there are.
+    expect(rule.compareDocumentPosition(books) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(cancel.compareDocumentPosition(books) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.queryByText(/6 minutos/)).toBeNull();
   });
 
   it("discards an open cancellation dialog across A to B to A POP without cancelling B", async () => {
@@ -66,13 +91,13 @@ describe("OrderPage", () => {
     });
     const { router } = renderPurchaseRoute(routes, "/orders/700");
     await userEvent.click(await screen.findByRole("button", { name: "Cancelar pedido" }));
-    await screen.findByRole("dialog", { name: "¿Cancelar el pedido N.° 700?" });
+    await screen.findByRole("dialog", { name: "¿Cancelar el pedido #700?" });
     await act(async () => { await router.navigate("/orders/701"); });
-    await screen.findByText("701", { selector: "dd" });
+    await screen.findByText("#701", { selector: "dd" });
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     expect(screen.queryByRole("button", { name: "Confirmar cancelación" })).toBeNull();
     await act(async () => { await router.navigate(-1); });
-    await screen.findByText("700", { selector: "dd" });
+    await screen.findByText("#700", { selector: "dd" });
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(api.calls.filter(call => call.method === "POST")).toHaveLength(0);
   });
@@ -90,9 +115,9 @@ describe("OrderPage", () => {
     await userEvent.click(await screen.findByRole("button", { name: "Confirmar cancelación" }));
     await waitFor(() => expect(api.count("POST", "/api/v1/orders/700/cancel")).toBe(1));
     await act(async () => { await router.navigate("/orders/701"); });
-    await screen.findByText("701", { selector: "dd" });
+    await screen.findByText("#701", { selector: "dd" });
     await act(async () => { await router.navigate(-1); });
-    await screen.findByText("700", { selector: "dd" });
+    await screen.findByText("#700", { selector: "dd" });
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     const reads = api.count("GET", "/api/v1/orders/700");
     await act(async () => {
@@ -108,10 +133,12 @@ describe("OrderPage", () => {
     stubApi({ "GET /api/v1/orders/700": () => json(digitalOrder({ cancel: true, canCancel: true, lifecycleState: "CANCELLATION_WINDOW", cancellationDeadline: "2026-10-06T15:06:00Z", libraryAccessState: "OWNERSHIP_ONLY" })) });
     renderPurchaseRoute(routes, "/orders/700");
     expect(await screen.findByRole("heading", { level: 2, name: "Compra confirmada" })).toBeInTheDocument();
-    expect(screen.getByText("Puedes cancelar este pedido durante los primeros 6 minutos.")).toBeInTheDocument();
+    // The server's own deadline, as a wall-clock time (never a countdown).
+    expect(screen.getByText(`Puedes cancelarlo hasta las ${cancellationClockLabel("2026-10-06T15:06:00Z")}, 6 minutos después de aprobarse el pago.`)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Cancelar pedido" })).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: /Ver Mi biblioteca/ })).toBeNull();
-    expect(document.body.textContent).not.toMatch(/15:06|CANCELLATION_WINDOW/);
+    // Paid and owned already: the title opens straight from its line, even inside the window.
+    expect(screen.getByRole("link", { name: "Ver en Mi biblioteca: Cien años de soledad" })).toHaveAttribute("href", "/biblioteca/81");
+    expect(document.body.textContent).not.toMatch(/CANCELLATION_WINDOW/);
   });
 
   it("thanks the customer and points to Mi biblioteca once the server finalizes a digital purchase", async () => {
@@ -120,7 +147,9 @@ describe("OrderPage", () => {
     expect(await screen.findByRole("heading", { level: 2, name: "¡Gracias por tu compra!" })).toBeInTheDocument();
     expect(screen.getByText("Tu compra está confirmada.")).toBeInTheDocument();
     expect(screen.getByText("Puedes revisar tus artículos comprados en Mi biblioteca.")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Ver Mi biblioteca/ })).toHaveAttribute("href", "/biblioteca");
+    // One way in, to the owned title itself; no second, collection-wide button competes with it.
+    expect(screen.getByRole("link", { name: "Ver en Mi biblioteca: Cien años de soledad" })).toHaveAttribute("href", "/biblioteca/81");
+    expect(screen.queryByRole("link", { name: /Ver Mi biblioteca/ })).toBeNull();
     expect(screen.queryByRole("button", { name: "Cancelar pedido" })).toBeNull();
     expect(document.body.textContent).not.toMatch(/Leer|Escuchar|Descargar/);
   });
@@ -129,7 +158,7 @@ describe("OrderPage", () => {
     stubApi({ "GET /api/v1/orders/700": () => json(digitalOrder({ canCancel: false, lifecycleState: "CANCELLATION_WINDOW" })) });
     renderPurchaseRoute(routes, "/orders/700");
     expect(await screen.findByRole("heading", { level: 2, name: "Compra confirmada" })).toBeInTheDocument();
-    expect(screen.queryByText(/primeros 6 minutos/)).toBeNull();
+    expect(screen.queryByText(/cancelarlo/)).toBeNull();
     expect(screen.queryByRole("button", { name: "Cancelar pedido" })).toBeNull();
   });
 
@@ -143,6 +172,8 @@ describe("OrderPage", () => {
     expect(await screen.findByRole("button", { name: "Cancelar pedido" })).toBeInTheDocument();
     expect(await screen.findByRole("heading", { level: 2, name: "¡Gracias por tu compra!" }, { timeout: 4000 })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Cancelar pedido" })).toBeNull();
+    // Seen open on this visit: the place the action was now says the window closed, instead of going silent.
+    expect(screen.getByText(`El plazo para cancelar terminó a las ${cancellationClockLabel(deadline)}.`)).toBeInTheDocument();
     expect(api.calls.filter(call => call.method === "GET" && call.path === "/api/v1/orders/700").length).toBe(2);
   });
 
@@ -161,7 +192,8 @@ describe("OrderPage", () => {
   it("keeps a pickup order's own state and adds the window line only while it can be cancelled", async () => {
     stubApi({ "GET /api/v1/orders/700": () => json({ ...pickupOrder, availableActions: { cancel: true, changeShippingAddress: false, canCancel: true, lifecycleState: "CANCELLATION_WINDOW" } }) });
     renderPurchaseRoute(routes, "/orders/700");
-    expect(await screen.findByText("Puedes cancelar este pedido durante los primeros 6 minutos.")).toBeInTheDocument();
+    // Without a reported deadline the rule is stated without a time.
+    expect(await screen.findByText("Puedes cancelarlo durante los 6 minutos siguientes a la aprobación del pago.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Cancelar pedido" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { level: 2, name: /Gracias por tu compra/ })).toBeNull();
   });
@@ -216,13 +248,19 @@ describe("OrderPage", () => {
 
     expect(await screen.findByRole("heading", { level: 2, name: "Pedido confirmado" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 1, name: "Detalle del pedido" })).toHaveFocus();
-    expect(screen.getByRole("link", { name: "Volver a mis pedidos" })).toHaveAttribute("href", "/orders");
+    // One trail, Google Store style: Inicio | Pedidos | Detalle del pedido, and no second way back.
+    const trail = within(screen.getByRole("navigation", { name: "Ruta" }));
+    expect(trail.getByRole("link", { name: "Inicio" })).toHaveAttribute("href", "/");
+    expect(trail.getByRole("link", { name: "Pedidos" })).toHaveAttribute("href", "/orders");
+    expect(trail.getByText("Detalle del pedido")).toHaveAttribute("aria-current", "page");
+    expect(screen.queryByRole("link", { name: "Volver a mis pedidos" })).toBeNull();
     expect(screen.getByRole("list", { name: "Progreso del envío" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Libros del pedido" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Cien años de soledad" })).toBeInTheDocument();
     expect(await screen.findByRole("img", { name: "Portada de Cien años de soledad" })).toBeInTheDocument();
     expect(screen.queryByText(/Referencia|SIM-/)).not.toBeInTheDocument();
-    expect(screen.getByText("Pedido N.°").nextSibling).toHaveTextContent("700");
+    // Without a reference in the response (older API), the order still reads with "#", never "N.°".
+    expect(screen.getByText("Pedido", { selector: "dt" }).nextSibling).toHaveTextContent("#700");
     expect(screen.queryByRole("heading", { name: /Factura/ })).not.toBeInTheDocument();
     expect(screen.queryByText(/4111/)).not.toBeInTheDocument();
   });
@@ -274,44 +312,125 @@ describe("OrderPage", () => {
     expect(screen.queryByRole("button", { name: "Cancelar pedido" })).not.toBeInTheDocument();
   });
 
-  it("shows an issued invoice without claiming electronic authorization or downloads", async () => {
-    stubApi({ "GET /api/v1/orders/700": () => json(order({
-      orderState: "DELIVERED", shipment: shipment("DELIVERED", { deliveredAt: "2026-10-07T17:00:00Z" }),
-      availableActions: { cancel: false, changeShippingAddress: false },
-      invoice: {
+  const issuedInvoice = {
         invoiceId: "5", documentNumber: "PLG-0005", state: "ISSUED", buyerName: "Ana Pérez", identityType: "NATIONAL_ID", identityNumber: "1712345678",
         buyerEmail: null, currency: "USD", subtotal: "37.00", taxTotal: "0.00", total: "37.00", issuedAt: "2026-09-28T10:00:00Z",
         billingAddress: { line1: "Av. Principal 123", line2: null, city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null },
-        items: [{ invoiceItemId: "1", orderItemId: "1", description: "Cien años de soledad", quantity: 2, unitPrice: "18.50", subtotal: "37.00", taxTreatment: "NOT_ASSESSED", taxRate: null, taxAmount: "0.00", total: "37.00" }],
-        electronicIssuance: null, pdfAvailable: false, xmlAvailable: false,
-      },
-    })) });
+        items: [], electronicIssuance: null, pdfAvailable: true, xmlAvailable: true,
+      };
+  const metadata = (pdf: string) => json({ invoiceId: "5", orderId: "700", state: "ISSUED", provenance: "SIMULATED", documentNumber: "PLG-0005",
+    files: [{ type: "PDF", state: pdf }, { type: "XML", state: pdf }] });
+
+  it("offers one Ver factura action and no document states, files or simulation notice on the page", async () => {
+    stubApi({ "GET /api/v1/orders/700": () => json(order({ invoice: issuedInvoice })), "GET /api/v1/orders/700/invoice": () => metadata("READY") });
     renderPurchaseRoute(routes, "/orders/700");
-    expect(await screen.findByRole("heading", { level: 2, name: "Entregado" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Factura comercial N.° PLG-0005" })).toBeInTheDocument();
-    expect(screen.getByText("No calculados")).toBeInTheDocument();
-    expect(screen.getByText("Aún no disponible")).toBeInTheDocument();
-    expect(screen.getByText(/todavía no es un comprobante electrónico autorizado/)).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: /PDF|XML|Descargar/ })).not.toBeInTheDocument();
+    const action = await screen.findByRole("button", { name: "Ver factura" });
+    expect(action).not.toHaveAttribute("aria-disabled");
+    expect(screen.getAllByRole("button", { name: /factura/i })).toHaveLength(1);
+    expect(screen.queryByRole("heading", { name: /Documentos de facturación|Factura comercial/ })).not.toBeInTheDocument();
+    expect(screen.queryByText(/PDF|XML|Descargar|Actualizar documentos|SIMULACIÓN ACADÉMICA|Estado: Emitida/)).not.toBeInTheDocument();
+  });
+
+  it("waits quietly while the PDF is prepared and offers nothing when there is no issued invoice", async () => {
+    stubApi({ "GET /api/v1/orders/700": () => json(order({ invoice: issuedInvoice })), "GET /api/v1/orders/700/invoice": () => metadata("PROCESSING") });
+    const { unmount } = renderPurchaseRoute(routes, "/orders/700");
+    expect(await screen.findByRole("button", { name: "Preparando factura…" })).toHaveAttribute("aria-disabled", "true");
+    unmount();
+    stubApi({ "GET /api/v1/orders/700": () => json(order()) });
+    renderPurchaseRoute(routes, "/orders/700");
+    await screen.findByRole("heading", { name: "Pago" });
+    expect(screen.queryByRole("button", { name: /factura/i })).not.toBeInTheDocument();
+  });
+
+  it("opens the invoice PDF inline in a tab opened by the press", async () => {
+    const api = stubApi({
+      "GET /api/v1/orders/700": () => json(order({ invoice: issuedInvoice })), "GET /api/v1/orders/700/invoice": () => metadata("READY"),
+      "GET /api/v1/orders/700/invoice/files/PDF": () => new Response(new Blob(["%PDF-1.7"], { type: "application/pdf" }), { status: 200, headers: { "Content-Type": "application/pdf" } }),
+    });
+    const tab = { opener: {}, closed: false, close: vi.fn(), document: { title: "" }, location: { href: "" } };
+    const openSpy = vi.spyOn(window, "open").mockReturnValue(tab as unknown as Window);
+    vi.stubGlobal("URL", Object.assign(URL, { createObjectURL: vi.fn(() => "blob:invoice"), revokeObjectURL: vi.fn() }));
+    renderPurchaseRoute(routes, "/orders/700");
+    await userEvent.click(await screen.findByRole("button", { name: "Ver factura" }));
+    await waitFor(() => expect(tab.location.href).toBe("blob:invoice"));
+    expect(openSpy).toHaveBeenCalledWith("", "_blank");
+    expect(tab.opener).toBeNull();
+    expect(api.calls.find((call) => call.path.startsWith("/api/v1/orders/700/invoice/files/PDF"))?.path).toBe("/api/v1/orders/700/invoice/files/PDF?disposition=inline");
+    openSpy.mockRestore();
+  });
+
+  it("names a credit note in one line beside the invoice action", async () => {
+    stubApi({
+      "GET /api/v1/orders/700": () => json(order({ orderState: "CANCELLED", purchaseState: "CANCELLED", payment: refunded, shipment: shipment("CANCELLED"), invoice: issuedInvoice,
+        creditNotes: [{ creditNoteId: "3", invoiceId: "5", documentNumber: "NC-0003", state: "ISSUED", reason: "Cancelación del pedido", subtotal: "37.00", taxRate: "0.00", taxTotal: "0.00", shippingAmount: "0.00", total: "37.00", issuedAt: "2026-09-29T10:00:00Z" }],
+        availableActions: { cancel: false, changeShippingAddress: false } })),
+      "GET /api/v1/orders/700/invoice": () => metadata("READY"),
+    });
+    renderPurchaseRoute(routes, "/orders/700");
+    expect(await screen.findByText(/Nota de crédito N.° NC-0003/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Ver factura" })).toBeInTheDocument();
+  });
+
+  it("keeps printed books in the shipment and gives a mixed order's digital titles their own access section", async () => {
+    const mixed = order({
+      subtotal: "45.49", total: "45.49",
+      items: [
+        { ...order().items[0], quantity: 1, subtotal: "18.50", digitalAccess: null },
+        { ...order().items[0], orderItemId: "2", editionId: "108", title: "Cómo comportarse en la multitud", requiresPhysicalFulfillment: false, format: "AUDIOBOOK", unitPrice: "26.99", quantity: 1, subtotal: "26.99", digitalAccess: { state: "AVAILABLE", ownedItemId: "81" } },
+      ],
+      shipment: shipment("PREPARING"),
+    });
+    stubApi({ "GET /api/v1/orders/700": () => json(mixed) });
+    renderPurchaseRoute(routes, "/orders/700");
+    const printed = await screen.findByRole("list", { name: "Libros impresos del pedido" });
+    expect(within(printed).getByText("Cien años de soledad")).toBeInTheDocument();
+    expect(within(printed).queryByText("Cómo comportarse en la multitud")).not.toBeInTheDocument();
+    const digital = screen.getByRole("region", { name: "Acceso digital" });
+    expect(within(digital).getByText("Cómo comportarse en la multitud")).toBeInTheDocument();
+    expect(within(digital).getByText("En Mi biblioteca")).toBeInTheDocument();
+    expect(within(digital).getByRole("link", { name: /^Ver en Mi biblioteca/ })).toHaveAttribute("href", "/biblioteca/81");
+    // Only the digital title: the printed book has no library action.
+    expect(within(printed).queryByRole("link", { name: /Mi biblioteca/ })).toBeNull();
+    // A home-delivery mixed order follows the shipment rule, not the six-minute window (V055: no window with printed books).
+    expect(screen.getByText("Puedes cancelarlo mientras lo preparamos, antes de que salga hacia tu dirección.")).toBeInTheDocument();
+    expect(screen.queryByText(/6 minutos/)).toBeNull();
+    // Cancelling a paid mixed order refunds it whole and revokes its digital titles (verified backend rule), said where it is decided.
+    await userEvent.click(screen.getByRole("button", { name: "Cancelar pedido" }));
+    expect(within(await screen.findByRole("dialog")).getByText("Los libros impresos reservados quedarán libres y los títulos digitales saldrán de Mi biblioteca.")).toBeInTheDocument();
+  });
+
+  it.each([
+    ["a pending payment", { state: "PENDING_PAYMENT", ownedItemId: null }, "PENDING"],
+    ["an unsuccessful purchase", { state: "UNAVAILABLE", ownedItemId: null }, "REJECTED"],
+    ["a refunded payment, whatever the line says", { state: "AVAILABLE", ownedItemId: "81" }, "REFUNDED"],
+  ])("offers no library action for %s", async (_case, access, paymentState) => {
+    const base = digitalOrder({ canCancel: false, lifecycleState: "COMPLETED", libraryAccessState: "OWNERSHIP_ONLY" }, access);
+    stubApi({ "GET /api/v1/orders/700": () => json({ ...base, payment: { ...base.payment, state: paymentState } }) });
+    renderPurchaseRoute(routes, "/orders/700");
+    expect(await screen.findByText("Cien años de soledad")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /Ver en Mi biblioteca/ })).toBeNull();
   });
 
   it("cancels a digital purchase inside its window and then shows the server's cancelled state", async () => {
     const api = stubApi({
       "GET /api/v1/orders/700": [
         () => json(digitalOrder({ cancel: true, canCancel: true, lifecycleState: "CANCELLATION_WINDOW", cancellationDeadline: new Date(Date.now() + 300_000).toISOString(), libraryAccessState: "OWNERSHIP_ONLY" })),
-        () => json({ ...digitalOrder({ canCancel: false, lifecycleState: "CANCELLED", libraryAccessState: "NOT_APPLICABLE" }), orderState: "CANCELLED", purchaseState: "CANCELLED", payment: refunded,
+        () => json({ ...digitalOrder({ canCancel: false, lifecycleState: "CANCELLED", libraryAccessState: "NOT_APPLICABLE" }, { state: "REVOKED", ownedItemId: null }), orderState: "CANCELLED", purchaseState: "CANCELLED", payment: refunded,
           stateHistory: [{ historyId: "2", actorUserId: "2", origin: "USER", previousState: "CONFIRMED", newState: "CANCELLED", at: "2026-09-27T22:00:00Z" }] }),
       ],
       "POST /api/v1/orders/700/cancel": () => json({ orderId: "700", previousState: "CONFIRMED", orderState: "CANCELLED", paymentState: "REFUNDED", restoredUnits: 0 }),
     });
     renderPurchaseRoute(routes, "/orders/700");
-    expect(await screen.findByText("Si lo cancelas, se reembolsará el pago y la compra dejará de estar en Mi biblioteca.")).toBeInTheDocument();
+    expect(await screen.findByText(/^Puedes cancelarlo hasta las \d{2}:\d{2}, 6 minutos después de aprobarse el pago\.$/)).toBeInTheDocument();
     expect(screen.queryByText(/Aún puedes cancelarlo/)).toBeNull();
     await userEvent.click(screen.getByRole("button", { name: "Cancelar pedido" }));
+    // The consequence is stated where the decision is taken.
+    const dialog = await screen.findByRole("dialog");
+    expect(within(dialog).getByText("La compra dejará de estar en Mi biblioteca.")).toBeInTheDocument();
     await userEvent.click(await screen.findByRole("button", { name: "Confirmar cancelación" }));
     expect(await screen.findByRole("heading", { level: 2, name: "Pedido cancelado" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Cancelar pedido" })).toBeNull();
-    expect(screen.queryByRole("link", { name: /Ver Mi biblioteca/ })).toBeNull();
+    expect(screen.queryByRole("link", { name: /Ver Mi biblioteca|Ver en Mi biblioteca/ })).toBeNull();
     expect(api.count("POST", "/api/v1/orders/700/cancel")).toBe(1);
   });
 
@@ -327,7 +446,7 @@ describe("OrderPage", () => {
     renderPurchaseRoute(routes, "/orders/700");
     await userEvent.click(await screen.findByRole("button", { name: "Cancelar pedido" }));
     expect(api.count("POST", "/api/v1/orders/700/cancel")).toBe(0);
-    const dialog = await screen.findByRole("dialog", { name: "¿Cancelar el pedido N.° 700?" });
+    const dialog = await screen.findByRole("dialog", { name: "¿Cancelar el pedido #700?" });
     expect(within(dialog).getByText(/Se reembolsarán/)).toBeInTheDocument();
     await waitFor(() => expect(within(dialog).getByRole("button", { name: "Conservar pedido" })).toHaveFocus());
     await userEvent.click(within(dialog).getByRole("button", { name: "Confirmar cancelación" }));
@@ -347,12 +466,12 @@ describe("OrderPage", () => {
     renderPurchaseRoute(routes, "/orders/700");
     const cancel = await screen.findByRole("button", { name: "Cancelar pedido" });
     await userEvent.click(cancel);
-    const dialog = await screen.findByRole("dialog", { name: "¿Cancelar el pedido N.° 700?" });
+    const dialog = await screen.findByRole("dialog", { name: "¿Cancelar el pedido #700?" });
     await userEvent.click(within(dialog).getByRole("button", { name: "Conservar pedido" }));
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     await waitFor(() => expect(cancel).toHaveFocus());
     await userEvent.click(cancel);
-    await screen.findByRole("dialog", { name: "¿Cancelar el pedido N.° 700?" });
+    await screen.findByRole("dialog", { name: "¿Cancelar el pedido #700?" });
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     await waitFor(() => expect(cancel).toHaveFocus());

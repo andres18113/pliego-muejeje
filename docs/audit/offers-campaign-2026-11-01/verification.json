@@ -1,0 +1,50 @@
+{
+  "scope": "LOCAL_DISPOSABLE_DATABASE_AND_ARCHIVED_CANDIDATES_ONLY",
+  "productionAccessPerformed": false,
+  "javaVersion": 25,
+  "postgresVersionNum": 180006,
+  "successfulFlywayMigrations": 98,
+  "maxMigration": 98,
+  "backendJarSha256": "17bef79d8a4c2dba8788492bd933a99463704f9a85832e35d3c5359059284eef",
+  "all98MigrationResourcesMatchSource": true,
+  "offlineBehaviorTests": 17,
+  "sqlGatePassed": true,
+  "httpGatePassed": true,
+  "nativeConcurrencyCases": 4,
+  "globalFixtureOrderCount": 0,
+  "combinedMaven": {
+    "tests": 554,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "runOwner": "parent combined verification"
+  },
+  "candidatePlan": {
+    "count": 21,
+    "PHYSICAL": 7,
+    "EBOOK": 7,
+    "AUDIOBOOK": 7,
+    "days3": 6,
+    "days5": 6,
+    "days7": 9,
+    "legacyEditionIdIntersection": 0,
+    "legacySkuIntersection": 0,
+    "currentProductionEligibility": "UNKNOWN; mandatory live preflight"
+  },
+  "auditFiles": {
+    "README.md": "6ac9bb3ef90eb5a25d9b1d3a0c4614b06f2d0864aa1878378b68a1b5bdc2f648",
+    "candidate-plan.json": "65cb7a338edd5f82965abe5942decc6a8d8379fd5e58f750278da100c21769db",
+    "concurrency-gate.txt": "bc260b1d4991ec2ecf203c702683eb14acd326e640fd54e636abf2a19e550461",
+    "http-gate.txt": "f28eae35808670a8cbfc4e9aed4a08ebd07cd6b347776abbadb76d74484d3032",
+    "local-applied.json": "d0cefd7653a34b3f5853358d4bf66db971de475cc7c95e7815fd51a0e8a0a417",
+    "local-cart-prices.json": "2005ab0d4315ab819d76af3ace3afc1d7e72f32be2284cc3cf184e7920d2c122",
+    "local-expiration-gate.sql": "ed51138f933fe20959213f15eda39577a233a58d247b2ba7757b4aea366bc91e",
+    "local-fixture-plan.json": "6c56de424c76f04e41e27b709a7c114caf962ceb514699fc1e8ab5064a8b34e6",
+    "local-gates.json": "d2cb93914cf99f666ef21cc5861e647d93300d87beaf4cada82692b7b8bb4194",
+    "local-preflight.txt": "c9ea26a471c88f886b74edbdc90770628696c93d1ad0890f536ecad512cdbcc3",
+    "local-write-receipts.jsonl": "fdc30cf131129af09e0b23b532018a15213c2584943de4f7becb7811ef5611f6",
+    "requirements-and-acceptance.md": "f3756bb4a78e85d5bf5fe63bcddeff66c13a122c1532f57596d8588b3f5a8f74",
+    "sql-gate.txt": "0d3772501fc4aff52a952fed89c80bad5c97eb637796e2250a69bb8c18abfe06",
+    "unit-tests.txt": "178eb4505bda1d0b254a65df06ff68147941080e2ccf700199f1915b2062d059"
+  }
+}

@@ -12,6 +12,7 @@ import { CustomerOnly, PurchasePage } from "@/features/purchase/PurchaseChrome";
 import { AccountShell } from "./AccountShell";
 import { AddressEditorDialog } from "./AddressEditorDialog";
 import { ConfirmDialog } from "@/shared/ui/ConfirmDialog";
+import { UndoToast, type UndoToastMessage } from "@/shared/ui/UndoToast";
 import classes from "./addresses.module.css";
 import { useCountries } from "@/shared/api/reference";
 
@@ -38,6 +39,8 @@ export function AddressBook() {
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [notice, setNotice] = useState<{ text: string; error: boolean } | null>(null);
   const noticeRef = useRef<HTMLParagraphElement>(null);
+  // A confirmed deletion is a passing fact, not a state of the page: a short toast, never a banner.
+  const [toast, setToast] = useState<UndoToastMessage | null>(null);
   const missingRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   // Dialogs outlive their own close animation: remember what the delete confirmation was asking about.
@@ -59,16 +62,15 @@ export function AddressBook() {
     if (!scope.isCurrent()) return;
     if (mutation.isPending || query.isError || query.isFetching) return;
     setNotice(null);
-    const wasPrimary = query.data?.find((address) => address.addressId === action.addressId)?.primary;
+    const position = query.data?.findIndex((address) => address.addressId === action.addressId) ?? -1;
     try {
       await mutation.mutateAsync({...action,scope});
       if (!scope.isCurrent()) return;
       const current = await query.refetch();
       if (!scope.isCurrent()) return;
       setConfirmDeleteId(null);
-      setNotice({ text: current.isError ? "Guardamos el cambio, pero no pudimos actualizar la lista. Pulsa Actualizar para comprobarlo." : action.kind === "primary"
-        ? "Esta es ahora tu dirección principal."
-        : wasPrimary && current.data?.length ? "Eliminamos la dirección. Elige otra como principal para tus próximas compras." : "Eliminamos la dirección.", error: current.isError });
+      if (action.kind === "delete" && !current.isError) { deleted(position); return; }
+      setNotice({ text: current.isError ? "Guardamos el cambio, pero no pudimos actualizar la lista. Pulsa Actualizar para comprobarlo." : "Esta es ahora tu dirección principal.", error: current.isError });
     } catch (error) {
       if (!scope.isCurrent()) return;
       if (error instanceof ApiRequestError && error.status === 401) { clear("expired"); return; }
@@ -78,14 +80,25 @@ export function AddressBook() {
       const applied = !current.isError && (action.kind === "delete"
         ? !current.data?.some((address) => address.addressId === action.addressId)
         : current.data?.some((address) => address.addressId === action.addressId && address.primary));
+      if (applied && action.kind === "delete") { deleted(position); return; }
       if (!(error instanceof ApiRequestError) || error.status >= 500) {
         setNotice({ text: applied
-          ? action.kind === "delete" ? "Confirmamos que la dirección ya no está guardada." : "Confirmamos que esta es tu dirección principal."
+          ? "Confirmamos que esta es tu dirección principal."
           : "No pudimos confirmar el cambio. Consulta la lista actual antes de decidir si quieres intentarlo otra vez.", error: !applied });
       } else {
         setNotice({ text: `${error.title}. ${error.detail}`, error: true });
       }
     }
+  }
+
+  /** The deleted object's trigger is gone: focus moves to the address now in its place (or the add tile), and a toast reports it. */
+  function deleted(position: number) {
+    setToast({ key: Date.now(), message: "Dirección eliminada" });
+    requestAnimationFrame(() => {
+      const rows = document.querySelectorAll<HTMLElement>("#direcciones .account-address-row");
+      const next = rows[Math.min(Math.max(position, 0), rows.length - 1)];
+      (next?.querySelector<HTMLElement>("button") ?? document.querySelector<HTMLElement>('#direcciones button[aria-label="Agregar dirección"]'))?.focus({ preventScroll: true });
+    });
   }
 
   const addresses = query.data;
@@ -177,6 +190,7 @@ export function AddressBook() {
         <p>Los pedidos anteriores conservan los datos de entrega con los que se hicieron.</p>
       </ConfirmDialog>
     </>}
+    <UndoToast toast={toast} onDismiss={() => setToast(null)} duration={5000} />
   </section>;
 }
 
@@ -200,10 +214,12 @@ function AddressRow({ address, countryName, editable, onEdit, onPrimary, onDelet
       <span className={classes.phone}>{parsePhoneNumberFromString(address.phone)?.formatInternational() ?? address.phone}</span>
     </address>
     {address.reference && <p className={classes.reference}>{address.reference}</p>}
+    {/* An older address whose city is not in the catalog (ADR 0044): it still delivers, but asks for its city once. */}
+    {address.cityNeedsReview && <p className={classes.cityReview}><MaterialSymbol name="info" aria-hidden="true" size={16} />Elige su ciudad de la lista con Editar para usarla también en tus facturas.</p>}
     <div className={`account-address-actions ${classes.actions}`}>
       {!address.primary && <Button variant="secondary" type="button" className={classes.makePrimary} disabled={!editable} onClick={onPrimary}>Usar como principal<span className="visually-hidden"> {address.alias}</span></Button>}
-      <Button variant="text" type="button" className={classes.quiet} disabled={!editable} onClick={(event) => onEdit(event.currentTarget)}><MaterialSymbol name="edit" aria-hidden="true" size={16} />Editar <span className="visually-hidden">{address.alias}</span></Button>
-      <Button variant="text" type="button" className={classes.quiet} disabled={!editable} onClick={(event) => onDelete(event.currentTarget)}><MaterialSymbol name="delete" aria-hidden="true" size={16} />Eliminar <span className="visually-hidden">{address.alias}</span></Button>
+      <Button variant="text" type="button" className={`${classes.quiet} ${classes.edit}`} disabled={!editable} onClick={(event) => onEdit(event.currentTarget)}><MaterialSymbol name="edit" aria-hidden="true" size={16} />Editar <span className="visually-hidden">{address.alias}</span></Button>
+      <Button variant="text" type="button" className={`${classes.quiet} ${classes.remove}`} disabled={!editable} onClick={(event) => onDelete(event.currentTarget)}><MaterialSymbol name="delete" aria-hidden="true" size={16} />Eliminar <span className="visually-hidden">{address.alias}</span></Button>
     </div>
   </li>;
 }

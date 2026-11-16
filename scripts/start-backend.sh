@@ -48,4 +48,7 @@ if ((secret_bytes < 32)); then
   exit 2
 fi
 
+# This entrypoint is local development; scripts/dev.sh also probes OpenAPI.
+# Include the contract profile without replacing any caller's active profiles.
+export SPRING_PROFILES_INCLUDE="${SPRING_PROFILES_INCLUDE:+${SPRING_PROFILES_INCLUDE},}contract"
 exec mvn spring-boot:run "$@"

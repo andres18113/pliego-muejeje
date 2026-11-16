@@ -7,6 +7,8 @@ import org.springdoc.core.customizers.OpenApiCustomizer;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.media.ComposedSchema;
+import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 
 @Configuration
@@ -22,7 +24,32 @@ public class OpenApiConfiguration {
                         new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"))
                         .addSecuritySchemes("authSessionCookie",
                                 new SecurityScheme().type(SecurityScheme.Type.APIKEY)
-                                        .in(SecurityScheme.In.COOKIE).name("pliego_session")));
+                                        .in(SecurityScheme.In.COOKIE).name("pliego_session"))
+                        .addSecuritySchemes("registrationContinuationCookie",
+                                new SecurityScheme().type(SecurityScheme.Type.APIKEY)
+                                        .in(SecurityScheme.In.COOKIE).name("pliego_registration")));
+    }
+
+    @Bean
+    OpenApiCustomizer pendingEmailNullableContract() {
+        return openApi -> {
+            var identity = openApi.getComponents().getSchemas().get("StoredBillingIdentity");
+            if (identity != null && identity.getProperties() != null) {
+                identity.addProperty("correctionRequest", new ComposedSchema()
+                        .addAnyOfItem(new Schema<>().$ref("#/components/schemas/StoredBillingIdentityCorrectionRequest"))
+                        .addAnyOfItem(new Schema<>().types(java.util.Set.of("null")))
+                        .description("Solicitud pendiente o última reciente. Tras reconocer una decisión APPROVED/REJECTED devuelve null, sin recuperar decisiones anteriores; se conserva la recencia histórica de 30 días."));
+            }
+            var profile = openApi.getComponents().getSchemas().get("CustomerProfile");
+            if (profile != null && profile.getProperties() != null) {
+                // A nullable $ref sibling is ignored by some 3.1 clients. Model the union explicitly.
+                var pending = new ComposedSchema()
+                        .addAnyOfItem(new Schema<>().$ref("#/components/schemas/PendingEmail"))
+                        .addAnyOfItem(new Schema<>().types(java.util.Set.of("null")))
+                        .description("Cambio de correo vigente; null cuando no existe o venció.");
+                profile.addProperty("pendingEmail", pending);
+            }
+        };
     }
 
     @Bean

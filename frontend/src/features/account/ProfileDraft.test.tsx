@@ -89,8 +89,8 @@ it("retains newer email and password input during save without storing the passw
   await user.click(screen.getByRole("button", { name: "Guardar" }));
   await user.clear(screen.getByLabelText("Nuevo correo")); await user.type(screen.getByLabelText("Nuevo correo"), "otra@example.com");
   await user.clear(screen.getByLabelText("Contraseña actual")); await user.type(screen.getByLabelText("Contraseña actual"), "Clave-nueva");
-  current = { ...profile, email: "nueva@example.com", version: "1" };
-  await act(async () => { release(json({ email: "nueva@example.com" })); });
+  current = { ...profile, version: "1" };
+  await act(async () => { release(json({ email: profile.email, pendingEmail: { address: "nueva@example.com", expiresAt: "2026-11-02T15:00:00Z" } }, 202)); });
   expect(screen.getByLabelText("Nuevo correo")).toHaveValue("otra@example.com");
   expect(screen.getByLabelText("Contraseña actual")).toHaveValue("Clave-nueva");
   const stored = sessionStorage.getItem("pliego-profile-draft:2:email");

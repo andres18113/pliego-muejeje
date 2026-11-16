@@ -1,17 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { CartPreviewProvider } from "@/features/purchase/CartPreview";
-import { Link, Outlet, RouterProvider, ScrollRestoration, createBrowserRouter, isRouteErrorResponse, redirect, useLocation, useNavigation, useNavigationType, useRouteError } from "react-router-dom";
+import { FavoriteSnackbar } from "@/features/favorites/favoriteSnackbar";
+import { Outlet, RouterProvider, ScrollRestoration, createBrowserRouter, isRouteErrorResponse, redirect, useLocation, useNavigation, useNavigationType, useRouteError } from "react-router-dom";
 import { CatalogHomePage } from "@/features/catalog/CatalogHomePage";
 import { SiteHeader } from "./navigation/SiteHeader";
 import { BackNavigationProvider } from "./navigation/BackNavigationProvider";
 import { PurchaseHeader } from "./navigation/PurchaseHeader";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
-import { Button, ButtonLink } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { BrandLogo } from "@/shared/ui/BrandLogo";
-import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { NotFoundScene } from "@/shared/ui/NotFoundScene";
 import { useDelayedPending } from "@/shared/hooks/useDelayedPending";
 import { SessionProvider, useSession } from "./session";
+import { RealtimeSync } from "./realtime/RealtimeSync";
+import { OfferRefreshSync } from "./realtime/OfferRefreshSync";
+import { BuildUpdateNotice } from "./version/BuildUpdateNotice";
+import { focusReadingPosition } from "@/shared/ui/readingPosition";
+import { useOfferClockSettled } from "./realtime/useOfferClockSettled";
 
 const catalogCriteriaKeys = ["que", "category", "minPrice", "maxPrice", "language", "format", "productType", "sort", "page", "pageSize"];
 
@@ -104,6 +109,20 @@ export const router = createBrowserRouter([
         },
       },
       {
+        path: "confirmar-correo",
+        lazy: async () => {
+          const { ConfirmEmailChangePage } = await import("@/features/auth/EmailActionPages");
+          return { Component: ConfirmEmailChangePage };
+        },
+      },
+      {
+        path: "cancelar-cambio-correo",
+        lazy: async () => {
+          const { CancelEmailChangePage } = await import("@/features/auth/EmailActionPages");
+          return { Component: CancelEmailChangePage };
+        },
+      },
+      {
         path: "reenviar-verificacion",
         lazy: async () => {
           const { ResendVerificationPage } = await import("@/features/auth/EmailActionPages");
@@ -129,6 +148,13 @@ export const router = createBrowserRouter([
         lazy: async () => {
           const { AccountPage } = await import("@/features/account/AccountPage");
           return { Component: AccountPage };
+        },
+      },
+      {
+        path: "account/identity",
+        lazy: async () => {
+          const { IdentityCorrectionPage } = await import("@/features/account/IdentityCorrectionPage");
+          return { Component: IdentityCorrectionPage };
         },
       },
       {
@@ -173,27 +199,54 @@ export const router = createBrowserRouter([
           return { Component: OrderPage };
         },
       },
-      { path: "admin", Component: AdminWorkspacePage },
+      {
+        // The invoice's stable address: the invoice email's "Visualizar documento" links here, never to storage.
+        path: "orders/:orderId/invoice",
+        lazy: async () => {
+          const { InvoiceDocumentPage } = await import("@/features/purchase/InvoiceDocumentPage");
+          return { Component: InvoiceDocumentPage };
+        },
+      },
+      {
+        // Administración (ADR 0047): an ADMIN-only area; the API enforces every permission again.
+        path: "admin",
+        lazy: async () => ({ Component: (await import("@/features/admin/AdminArea")).AdminArea }),
+        children: [
+          { index: true, lazy: async () => ({ Component: (await import("@/features/admin/AdminArea")).AdminOverviewPage }) },
+          { path: "retiros", lazy: async () => ({ Component: (await import("@/features/admin/AdminPickupsPage")).AdminPickupsPage }) },
+          { path: "retiros/:orderId", lazy: async () => ({ Component: (await import("@/features/admin/AdminPickupDetailPage")).AdminPickupDetailPage }) },
+          { path: "correcciones", lazy: async () => ({ Component: (await import("@/features/admin/AdminCorrectionsPage")).AdminCorrectionsPage }) },
+        ],
+      },
       { path: "*", Component: NotFoundPage },
     ],
   },
 ]);
 
 export function App() {
-  return <RouterProvider router={router} />;
+  // The session restore needs no router, so it starts as the app mounts, beside the opening route's code, instead of
+  // after the router has loaded it. The restore itself and the gate below are unchanged.
+  return <SessionProvider><RouterProvider router={router} /></SessionProvider>;
 }
 
 function RootSessionLayout() {
   return (
-    <SessionProvider>
+    <>
+      <RealtimeSync />
+      <OfferRefreshSync />
+      <BuildUpdateNotice />
       <BackNavigationProvider><RootLayout /></BackNavigationProvider>
-    </SessionProvider>
+    </>
   );
 }
 
 function RootLayout() {
   const { restoreState, retryRestore } = useSession();
+  const clockSettled = useOfferClockSettled();
   if (restoreState === "restoring") return <InitialRouteFallback label="Comprobando tu sesión…" />;
+  // ADR 0058: price views mount only once the server has answered the offer clock (it normally answered long before
+  // the session restore finishes, so this rarely waits).
+  if (!clockSettled) return <InitialRouteFallback />;
   if (restoreState === "unavailable") {
     return (
       <main className="initial-route-loading" role="alert">
@@ -225,6 +278,7 @@ function ApplicationLayout() {
       {showRoutePending && <div className="route-pending" role="status" aria-live="polite">{label}</div>}
       {purchaseFocused ? <PurchaseHeader /> : <SiteHeader />}
       <CartPreviewProvider><Outlet /></CartPreviewProvider>
+      <FavoriteSnackbar />
       <ScrollRestoration />
     </>
   );
@@ -276,44 +330,6 @@ function NotFoundPage() {
   );
 }
 
-function AdminWorkspacePage() {
-  const { session, logout } = useSession();
-  const [logoutError, setLogoutError] = useState(false);
-
-  useEffect(() => {
-    document.title = "Área administrativa · PLIEGO";
-  }, []);
-
-  return (
-    <>
-
-      <main className="admin-placeholder page-frame" id="contenido-principal" tabIndex={-1}>
-        {!session ? (
-          <section role="alert">
-            <h1>Inicia sesión para continuar.</h1>
-            <p>El acceso a esta área requiere una sesión de administración.</p>
-            <ButtonLink variant="primary" to="/sign-in">Iniciar sesión</ButtonLink>
-          </section>
-        ) : session.user.role !== "ADMIN" ? (
-          <section role="alert">
-            <h1>Esta área no está disponible para tu cuenta.</h1>
-            <p>Vuelve al inicio para continuar.</p>
-            <Link className="route-home" to="/"><MaterialSymbol name="arrow_back" aria-hidden="true" /><span>Ir al inicio</span></Link>
-          </section>
-        ) : (
-          <section>
-            <h1>Área administrativa</h1>
-            <p>Tu sesión está activa. Las herramientas de administración aún no forman parte de esta versión del frontend.</p>
-          {logoutError && <p role="alert">No se pudo cerrar la sesión. Comprueba tu conexión e inténtalo otra vez.</p>}
-          <Button variant="secondary" type="button" onClick={() => void logout().catch(() => setLogoutError(true))}>Cerrar sesión</Button>
-          </section>
-        )}
-      </main>
-      <SiteFooter />
-    </>
-  );
-}
-
 function usePageHeadingFocus() {
   const { pathname } = useLocation();
   const navigationType = useNavigationType();
@@ -339,12 +355,8 @@ function usePageHeadingFocus() {
       // Late content supplies the reading position only while navigation still owns focus.
       // A user who has moved to another connected control keeps that position.
       if (active !== startingFocus && active !== document.body && active?.isConnected) return true;
-      heading.tabIndex = -1;
-    // The heading is only a reading position for assistive technology, never a control: mark this focus so
-    // it draws no ring (styles.css). The mark leaves with the focus; keyboard focus on controls is unchanged.
-      heading.setAttribute("data-route-focus", "");
-      heading.addEventListener("blur", () => heading.removeAttribute("data-route-focus"), { once: true });
-      heading.focus({ preventScroll: true });
+      // The heading is only a reading position for assistive technology, never a control (no ring).
+      focusReadingPosition(heading);
       return true;
     };
     if (focusHeading()) return;

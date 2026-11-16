@@ -2,9 +2,16 @@ import createClient from "openapi-fetch";
 import type { Middleware } from "openapi-fetch";
 import type { paths } from "./generated";
 import { SessionRenewedError } from "./errors";
+import { apiOriginFrom } from "./apiOrigin";
 
-const configuredBaseUrl = (import.meta.env.VITE_API_BASE_URL || "/api/v1").replace(/\/$/, "");
-const apiOrigin = configuredBaseUrl.replace(/\/api\/v1$/, "");
+export { apiOriginFrom };
+
+const apiOrigin = apiOriginFrom(import.meta.env.VITE_API_BASE_URL);
+
+/** An absolute API path (`/api/v1/...`) on the configured origin; same-origin when the origin is relative. */
+export function apiUrl(path: `/api/v1/${string}`) {
+  return `${apiOrigin}${path}`;
+}
 
 export const apiClient = createClient<paths>({
   baseUrl: apiOrigin || (typeof window !== "undefined" ? window.location.origin : "http://localhost"),

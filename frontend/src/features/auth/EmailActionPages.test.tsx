@@ -6,6 +6,9 @@ import { VerifyEmailPage, ResendVerificationPage, ForgotPasswordPage, ResetPassw
 import { useSession } from "@/app/session";
 
 const token = "a".repeat(43);
+/** The registering browser's answer (ADR 0050): verified and signed in. */
+const signedIn = () => json({ accessToken: "verified-session", tokenType: "Bearer", expiresInSeconds: 1800,
+  user: { userId: "100", email: "ana@example.com", role: "CUSTOMER" }, returnTo: null });
 const routes = [
   { path: "/verificar-correo", element: <VerifyEmailPage /> },
   { path: "/reenviar-verificacion", element: <ResendVerificationPage /> },
@@ -17,16 +20,34 @@ const routes = [
 describe("customer email actions", () => {
   afterEach(() => { vi.unstubAllGlobals(); configure({ reactStrictMode: false }); });
 
-  it("preserves the cart origin through verification and automatic return without authorizing access", async () => {
+  it("verified in another browser: no session is created, sign-in keeps the cart origin", async () => {
     const destination = "/cart?source=edition#items";
     const from = new URLSearchParams({ from: destination }).toString();
     const api = stubApi({ "POST /api/v1/auth/verify-email": () => new Response(null, { status: 204 }) });
     const { router } = renderPurchaseRoute(routes, `/verificar-correo?${from}#token=${token}`, { role: null });
     await waitFor(() => expect(router.state.location.hash).toBe(""));
-    expect(await screen.findByRole("status")).toHaveTextContent("Volviendo a donde estabas…");
-    expect(screen.getByRole("link", { name: "Continuar" })).toHaveAttribute("href", destination);
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Tu cuenta ya está activa."));
+    expect(screen.queryByRole("link", { name: "Continuar" })).not.toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "Iniciar sesión" }).every(link => link.getAttribute("href") === `/sign-in?${from}`)).toBe(true);
     expect(api.count("POST", "/api/v1/auth/login")).toBe(0);
+  });
+
+  it("in the registering browser, continues to the cart origin signed in", async () => {
+    const destination = "/cart?source=edition#items";
+    stubApi({ "POST /api/v1/auth/verify-email": signedIn });
+    renderPurchaseRoute(routes, `/verificar-correo?${new URLSearchParams({ from: destination })}#token=${token}`, { role: null });
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Ya iniciaste sesión. Volviendo a donde estabas…"));
+    expect(screen.getByRole("link", { name: "Continuar" })).toHaveAttribute("href", destination);
+  });
+
+  it("recovers a lost verification answer from the session cookie instead of asking for a new link", async () => {
+    const api = stubApi({
+      "POST /api/v1/auth/verify-email": () => { throw new TypeError("network"); },
+      "POST /api/v1/auth/refresh": () => json({ accessToken: "restored", tokenType: "Bearer", expiresInSeconds: 1800, user: { userId: "100", email: "ana@example.com", role: "CUSTOMER" } }),
+    });
+    renderPurchaseRoute(routes, `/verificar-correo#token=${token}`, { role: null });
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Ya iniciaste sesión. Abriendo el inicio…"));
+    expect(api.count("POST", "/api/v1/auth/verify-email")).toBe(1);
   });
 
   it("carries the validated origin into a resend request while keeping neutral feedback", async () => {
@@ -65,10 +86,10 @@ describe("customer email actions", () => {
   });
 
   it("automatically verifies a fragment token once and removes it from the URL", async () => {
-    const api = stubApi({ "POST /api/v1/auth/verify-email": () => new Response(null, { status: 204 }) });
+    const api = stubApi({ "POST /api/v1/auth/verify-email": signedIn });
     const { router } = renderPurchaseRoute(routes, `/verificar-correo#token=${token}`, { role: null });
     await waitFor(() => expect(router.state.location.hash).toBe(""));
-    expect(await screen.findByRole("status")).toHaveTextContent("Abriendo el inicio…");
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Abriendo el inicio…"));
     expect(api.calls.find(call => call.path === "/api/v1/auth/verify-email")?.body).toEqual({ token });
     expect(api.count("POST", "/api/v1/auth/login")).toBe(0);
   });
@@ -88,7 +109,7 @@ describe("customer email actions", () => {
   });
 
   it("preserves success when the same link is reopened without replaying verification", async () => {
-    const api = stubApi({ "POST /api/v1/auth/verify-email": () => new Response(null, { status: 204 }) });
+    const api = stubApi({ "POST /api/v1/auth/verify-email": signedIn });
     const { router } = renderPurchaseRoute(routes, `/verificar-correo#token=${token}`, { role: null });
     await screen.findByRole("heading", { name: "Correo verificado" });
     await act(async () => { await router.navigate(`/verificar-correo#token=${token}`); });
@@ -101,14 +122,16 @@ describe("customer email actions", () => {
     let finishOld!: (response: Response) => void;
     const api = stubApi({ "POST /api/v1/auth/verify-email": [
       () => new Promise(resolve => { finishOld = resolve; }),
-      () => new Response(null, { status: 204 }),
+      signedIn,
     ] });
     const { router } = renderPurchaseRoute(routes, `/verificar-correo#token=${token}`, { role: null });
     await waitFor(() => expect(api.count("POST", "/api/v1/auth/verify-email")).toBe(1));
     const freshToken = "b".repeat(43);
     await act(async () => { await router.navigate(`/verificar-correo#token=${freshToken}`); });
-    await screen.findByRole("heading", { name: "Correo verificado" });
+    // Verifications share the browser's session lock (one can sign in), so the fresh link waits for the old answer;
+    // that late rejection must not replace the current link's result.
     await act(async () => finishOld(problem(400, "EMAIL_ACTION_INVALID", "Enlace inválido", "El enlace venció o ya se utilizó.")));
+    await screen.findByRole("heading", { name: "Correo verificado" });
     expect(screen.queryByRole("alert")).not.toBeInTheDocument();
     expect(screen.getByRole("status")).toHaveTextContent("Abriendo el inicio…");
     expect(api.calls.filter(call => call.path === "/api/v1/auth/verify-email").map(call => call.body)).toEqual([{ token }, { token: freshToken }]);
@@ -136,13 +159,13 @@ describe("customer email actions", () => {
     const freshToken = "b".repeat(43);
     const api = stubApi({ "POST /api/v1/auth/verify-email": [
       () => problem(400, "EMAIL_ACTION_INVALID", "Enlace inválido", "El enlace venció o ya se utilizó."),
-      () => new Response(null, { status: 204 }),
+      signedIn,
     ] });
     const { router } = renderPurchaseRoute(routes, `/verificar-correo#token=${token}`, { role: null });
     expect(await screen.findByRole("alert")).toHaveTextContent("El enlace venció");
     await act(async () => { await router.navigate(`/verificar-correo#token=${freshToken}`); });
     await waitFor(() => expect(router.state.location.hash).toBe(""));
-    expect(await screen.findByRole("status")).toHaveTextContent("Abriendo el inicio…");
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Abriendo el inicio…"));
     expect(api.calls.filter(call => call.path === "/api/v1/auth/verify-email").map(call => call.body)).toEqual([{ token }, { token: freshToken }]);
   });
 
@@ -260,9 +283,9 @@ describe("customer email actions", () => {
   });
 
   it("keeps automatic verification feedback concise and shows the account is ready", async () => {
-    const api = stubApi({ "POST /api/v1/auth/verify-email": () => new Response(null, { status: 204 }) });
+    const api = stubApi({ "POST /api/v1/auth/verify-email": signedIn });
     renderPurchaseRoute(routes, `/verificar-correo#token=${token}`, { role: null });
-    expect(await screen.findByRole("status")).toHaveTextContent(/^Abriendo el inicio…$/);
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent(/^Ya iniciaste sesión\. Abriendo el inicio…$/));
     expect(screen.getByRole("heading", { name: "Correo verificado" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Verificar correo" })).not.toBeInTheDocument();
     expect(api.count("POST", "/api/v1/auth/verify-email")).toBe(1);

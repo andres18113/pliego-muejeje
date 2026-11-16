@@ -43,11 +43,12 @@ function NavigationState({ navigation }: { navigation: Navigation }) {
 }
 
 /**
- * Desktop: the server's sections on the bar. A section with featured titles, subjects or a bestseller
- * destination is a disclosure button whose panel follows it in the tab order; the others are plain links.
- * A mouse opens a panel on hover and moves between sections without a click; leaving the bar and panel
- * closes it after a short grace (never while keyboard focus is inside). Click, ↓, Escape and a press
- * outside keep working, so hover is never the only way in.
+ * Desktop: the server's sections on the bar. Every section name is a link to its whole catalog, so one click
+ * on "Libros" lands on all the books. A section with featured titles, subjects or a bestseller destination adds
+ * its menu as a separate chevron button right after the name, whose panel follows it in the tab order.
+ * A mouse opens a panel on hover (over the name or the chevron) and moves between sections without a click;
+ * leaving the bar and panel closes it after a short grace (never while keyboard focus is inside). The chevron's
+ * click, ↓ on the name or the chevron, Escape and a press outside keep working, so hover is never the only way in.
  */
 export function DesktopNavigation({ navigation, selected, openKey, onOpenChange }: {
   navigation: Navigation; selected: string | undefined; openKey: string | null; onOpenChange: (key: string | null, restoreFocus?: boolean) => void;
@@ -67,12 +68,12 @@ export function DesktopNavigation({ navigation, selected, openKey, onOpenChange 
       if (!document.querySelector("[data-header-menu] :focus-visible")) onOpenChange(null);
     }, 150);
   }
-  function onTriggerEnter(event: PointerEvent<HTMLButtonElement>, key: string) {
+  function onTriggerEnter(event: PointerEvent<HTMLElement>, key: string) {
     if (event.pointerType !== "mouse") return;
     cancelClose();
     if (openKey !== key) { hoverOpened.current = true; onOpenChange(key); }
   }
-  function onTriggerKey(event: KeyboardEvent<HTMLButtonElement>, key: string) {
+  function onTriggerKey(event: KeyboardEvent<HTMLElement>, key: string) {
     if (event.key === "ArrowDown") {
       event.preventDefault();
       onOpenChange(key);
@@ -94,11 +95,18 @@ export function DesktopNavigation({ navigation, selected, openKey, onOpenChange 
         return <li key={section.key} data-header-menu
           onBlur={event => { if (open && event.relatedTarget instanceof Node && !event.currentTarget.contains(event.relatedTarget)) onOpenChange(null); }}
           onKeyDown={event => { if (open && event.key === "Escape") { event.stopPropagation(); onOpenChange(null, true); event.currentTarget.querySelector<HTMLButtonElement>("button[aria-expanded]")?.focus(); } }}>
-          <button type="button" className={`${header.navLink} ${classes.trigger}`} aria-expanded={open} aria-controls={open ? `${uid}-${section.key}` : undefined} aria-current={selected === section.key ? "page" : undefined}
-            onClick={() => { if (open && hoverOpened.current) { hoverOpened.current = false; return; } onOpenChange(open ? null : section.key); }}
-            onPointerEnter={event => onTriggerEnter(event, section.key)} onKeyDown={event => onTriggerKey(event, section.key)}>
-            {section.label}<MaterialSymbol name="expand_more" size={18} className={classes.chevron} />
-          </button>
+          <span className={classes.split} data-open={open || undefined}>
+            {/* The name goes straight to the section's whole catalog; the chevron is the way into its menu. */}
+            <Link to={all.href} className={`${header.navLink} ${classes.sectionLink}`} aria-current={selected === section.key ? "page" : undefined}
+              onClick={close} onPointerEnter={event => onTriggerEnter(event, section.key)} onKeyDown={event => onTriggerKey(event, section.key)}>
+              {section.label}
+            </Link>
+            <button type="button" className={classes.trigger} aria-expanded={open} aria-controls={open ? `${uid}-${section.key}` : undefined} aria-label={`Menú de ${section.label}`}
+              onClick={() => { if (open && hoverOpened.current) { hoverOpened.current = false; return; } onOpenChange(open ? null : section.key); }}
+              onPointerEnter={event => onTriggerEnter(event, section.key)} onKeyDown={event => onTriggerKey(event, section.key)}>
+              <MaterialSymbol name="expand_more" size={18} className={classes.chevron} aria-hidden="true" />
+            </button>
+          </span>
           {open && <div id={`${uid}-${section.key}`} className={classes.panel} role="region" aria-label={`Menú de ${section.label}`} data-menu-panel>
             <div className={classes.panelInner}>
               <div className={classes.main}>
@@ -130,8 +138,9 @@ export function DesktopNavigation({ navigation, selected, openKey, onOpenChange 
 }
 
 /**
- * Phones and tablets: the same sections as a list. A section with secondary destinations unfolds in place
- * with the desktop panel's architecture — featured titles, "Explorar todos…", then "Explorar más".
+ * Phones and tablets: the same sections as a list. Every section name goes to its whole catalog in one tap; a
+ * section with secondary destinations adds a 44px chevron at the end of its row that unfolds it in place with the
+ * desktop panel's architecture — featured titles, "Explorar todos…", then "Explorar más".
  */
 export function MobileNavigation({ navigation, selected, onNavigate }: { navigation: Navigation; selected: string | undefined; onNavigate: () => void }) {
   const uid = useId();
@@ -149,9 +158,13 @@ export function MobileNavigation({ navigation, selected, onNavigate }: { navigat
         const all = browseAll(section);
         const more = moreDestinations(section);
         return <li key={section.key}>
-          <button type="button" className={classes.sheetRow} aria-expanded={open} aria-controls={open ? `${uid}-${section.key}` : undefined} aria-current={selected === section.key ? "page" : undefined} onClick={() => setChosen(open ? null : section.key)}>
-            {section.label}<MaterialSymbol name={open ? "expand_less" : "expand_more"} size={22} />
-          </button>
+          <div className={classes.sheetSplit} data-open={open || undefined}>
+            <Link to={all.href} className={classes.sheetRow} aria-current={selected === section.key ? "page" : undefined} onClick={onNavigate}>{section.label}</Link>
+            <button type="button" className={classes.sheetToggle} aria-expanded={open} aria-controls={open ? `${uid}-${section.key}` : undefined}
+              aria-label={`Menú de ${section.label}`} onClick={() => setChosen(open ? null : section.key)}>
+              <MaterialSymbol name={open ? "expand_less" : "expand_more"} size={22} aria-hidden="true" />
+            </button>
+          </div>
           {open && <div id={`${uid}-${section.key}`} className={classes.sheetSection}>
             {section.featured.length > 0 && <ul className={classes.sheetFeatured} aria-label={`Destacados de ${section.label}`}>{section.featured.map(product => <li key={product.editionId}>
               <Link to={product.href} className={classes.sheetProduct} data-media={product.productType} onClick={onNavigate}>

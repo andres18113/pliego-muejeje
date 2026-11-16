@@ -2,6 +2,7 @@ package com.pliego.modules.sales.api;
 
 import java.util.List;
 import com.pliego.modules.sales.application.PostPurchaseModels;
+import com.pliego.modules.sales.application.OrderModels.DigitalAccess;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /** Customer order representations; identifiers and money are JSON strings. */
@@ -22,7 +23,8 @@ public final class CustomerOrderResponses {
             @Schema(nullable = true, description = "Subtotal pagado antes de impuestos, leído del pedido inmutable; cadena decimal con dos posiciones.") String subtotal,
             @Schema(nullable = true, description = "Tasa de impuesto guardada al comprar, expresada como porcentaje y cadena decimal con dos posiciones.") String taxRate,
             @Schema(nullable = true, description = "Importe de impuesto guardado al comprar; cadena decimal con dos posiciones.") String taxAmount,
-            @Schema(nullable = true, description = "Importe de envío guardado al comprar; cadena decimal con dos posiciones.") String shippingAmount) {
+            @Schema(nullable = true, description = "Importe de envío guardado al comprar; cadena decimal con dos posiciones.") String shippingAmount,
+            @Schema(nullable = true, example = "PL-0123-4567") String orderReference) {
         public Summary(String orderId, String createdAt, String orderState,
                 String total, String paymentState, String purchaseState, String fulfillmentMethod,
                 String shipmentState, String estimatedDeliveryFrom, String estimatedDeliveryTo,
@@ -32,7 +34,7 @@ public final class CustomerOrderResponses {
             this(orderId, createdAt, orderState, total, paymentState, purchaseState, fulfillmentMethod,
                     shipmentState, estimatedDeliveryFrom, estimatedDeliveryTo, itemCount, unitCount,
                     itemSummary, invoiceState, invoicePdfAvailable, invoiceXmlAvailable,
-                    originalSubtotal, savingsTotal, currentSubtotal, pricingSnapshotAvailable, null, null, null, null);
+                    originalSubtotal, savingsTotal, currentSubtotal, pricingSnapshotAvailable, null, null, null, null, null);
         }
         public Summary(String orderId, String createdAt, String orderState,
                 String total, String paymentState, String purchaseState, String fulfillmentMethod,
@@ -55,7 +57,8 @@ public final class CustomerOrderResponses {
             @Schema(nullable = true, description = "Subtotal original guardado al comprar; null si falta el snapshot histórico.") String originalSubtotal,
             @Schema(nullable = true, description = "Ahorro total guardado al comprar; null si falta el snapshot histórico.") String savingsTotal,
             @Schema(nullable = true, description = "Subtotal pagado antes de impuestos, leído del pedido inmutable; cadena decimal con dos posiciones.") String currentSubtotal,
-            @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "Indica si todas las líneas conservan el snapshot de precios originales y ahorros de la compra.") boolean pricingSnapshotAvailable) {
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "Indica si todas las líneas conservan el snapshot de precios originales y ahorros de la compra.") boolean pricingSnapshotAvailable,
+            @Schema(nullable = true, example = "PL-0123-4567") String orderReference) {
         public Detail(String orderId, String orderState, String subtotal, String total,
                 String createdAt, String updatedAt, List<Item> items, Address address,
                 Payment payment, List<History> stateHistory, String purchaseState,
@@ -64,7 +67,7 @@ public final class CustomerOrderResponses {
                 PostPurchaseModels.Actions availableActions, String taxRate, String taxAmount, String shippingAmount) {
             this(orderId, orderState, subtotal, total, createdAt, updatedAt, items, address, payment,
                     stateHistory, purchaseState, fulfillment, shipment, invoice, creditNotes, availableActions,
-                    taxRate, taxAmount, shippingAmount, null, null, null, false);
+                    taxRate, taxAmount, shippingAmount, null, null, null, false, null);
         }
     }
 
@@ -77,7 +80,20 @@ public final class CustomerOrderResponses {
             @Schema(nullable = true, description = "Ahorro unitario guardado al comprar; null si falta el snapshot histórico.") String unitSavings,
             @Schema(nullable = true, description = "Subtotal original de la línea guardado al comprar; null si falta el snapshot histórico.") String originalSubtotal,
             @Schema(nullable = true, description = "Ahorro total de la línea guardado al comprar; null si falta el snapshot histórico.") String lineSavings,
-            @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "Indica si esta línea conserva el snapshot de precios originales y ahorros de la compra.") boolean pricingSnapshotAvailable) {
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "Indica si esta línea conserva el snapshot de precios originales y ahorros de la compra.") boolean pricingSnapshotAvailable,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED, nullable = true,
+                    schemaResolution = Schema.SchemaResolution.INLINE, types = {"object", "null"},
+                    description = "Propiedad digital de esta fuente de compra; null en líneas físicas.")
+            DigitalAccess digitalAccess) {
+        public Item(String orderItemId, String editionId, String sku, String isbn,
+                String title, String authors, String publisher, String format, String language,
+                String unitPrice, int quantity, String subtotal, boolean requiresPhysicalFulfillment,
+                String originalPrice, String unitSavings, String originalSubtotal, String lineSavings,
+                boolean pricingSnapshotAvailable) {
+            this(orderItemId, editionId, sku, isbn, title, authors, publisher, format, language,
+                    unitPrice, quantity, subtotal, requiresPhysicalFulfillment, originalPrice, unitSavings,
+                    originalSubtotal, lineSavings, pricingSnapshotAvailable, null);
+        }
         public Item(String orderItemId, String editionId, String sku, String isbn,
                 String title, String authors, String publisher, String format, String language,
                 String unitPrice, int quantity, String subtotal, boolean requiresPhysicalFulfillment) {

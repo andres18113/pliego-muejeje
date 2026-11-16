@@ -12,7 +12,7 @@ public class InvoiceArtifactService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public InvoiceJob claim() { return gateway.claim(); }
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public boolean complete(InvoiceJob job, byte[] content) { return gateway.complete(job, content); }
+    public boolean complete(InvoiceJob job, InvoiceStoredArtifact artifact) { return gateway.completeStored(job, artifact); }
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public boolean fail(InvoiceJob job) { return gateway.fail(job); }
 }

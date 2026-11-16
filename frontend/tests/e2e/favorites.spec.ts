@@ -32,7 +32,8 @@ test("guests retain the favorite action through sign-in; customers can browse, t
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL(`${testFrontendOrigin}/catalog`);
   await expect(firstCard.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" })).toHaveAttribute("aria-pressed", "true");
-  await expect(firstCard.locator("[data-bookcard-feedback]")).toContainText("Agregado a favoritos.");
+  await expect(page.locator("[data-undo-toast]")).toContainText("Agregado a favoritos");
+  await expect(page.locator("[data-undo-toast]").getByRole("button", { name: "Ver favoritos" })).toBeVisible();
   // On the catalog the heart stays immediate in both directions: it never asks.
   await firstCard.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" }).click();
   await expect(firstCard.getByRole("button", { name: "Agregar a favoritos: Cien años de soledad" })).toHaveAttribute("aria-pressed", "false");
@@ -77,8 +78,8 @@ test("guests retain the favorite action through sign-in; customers can browse, t
   await page.keyboard.press("Tab");
   await expect(confirm.getByRole("button", { name: "Quitar de Favoritos" })).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("heading", { name: "Aún no guardaste favoritos." })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Aún no guardaste favoritos." })).toBeFocused();
+  await expect(page.getByRole("heading", { name: "Todavía no tienes favoritos" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Todavía no tienes favoritos" })).toBeFocused();
   await expect(page.getByRole("dialog")).toHaveCount(0);
   // The footer closes the page: nothing is left under it.
   expect(await page.evaluate(() => { const footer = document.querySelector("#root > footer")!.getBoundingClientRect(); return Math.round(Math.max(window.innerHeight, document.documentElement.scrollHeight) - (footer.bottom + window.scrollY)); })).toBeCloseTo(0);

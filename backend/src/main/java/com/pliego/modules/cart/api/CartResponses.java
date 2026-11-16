@@ -49,9 +49,9 @@ public final class CartResponses {
             @Schema(nullable = true) String coverUrl,
             int quantity, String currentPrice, String currentSubtotal,
             boolean available,
-            @Schema(nullable = true, allowableValues = {"P2043", "P2042", "P3002", "P4004"}, example = "P3002",
+            @Schema(nullable = true, allowableValues = {"P2043", "P2042", "P3002", "P4004", "P6002", "P6003"}, example = "P3002",
                     description = "SQLSTATE canónico de la condición que impide comprar el artículo: P2043 libro inactivo, "
-                            + "P2042 edición inactiva, P3002 existencias insuficientes, P4004 cantidad digital inválida; null si está disponible.")
+                            + "P2042 edición inactiva, P3002 existencias insuficientes, P4004 cantidad digital inválida, P6002 edición digital propia, P6003 compra digital pendiente; null si está disponible.")
             String unavailabilityReason,
             @Schema(allowableValues = {"PAPERBACK", "HARDCOVER", "EBOOK", "AUDIOBOOK"}) String format,
             @Schema(requiredMode = Schema.RequiredMode.REQUIRED) boolean requiresPhysicalFulfillment,
@@ -75,4 +75,21 @@ public final class CartResponses {
     }
 
     public record ItemMutation(String cartId, String cartItemId, int quantity) { }
+
+    public record SavedForLater(List<SavedItem> items, long totalCount) { }
+
+    /** Fresh cart and Saved for Later snapshots returned by either move command. */
+    public record SavedState(Cart cart, SavedForLater saved) { }
+
+    @Schema(name = "SavedForLaterItem", description = "Artículo guardado con la proyección comercial vigente del carrito.")
+    public record SavedItem(String savedItemId, String editionId, String title, String authors, String sku,
+            @Schema(nullable = true) String coverUrl, int quantity, String currentPrice, String currentSubtotal,
+            boolean available,
+            @Schema(nullable = true, allowableValues = {"P2041", "P2042", "P2043", "P3002", "P4004", "P6002", "P6003"})
+            String unavailabilityReason,
+            @Schema(allowableValues = {"PAPERBACK", "HARDCOVER", "EBOOK", "AUDIOBOOK"}) String format,
+            boolean requiresPhysicalFulfillment, boolean quantityEditable, String originalPrice,
+            String unitSavings, String originalSubtotal, String lineSavings,
+            @Schema(format = "date-time") String savedAt,
+            @Schema(format = "date-time") String updatedAt) { }
 }

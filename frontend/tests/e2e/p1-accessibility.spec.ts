@@ -1,13 +1,15 @@
 import { expect, test, type Page } from "@playwright/test";
+import { geoResponse, quitoIds } from "./geo-fixtures";
 
 const address = { addressId: "15", alias: "Casa", recipient: "Ana Pérez", line1: "Av. Principal 123", line2: null,
-  city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true };
+  city: "Quito", province: "Pichincha", ...quitoIds, countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true };
 
 async function installApi(page: Page, postalCode: string | null = null) {
   let quantity = 2;
   const writes: { path: string; body: unknown }[] = [];
   await page.route("**/api/v1/**", async (route) => {
     const request = route.request(), path = new URL(request.url()).pathname;
+    { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }
     const json = (body: unknown) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(body) });
     if (path === "/api/v1/auth/refresh") return json({ accessToken: "a11y-test", expiresInSeconds: 1800, user: { userId: "2", email: "ana@example.com", role: "CUSTOMER" } });
     if (path === "/api/v1/me") return json({ customerId: "2", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" });

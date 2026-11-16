@@ -210,7 +210,7 @@ public class AdminCatalogController {
                 row.format(), row.pageCount(), row.publicationDate() == null ? null : row.publicationDate().toString(),
                 row.price().setScale(2, RoundingMode.UNNECESSARY).toPlainString(), row.coverUrl(), row.coverLicense(),
                 row.coverSourceUrl(), row.coverAttribution(), row.state(), row.stockActual(), row.createdAt(), row.updatedAt(),
-                row.ebookFileFormat(), row.audioDurationSeconds(), row.narrators()));
+                row.ebookFileFormat(), row.audioDurationSeconds(), row.narrators(), row.offerRowExists()));
     }
 
     @PostMapping(path = "/editions", consumes = MediaType.APPLICATION_JSON_VALUE)

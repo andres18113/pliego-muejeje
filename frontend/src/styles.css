@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Self-hosted Material Symbols subset (scripts/update-material-symbols.mjs, generated from MaterialSymbolName): same-origin,
+   preloaded by index.html, hashed for immutable caching. `block` keeps ligature names invisible until the glyphs arrive. */
+@font-face { font-family: "Material Symbols Outlined"; font-style: normal; font-weight: 400 500; font-display: block; src: url("./assets/fonts/material-symbols-outlined.woff2") format("woff2"); }
+
 /* A fixed 1em square (the glyph's own advance) so icon names never reflow a layout before the symbol font arrives. */
 .material-symbol { color: currentColor; font-family: "Material Symbols Outlined"; font-weight: 400; font-style: normal; line-height: 1; letter-spacing: normal; text-transform: none; white-space: nowrap; direction: ltr; display: inline-block; flex: 0 0 auto; width: 1em; overflow: hidden; vertical-align: middle; font-feature-settings: "liga"; -webkit-font-feature-settings: "liga"; -webkit-font-smoothing: antialiased; }
 .material-symbol--header { display: inline-flex; align-items: center; justify-content: center; }

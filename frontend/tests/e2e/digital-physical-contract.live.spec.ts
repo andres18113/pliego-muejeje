@@ -32,7 +32,9 @@ test("live Home, navigation, physical/digital catalog, detail, search and offers
     await expect(page.getByText("Recibimos una respuesta incompleta", { exact: false })).toHaveCount(0);
     await page.goto(`/catalog?format=${format}&que=${encodeURIComponent(edition.title)}`);
     await page.locator(`a[href^="/catalog/editions/${edition.editionId}"]`).first().click();
-    await expect(page.getByRole("heading", { name: edition.title, exact: true })).toBeVisible();
+    // Campaign fixtures repeat titles across editions: wait for this edition's page and read only its own heading.
+    await page.waitForURL(url => url.pathname.startsWith(`/catalog/editions/${edition.editionId}`));
+    await expect(page.getByRole("heading", { level: 1, name: edition.title, exact: true })).toBeVisible();
     const detail = await (await page.request.get(`/api/v1/catalog/editions/${edition.editionId}`)).json();
     if (detail.format === "EBOOK" && detail.ebookFileFormat) await expect(page.getByRole("region", { name: "Datos de la edición" })).toContainText(detail.ebookFileFormat);
     if (detail.format === "AUDIOBOOK") {
@@ -86,17 +88,22 @@ test("live physical and digital purchase controls keep cart quantities and clean
       await page.request.delete(`/api/v1/me/favorites/${edition.editionId}`, { headers });
       await page.goto(`/catalog/editions/${edition.editionId}`);
       await page.getByRole("button", { name: "Agregar al carrito", exact: true }).click();
-      await expect(page.getByRole("link", { name: "Ver el carrito", exact: true })).toBeVisible();
+      // A confirmed add answers with the cart drawer.
+      await expect(page.getByRole("dialog", { name: "Tu carrito" }).getByRole("link", { name: "Ver carrito", exact: true })).toBeVisible();
       if (format !== "PAPERBACK") {
-        await page.getByRole("button", { name: "Agregar al carrito", exact: true }).click();
-        await expect(page.getByText("Esta edición digital ya está en tu carrito.")).toBeAttached();
+        // A digital edition already in the cart offers the cart instead of a second add (the server also refuses one).
+        await expect(page.getByText("Ya está en tu carrito", { exact: true })).toBeVisible();
+        await expect(page.getByRole("region", { name: "Compra" }).getByRole("button", { name: "Agregar al carrito", exact: true })).toHaveCount(0);
       }
-      await page.getByRole("link", { name: "Ver el carrito", exact: true }).click();
+      await page.getByRole("dialog", { name: "Tu carrito" }).getByRole("link", { name: "Ver carrito", exact: true }).click();
+      // Arrive at the cart page and let the closing drawer leave, so its copy of the line is gone.
+      await expect(page).toHaveURL(/\/cart$/);
+      await expect(page.getByRole("dialog", { name: "Tu carrito" })).toHaveCount(0);
       await expect(page.getByRole("link", { name: edition.title, exact: true }).first()).toBeVisible();
       if (format === "PAPERBACK") await expect(page.getByRole("combobox", { name: `Cantidad de ${edition.title}` })).toBeVisible();
       else {
         await expect(page.getByRole("combobox", { name: `Cantidad de ${edition.title}` })).toHaveCount(0);
-        await expect(page.getByText("Cantidad: 1", { exact: true })).toHaveCount(1);
+        await expect(page.getByText("Copia digital individual", { exact: true })).toHaveCount(1);
       }
       const response = await page.request.get("/api/v1/cart", { headers });
       const cart = await response.json();

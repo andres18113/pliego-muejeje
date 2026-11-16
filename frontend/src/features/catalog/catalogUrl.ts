@@ -2,6 +2,13 @@ import type { EditionSearch } from "@/shared/api/catalog";
 
 export type CatalogCriteria = EditionSearch;
 
+/**
+ * Editions per catalog page. The commerce shelf shows 2 columns on phones and 3 from 600px, so the page
+ * holds a common multiple of both: every full page ends on a complete row at any width. Only the last
+ * page of a collection can end short, and it then shows exactly what the server returned.
+ */
+export const CATALOG_PAGE_SIZE = 24;
+
 export function readCatalogCriteria(search: string): CatalogCriteria {
   const params = new URLSearchParams(search);
   return normalizeCatalogCriteria({
@@ -14,7 +21,7 @@ export function readCatalogCriteria(search: string): CatalogCriteria {
     productType: params.get("productType") as CatalogCriteria["productType"],
     sort: params.get("sort") as CatalogCriteria["sort"],
     page: parseInteger(params.get("page"), 0, 0, 2_147_483_647),
-    pageSize: parseInteger(params.get("pageSize"), 20, 1, 50),
+    pageSize: parseInteger(params.get("pageSize"), CATALOG_PAGE_SIZE, 1, 50),
   });
 }
 
@@ -32,7 +39,7 @@ export function writeCatalogCriteria(criteria: CatalogCriteria) {
   if (normalized.productType) params.set("productType", normalized.productType);
   if (normalized.sort !== "TITLE_ASC") params.set("sort", normalized.sort);
   if (normalized.page > 0) params.set("page", String(normalized.page));
-  if (normalized.pageSize !== 20) params.set("pageSize", String(normalized.pageSize));
+  if (normalized.pageSize !== CATALOG_PAGE_SIZE) params.set("pageSize", String(normalized.pageSize));
   return params;
 }
 
@@ -115,7 +122,7 @@ function normalizeCatalogCriteria(criteria: CatalogCriteria): CatalogCriteria {
       : 0,
     pageSize: Number.isInteger(criteria.pageSize) && criteria.pageSize >= 1 && criteria.pageSize <= 50
       ? criteria.pageSize
-      : 20,
+      : CATALOG_PAGE_SIZE,
   };
 }
 

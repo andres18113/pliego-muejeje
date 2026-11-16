@@ -1,0 +1,8 @@
+BEGIN
+DO
+ROLLBACK
+                                    ?column?                                    
+--------------------------------------------------------------------------------
+ PASS: absent, expired, inactive offer-row presence and ADMIN actor enforcement
+(1 row)
+

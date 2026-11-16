@@ -10,6 +10,8 @@ Pago pendiente conserva borrador; pago aprobado y pedido confirmado emiten una s
 
 Decisión de almacenamiento: para el alcance académico, archivos privados de hasta 10 MiB se almacenan como `bytea` inmutable con checksum SHA-256 y MIME. La Database API oculta el almacenamiento; esta elección evita inconsistencias entre filesystem y commit y permite varias instancias del backend. Una futura migración a almacenamiento de objetos exige preservar publicación y autorización; no exponer claves privadas a React. Esta variante concreta el requisito de artefactos recuperables del plan.
 
+Actualización 2026-11-01: [ADR-0046](0046-academic-invoice-pdf-email-and-storage.md) amplía esta decisión con almacenamiento privado R2, activo en producción para archivos nuevos bajo `invoices/`. Los artefactos históricos en PostgreSQL siguen por la ruta de streaming de la Database API; `bytea` permanece como opción predeterminada del código con R2 deshabilitado. Se conservan publicación y autorización.
+
 Los precios, descuentos y tributos vienen del snapshot PostgreSQL. XML sin firma y PDF incluyen «SIMULACIÓN ACADÉMICA — SIN VALIDEZ TRIBUTARIA». El esquema XSD y su procedencia se registran junto al renderer. La ficha SRI y la versión XML son referencias diferentes. No hay credenciales, certificado ni llamadas a SRI, tampoco al ambiente de pruebas.
 
 Evidencia requerida: rollback inyectado, replay con carrito vacío y perfil cambiado, conflictos P1010, compras/concurrencia, emisión/crédito únicos, leases y recuperación, autorización propietario/ADMIN, upgrade sin cambios históricos y validación de artefactos.

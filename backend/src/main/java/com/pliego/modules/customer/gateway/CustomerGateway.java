@@ -38,18 +38,26 @@ public interface CustomerGateway {
     void removeFavorite(long actorUserId, long editionId);
 
     record CustomerProfile(long customerId, String email, String firstNames, String lastNames, String phone,
-            String state, long version, boolean emailVerified) {
+            String state, long version, boolean emailVerified, java.time.Instant emailUndeliverableSince,
+            com.pliego.modules.identity.application.PendingEmailChange pendingEmail) {
+        public CustomerProfile(long customerId, String email, String firstNames, String lastNames, String phone, String state,
+                long version, boolean emailVerified, java.time.Instant emailUndeliverableSince) {
+            this(customerId, email, firstNames, lastNames, phone, state, version, emailVerified, emailUndeliverableSince, null);
+        }
+        public CustomerProfile(long customerId, String email, String firstNames, String lastNames, String phone, String state, long version, boolean emailVerified) {
+            this(customerId, email, firstNames, lastNames, phone, state, version, emailVerified, null);
+        }
         public CustomerProfile(long customerId, String email, String firstNames, String lastNames, String phone, String state, boolean emailVerified) {
             this(customerId, email, firstNames, lastNames, phone, state, 0, emailVerified);
         }
     }
 
     record CustomerAddress(long addressId, String alias, String recipient, String line1, String line2,
-            String city, String province, String countryCode, String postalCode, String reference, String phone,
-            boolean primary) {
+            String city, String province, Long provinceId, Long cityId, boolean cityNeedsReview,
+            String countryCode, String postalCode, String reference, String phone, boolean primary) {
     }
 
-    record AddressData(String alias, String recipient, String line1, String line2, String city, String province,
-            String countryCode, String postalCode, String reference, String phone) {
+    record AddressData(String alias, String recipient, String line1, String line2, Long provinceId, Long cityId,
+            String city, String province, String countryCode, String postalCode, String reference, String phone) {
     }
 }

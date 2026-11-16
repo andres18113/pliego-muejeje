@@ -1,6 +1,8 @@
 package com.pliego.foundation.security;
 
 import java.time.Instant;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 import javax.crypto.SecretKey;
@@ -26,13 +28,17 @@ public final class JwtTokenIssuer {
     }
 
     public String issue(String userId, String role, Instant issuedAt, Instant expiresAt, String tokenId) {
+        if (!Duration.between(issuedAt, expiresAt).equals(JwtAccessTokenClaims.LIFETIME)) {
+            throw new IllegalArgumentException("Access token lifetime must match the JWT contract");
+        }
+        Instant issuedSecond = issuedAt.truncatedTo(ChronoUnit.SECONDS);
         Map<String, Object> claims = Map.of(
-                "iss", "pliego",
-                "aud", "pliego-api",
+                "iss", JwtAccessTokenClaims.ISSUER,
+                "aud", JwtAccessTokenClaims.AUDIENCE,
                 "sub", userId,
                 "role", role,
-                "iat", issuedAt.getEpochSecond(),
-                "exp", expiresAt.getEpochSecond(),
+                "iat", issuedSecond.getEpochSecond(),
+                "exp", issuedSecond.plus(JwtAccessTokenClaims.LIFETIME).getEpochSecond(),
                 "jti", tokenId);
         JWSObject jws = new JWSObject(
                 new JWSHeader.Builder(JWSAlgorithm.HS256).type(JOSEObjectType.JWT).build(),

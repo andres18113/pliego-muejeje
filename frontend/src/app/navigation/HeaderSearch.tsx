@@ -16,8 +16,9 @@ interface Topic { slug: string; name: string }
 const searchTransition = { in: { opacity: 1, transform: "translateY(0)" }, out: { opacity: 0, transform: "translateY(-8px)" }, transitionProperty: "opacity, transform" };
 
 /**
- * The catalog search surface: one field and one results panel, centered over a light veil
- * (a full-height sheet on phones). States: empty, typing, results, no results, error.
+ * The catalog search surface: one field and one results panel, centered over a light veil. On phones it is a
+ * light sheet from the top edge, as tall as its content and never taller than what the keyboard leaves visible,
+ * so the storefront stays in view under the veil. States: empty, typing, results, no results, error.
  */
 export function HeaderSearch({ criteria, topics, opened, onClose }: { criteria: CatalogCriteria; topics: Topic[]; opened: boolean; onClose: (restoreFocus: boolean) => void }) {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ export function HeaderSearch({ criteria, topics, opened, onClose }: { criteria: 
   useEffect(() => {
     if (opened) { setInput(criteria.query); setQuery(""); }
   }, [opened, criteria.query]);
+  useVisibleViewport(opened && Boolean(phone));
   useEffect(() => {
     if (!opened) return;
     const timer = window.setTimeout(() => setQuery(normalized), 220);
@@ -79,7 +81,7 @@ export function HeaderSearch({ criteria, topics, opened, onClose }: { criteria: 
   if (!normalized) {
     body = <div className={classes.state} key="empty">
       {topicLinks && <><p className={classes.label}>Explora por tema</p>{topicLinks}</>}
-      <p className={classes.hint}>Escribe un título, un autor o un ISBN. Pulsa Enter para ver todos los resultados.</p>
+      <p className={classes.hint}>Escribe un título, un autor o un ISBN.{phone ? "" : " Pulsa Enter para ver todos los resultados."}</p>
     </div>;
   } else if (!valid) {
     body = <p role="alert" className={classes.notice} key="invalid">La búsqueda no puede superar 140 caracteres.</p>;
@@ -120,12 +122,12 @@ export function HeaderSearch({ criteria, topics, opened, onClose }: { criteria: 
   }
 
   return (
-    <Modal opened={opened} onClose={() => onClose(true)} title="Buscar en el catálogo" withCloseButton={false} fullScreen={Boolean(phone)} size={680} yOffset={88} zIndex={100} returnFocus={false}
-      transitionProps={{ transition: searchTransition, duration: reducedMotion ? 0 : 160, timingFunction: "cubic-bezier(.32, .94, .6, 1)" }} overlayProps={{ color: "#1d1f38", backgroundOpacity: 0.28, blur: 2 }}
+    <Modal opened={opened} onClose={() => onClose(true)} title="Buscar en el catálogo" withCloseButton={false} size={680} yOffset={phone ? 0 : 88} zIndex={100} returnFocus={false}
+      transitionProps={{ transition: searchTransition, duration: reducedMotion ? 0 : 160, timingFunction: "cubic-bezier(.32, .94, .6, 1)" }} overlayProps={{ color: "#1d1f38", backgroundOpacity: phone ? 0.22 : 0.28, blur: phone ? 0 : 2 }}
       classNames={{ inner: classes.inner, content: classes.surface, header: classes.heading, body: classes.body }}>
       <form role="search" aria-label="Catálogo" onSubmit={submit} className={classes.field}>
         <ActionIcon type="submit" variant="subtle" className={classes.submit} aria-label="Buscar"><MaterialSymbol name="search" size={24} /></ActionIcon>
-        <input ref={field} data-autofocus type="search" aria-label="Buscar en el catálogo" placeholder="Título, autor o ISBN" value={input} maxLength={140} aria-describedby={helpId} aria-invalid={!valid || undefined} className={classes.input}
+        <input ref={field} data-autofocus type="search" enterKeyHint="search" aria-label="Buscar en el catálogo" placeholder="Título, autor o ISBN" value={input} maxLength={140} aria-describedby={helpId} aria-invalid={!valid || undefined} className={classes.input}
           onChange={(event) => setInput(event.currentTarget.value)} onKeyDown={(event) => {
             if (event.key === "ArrowDown" && !waiting && items.length) { event.preventDefault(); focusResult(0); }
           }} />
@@ -138,4 +140,30 @@ export function HeaderSearch({ criteria, topics, opened, onClose }: { criteria: 
       <section aria-label="Resultados sugeridos" aria-busy={waiting} className={classes.panel}>{body}</section>
     </Modal>
   );
+}
+
+/**
+ * Phones: what the on-screen keyboard leaves visible. Android Chrome resizes only the visual viewport (dvh keeps the
+ * full height) and iOS pans it, so the sheet reads the real visible box to stay pinned to its top and end above
+ * the keyboard. Cleared when the sheet closes.
+ */
+function useVisibleViewport(active: boolean) {
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    if (!active || !viewport) return;
+    const root = document.documentElement.style;
+    const update = () => {
+      root.setProperty("--search-visible-height", `${Math.round(viewport.height)}px`);
+      root.setProperty("--search-visible-top", `${Math.max(0, Math.round(viewport.offsetTop))}px`);
+    };
+    update();
+    viewport.addEventListener("resize", update);
+    viewport.addEventListener("scroll", update);
+    return () => {
+      viewport.removeEventListener("resize", update);
+      viewport.removeEventListener("scroll", update);
+      root.removeProperty("--search-visible-height");
+      root.removeProperty("--search-visible-top");
+    };
+  }, [active]);
 }

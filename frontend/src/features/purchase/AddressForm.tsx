@@ -10,6 +10,7 @@ import { beginPendingAttempt, clearPendingAttempt, readPendingAttempt } from "@/
 import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
 import { useCountries } from "@/shared/api/reference";
 import { Field, FieldMessage } from "@/shared/ui/Field";
+import { ProvinceCityFields } from "@/shared/ui/ProvinceCityFields";
 import { CountryFlag } from "@/shared/ui/CountryFlag";
 import { PersonNameInput } from "@/shared/ui/PersonNameInput";
 import countryClasses from "@/shared/ui/CountryPicker.module.css";
@@ -33,8 +34,9 @@ const addressSchema = z.object({
   alias: required("un nombre para la dirección", 80),
   line1: required("la dirección", 200),
   line2: optional(200),
-  city: required("la ciudad", 100),
-  province: required("la provincia", 100),
+  // From the INEC catalog (ADR 0044): the server names them and checks that the city belongs to the province.
+  provinceId: z.string().min(1, "Elige la provincia."),
+  cityId: z.string().min(1, "Elige la ciudad."),
   countryCode: z.literal("EC", "Las entregas están disponibles únicamente en Ecuador."),
   postalCode: optional(20),
   reference: optional(300),
@@ -47,12 +49,12 @@ const addressSchema = z.object({
 
 type AddressValues = z.infer<typeof addressSchema>;
 
-const fields: { name: Exclude<keyof AddressValues, "makePrimary" | "countryCode" | "phone" | "recipient">; label: string; maxLength: number; optional?: boolean; autoComplete?: string; inputMode?: "tel" | "text" }[] = [
+const fields: { name: Exclude<keyof AddressValues, "makePrimary" | "countryCode" | "phone" | "recipient" | "provinceId" | "cityId">; label: string; maxLength: number; optional?: boolean; autoComplete?: string; inputMode?: "tel" | "text" }[] = [
   { name: "alias", label: "Nombre de la dirección", maxLength: 80 },
   { name: "line1", label: "Dirección", maxLength: 200, autoComplete: "address-line1" },
-  { name: "city", label: "Ciudad", maxLength: 100, autoComplete: "address-level2" },
-  { name: "province", label: "Provincia", maxLength: 100, autoComplete: "address-level1" },
 ];
+/** Controls without a registered input: focus goes to their element by id. */
+const pickerFields: readonly (keyof AddressValues)[] = ["phone", "countryCode", "provinceId", "cityId"];
 
 const optionalFields: typeof fields = [
   { name: "line2", label: "Piso, departamento u oficina", maxLength: 200, optional: true, autoComplete: "address-line2" },
@@ -120,8 +122,9 @@ export function AddressForm({
       alias: address?.alias ?? (firstAddress ? "Casa" : ""),
       line1: address?.line1 ?? "",
       line2: address?.line2 ?? "",
-      city: address?.city ?? "",
-      province: address?.province ?? "",
+      provinceId: address?.provinceId ?? "",
+      // An older address whose city did not match the catalog asks for it again.
+      cityId: address?.cityNeedsReview ? "" : address?.cityId ?? "",
       countryCode: "EC",
       postalCode: address?.postalCode ?? "",
       reference: address?.reference ?? "",
@@ -136,12 +139,13 @@ export function AddressForm({
     if (!invalidFocus || busy || disabled || !scope.isCurrent()) return;
     const control = document.getElementById(`address-${invalidFocus}`);
     if (!control || (control instanceof HTMLInputElement && control.disabled)) return;
-    if (invalidFocus === "phone" || invalidFocus === "countryCode") control.focus();
+    if (pickerFields.includes(invalidFocus)) control.focus();
     else setFocus(invalidFocus);
     setInvalidFocus(null);
   }, [invalidFocus, busy, disabled, scope, setFocus, showRecipient, detailsOpen]);
   useEffect(() => { onStateChange?.({ dirty: isDirty, busy }); }, [onStateChange, isDirty, busy]);
   const phone = watch("phone");
+  const provinceId = watch("provinceId"), cityId = watch("cityId");
 
   useEffect(() => {
     function recover() {
@@ -206,8 +210,8 @@ export function AddressForm({
         recipient,
         line1: values.line1,
         countryCode: values.countryCode,
-        city: values.city,
-        province: values.province,
+        provinceId: values.provinceId,
+        cityId: values.cityId,
         phone: normalizePhonePresentation(values.phone),
         line2: values.line2 || null,
         postalCode: values.postalCode || null,
@@ -238,7 +242,13 @@ export function AddressForm({
           clearPendingAttempt("address", actor, keyRef.current);
           keyRef.current = null; setPendingKey(null);
         }
-        const wireFields=(["recipient","alias","line1","line2","city","province","countryCode","postalCode","reference","phone"] as const);
+        // A city outside its province or not in the catalog belongs to the city choice.
+        if (error.code === "P5014" || error.code === "P5015") {
+          setError("cityId", { type: "server", message: error.detail });
+          setInvalidFocus("cityId");
+          return;
+        }
+        const wireFields=(["recipient","alias","line1","line2","provinceId","cityId","countryCode","postalCode","reference","phone"] as const);
         const invalidFields=wireFields.filter((field) => {
           const message=fieldErrorMessages(error,field);
           if(message) setError(field,{type:"server",message});
@@ -268,8 +278,9 @@ export function AddressForm({
       lock.current = false;
     }
   }, (invalid) => {
-    // The composite phone input has no RHF ref; restore the same first-error focus.
-    if (Object.keys(invalid)[0] === "phone") setInvalidFocus("phone");
+    // The composite phone input and the pickers have no RHF ref; restore the same first-error focus.
+    const first = Object.keys(invalid)[0] as keyof AddressValues | undefined;
+    if (first && pickerFields.includes(first)) setInvalidFocus(first);
     const hiddenInvalid = optionalFields.find((field) => invalid[field.name]);
     const details = optionalDetailsRef.current;
     if (!hiddenInvalid || !details || details.open) return;
@@ -329,6 +340,13 @@ export function AddressForm({
             </Field>
           );
         })}
+        <ProvinceCityFields idPrefix="address" provinceId={provinceId} cityId={cityId} disabled={disabled}
+          reviewCity={address?.cityNeedsReview} provinceError={errors.provinceId?.message} cityError={errors.cityId?.message}
+          onChange={(next) => {
+            setValue("provinceId", next.provinceId, { shouldDirty: true });
+            setValue("cityId", next.cityId, { shouldDirty: true });
+            clearErrors(next.cityId ? ["provinceId", "cityId"] : "provinceId");
+          }} />
         <div className="form-field">
           <label htmlFor="address-countryCode">País de entrega</label>
           <div className={`country-picker-trigger delivery-country-trigger ${countryClasses.trigger}`} style={{ cursor: "default" }}>

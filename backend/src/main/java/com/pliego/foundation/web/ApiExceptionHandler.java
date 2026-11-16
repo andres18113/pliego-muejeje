@@ -2,6 +2,8 @@ package com.pliego.foundation.web;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,9 @@ import org.springframework.web.method.annotation.HandlerMethodValidationExceptio
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import org.springframework.web.context.request.async.AsyncRequestNotUsableException;
+import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
+import org.springframework.web.util.DisconnectedClientHelper;
 
 import com.pliego.foundation.database.DatabaseException;
 import com.pliego.foundation.security.CurrentPasswordMismatchException;
@@ -22,11 +27,13 @@ import com.pliego.modules.catalog.application.EditionNotFoundException;
 import com.pliego.modules.sales.application.InvalidCardNumberException;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public final class ApiExceptionHandler {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ApiExceptionHandler.class);
     private static final String VALIDATION_TITLE = "Datos inválidos";
     private static final String VALIDATION_DETAIL = "Revisa los datos enviados e intenta nuevamente.";
     private static final String CATALOG_FILTER_DETAIL = "Revisa los filtros enviados e intenta nuevamente.";
@@ -127,6 +134,24 @@ public final class ApiExceptionHandler {
                 HttpStatus.UNAUTHORIZED, "El correo o la contraseña son incorrectos.");
     }
 
+    @ExceptionHandler(com.pliego.foundation.security.LoginAttemptLimitedException.class)
+    public ResponseEntity<ProblemDetail> loginAttemptLimited(
+            com.pliego.foundation.security.LoginAttemptLimitedException exception, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                .header(org.springframework.http.HttpHeaders.RETRY_AFTER, Integer.toString(exception.retryAfterSeconds()))
+                .body(problems.create("AUTH_LOGIN_RATE_LIMITED", "Demasiados intentos", HttpStatus.TOO_MANY_REQUESTS,
+                        "Espera unos minutos antes de volver a intentarlo.", request));
+    }
+
+    @ExceptionHandler(com.pliego.foundation.security.RegistrationAttemptLimitedException.class)
+    public ResponseEntity<ProblemDetail> registrationAttemptLimited(
+            com.pliego.foundation.security.RegistrationAttemptLimitedException exception, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                .header(org.springframework.http.HttpHeaders.RETRY_AFTER, Integer.toString(exception.retryAfterSeconds()))
+                .body(problems.create("AUTH_REGISTER_RATE_LIMITED", "Demasiados intentos", HttpStatus.TOO_MANY_REQUESTS,
+                        "Espera unos minutos antes de volver a intentarlo.", request));
+    }
+
     @ExceptionHandler(CurrentPasswordMismatchException.class)
     public ResponseEntity<ProblemDetail> currentPasswordMismatch(CurrentPasswordMismatchException exception,
             HttpServletRequest request) {
@@ -168,7 +193,10 @@ public final class ApiExceptionHandler {
         String detail = error == com.pliego.foundation.database.DatabaseError.INVALID_ARGUMENT
                 ? validationDetail(request) : databaseDetail(error, request);
         String publicCode = switch (error) {
-            case DATABASE_CONTRACT_VIOLATION, INTERNAL_SERVER_ERROR -> error.code();
+            case DATABASE_CONTRACT_VIOLATION, INTERNAL_SERVER_ERROR,
+                    EMAIL_CHANGE_SAME_ADDRESS, EMAIL_CHANGE_NOT_PENDING, EMAIL_CHANGE_RATE_LIMITED,
+                    EMAIL_CHANGE_TOKEN_INVALID, EMAIL_CHANGE_TOKEN_EXPIRED, EMAIL_CHANGE_TOKEN_USED,
+                    EMAIL_CHANGE_TOKEN_SUPERSEDED, EMAIL_CHANGE_CANCELLED, EMAIL_CHANGE_ALREADY_CONFIRMED -> error.code();
             default -> error.sqlState();
         };
         ProblemDetail problem = problems.create(publicCode, databaseTitle(error, request), error.httpStatus(), detail,
@@ -176,10 +204,50 @@ public final class ApiExceptionHandler {
         return ResponseEntity.status(error.httpStatus()).body(problem);
     }
 
+    @ExceptionHandler(com.pliego.foundation.security.InvalidEmailChangeTokenException.class)
+    public ResponseEntity<ProblemDetail> invalidEmailChangeToken(HttpServletRequest request) {
+        return ProblemDetailSupport.response(problems, request, "EMAIL_CHANGE_TOKEN_INVALID", "Enlace inválido",
+                HttpStatus.BAD_REQUEST, "El enlace de cambio de correo no es válido.");
+    }
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ProblemDetail> unexpected(Exception exception, HttpServletRequest request) {
+    public ResponseEntity<ProblemDetail> unexpected(Exception exception, HttpServletRequest request,
+            HttpServletResponse response) {
+        String contentType = response.getContentType();
+        if (request.getRequestURI().equals(request.getContextPath() + "/api/v1/auth/events")
+                && response.isCommitted() && contentType != null
+                && contentType.split(";", 2)[0].trim().equalsIgnoreCase("text/event-stream")) {
+            if (expectedSseEnd(exception)) {
+                LOG.debug("realtime state=STREAM_CLOSED");
+            } else {
+                LOG.error("realtime state=STREAM_FAILED", exception);
+            }
+            // A response argument marks this MVC request handled. No JSON can
+            // replace an already committed SSE response, even for a server error.
+            return null;
+        }
         return ProblemDetailSupport.response(problems, request, "INTERNAL_SERVER_ERROR", INTERNAL_TITLE,
                 HttpStatus.INTERNAL_SERVER_ERROR, INTERNAL_DETAIL);
+    }
+
+    private static boolean expectedSseEnd(Exception exception) {
+        if (exception instanceof AsyncRequestTimeoutException) return true;
+        if (!DisconnectedClientHelper.isClientDisconnectedException(exception)) return false;
+        Throwable failure = exception;
+        for (Throwable current = exception; current != null; current = current.getCause()) {
+            if (current instanceof AsyncRequestNotUsableException unusable) {
+                if (unusable.getCause() == null) {
+                    return "Response not usable after async request completion.".equals(unusable.getMessage())
+                            || "Response not usable after response errors.".equals(unusable.getMessage());
+                }
+                // This wrapper can also contain a real server-side I/O failure.
+                // Classify its cause rather than assuming every unusable response
+                // was caused by a disconnected client.
+                failure = unusable.getCause();
+            }
+            if (current == current.getCause()) break;
+        }
+        return DisconnectedClientHelper.isClientDisconnectedException(failure);
     }
 
     private static ProblemDetailSupport.Violation safeViolation(FieldError error) {
@@ -236,6 +304,7 @@ public final class ApiExceptionHandler {
             return switch (error) {
                 case CART_NOT_ACTIVE -> "Carrito no disponible";
                 case CART_ITEM_NOT_FOUND -> "Artículo del carrito no encontrado";
+                case SAVED_ITEM_NOT_FOUND -> "Artículo guardado no encontrado";
                 case CART_QUANTITY_INVALID -> "Cantidad inválida";
                 default -> databaseTitle(error);
             };
@@ -254,9 +323,23 @@ public final class ApiExceptionHandler {
             case ACTOR_INACTIVE -> "Cuenta bloqueada";
             case ACTOR_NOT_ADMIN, ACTOR_NOT_CUSTOMER -> "Acceso denegado";
             case EMAIL_ALREADY_EXISTS -> "Correo ya registrado";
+            case EMAIL_CHANGE_SAME_ADDRESS -> "Correo actual";
+            case EMAIL_CHANGE_NOT_PENDING -> "No hay un cambio pendiente";
+            case EMAIL_CHANGE_RATE_LIMITED -> "Demasiadas solicitudes";
+            case EMAIL_CHANGE_TOKEN_INVALID -> "Enlace inválido";
+            case EMAIL_CHANGE_TOKEN_EXPIRED -> "Enlace vencido";
+            case EMAIL_CHANGE_TOKEN_USED -> "Enlace ya utilizado";
+            case EMAIL_CHANGE_TOKEN_SUPERSEDED -> "Enlace sustituido";
+            case EMAIL_CHANGE_CANCELLED -> "Cambio cancelado";
+            case EMAIL_CHANGE_ALREADY_CONFIRMED -> "Cambio ya confirmado";
             case CUSTOMER_NOT_FOUND -> "Perfil no encontrado";
             case BILLING_IDENTITY_CONFLICT -> "Tu identificación cambió";
             case BILLING_IDENTITY_MISMATCH -> "Identificación distinta a la de tu perfil";
+            case BILLING_IDENTITY_CORRECTION_REQUIRES_REVIEW -> "Esta identificación requiere revisión";
+            case BILLING_IDENTITY_CORRECTION_PENDING -> "Ya tienes una solicitud pendiente";
+            case BILLING_IDENTITY_CORRECTION_NOT_FOUND -> "Solicitud no encontrada";
+            case BILLING_IDENTITY_CORRECTION_NOT_REQUIRED -> "Puedes corregirla directamente";
+            case BILLING_IDENTITY_CORRECTION_INVALID_TRANSITION -> "Solicitud ya atendida";
             case ADDRESS_NOT_FOUND -> "Dirección no encontrada";
             case AUTHOR_NOT_FOUND -> "Autor no encontrado";
             case AUTHOR_INACTIVE -> "Autor no disponible";
@@ -289,8 +372,11 @@ public final class ApiExceptionHandler {
             case CART_ITEM_NOT_FOUND -> "Artículo del carrito no encontrado";
             case CART_QUANTITY_INVALID -> "Cantidad del carrito inválida";
             case CART_QUOTE_CHANGED -> "El carrito cambió";
+            case SAVED_ITEM_NOT_FOUND -> "Artículo guardado no encontrado";
             case ORDER_NOT_FOUND -> "Pedido no encontrado";
             case ORDER_INVALID_TRANSITION -> "Cambio de estado del pedido inválido";
+            case DIGITAL_ALREADY_OWNED -> "Ya tienes esta edición digital";
+            case DIGITAL_PURCHASE_PENDING -> "Compra digital pendiente";
             case LIBRARY_ITEM_NOT_FOUND -> "Título de biblioteca no disponible";
             case ORDER_NOT_CANCELLABLE -> "Pedido no cancelable";
             case CHECKOUT_ADDRESS_INVALID -> "Dirección no disponible";
@@ -298,6 +384,11 @@ public final class ApiExceptionHandler {
             case PICKUP_LOCATION_INACTIVE -> "Punto de retiro no disponible";
             case PICKUP_NOT_APPLICABLE -> "Retiro no disponible para este carrito";
             case PICKUP_CODE_INVALID -> "Código de retiro incorrecto";
+            case PICKUP_NOT_FOUND -> "Retiro no encontrado";
+            case PICKUP_ALREADY_COLLECTED -> "Pedido ya retirado";
+            case PICKUP_NOT_READY -> "Pedido aún no disponible para retiro";
+            case GEO_CITY_PROVINCE_INVALID -> "Ciudad no válida para la provincia";
+            case GEO_CITY_UNAVAILABLE -> "Ciudad no disponible";
             case PAYMENT_OUTCOME_INVALID -> "Resultado de pago inválido";
             case PAYMENT_STATE_INVALID -> "Estado de pago inválido";
             case PAYMENT_REFERENCE_CONFLICT -> "Referencia de pago en conflicto";
@@ -355,6 +446,7 @@ public final class ApiExceptionHandler {
             return switch (error) {
                 case CART_NOT_ACTIVE -> "No hay un carrito activo para realizar esta operación.";
                 case CART_ITEM_NOT_FOUND -> "El artículo solicitado no existe o no está disponible en tu carrito.";
+                case SAVED_ITEM_NOT_FOUND -> "El artículo guardado no existe o no está disponible en tu lista.";
                 case CART_QUANTITY_INVALID -> "La cantidad debe ser mayor que cero.";
                 case INSUFFICIENT_STOCK -> "No hay existencias suficientes para la cantidad solicitada.";
                 case EDITION_INACTIVE -> "La edición seleccionada no está disponible actualmente.";
@@ -400,15 +492,36 @@ public final class ApiExceptionHandler {
             case ACTOR_INACTIVE -> "Tu cuenta está bloqueada y no puede realizar esta operación.";
             case ACTOR_NOT_ADMIN, ACTOR_NOT_CUSTOMER -> "No tienes permiso para realizar esta operación.";
             case EMAIL_ALREADY_EXISTS -> "Ya existe una cuenta con ese correo electrónico.";
+            case EMAIL_CHANGE_SAME_ADDRESS -> "Ese ya es tu correo actual.";
+            case EMAIL_CHANGE_NOT_PENDING -> "No tienes un cambio de correo pendiente. Solicita uno nuevo desde tu perfil.";
+            case EMAIL_CHANGE_RATE_LIMITED -> "Pediste demasiados cambios o enlaces. Espera antes de intentarlo de nuevo.";
+            case EMAIL_CHANGE_TOKEN_INVALID -> "El enlace de cambio de correo no es válido.";
+            case EMAIL_CHANGE_TOKEN_EXPIRED -> "El enlace de cambio de correo venció. Solicita un cambio nuevo desde tu perfil.";
+            case EMAIL_CHANGE_TOKEN_USED -> "Este enlace de cambio de correo ya se utilizó.";
+            case EMAIL_CHANGE_TOKEN_SUPERSEDED -> "Este enlace fue sustituido por una solicitud o un enlace más reciente.";
+            case EMAIL_CHANGE_CANCELLED -> "Este cambio de correo fue cancelado.";
+            case EMAIL_CHANGE_ALREADY_CONFIRMED -> "El cambio de correo ya se confirmó. Si no fuiste tú, escríbenos desde Ayuda.";
             case CUSTOMER_NOT_FOUND -> "El perfil solicitado no está disponible.";
             case BILLING_IDENTITY_CONFLICT -> "La identificación de tu perfil no es la que estabas viendo. Revisa la actual antes de continuar.";
             case BILLING_IDENTITY_MISMATCH -> "La factura usa la cédula o el RUC registrado en tu perfil. Si es incorrecto, corrígelo en Mi perfil.";
+            case BILLING_IDENTITY_CORRECTION_REQUIRES_REVIEW -> "Esta identificación ya figura en una factura. Solicita la corrección para que la revisemos.";
+            case BILLING_IDENTITY_CORRECTION_PENDING -> "Ya existe una solicitud de corrección pendiente para esta cuenta.";
+            case BILLING_IDENTITY_CORRECTION_NOT_FOUND -> "La solicitud no existe o no está disponible para esta cuenta.";
+            case BILLING_IDENTITY_CORRECTION_NOT_REQUIRED -> "Esta identificación no requiere una solicitud; usa la corrección directa de tu perfil.";
+            case BILLING_IDENTITY_CORRECTION_INVALID_TRANSITION -> "La solicitud ya no está pendiente y no puede cambiarse.";
             case ADDRESS_NOT_FOUND -> "La dirección solicitada no existe o no está disponible para tu cuenta.";
+            case DIGITAL_ALREADY_OWNED -> "Esta edición digital ya está en tu biblioteca. Puedes consultarla sin volver a comprarla.";
+            case DIGITAL_PURCHASE_PENDING -> "Ya tienes un pedido abierto con esta edición digital. Revisa ese pedido antes de intentar otra compra.";
             case LIBRARY_ITEM_NOT_FOUND -> "El título solicitado no existe o no pertenece a tu biblioteca.";
             case PICKUP_LOCATION_NOT_FOUND -> "El punto de retiro seleccionado no existe.";
             case PICKUP_LOCATION_INACTIVE -> "El punto de retiro está inactivo. Selecciona otro.";
             case PICKUP_NOT_APPLICABLE -> "El retiro en tienda requiere al menos un producto físico.";
             case PICKUP_CODE_INVALID -> "El código de retiro no corresponde al pedido.";
+            case PICKUP_NOT_FOUND -> "No encontramos un retiro con ese código.";
+            case PICKUP_ALREADY_COLLECTED -> "Este pedido ya fue retirado.";
+            case PICKUP_NOT_READY -> "Este pedido aún no está listo para retiro.";
+            case GEO_CITY_PROVINCE_INVALID -> "La ciudad no pertenece a la provincia seleccionada.";
+            case GEO_CITY_UNAVAILABLE -> "Elige una ciudad de la lista.";
             case AUTHOR_NOT_FOUND -> "El autor solicitado no está disponible.";
             case AUTHOR_INACTIVE -> "El autor no está disponible para esta operación.";
             case PUBLISHER_NOT_FOUND -> "La editorial solicitada no está disponible.";

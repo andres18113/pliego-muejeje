@@ -1,4 +1,3 @@
-import { stockReadOptions } from "@/features/catalog/stockStatusModel";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate, useNavigationType } from "react-router-dom";
@@ -6,11 +5,10 @@ import { Button, UnstyledButton } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { AppliedCriteria, CatalogHeading, CatalogToolbar, SortControl, type RemovableCriterion } from "./CatalogControls";
 import classes from "./exploration.module.css";
-import { PageWayfinding } from "@/app/navigation/BackButton";
 import { HomeFooter } from "./HomeFooter";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { describeApiError } from "@/shared/api/errors";
-import { getPublicCategories, getPublicCatalogFilterOptions, searchPublicEditions } from "@/shared/api/catalog";
+import { publicCategoriesQuery, publicEditionsQuery, publicFilterOptionsQuery } from "./publicCatalogQueries";
 import { CatalogFilterPanel, CatalogFilters, hasResettableFilters, resetFilters } from "./CatalogFilters";
 import { catalogFacets } from "./catalogFacets";
 import { mediaOfProductType, mediaTitle } from "./catalogMedia";
@@ -44,22 +42,9 @@ export function CatalogPage() {
   const desktop = useMediaQuery("(min-width: 64em)", false, { getInitialValueInEffect: false });
   // Filter choices navigate within the catalog; only leaving it (or reaching desktop) closes the drawer.
   useEffect(() => setFiltersOpen(false), [location.pathname, desktop]);
-  const categoriesQuery = useQuery({
-    queryKey: ["public-catalog", "categories", scope],
-    queryFn: ({ signal }) => getPublicCategories(signal, scope),
-    staleTime: 60_000,
-  });
-  const filterOptionsQuery = useQuery({
-    queryKey: ["public-catalog", "filter-options", scope],
-    queryFn: ({ signal }) => getPublicCatalogFilterOptions(signal, scope),
-    staleTime: 60_000,
-  });
-  const editionsQuery = useQuery({
-    queryKey: ["public-catalog", "editions", criteria],
-    ...stockReadOptions,
-    queryFn: ({ signal }) => searchPublicEditions(criteria, signal),
-    staleTime: 20_000,
-  });
+  const categoriesQuery = useQuery(publicCategoriesQuery(scope));
+  const filterOptionsQuery = useQuery(publicFilterOptionsQuery(scope));
+  const editionsQuery = useQuery(publicEditionsQuery(criteria));
 
   useEffect(() => {
     const media = mediaOfProductType(criteria.productType);
@@ -149,7 +134,6 @@ export function CatalogPage() {
     <div className={classes.surface} data-storefront-surface>
       <main id="contenido-principal" tabIndex={-1} className={classes.page}>
         <div className={classes.shell}>
-        <PageWayfinding className={classes.wayfinding} />
         {/* Desktop: the sort shares the heading's line, so the shelf and the filters start on the same line. */}
         <div className={classes.headingRow}>
           <CatalogHeading criteria={criteria} categories={categories} pending={isCurrentReadPending} total={activePage?.totalCountValue} />

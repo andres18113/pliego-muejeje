@@ -21,7 +21,7 @@ class BillingControllerTest {
     @Test void absentLegacyFileIsUnavailableInsteadOfPerpetuallyPreparing() {
         when(service.metadata(7, 9)).thenReturn(new tools.jackson.databind.ObjectMapper()
                 .readTree("{\"provenance\":\"LEGACY\",\"files\":[{\"type\":\"PDF\",\"state\":\"UNAVAILABLE\"}]}"));
-        var response = controller.download(jwt, 9, "PDF");
+        var response = controller.download(jwt, 9, "PDF", "attachment");
         assertThat(response.getStatusCode().value()).isEqualTo(404);
         assertThat(((ProblemDetail) response.getBody()).getProperties().get("code")).isEqualTo("INVOICE_FILE_UNAVAILABLE");
         assertThat(response.getHeaders().getCacheControl()).isEqualTo("no-store");
@@ -31,7 +31,7 @@ class BillingControllerTest {
     @Test void simulatedFileWithoutBytesRemainsInPreparation() {
         when(service.metadata(7, 9)).thenReturn(new tools.jackson.databind.ObjectMapper()
                 .readTree("{\"provenance\":\"SIMULATED\"}"));
-        assertThat(controller.download(jwt, 9, "XML").getStatusCode().value()).isEqualTo(409);
+        assertThat(controller.download(jwt, 9, "XML", "attachment").getStatusCode().value()).isEqualTo(409);
     }
 
     @Test void administratorAliasMapsMetadataAndDownloadWithoutChangingTheActor() throws Exception {
@@ -56,7 +56,7 @@ class BillingControllerTest {
     }
 
     @Test void documentNotReadyExplainsThatThePurchaseAlreadyExists() {
-        var response = controller.download(jwt, 9, "PDF");
+        var response = controller.download(jwt, 9, "PDF", "attachment");
         assertThat(response.getStatusCode().value()).isEqualTo(409);
         assertThat(((ProblemDetail) response.getBody()).getDetail()).contains("compra está registrada");
         assertThat(((ProblemDetail) response.getBody()).getProperties().get("code")).isEqualTo("INVOICE_FILE_NOT_READY");
@@ -65,7 +65,7 @@ class BillingControllerTest {
 
     @Test void downloadIsPrivateAndUsesOnlyTheAuthenticatedActor() {
         when(service.download(7, 9, "PDF")).thenReturn(new InvoiceDownload(new byte[]{1, 2}, "application/pdf", "factura.pdf", "hash"));
-        var response = controller.download(jwt, 9, "PDF");
+        var response = controller.download(jwt, 9, "PDF", "attachment");
         assertThat(response.getStatusCode().value()).isEqualTo(200);
         assertThat(response.getHeaders().getCacheControl()).isEqualTo("no-store");
         assertThat(response.getHeaders().getFirst(HttpHeaders.CONTENT_DISPOSITION)).contains("attachment").contains("factura.pdf");

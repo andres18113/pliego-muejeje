@@ -1,4 +1,5 @@
 import { fillCheckoutBilling } from "./billing-fixtures";
+import { geoResponse, quitoIds } from "./geo-fixtures";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { pickupLocation, pickupOrder } from "../../src/test/pickup";
@@ -7,14 +8,16 @@ async function install(page: Page) {
   const posts: { body: Record<string, unknown>; key: string | undefined }[] = [];
   let locationState: "ok" | "error" | "empty" = "ok";
   await page.route("https://www.openstreetmap.org/**", route => route.fulfill({ contentType: "text/html", body: "<!doctype html><html lang='es'><title>Mapa de prueba</title><body>Mapa</body></html>" }));
+  await page.route("https://tile.openstreetmap.org/**", route => route.fulfill({ contentType: "image/png", body: Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", "base64") }));
   await page.route("**/api/v1/**", async route => {
     const request = route.request(); const path = new URL(request.url()).pathname;
+    { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }
     const json = (body: unknown, status = 200) => route.fulfill({ status, json: body });
     if (path === "/api/v1/auth/refresh") return route.fulfill({ status: 204 });
     if (path === "/api/v1/auth/login") return json({ accessToken: "e2e-token", tokenType: "Bearer", expiresInSeconds: 1800, user: { userId: "100", email: "ana@example.com", role: "CUSTOMER" } });
     if (path === "/api/v1/me") return json({ customerId: "100", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" });
     if (path === "/api/v1/me/addresses") return json([{ addressId: "15", alias: "Casa", recipient: "Ana Pérez", line1: "Av. Principal 123", line2: null,
-      city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true }]);
+      city: "Quito", province: "Pichincha", ...quitoIds, countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true }]);
     if (path === "/api/v1/cart") return json({ cartId: "40", state: "ACTIVE", requiresPhysicalFulfillment: true, physicalItemCount: 1, digitalItemCount: 0, subtotal: "18.50", taxRate: "15.00", taxAmount: "2.78", shippingAmount: "0.00", total: "21.28", totalCurrent: "21.28",
       estimatedDeliveryFrom: "2026-10-05", estimatedDeliveryTo: "2026-10-07", items: [{ cartItemId: "1", editionId: "42", title: "Cien años de soledad", authors: "Gabriel García Márquez", sku: "TEST-42", coverUrl: null,
         requiresPhysicalFulfillment: true, quantityEditable: true, quantity: 1, currentPrice: "18.50", currentSubtotal: "18.50", available: true, unavailabilityReason: null }] });
@@ -81,10 +84,11 @@ for (const width of [1440, 1024, 768, 390, 320]) {
     await page.getByRole("radio", { name: /Punto de prueba Quito/ }).click();
     await expect(page.getByRole("button", { name: "Cambiar punto" })).toBeFocused();
     await expect(destination).toContainText("Punto de prueba Quito");
-    await expect(destination).toContainText("Preparación estimada: ~37 min.");
+    await expect(destination).toContainText("Listo unos 37 minutos después de aprobarse el pago, en horario de atención.");
+    await expect(destination).toContainText("Si el punto está cerrado, estará listo cuando abra.");
     await expect(page.getByRole("button", { name: "Hacer pedido" })).toBeDisabled();
     await expect(summary.locator("dt")).toHaveText(["Subtotal", "IVA (15 %)", "Gastos de envío", "Total"]);
-    await expect(page.getByTitle("Mapa de Punto de prueba Quito")).toHaveCount(0);
+    await expect(page.getByRole("img", { name: "Mapa de Punto de prueba Quito" })).toHaveCount(0);
     await noOverflow(page); await axe(page);
     await page.screenshot({ path: info.outputPath(`pickup-${width}.png`), fullPage: true });
     await delivery.click(); await expect(page.getByText("Av. Principal 123", { exact: true })).toBeVisible();
@@ -92,7 +96,7 @@ for (const width of [1440, 1024, 768, 390, 320]) {
     await expect(summary.locator("dt")).toHaveText(["Subtotal", "IVA (15 %)", "Gastos de envío", "Total"]);
     await page.getByRole("tab", { name: "Retiro", exact: true }).click();
     await expect(destination).toContainText("Punto de prueba Quito");
-    await expect(page.getByTitle("Mapa de Punto de prueba Quito")).toHaveCount(0);
+    await expect(page.getByRole("img", { name: "Mapa de Punto de prueba Quito" })).toHaveCount(0);
   });
 }
 
@@ -111,7 +115,7 @@ test("loading error, retry, multiple locations and empty-state recovery", async 
   await expect(page.getByRole("radio").first()).toBeFocused();
   await page.getByRole("radio", { name: /Otro punto de retiro/ }).focus(); await page.keyboard.press("Space");
   await expect(page.getByRole("tabpanel")).toContainText("Otro punto de retiro");
-  await expect(page.getByTitle("Mapa de Otro punto de retiro")).toHaveCount(0);
+  await expect(page.getByRole("img", { name: "Mapa de Otro punto de retiro" })).toHaveCount(0);
   api.locations("empty");
   await page.getByRole("tab", { name: "Entrega", exact: true }).click();
   await page.getByRole("tab", { name: "Retiro", exact: true }).click();
@@ -120,6 +124,19 @@ test("loading error, retry, multiple locations and empty-state recovery", async 
   expect(api.posts).toHaveLength(0);
   await page.getByRole("tab", { name: "Entrega", exact: true }).click();
   await expect(page.getByText("Av. Principal 123", { exact: true })).toBeVisible();
+});
+
+test("pickup order facts fit a 320px phone at 200% text", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 900 }); await install(page);
+  await page.goto("/sign-in?from=%2Forders%2F700");
+  await page.getByLabel("Correo electrónico").fill("ana@example.com");
+  await page.getByLabel("Contraseña", { exact: true }).fill("Lectura-segura-2026");
+  await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
+  await expect(page).toHaveURL(/\/orders\/700$/);
+  await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; });
+  await expect(page.getByText("P-ABC234")).toBeVisible();
+  // The facts grid's minimum track must never exceed its cell (9.5rem is 304px at 200% text).
+  await noOverflow(page); await axe(page);
 });
 
 for (const payment of ["CARD", "TRANSFER"] as const) {
@@ -148,10 +165,14 @@ for (const payment of ["CARD", "TRANSFER"] as const) {
     await expect(page.getByText("P-ABC234")).toBeVisible();
     await expect(page.locator('time[datetime="2026-10-05T00:32:12Z"]')).toContainText("19:32:12");
     await expect(page.getByText("America/Guayaquil")).toHaveCount(0);
-    await expect(page.getByText(/Presenta la confirmación enviada a tu correo/)).toBeVisible();
-    await expect(page.getByTitle("Mapa de Punto de prueba Quito")).toHaveAttribute("src", /marker=-0\.22%2C-78\.5/);
-    await expect(page.getByRole("complementary", { name: "Tu pedido" })).not.toContainText(/IVA|Total|Cien años/);
+    await expect(page.getByText(/Al retirar, muestra tu código de retiro y tu documento de identidad/)).toBeVisible();
+    await expect(page.getByRole("img", { name: "Mapa de Punto de prueba Quito" })).toBeVisible();
+    await expect(page.locator("[data-location-map]").first()).toHaveAttribute("data-state", "ready");
+    await expect(page.getByRole("link", { name: /Ver ubicación en el mapa|Abrir en el mapa|mapa/ }).first()).toHaveAttribute("href", /mlat=-0\.22&mlon=-78\.5/);
+    // The receipt once (totals, no books); the pickup facts and the books to collect lead beside it.
+    await expect(page.getByRole("complementary", { name: "Tu pedido" })).not.toContainText(/Cien años/);
     await expect(page.locator('[data-confirmation="details"]')).toContainText("IVA (15 %)");
+    await expect(page.getByRole("region", { name: "Retiro" })).toContainText("P-ABC234");
     expect(api.posts).toHaveLength(1);
     expect(api.posts[0].body).toMatchObject({ fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: payment });
     expect(api.posts[0].body).not.toHaveProperty("addressId");

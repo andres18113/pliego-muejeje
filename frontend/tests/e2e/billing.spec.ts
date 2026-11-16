@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { geoResponse } from "./geo-fixtures";
 import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
 import { fillCheckoutBilling } from "./billing-fixtures";
 
@@ -6,6 +7,7 @@ async function installBillingApi(page: Page, loseCheckout = false) {
   const state = { posts: [] as {body:Record<string,unknown>;key:string|null}[], downloads:0 };
   await page.route("**/api/v1/**", async route => {
     const request=route.request(), url=new URL(request.url()), path=url.pathname.replace("/api/v1", "");
+    { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }
     const method=request.method();
     const ok=(body:unknown,status=200)=>route.fulfill({json:body,status});
     if(path==="/auth/refresh") return ok({accessToken:"synthetic-billing-token",tokenType:"Bearer",expiresInSeconds:1800,user:{userId:"2",email:"billing@example.test",role:"CUSTOMER"}});
@@ -21,7 +23,7 @@ async function installBillingApi(page: Page, loseCheckout = false) {
       if(loseCheckout) return route.abort("failed");
       return ok({orderId:"700",orderState:"CONFIRMED",paymentState:"APPROVED",total:"18.50",fulfillment:null},201);
     }
-    if(path==="/orders/700") return ok({orderId:"700",orderState:"CONFIRMED",purchaseState:"CONFIRMED",subtotal:"18.50",taxRate:"0.00",taxAmount:"0.00",shippingAmount:"0.00",total:"18.50",createdAt:"2026-10-17T15:00:00Z",items:[{orderItemId:"1",title:"Libro digital de prueba",authors:"Autora Prueba",publisher:null,format:"EBOOK",unitPrice:"18.50",quantity:1,subtotal:"18.50",requiresPhysicalFulfillment:false}],address:null,payment:{method:"TRANSFER",state:"APPROVED",amount:"18.50",reference:"SIM-TEST"},stateHistory:[],fulfillment:null,shipment:null,invoice:null,creditNotes:[],availableActions:{cancel:false,changeShippingAddress:false}});
+    if(path==="/orders/700") return ok({orderId:"700",orderState:"CONFIRMED",purchaseState:"CONFIRMED",subtotal:"18.50",taxRate:"0.00",taxAmount:"0.00",shippingAmount:"0.00",total:"18.50",createdAt:"2026-10-17T15:00:00Z",items:[{orderItemId:"1",title:"Libro digital de prueba",authors:"Autora Prueba",publisher:null,format:"EBOOK",unitPrice:"18.50",quantity:1,subtotal:"18.50",requiresPhysicalFulfillment:false}],address:null,payment:{method:"TRANSFER",state:"APPROVED",amount:"18.50",reference:"SIM-TEST"},stateHistory:[],fulfillment:null,shipment:null,invoice:{invoiceId:"8",documentNumber:"999-999-000000001",state:"ISSUED",buyerName:"Compradora Prueba",identityType:"NATIONAL_ID",identityNumber:"0123456782",buyerEmail:null,currency:"USD",subtotal:"18.50",taxTotal:"0.00",total:"18.50",issuedAt:"2026-10-17T15:00:01Z",billingAddress:{line1:"Calle Fiscal de prueba",line2:null,city:"Quito",province:"Pichincha",countryCode:"EC",postalCode:null},items:[],electronicIssuance:null,pdfAvailable:true,xmlAvailable:false},creditNotes:[],availableActions:{cancel:false,changeShippingAddress:false}});
     if(path==="/orders/700/invoice") return ok({invoiceId:"8",orderId:"700",state:"ISSUED",provenance:"SIMULATED",documentNumber:"999-999-000000001",files:[{type:"PDF",state:"READY"},{type:"XML",state:"PENDING"}]});
     if(path==="/orders/700/invoice/files/PDF") {state.downloads++;expect(request.headers()["authorization"]).toBe("Bearer synthetic-billing-token");return route.fulfill({status:200,contentType:"application/pdf",body:"%PDF-1.4 synthetic academic fixture"});}
     if(path==="/orders") return ok({items:[],page:0,pageSize:10,totalCount:"0"});
@@ -40,18 +42,20 @@ test("digital nominative checkout validates identity and downloads authenticated
   await fillFiscalData(page);
   await page.getByRole("button",{name:"Hacer pedido"}).click();
   await expect(page).toHaveURL(/\/orders\/700$/);
-  await expect(page.getByText("SIMULACIÓN ACADÉMICA — SIN VALIDEZ TRIBUTARIA")).toBeVisible();
+  // One invoice action; the academic-simulation notice lives in the PDF itself, not on the page.
+  const invoiceAction=page.getByRole("button",{name:"Ver factura"});
+  await expect(invoiceAction).toBeVisible();
+  await expect(page.getByText("SIMULACIÓN ACADÉMICA — SIN VALIDEZ TRIBUTARIA")).toHaveCount(0);
   expect(state.posts).toHaveLength(1);
-  expect(state.posts[0]).toMatchObject({body:{fulfillmentMethod:"DIGITAL_ONLY",billingIdentity:{type:"EC_CEDULA",number:"0123456782"},buyerName:"Compradora Prueba",billingAddress:{line1:"Calle Fiscal de prueba",city:"Quito",province:"Pichincha",countryCode:"EC"}}});
+  expect(state.posts[0]).toMatchObject({body:{fulfillmentMethod:"DIGITAL_ONLY",billingIdentity:{type:"EC_CEDULA",number:"0123456782"},buyerName:"Compradora Prueba",billingAddress:{line1:"Calle Fiscal de prueba",provinceId:"17",cityId:"893",countryCode:"EC"}}});
   expect(state.posts[0].key).toMatch(/^[0-9a-f-]{36}$/);
-  await expect(page.getByRole("button",{name:"Descargar XML"})).toBeDisabled();
-  const downloading=page.waitForEvent("download");
-  await page.getByRole("button",{name:"Descargar PDF"}).click();
-  const download=await downloading;
-  expect(download.suggestedFilename()).toBe("factura-700.pdf");
-  expect(state.downloads).toBe(1);
+  await expect(page.getByRole("button",{name:/Descargar (PDF|XML)/})).toHaveCount(0);
+  // The press opens a tab and fetches the authenticated PDF once, to view inline.
+  const [,pdfRequest]=await Promise.all([page.context().waitForEvent("page"),page.waitForRequest(request=>request.url().includes("/orders/700/invoice/files/PDF")),invoiceAction.click()]);
+  expect(new URL(pdfRequest.url()).searchParams.get("disposition")).toBe("inline");
+  await expect.poll(()=>state.downloads).toBe(1);
   await page.reload();
-  await expect(page.getByRole("button",{name:"Descargar PDF"})).toBeVisible();
+  await expect(page.getByRole("button",{name:"Ver factura"})).toBeVisible();
   expect(state.posts).toHaveLength(1);
 });
 test("mobile uncertain result survives reload without a second checkout",async({page})=>{

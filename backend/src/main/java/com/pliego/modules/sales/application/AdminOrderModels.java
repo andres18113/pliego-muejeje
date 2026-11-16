@@ -11,19 +11,37 @@ public final class AdminOrderModels {
     private AdminOrderModels() { }
 
     public record Search(String state, OffsetDateTime dateFrom, OffsetDateTime dateTo,
-            Long customerId, int page, int pageSize) { }
+            Long customerId, int page, int pageSize, String q) {
+        public Search(String state, OffsetDateTime dateFrom, OffsetDateTime dateTo,
+                Long customerId, int page, int pageSize) {
+            this(state, dateFrom, dateTo, customerId, page, pageSize, null);
+        }
+    }
 
     public record Page(List<Summary> items, long totalCount) {
         public Page { items = List.copyOf(items); }
     }
 
     public record Summary(String orderId, String customerId, String customerName,
-            Instant createdAt, String orderState, BigDecimal total, String paymentState) { }
+            Instant createdAt, String orderState, BigDecimal total, String paymentState, String orderReference) {
+        public Summary(String orderId, String customerId, String customerName,
+                Instant createdAt, String orderState, BigDecimal total, String paymentState) {
+            this(orderId, customerId, customerName, createdAt, orderState, total, paymentState, null);
+        }
+    }
 
     public record Detail(String orderId, String customerId, String customerEmail, String customerName,
             String orderState, BigDecimal subtotal, BigDecimal total, Instant createdAt, Instant updatedAt,
             List<Item> items, Address address, Payment payment, List<History> stateHistory,
-            List<InventoryMovement> inventoryMovements, PostPurchaseModels.Extras postPurchase) {
+            List<InventoryMovement> inventoryMovements, PostPurchaseModels.Extras postPurchase, String orderReference) {
+        public Detail(String orderId, String customerId, String customerEmail, String customerName,
+                String orderState, BigDecimal subtotal, BigDecimal total, Instant createdAt, Instant updatedAt,
+                List<Item> items, Address address, Payment payment, List<History> stateHistory,
+                List<InventoryMovement> inventoryMovements, PostPurchaseModels.Extras postPurchase) {
+            this(orderId, customerId, customerEmail, customerName, orderState, subtotal, total, createdAt, updatedAt,
+                    items, address, payment, stateHistory, inventoryMovements, postPurchase, null);
+        }
+
         public Detail {
             items = List.copyOf(items);
             stateHistory = List.copyOf(stateHistory);

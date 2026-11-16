@@ -1,4 +1,5 @@
 import { fillCheckoutBilling, billingFixturePayload } from "./billing-fixtures";
+import { geoResponse, quitoIds } from "./geo-fixtures";
 import { expect, test, type Page } from "@playwright/test";
 import { orderDetailFixture } from "../../src/test/orders";
 
@@ -11,13 +12,15 @@ async function install(page: Page, mixed = false) {
   const physicalReads: string[] = [];
   const formats = mixed ? ["PAPERBACK", "EBOOK"] : ["EBOOK"];
   await page.route("https://www.openstreetmap.org/**", route => route.fulfill({ contentType: "text/html", body: "<!doctype html><title>Mapa</title>" }));
+  await page.route("https://tile.openstreetmap.org/**", route => route.fulfill({ contentType: "image/png", body: Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", "base64") }));
   await page.route("**/api/v1/**", route => {
     const request = route.request(); const url = new URL(request.url()); const path = url.pathname;
+    { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }
     const json = (body: unknown, status = 200) => route.fulfill({ status, json: body });
     if (path === "/api/v1/auth/refresh") return json({ accessToken: "test-token", tokenType: "Bearer", expiresInSeconds: 1800, user: { userId: "2", email: "ana@example.com", role: "CUSTOMER" } });
     if (path === "/api/v1/me") return json({ customerId: "2", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" });
     if (path === "/api/v1/cart") return json({ cartId: "40", state: "ACTIVE", requiresPhysicalFulfillment: mixed, physicalItemCount: mixed ? 1 : 0, digitalItemCount: 1, totalCurrent: mixed ? "37.00" : "18.50", items: formats.map((format, index) => ({ cartItemId: String(index + 1), editionId: String(42 + index), title: format === "EBOOK" ? "Libro propio" : "Libro físico", authors: "Autora", sku: "TEST", coverUrl: null, quantity: 1, currentPrice: "18.50", currentSubtotal: "18.50", available: true, format, requiresPhysicalFulfillment: format === "PAPERBACK", quantityEditable: format === "PAPERBACK", unavailabilityReason: null })) });
-    if (path === "/api/v1/me/addresses") { physicalReads.push(path); return json([{ addressId: "15", alias: "Casa", recipient: "Ana Pérez", line1: "Av. Principal 123", line2: null, city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true }]); }
+    if (path === "/api/v1/me/addresses") { physicalReads.push(path); return json([{ addressId: "15", alias: "Casa", recipient: "Ana Pérez", line1: "Av. Principal 123", line2: null, city: "Quito", province: "Pichincha", ...quitoIds, countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true }]); }
     if (path === "/api/v1/pickup-locations") { physicalReads.push(path); return json([]); }
     if (path === "/api/v1/reference/transfer-details") return json({ bank: "Banco Guayaquil", beneficiary: "PLIEGO", accountType: "Ahorros", accountNumber: "2557897233", identification: "1751550656" });
     if (path === "/api/v1/me/library") return json({ items: url.searchParams.get("productType") === "AUDIOBOOK" ? [] : [owned], page: 0, pageSize: 20, totalCount: url.searchParams.get("productType") === "AUDIOBOOK" ? "0" : "1" });
@@ -81,15 +84,16 @@ test("owned title filters open detail with only genuine purchase and Help action
   await page.screenshot({ path: test.info().outputPath("library.png") });
   await page.getByRole("link", { name: "Libro propio", exact: true }).click();
   await expect(page).toHaveURL(/\/biblioteca\/8$/);
-  await expect(page.getByText("Pertenece a tu cuenta", { exact: true })).toBeVisible();
+  await expect(page.getByText("Tuyo para leer", { exact: true })).toBeVisible();
   await expect(page.getByText(/simulación|Registro de titularidad/)).toHaveCount(0);
   await expect(page.locator('[class*="scene"]').first()).toHaveCSS("background-color", "rgb(255, 255, 255)");
   await expect(page.locator('[class*="purchase_"], [class*="_purchase"]').locator("visible=true").first()).toBeVisible();
   await page.waitForTimeout(200);
   await page.screenshot({ path: test.info().outputPath("library-detail.png"), fullPage: true });
-  await expect(page.getByRole("navigation", { name: "Acciones de la adquisición" }).getByRole("link")).toHaveCount(2);
+  // Only the server's two actions, each where it belongs: the order in its purchase record, help beside the title.
+  await expect(page.getByRole("region", { name: "Información de compra" }).getByRole("link", { name: /^Ver pedido/ })).toHaveCount(1);
   await expect(page.getByRole("link", { name: /^Leer$|^Escuchar$|Continuar/ })).toHaveCount(0);
-  await page.getByRole("navigation", { name: "Acciones de la adquisición" }).getByRole("link", { name: "Ayuda" }).click();
+  await page.getByRole("article").getByRole("link", { name: "Ayuda", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Cómo funcionan los eBooks" })).toBeVisible();
 });
 
@@ -112,10 +116,8 @@ test("Help search keeps backend applicability and opens a published article", as
   await expect(page.getByRole("link", { name: "Ver todos los recursos" })).toHaveAttribute("href", "/ayuda");
   await page.getByRole("link", { name: "Cómo funcionan los eBooks" }).click();
   await expect(page.getByText("Tu cuenta registra la titularidad del título adquirido.")).toBeVisible();
-  // The closing card is white, never lavender.
-  const onward = page.getByRole("complementary", { name: "Más ayuda" });
-  await expect(onward.getByRole("heading", { name: "¿Necesitas algo más?" })).toBeVisible();
-  await expect(onward).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  // No closing card: the article ends on its content and, when there are other topics, their list.
+  await expect(page.getByText("¿Necesitas algo más?")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Volver a Ayuda" })).toBeVisible();
   await page.screenshot({ path: test.info().outputPath("help-article.png"), fullPage: true });
 });
@@ -132,7 +134,7 @@ for (const mixed of [false, true]) test(`${mixed ? "mixed" : "digital-only"} che
   await page.getByRole("button", { name: "Hacer pedido", exact: true }).click();
   await expect(page).toHaveURL(/\/orders\/700$/);
   // The invoice reuses the saved address (the delivery one when there is a delivery) instead of asking again.
-  const invoiceAddress = { line1: "Av. Principal 123", line2: "", city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: "" };
-  expect(api.checkout).toEqual([{ ...billingFixturePayload, billingAddress: invoiceAddress, ...(mixed ? { fulfillmentMethod: "HOME_DELIVERY", addressId: "15" } : { fulfillmentMethod: "DIGITAL_ONLY" }), expectedCartId: "40", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" }]);
+  const invoiceAddress = { line1: "Av. Principal 123", line2: "", provinceId: "17", cityId: "893", countryCode: "EC", postalCode: "" };
+  expect(api.checkout).toEqual([{ ...billingFixturePayload, buyerName: "Ana Pérez", billingAddress: invoiceAddress, ...(mixed ? { fulfillmentMethod: "HOME_DELIVERY", addressId: "15" } : { fulfillmentMethod: "DIGITAL_ONLY" }), expectedCartId: "40", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" }]);
   if (!mixed) { expect(api.physicalReads.filter(path => path !== "/api/v1/me/addresses")).toEqual([]); await expect(page.getByRole("region", { name: "Destino confirmado" })).toHaveCount(0); }
 });
