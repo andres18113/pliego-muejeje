@@ -163,8 +163,14 @@ test("touch topic navigation, filter selection and search work at 320 and 375px"
     await session.detach();
     await page.goto(`${testFrontendOrigin}/catalog?category=literatura`);
     await expect(page.locator("[data-bookcard]").first()).toBeVisible();
-    await page.getByRole("button", { name: /^Filtros/ }).tap();
     const filters = page.getByRole("dialog", { name: "Filtros" });
+    // A synthesized touch tap right after the raw CDP swipe above is occasionally dropped by Chromium's gesture
+    // detector (no click reaches the page; seen on old and new code alike). Tap again only when no dialog appeared,
+    // so a tap that opens and then closes the drawer would still fail here.
+    await expect(async () => {
+      if (!(await filters.isVisible())) await page.getByRole("button", { name: /^Filtros/ }).tap();
+      await expect(filters).toBeVisible({ timeout: 1_500 });
+    }).toPass({ timeout: 10_000 });
     await filters.getByRole("button", { name: "Formato" }).tap();
     await filters.getByText("Tapa dura", { exact: true }).tap();
     await expect(page).toHaveURL(/format=HARDCOVER/);
