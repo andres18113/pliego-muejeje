@@ -12,7 +12,7 @@ import { useSession } from "@/app/session";
 import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { availabilityConflictMessage, resolveStockStatus } from "./stockStatusModel";
 import type { BookCardFeedback, FavoriteControl, CartControl } from "./bookCardModel";
-import { dismissFavoriteSnackbar, showFavoriteSnackbar } from "@/features/favorites/favoriteSnackbar";
+import { dismissFavoriteSnackbar, registerFavoriteSnackbarCard, showFavoriteSnackbar } from "@/features/favorites/favoriteSnackbar";
 
 type FeedbackSink = (value: BookCardFeedback | null) => void;
 export interface FavoriteControllerProps { editionId: string; isFavorite: boolean; ready: boolean; queryKey: QueryKey; returnHref: string; onFeedback: FeedbackSink;
@@ -30,7 +30,12 @@ class FavoriteOutcomeUnknown extends Error {}
 export function useFavoriteControl({ editionId, isFavorite, ready, queryKey, returnHref, onFeedback, onChanged, confirmation }: FavoriteControllerProps): FavoriteControl {
   const snackbarTitle = confirmation.kind === "snackbar" ? confirmation.title : null;
   const snackbarOwner = useRef(Symbol("favorite"));
-  useEffect(() => { const owner = snackbarOwner.current; return () => dismissFavoriteSnackbar(owner); }, []);
+  const usesSnackbar = snackbarTitle !== null;
+  useEffect(() => {
+    const owner = snackbarOwner.current;
+    const release = usesSnackbar ? registerFavoriteSnackbarCard() : undefined;
+    return () => { dismissFavoriteSnackbar(owner); release?.(); };
+  }, [usesSnackbar]);
   const scope = useSessionOperationScope(editionId);
   const location = useLocation();
   const navigate = useNavigate();

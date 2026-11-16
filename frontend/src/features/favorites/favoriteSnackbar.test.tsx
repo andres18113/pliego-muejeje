@@ -2,7 +2,7 @@ import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { dismissFavoriteSnackbar, FavoriteSnackbar, showFavoriteSnackbar } from "./favoriteSnackbar";
+import { dismissFavoriteSnackbar, FavoriteSnackbar, registerFavoriteSnackbarCard, showFavoriteSnackbar } from "./favoriteSnackbar";
 
 function Shell() {
   const navigate = useNavigate();
@@ -39,6 +39,16 @@ describe("FavoriteSnackbar", () => {
     await userEvent.setup().click(screen.getByRole("button", { name: "Deshacer" }));
     expect(undo).toHaveBeenCalledTimes(1);
     expect(screen.getByRole("button", { name: "Guardando…" })).toHaveAttribute("aria-busy", "true");
+  });
+
+  it("adds no status region to a page without hearts, and keeps an empty one ready while a card is shown", () => {
+    renderAt();
+    expect(screen.queryByRole("status")).toBeNull();
+    let release: () => void = () => undefined;
+    act(() => { release = registerFavoriteSnackbarCard(); });
+    expect(screen.getByRole("status")).toBeEmptyDOMElement();
+    act(() => release());
+    expect(screen.queryByRole("status")).toBeNull();
   });
 
   it("leaves when the page changes, when its card leaves, and with its close button", async () => {

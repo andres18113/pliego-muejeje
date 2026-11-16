@@ -19,9 +19,33 @@ export interface FavoriteSnackbarNotice {
 type Shown = { notice: FavoriteSnackbarNotice; key: number; busy: boolean } | null;
 let shown: Shown = null;
 let nextKey = 1;
+/** Cards on the page that answer through the snackbar; its live region exists only while there are some. */
+let cards = 0;
+type Snapshot = { shown: Shown; present: boolean };
+let snapshot: Snapshot = { shown: null, present: false };
 const listeners = new Set<() => void>();
-const emit = () => listeners.forEach(listener => listener());
+const emit = () => {
+  snapshot = { shown, present: cards > 0 || shown !== null };
+  listeners.forEach(listener => listener());
+};
 const subscribe = (listener: () => void) => { listeners.add(listener); return () => { listeners.delete(listener); }; };
+
+/**
+ * A card that confirms through the snackbar registers while mounted, so the polite live region is already in the page
+ * before its first announcement (one inserted together with its text is often not read) — and pages without hearts
+ * carry no empty status region at all. Returns the release.
+ */
+export function registerFavoriteSnackbarCard() {
+  cards += 1;
+  emit();
+  let released = false;
+  return () => {
+    if (released) return;
+    released = true;
+    cards -= 1;
+    emit();
+  };
+}
 
 export function showFavoriteSnackbar(notice: FavoriteSnackbarNotice) {
   shown = { notice, key: nextKey++, busy: false };
@@ -36,12 +60,13 @@ export function dismissFavoriteSnackbar(owner?: symbol) {
 }
 
 export function FavoriteSnackbar() {
-  const current = useSyncExternalStore(subscribe, () => shown, () => null);
+  const { shown: current, present } = useSyncExternalStore(subscribe, () => snapshot, () => snapshot);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   // It speaks about a card on the page being left.
   useEffect(() => { dismissFavoriteSnackbar(); }, [pathname]);
   const notice = current?.notice;
+  if (!present) return null;
   return <UndoToast onDismiss={() => dismissFavoriteSnackbar()} toast={current && notice ? {
     key: current.key,
     message: notice.favorite ? "Agregado a favoritos" : "Quitado de favoritos",
