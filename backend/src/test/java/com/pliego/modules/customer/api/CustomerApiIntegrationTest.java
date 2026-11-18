@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ import org.springframework.transaction.support.SimpleTransactionStatus;
 import com.pliego.foundation.database.DatabaseException;
 import com.pliego.foundation.database.DatabaseExceptionTranslator;
 import com.pliego.foundation.security.JwtTokenIssuer;
+import com.pliego.modules.catalog.application.EditionUnavailabilityReason;
 import com.pliego.modules.customer.gateway.CustomerGateway;
 import com.pliego.modules.customer.gateway.CustomerGateway.AddressData;
 import com.pliego.modules.customer.gateway.CustomerGateway.CustomerAddress;
@@ -628,7 +630,8 @@ class CustomerApiIntegrationTest {
                 .andExpect(jsonPath("$.totalCount").value("1"))
                 .andExpect(jsonPath("$.items[0].editionId").value("42"))
                 .andExpect(jsonPath("$.items[0].title").value("Edición favorita"))
-                .andExpect(jsonPath("$.items[0].available").value(true));
+                .andExpect(jsonPath("$.items[0].available").value(true))
+                .andExpect(jsonPath("$.items[0].unavailabilityReason").value(org.hamcrest.Matchers.nullValue()));
 
         mvc.perform(delete("/api/v1/me/favorites/42").header("Authorization", customerToken("100")))
                 .andExpect(status().isNoContent());
@@ -637,6 +640,25 @@ class CustomerApiIntegrationTest {
         mvc.perform(get("/api/v1/me/favorites/status").param("editionIds", "42")
                         .header("Authorization", customerToken("100")))
                 .andExpect(status().isOk()).andExpect(jsonPath("$[0].favorite").value(false));
+    }
+
+    @Test
+    void favoritesSerializeEachUnavailableReason() throws Exception {
+        gateway.favorites.add(new Favorite(42, 12, "Agotado", "Autora", "Editorial", new BigDecimal("18.40"),
+                null, null, null, "PAPERBACK", "es", false, EditionUnavailabilityReason.OUT_OF_STOCK, Instant.EPOCH));
+        gateway.favorites.add(new Favorite(43, 12, "Edición inactiva", "Autora", "Editorial", new BigDecimal("18.40"),
+                null, null, null, "PAPERBACK", "es", false, EditionUnavailabilityReason.P2042, Instant.EPOCH));
+        gateway.favorites.add(new Favorite(44, 13, "Libro inactivo", "Autora", "Editorial", new BigDecimal("18.40"),
+                null, null, null, "EBOOK", "es", false, EditionUnavailabilityReason.P2043, Instant.EPOCH));
+
+        mvc.perform(get("/api/v1/me/favorites").header("Authorization", customerToken("100")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items[0].available").value(false))
+                .andExpect(jsonPath("$.items[0].unavailabilityReason").value("OUT_OF_STOCK"))
+                .andExpect(jsonPath("$.items[1].available").value(false))
+                .andExpect(jsonPath("$.items[1].unavailabilityReason").value("P2042"))
+                .andExpect(jsonPath("$.items[2].available").value(false))
+                .andExpect(jsonPath("$.items[2].unavailabilityReason").value("P2043"));
     }
 
     @Test
@@ -812,7 +834,7 @@ class CustomerApiIntegrationTest {
             beforeCall(actorUserId);
             if (favorites.stream().noneMatch(favorite -> favorite.editionId() == editionId)) {
                 favorites.add(new Favorite(editionId, 12, "Edición favorita", "Autora de prueba", "Editorial",
-                        new java.math.BigDecimal("12.50"), null, null, null, "PAPERBACK", "es", true,
+                        new BigDecimal("12.50"), null, null, null, "PAPERBACK", "es", true, null,
                         Instant.parse("2026-09-29T12:00:00Z")));
             }
         }

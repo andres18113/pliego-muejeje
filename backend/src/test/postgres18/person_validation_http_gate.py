@@ -24,8 +24,9 @@ def request(path, method="GET", body=None, actor=None, key=None):
         content=response.read()
         return response.status,json.loads(content) if content else None
 
-def register(first="Ana",last="Pérez",phone=None):
-    email=uuid.uuid4().hex+"@validation.example.invalid"
+def register(first="Ana",last="Pérez",phone=None,*,email=None):
+    if email is None:
+        email=uuid.uuid4().hex+"@validation.example.invalid"
     status,result=request("/api/v1/auth/register","POST",{"email":email,
         "password":"Lectura-segura-2026","firstNames":first,"lastNames":last,"phone":phone})
     if status==201:
@@ -74,16 +75,33 @@ def phone_rule():
     for phone in ("+5930991234567","+593991234567 ext 5","+999991234567"):
         status,problem=register(phone=phone)
         assert status==400,(phone,status,problem)
+    whitespace = " \t\n"
+    expected_violations = [{"field": "phone", "message": "Escribe solo dígitos en el número de teléfono."}]
+    invalid_email = uuid.uuid4().hex + "@validation.example.invalid"
+    status, problem = register(phone=whitespace, email=invalid_email)
+    assert status == 400 and problem["code"] == "VALIDATION_ERROR", (status, problem)
+    assert problem["violations"] == expected_violations, problem
+    assert query(f"SELECT count(*) FROM pliego.usuario WHERE email_normalizado='{invalid_email}'") == "0"
     status,registered=register(phone="+593 (99) 123-4567")
     assert status==201,(status,registered)
     actor=int(registered["fixtureActor"])
     _,profile=request("/api/v1/me",actor=actor)
     assert profile["phone"]=="+593991234567",profile
-    status,problem=request("/api/v1/me","PATCH",{"field":"phone","value":"+44 020 7946 0018","expectedVersion":profile["version"]},actor)
-    assert status==400 and problem["violations"][0]["field"]=="value",(status,problem)
-    assert request("/api/v1/me","PATCH",{"field":"phone","value":"+44 20 7946 0018","expectedVersion":profile["version"]},actor)[0]==400
-    _,after=request("/api/v1/me",actor=actor)
-    assert after==profile,after
+    status, problem = request("/api/v1/me", "PUT", {"firstNames": "María", "lastNames": "López",
+                              "phone": whitespace, "expectedVersion": profile["version"]}, actor)
+    assert status == 400 and problem["code"] == "VALIDATION_ERROR", (status, problem)
+    assert problem["violations"] == expected_violations, problem
+    assert request("/api/v1/me", actor=actor) == (200, profile)
+    foreign_phone_message = "Solo se aceptan teléfonos de Ecuador (+593)."
+    for value, message in (("+44 020 7946 0018", foreign_phone_message),
+                           ("+44 20 7946 0018", foreign_phone_message),
+                           (whitespace, expected_violations[0]["message"])):
+        status, problem = request("/api/v1/me", "PATCH", {"field": "phone", "value": value,
+                                  "expectedVersion": profile["version"]}, actor)
+        assert status == 400 and problem["code"] == "VALIDATION_ERROR", (status, problem)
+        # A PATCH names the failed request property, "value", as it does for names.
+        assert problem["violations"] == [{"field": "value", "message": message}], problem
+        assert request("/api/v1/me", actor=actor) == (200, profile)
     assert request("/api/v1/me","PATCH",{"field":"phone","value":"+59325550134","expectedVersion":profile["version"]},actor)[0]==204
     _,after=request("/api/v1/me",actor=actor)
     assert after["phone"]=="+59325550134",after
@@ -101,8 +119,40 @@ def delivery_scope():
     update={k:v for k,v in body.items() if k!='makePrimary'}
     assert request('/api/v1/me/addresses/'+address['addressId'],'PUT',{**update,'countryCode':'US'},actor)[0]==400
 
+def address_phone_rule():
+    actors, _ = fixture()
+    actor, _ = actors[0]
+    addresses = "/api/v1/me/addresses"
+    body = {"alias": "Casa", "recipient": "Ana Pérez", "line1": "Calle 1", "provinceId": "17", "cityId": "893",
+            "countryCode": "EC", "phone": "+593991234567"}
+    status, created = request(addresses, "POST", {**body, "makePrimary": True}, actor, str(uuid.uuid4()))
+    assert status == 201, (status, created)
+    address_id = int(created["addressId"])
+    address_path = f"{addresses}/{address_id}"
+    snapshot_sql = f"SELECT to_jsonb(d) FROM pliego.direccion d WHERE direccion_id={address_id}"
+    original = json.loads(query(snapshot_sql))
+    before = request(addresses, actor=actor)
+    assert before[0] == 200, before
+
+    for phone, message in (("+593９９１２３４５６７", "Escribe solo dígitos en el número de teléfono."),
+                           (" \t\n", "Escribe un teléfono de contacto.")):
+        status, problem = request(address_path, "PUT", {**body, "alias": "Trabajo", "line1": "Calle 2", "phone": phone}, actor)
+        assert status == 400 and problem["code"] == "VALIDATION_ERROR", (status, problem)
+        assert problem["violations"] == [{"field": "phone", "message": message}], problem
+        assert json.loads(query(snapshot_sql)) == original
+
+    assert request(address_path, "PUT", body, actor) == (204, None)
+    assert request(addresses, actor=actor) == before
+    # The identical replacement still takes the database UPDATE path and refreshes the internal timestamp.
+    repeated = json.loads(query(snapshot_sql))
+    assert repeated.pop("fecha_actualizacion") != original.pop("fecha_actualizacion")
+    assert repeated == original
+    assert request(address_path, "PUT", {**body, "alias": "Trabajo", "phone": "+593 (2) 555-0134"}, actor) == (204, None)
+    changed = json.loads(query(snapshot_sql))
+    assert (changed["alias"], changed["telefono"]) == ("Trabajo", "+59325550134"), changed
+
 if __name__=="__main__":
     import sys
-    for check in (recipient_limits,personal_names,phone_rule,delivery_scope):
+    for check in (recipient_limits,personal_names,phone_rule,delivery_scope,address_phone_rule):
         if not sys.argv[1:] or check.__name__ in sys.argv[1:]:
             check(); print(check.__name__+" passed")

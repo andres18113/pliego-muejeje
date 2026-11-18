@@ -2,6 +2,8 @@ package com.pliego.modules.catalog.api;
 
 import java.util.List;
 
+import com.pliego.modules.catalog.application.EditionUnavailabilityReason;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(name = "CatalogEditionDetailResponse")
@@ -13,6 +15,7 @@ public record CatalogEditionDetailResponse(String editionId, String bookId, Stri
         @Schema(nullable = true) String coverSourceUrl,
         @Schema(nullable = true) String coverAttribution,
         boolean available,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED, nullable = true) EditionUnavailabilityReason unavailabilityReason,
         @Schema(nullable = true, allowableValues = {"EPUB", "PDF"}) String ebookFileFormat,
         @Schema(nullable = true) Integer audioDurationSeconds, List<String> narrators, @Schema(nullable = true) CatalogOfferResponse offer) {
 

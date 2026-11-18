@@ -57,4 +57,74 @@ BEGIN
  THEN RAISE EXCEPTION 'recipient Unicode repertoire/241-code-point limit changed'; END IF;
  IF NOT pliego.fn_is_valid_country_code('GB') THEN RAISE EXCEPTION 'historical ISO helper was narrowed'; END IF;
 END $gate$;
+
+DO $gate$
+DECLARE
+ actor BIGINT;
+ customer BIGINT;
+ new_actor BIGINT;
+ new_customer BIGINT;
+ account_state VARCHAR;
+ address BIGINT;
+ new_address BIGINT;
+ previous_addresses JSONB;
+ previous_profile JSONB;
+ phone VARCHAR;
+ malformed_phones CONSTANT VARCHAR[] := ARRAY[
+  'abc','+593abc','+5930991234567','+442079460018','+59399123456789','+59399',
+  E' \t\n','+593９９１２３４５６７','+593991234567 ext 2'
+ ];
+BEGIN
+ CALL pliego.sp_customer_register('contact-phone-gate@example.invalid','fixture','Ana','Pérez',
+  '+593991234567',actor,customer,account_state);
+ SELECT to_jsonb(p) INTO previous_profile FROM pliego.fn_customer_profile_versioned(actor) p;
+
+ CALL pliego.sp_address_create(actor,'Casa','Ana Pérez','Calle 1',NULL,17::BIGINT,893::BIGINT,'EC',
+  NULL,NULL,'+593991234567',TRUE,address);
+ SELECT jsonb_agg(to_jsonb(d) ORDER BY d.direccion_id) INTO previous_addresses
+  FROM pliego.direccion d WHERE d.cliente_id=customer;
+
+ FOREACH phone IN ARRAY malformed_phones || ARRAY['',NULL]::VARCHAR[] LOOP
+  BEGIN
+   CALL pliego.sp_address_update(actor,address,'Trabajo','María Pérez','Calle 2','Suite 4',
+    17::BIGINT,893::BIGINT,'EC','170101','Otra referencia',phone);
+   RAISE EXCEPTION 'Invalid phone accepted by address update: %',phone;
+  EXCEPTION WHEN SQLSTATE 'P1001' THEN NULL; END;
+  BEGIN
+   CALL pliego.sp_address_create(actor,'Trabajo','María Pérez','Calle 2','Suite 4',
+    17::BIGINT,893::BIGINT,'EC','170101','Otra referencia',phone,TRUE,new_address);
+   RAISE EXCEPTION 'Invalid phone accepted by address creation: %',phone;
+  EXCEPTION WHEN SQLSTATE 'P1001' THEN NULL; END;
+  IF (SELECT jsonb_agg(to_jsonb(d) ORDER BY d.direccion_id) FROM pliego.direccion d WHERE d.cliente_id=customer)
+   IS DISTINCT FROM previous_addresses THEN RAISE EXCEPTION 'Invalid phone changed a stored address: %',phone; END IF;
+ END LOOP;
+
+ FOREACH phone IN ARRAY malformed_phones LOOP
+  BEGIN
+   CALL pliego.sp_customer_update_versioned(actor,(previous_profile->>'version')::BIGINT,'María','Pérez',phone);
+   RAISE EXCEPTION 'Invalid phone accepted by profile replacement: %',phone;
+  EXCEPTION WHEN SQLSTATE 'P1001' THEN NULL; END;
+  BEGIN
+   CALL pliego.sp_customer_patch(actor,(previous_profile->>'version')::BIGINT,'phone',phone);
+   RAISE EXCEPTION 'Invalid phone accepted by profile PATCH: %',phone;
+  EXCEPTION WHEN SQLSTATE 'P1001' THEN NULL; END;
+  BEGIN
+   CALL pliego.sp_customer_register('invalid-contact-phone@example.invalid','fixture','Ana','Pérez',
+    phone,new_actor,new_customer,account_state);
+   RAISE EXCEPTION 'Invalid phone accepted by registration: %',phone;
+  EXCEPTION WHEN SQLSTATE 'P1001' THEN NULL; END;
+  IF (SELECT to_jsonb(p) FROM pliego.fn_customer_profile_versioned(actor) p) IS DISTINCT FROM previous_profile
+   THEN RAISE EXCEPTION 'Invalid phone changed the profile: %',phone; END IF;
+  IF EXISTS (SELECT FROM pliego.usuario WHERE email_normalizado='invalid-contact-phone@example.invalid')
+   THEN RAISE EXCEPTION 'Invalid phone created an account: %',phone; END IF;
+ END LOOP;
+
+ CALL pliego.sp_customer_update_versioned(actor,(previous_profile->>'version')::BIGINT,'Ana','Pérez','');
+ IF (SELECT p.phone FROM pliego.fn_customer_profile_versioned(actor) p) IS NOT NULL
+  THEN RAISE EXCEPTION 'Empty optional profile phone did not clear the saved phone'; END IF;
+ CALL pliego.sp_customer_register('empty-contact-phone@example.invalid','fixture','Ana','Pérez',
+  '',new_actor,new_customer,account_state);
+ IF (SELECT p.phone FROM pliego.fn_customer_profile_versioned(new_actor) p) IS NOT NULL
+  THEN RAISE EXCEPTION 'Empty optional registration phone was stored'; END IF;
+END $gate$;
 ROLLBACK;

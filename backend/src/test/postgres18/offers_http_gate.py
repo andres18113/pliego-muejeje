@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 import uuid
 import os
 from urllib.parse import urlencode
-from digital_editions_http_gate import ok, problem
+from digital_editions_http_gate import assert_availability, ok, problem
 from full_journey_http_gate import admin_token
 from checkout_last_unit import query
 
@@ -53,6 +53,7 @@ def main():
     assert len(results['items']) == 1 and results['items'][0]['offer'] == detail['offer'], results
     offers = ok('/api/v1/catalog/offers?'+urlencode({'productType': 'EBOOK', 'category': f'offers-{suffix}', 'sort': 'ENDING_SOON', 'pageSize': 50}))
     assert offers['totalCount'] == '1' and [row['editionId'] for row in offers['items']] == [edition], offers
+    assert_availability(offers['items'][0], None)
     assert ok('/api/v1/catalog/offers?'+urlencode({'productType': 'PHYSICAL', 'category': f'offers-{suffix}'}))['totalCount'] == '0'
     customer_email = f'offers-customer-{suffix}@example.invalid'
     ok('/api/v1/auth/register', None, 'POST', {'email': customer_email, 'password': 'Offers-fixture-1', 'firstNames': 'Cliente', 'lastNames': 'Ofertas'}, 201)

@@ -10,6 +10,7 @@ public final class PhoneNumbers {
     private static final Pattern CANONICAL = Pattern.compile(PersonRules.rule("canonicalPhonePattern"));
     private static final int MAX_NATIONAL_DIGITS = Integer.parseInt(PersonRules.rule("maxNationalPhoneDigits"));
     private static final PhoneNumberUtil NUMBERS = PhoneNumberUtil.getInstance();
+    private static final String REQUIRED = "Escribe un teléfono de contacto.";
     private PhoneNumbers() { }
     public static String normalized(String input) {
         String value = PersonRules.presentation(input);
@@ -19,9 +20,17 @@ public final class PhoneNumbers {
         // A supplied punctuation-only value is invalid, not a request to clear an optional phone.
         return canonical.isEmpty() ? value : canonical;
     }
+
+    public static String normalizedOptionalInput(String input) {
+        String canonical = normalized(input);
+        // Preserve a supplied whitespace-only value until validation runs.
+        return canonical == null && input != null && !input.isEmpty() ? input : canonical;
+    }
+
     public static String error(String input, boolean required) {
         String value = PersonRules.presentation(input);
-        if (value == null || value.isEmpty()) return required ? "Escribe un teléfono de contacto." : null;
+        if (input == null || input.isEmpty()) return required ? REQUIRED : null;
+        if (value.isEmpty()) return required ? REQUIRED : PersonRules.message("phoneCharacters");
         if (!PRESENTATION.matcher(value).matches()) return PersonRules.message("phoneCharacters");
         String canonical = normalized(value);
         if (!canonical.startsWith("+")) return PersonRules.message("phonePrefix");

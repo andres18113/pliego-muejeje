@@ -3279,6 +3279,11 @@ export interface components {
             format?: string;
             language?: string;
             available?: boolean;
+            /**
+             * @description Motivo de indisponibilidad: OUT_OF_STOCK sin existencias, P2042 edición inactiva, P2043 libro inactivo. Null cuando la edición está disponible.
+             * @enum {string|null}
+             */
+            unavailabilityReason: "OUT_OF_STOCK" | "P2042" | "P2043" | null;
             favoritedAt?: string;
         };
         CustomerFavoritePage: {
@@ -3444,6 +3449,11 @@ export interface components {
             format?: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
             language?: string;
             available?: boolean;
+            /**
+             * @description Motivo de indisponibilidad: OUT_OF_STOCK sin existencias, P2042 edición inactiva, P2043 libro inactivo. Null cuando la edición está disponible.
+             * @enum {string|null}
+             */
+            unavailabilityReason: "OUT_OF_STOCK" | "P2042" | "P2043" | null;
             /** @enum {string|null} */
             ebookFileFormat?: "EPUB" | "PDF" | null;
             /** Format: int32 */
@@ -3542,6 +3552,11 @@ export interface components {
             coverSourceUrl?: string | null;
             coverAttribution?: string | null;
             available?: boolean;
+            /**
+             * @description Motivo de indisponibilidad: OUT_OF_STOCK sin existencias, P2042 edición inactiva, P2043 libro inactivo. Null cuando la edición está disponible.
+             * @enum {string|null}
+             */
+            unavailabilityReason: "OUT_OF_STOCK" | "P2042" | "P2043" | null;
             /** @enum {string|null} */
             ebookFileFormat?: "EPUB" | "PDF" | null;
             /** Format: int32 */

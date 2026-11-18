@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -27,6 +28,24 @@ class OpenApiContractProfileIntegrationTest extends OpenApiHttpTestSupport {
         var output = Path.of(System.getProperty("pliego.openapi.evidence", "target/openapi-contract.json"));
         Files.createDirectories(output.toAbsolutePath().getParent());
         Files.writeString(output, response.body());
+    }
+
+    @Test
+    void documentation_describesRequiredNullableEditionAvailabilityReasons() throws Exception {
+        var response = get("/v3/api-docs");
+        assertThat(response.statusCode()).isEqualTo(200);
+        var schemas = json.readTree(response.body()).path("components").path("schemas");
+        for (String name : List.of("CatalogEditionSummaryResponse", "CatalogEditionDetailResponse", "CustomerFavorite")) {
+            var schema = schemas.path(name);
+            var reason = schema.path("properties").path("unavailabilityReason");
+            assertThat(json.treeToValue(schema.path("required"), String[].class)).as(name)
+                    .contains("unavailabilityReason");
+            assertThat(json.treeToValue(reason.path("type"), String[].class)).as(name)
+                    .containsExactlyInAnyOrder("string", "null");
+            assertThat(json.treeToValue(reason.path("enum"), String[].class)).as(name)
+                    .containsExactlyInAnyOrder("OUT_OF_STOCK", "P2042", "P2043", null);
+            assertThat(reason.path("description").asText()).as(name).contains("edición", "libro", "existencias");
+        }
     }
 
     @Test

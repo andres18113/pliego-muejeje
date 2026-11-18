@@ -100,8 +100,8 @@ start_backend false
 
 flyway_state="$(psql -X -v ON_ERROR_STOP=1 -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '107:107' ]]; then
-    printf 'Expected 107 successful versioned Flyway migrations through V107; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '109:109' ]]; then
+    printf 'Expected 109 successful versioned Flyway migrations through V109; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'PostgreSQL server_version_num=%s; Flyway successful migrations=%s\n' "$server_version_num" "$flyway_state"

@@ -253,6 +253,6 @@ public class CustomerController {
                 favorite.title(), favorite.authors(), favorite.publisher(),
                 favorite.price().setScale(2, RoundingMode.UNNECESSARY).toPlainString(), favorite.coverUrl(),
                 favorite.coverLicense(), favorite.coverAttribution(), favorite.format(), favorite.language(),
-                favorite.available(), favorite.favoritedAt().toString());
+                favorite.available(), favorite.unavailabilityReason(), favorite.favoritedAt().toString());
     }
 }

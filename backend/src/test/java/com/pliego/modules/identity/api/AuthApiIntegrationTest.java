@@ -17,6 +17,8 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -183,6 +185,19 @@ class AuthApiIntegrationTest {
         org.junit.jupiter.api.Assertions.assertFalse(response.getResponse().getContentAsString().contains("password"));
         org.junit.jupiter.api.Assertions.assertTrue(identityGateway.verificationHash.matches("[0-9a-f]{64}"));
         org.junit.jupiter.api.Assertions.assertFalse(response.getResponse().getContentAsString().contains(identityGateway.verificationNonce));
+    }
+
+    @ParameterizedTest
+    @MethodSource("com.pliego.foundation.validation.PhoneValidationTestCases#malformedPhones")
+    void registrationRejectsInvalidPhoneWithoutRegisteringAnAccount(String phone, String message) throws Exception {
+        mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
+                        .content(REGISTER_JSON.replace("\"+59325550134\"", objectMapper.writeValueAsString(phone))))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.violations.length()").value(1))
+                .andExpect(jsonPath("$.violations[0].field").value("phone"))
+                .andExpect(jsonPath("$.violations[0].message").value(message));
+        org.junit.jupiter.api.Assertions.assertNull(identityGateway.registeredEmail);
     }
 
     @Test

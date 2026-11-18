@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pliego.foundation.database.DatabaseExceptionTranslator;
 import com.pliego.foundation.database.JdbcGatewaySupport;
+import com.pliego.modules.catalog.application.EditionUnavailabilityReason;
 import com.pliego.modules.customer.gateway.CustomerGateway.AddressData;
 import com.pliego.modules.customer.gateway.CustomerGateway.CustomerAddress;
 import com.pliego.modules.customer.gateway.CustomerGateway.CustomerProfile;
@@ -42,7 +43,7 @@ public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerG
     private static final String ADDRESS_DELETE_CALL = "CALL pliego.sp_address_delete(?,?)";
     private static final String ADDRESS_SET_PRIMARY_CALL = "CALL pliego.sp_address_set_primary(?,?)";
     private static final String FAVORITES_QUERY = "SELECT edition_id, book_id, title, authors, publisher, price, "
-            + "cover_url, cover_license, cover_attribution, format, language, available, favorited_at, total_count "
+            + "cover_url, cover_license, cover_attribution, format, language, available, unavailability_reason, favorited_at, total_count "
             + "FROM pliego.fn_customer_favorites(?,?,?)";
     private static final String FAVORITE_STATUS_QUERY = "SELECT edition_id, favorite "
             + "FROM pliego.fn_customer_favorite_status(?, string_to_array(?, ',')::BIGINT[])";
@@ -237,6 +238,7 @@ public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerG
                     results.getBigDecimal("price"), results.getString("cover_url"),
                     results.getString("cover_license"), results.getString("cover_attribution"),
                     results.getString("format"), results.getString("language"), results.getBoolean("available"),
+                    EditionUnavailabilityReason.fromNullableCode(results.getString("unavailability_reason")),
                     results.getTimestamp("favorited_at").toInstant());
             return new FavoriteRow(favorite, results.getLong("total_count"));
         });

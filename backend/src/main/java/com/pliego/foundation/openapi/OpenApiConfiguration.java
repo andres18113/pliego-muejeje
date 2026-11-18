@@ -1,9 +1,15 @@
 package com.pliego.foundation.openapi;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import org.springdoc.core.customizers.OpenApiCustomizer;
+
+import com.pliego.modules.catalog.application.EditionUnavailabilityReason;
+
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -28,6 +34,28 @@ public class OpenApiConfiguration {
                         .addSecuritySchemes("registrationContinuationCookie",
                                 new SecurityScheme().type(SecurityScheme.Type.APIKEY)
                                         .in(SecurityScheme.In.COOKIE).name("pliego_registration")));
+    }
+
+    @Bean
+    OpenApiCustomizer editionUnavailabilityReasonContract() {
+        return openApi -> {
+            var values = new ArrayList<String>();
+            for (var reason : EditionUnavailabilityReason.values()) {
+                values.add(reason.name());
+            }
+            // OpenAPI 3.1 requires null to satisfy both the type and enum constraints.
+            values.add(null);
+            for (String name : List.of("CatalogEditionSummaryResponse", "CatalogEditionDetailResponse", "CustomerFavorite")) {
+                var schema = openApi.getComponents().getSchemas().get(name);
+                if (schema != null) {
+                    schema.addProperty("unavailabilityReason", new Schema<String>()
+                            .types(new LinkedHashSet<>(List.of("string", "null")))
+                            ._enum(values)
+                            .description("Motivo de indisponibilidad: OUT_OF_STOCK sin existencias, P2042 edición inactiva, "
+                                    + "P2043 libro inactivo. Null cuando la edición está disponible."));
+                }
+            }
+        };
     }
 
     @Bean
