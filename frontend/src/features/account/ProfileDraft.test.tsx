@@ -89,8 +89,8 @@ it("retains newer email and password input during save without storing the passw
   await user.click(screen.getByRole("button", { name: "Guardar" }));
   await user.clear(screen.getByLabelText("Nuevo correo")); await user.type(screen.getByLabelText("Nuevo correo"), "otra@example.com");
   await user.clear(screen.getByLabelText("Contraseña actual")); await user.type(screen.getByLabelText("Contraseña actual"), "Clave-nueva");
-  current = { ...profile, email: "nueva@example.com", version: "1" };
-  await act(async () => { release(json({ email: "nueva@example.com" })); });
+  current = { ...profile, version: "1" };
+  await act(async () => { release(json({ email: profile.email, pendingEmail: { address: "nueva@example.com", expiresAt: "2026-11-02T15:00:00Z" } }, 202)); });
   expect(screen.getByLabelText("Nuevo correo")).toHaveValue("otra@example.com");
   expect(screen.getByLabelText("Contraseña actual")).toHaveValue("Clave-nueva");
   const stored = sessionStorage.getItem("pliego-profile-draft:2:email");
@@ -120,15 +120,19 @@ it("lets Escape explicitly discard a draft and recover focus", async () => {
   expect(sessionStorage.getItem("pliego-profile-draft:2:firstNames")).toBeNull();
 });
 
-it("preserves a valid phone draft when rejecting pasted letters, including across navigation", async () => {
+it("preserves the phone draft exactly as typed, with its reason, across navigation", async () => {
   stubApi({ "GET /api/v1/me": () => json(profile), "GET /api/v1/reference/countries": () => json([{ code: "EC", name: "Ecuador" }]) });
   const { router } = renderPurchaseRoute(routes, "/account"); const user = userEvent.setup();
   await user.click(await screen.findByRole("button", { name: "Agregar teléfono" }));
   const phone = screen.getByLabelText("Teléfono", { exact: true });
   await user.type(phone, "991234567");
   fireEvent.change(phone, { target: { value: "991234567abc" } });
-  expect(phone).toHaveValue("991234567");
+  expect(phone).toHaveValue("991234567abc");
   expect(phone).toHaveAccessibleDescription(/solo números/);
   await act(async () => { await router.navigate("/orders"); await router.navigate("/account"); });
-  expect(await screen.findByLabelText("Teléfono", { exact: true })).toHaveValue("991234567");
+  const restored = await screen.findByLabelText("Teléfono", { exact: true });
+  expect(restored).toHaveValue("991234567abc");
+  expect(restored).toHaveAccessibleDescription(/solo números/);
+  expect(restored).toHaveAttribute("aria-invalid", "true");
+  expect(screen.queryByRole("button", { name: "Borrar número guardado" })).not.toBeInTheDocument();
 });

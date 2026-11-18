@@ -1,7 +1,7 @@
 import { act, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, expect, it, vi } from "vitest";
-import { cartBody, json, problem, renderPurchaseRoute, savedAddress, stubApi } from "@/test/purchase";
+import { cartBody, json, problem, renderPurchaseRoute, savedAddress, savedItem, stubApi } from "@/test/purchase";
 import { FavoritesPage } from "@/features/favorites/FavoritesPage";
 import { CartPage } from "@/features/purchase/CartPage";
 import { CheckoutPage } from "@/features/purchase/CheckoutPage";
@@ -29,6 +29,26 @@ it.each(["P2042", "P3002"] as const)("ignores a residual reason on an authoritat
   renderPurchaseRoute([{ path: "/cart", element: <CartPage /> }], "/cart");
   await userEvent.setup().click(await screen.findByRole("combobox", { name: /Cantidad de/ }));
   expect(screen.getAllByRole("option")).toHaveLength(10);
+  expect(screen.queryByText("No disponible")).not.toBeInTheDocument();
+});
+
+it("tells each favorite's state apart: available, sold out, or no longer for sale", async () => {
+  const items = [
+    { ...book, editionId: "41", title: "Primera lectura", available: true, unavailabilityReason: null },
+    { ...book, editionId: "42", title: "Sin ejemplares", available: false, unavailabilityReason: "OUT_OF_STOCK" },
+    { ...book, editionId: "43", title: "Edición retirada", available: false, unavailabilityReason: "P2042" },
+    { ...book, editionId: "44", title: "Libro retirado", available: false, unavailabilityReason: "P2043" },
+  ].map((item) => ({ ...item, favoritedAt: "2026-10-04T12:00:00Z" }));
+  stubApi({
+    "GET /api/v1/me/favorites": () => json({ items, page: 0, pageSize: 20, totalCount: "4" }),
+    "GET /api/v1/cart": () => json(cartBody([])),
+  });
+  renderPurchaseRoute([{ path: "/favorites", element: <FavoritesPage /> }], "/favorites");
+  const state = async (title: string) => ((await screen.findByRole("heading", { name: title })).closest("article, li") as HTMLElement).querySelector("[data-stockstatus-label]")?.textContent;
+  expect(await state("Primera lectura")).toBe("Disponible");
+  expect(await state("Sin ejemplares")).toBe("Agotado");
+  expect(await state("Edición retirada")).toBe("Fuera de venta");
+  expect(await state("Libro retirado")).toBe("Fuera de venta");
   expect(screen.queryByText("No disponible")).not.toBeInTheDocument();
 });
 
@@ -64,4 +84,29 @@ it("natively disables checkout for a cart with an unavailable line", async () =>
   stubApi({ "GET /api/v1/cart": () => json(cartBody([{ available: false, unavailabilityReason: "P3002" }])), "GET /api/v1/me/addresses": () => json([savedAddress]) });
   renderPurchaseRoute([{ path: "/checkout", element: <CheckoutPage /> }], "/checkout");
   expect(await screen.findByRole("button", { name: "Hacer pedido" })).toBeDisabled();
+});
+
+it.each(["P6002", "P6003"])("explains %s in favorites and saved-for-later rows", async code => {
+  const routes = [{ path: "/favorites", element: <FavoritesPage /> }, { path: "/cart", element: <CartPage /> }];
+  stubApi({
+    "GET /api/v1/me/favorites": () => json({ items: [{ ...book, format: "EBOOK", favoritedAt: "2026-10-04T12:00:00Z" }], page: 0, pageSize: 20, totalCount: "1" }),
+    "GET /api/v1/cart": () => json(cartBody([])),
+    "POST /api/v1/cart/items": () => problem(409, code, "Genérico", "Genérico"),
+  });
+  const view = renderPurchaseRoute(routes, "/favorites");
+  await userEvent.setup().click(await screen.findByRole("button", { name: "Agregar al carrito: Libro de prueba" }));
+  await screen.findByText(code === "P6002" ? "Ya está en tu biblioteca" : "Tienes un pedido abierto con esta edición");
+  expect(screen.queryByText(/Genérico/)).not.toBeInTheDocument();
+  view.unmount();
+  // The cart's own Saved for Later list: moving the copy back meets the same rule, explained with its destination.
+  stubApi({
+    "GET /api/v1/cart": () => json(cartBody([])),
+    "GET /api/v1/cart/saved": () => json({ items: [savedItem({ editionId: book.editionId, title: "Libro de prueba", format: "EBOOK", requiresPhysicalFulfillment: false, quantityEditable: false })], totalCount: 1 }),
+    "POST /api/v1/cart/saved/501/move-to-cart": () => problem(409, code, "Genérico", "Genérico"),
+  });
+  renderPurchaseRoute(routes, "/cart");
+  await userEvent.setup().click(await screen.findByRole("button", { name: "Mover Libro de prueba al carrito" }));
+  await screen.findByText(code === "P6002" ? "Ya está en tu biblioteca" : "Tienes un pedido abierto con esta edición");
+  expect(screen.getByRole("link", { name: code === "P6002" ? "Ver en Mi biblioteca" : "Ver pedido" })).toBeInTheDocument();
+  expect(screen.queryByText(/Genérico/)).not.toBeInTheDocument();
 });

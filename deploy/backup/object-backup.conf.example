@@ -1,0 +1,23 @@
+# Separate optional installation; root:postgres 0640. No secrets here.
+# Standalone example stays disabled. Production packet generates enabled config
+# but leaves scheduling disabled until real first-run/restore/alert review.
+OBJECT_BACKUP_ENABLED=0
+PGHOST=/var/run/postgresql
+PGPORT=5432
+PGUSER=postgres
+PGDATABASE=pliego
+OBJECT_SOURCE_ENDPOINT=https://REPLACE_WITH_32_HEX_ACCOUNT_ID.r2.cloudflarestorage.com
+OBJECT_SOURCE_BUCKET=billing-pliego
+OBJECT_SOURCE_PREFIX=invoices/
+OBJECT_TARGET_ENDPOINT=https://REPLACE_WITH_32_HEX_ACCOUNT_ID.r2.cloudflarestorage.com
+OBJECT_TARGET_BUCKET=pliego-db-backups
+OBJECT_BACKUP_PREFIX=object-backups/v1/
+OBJECT_BACKUP_STATE_DIR=/var/lib/pliego-object-backup
+OBJECT_BACKUP_PUBLIC_KEYRING=/etc/pliego-backup/recipients.gpg
+OBJECT_BACKUP_RECIPIENT=REPLACE_WITH_FULL_OFFLINE_VERIFIED_FINGERPRINT
+# LoadCredential files object-source.json and object-target.json use:
+# {"access_key":"OWNER_CREATED","secret_key":"OWNER_CREATED","expires_at":"OWNER_APPROVED_UTC_EXPIRY"}
+# Source: separate read-only token for billing-pliego; target: backup-bucket reader/writer,
+# protected by an object-backups/ prefix bucket lock; never reuse the application token.
+# Attended verify supplies a separately held read-only target credential under the
+# same object-target.json name and an offline GNUPGHOME; it needs no source credential.

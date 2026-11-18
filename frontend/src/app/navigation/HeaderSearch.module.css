@@ -58,18 +58,25 @@
 .notice { margin: 0; padding: 8px 12px; color: var(--search-muted); font-size: .9375rem; line-height: 1.5; overflow-wrap: anywhere; }
 .notice p { margin: 0 0 12px; }
 
-/* Phones: a full-height sheet with the field pinned at the top. */
+/* Phones: a light sheet from the top edge (Google Store's integrated search), never a full-screen page. It is as tall
+   as what it holds — the topics and one line while empty, suggestions as they arrive — and never taller than what the
+   keyboard leaves visible (`useVisibleViewport`): the field stays pinned at the top, the list scrolls inside, and the
+   storefront stays in view under a lighter, unblurred veil; a press on it closes search like the back arrow. */
 @media (max-width: 599px) {
-  .inner.inner { padding: 0; }
-  .surface.surface { display: flex; flex-direction: column; border: 0; border-radius: 0; box-shadow: none; }
-  .body.body { display: flex; flex: 1; flex-direction: column; min-height: 0; }
-  .field { height: 64px; padding: 0 6px 0 8px; }
+  .inner.inner { padding: var(--search-visible-top, 0px) 0 0; }
+  .surface.surface {
+    display: flex; flex-direction: column; max-height: calc(var(--search-visible-height, 100dvh) - 24px);
+    border: 0; border-radius: 0 0 20px 20px; box-shadow: 0 18px 40px -16px rgb(20 23 55 / 42%), 0 1px 0 var(--search-line);
+  }
+  .body.body { display: flex; flex: 1 1 auto; flex-direction: column; min-height: 0; }
+  .field { flex: none; height: 64px; padding: 0 6px 0 8px; }
   .input { font-size: 1.0625rem; }
   .esc { display: none; }
   .closeIcon.closeIcon { display: inline-block; }
   .close { order: -1; margin: 0; }
   .submit.submit { order: 2; }
-  .panel { flex: 1; max-height: none; min-height: 0; padding: 16px 6px; }
+  .panel { flex: 0 1 auto; min-height: 0; max-height: none; padding: 14px 6px 12px; }
+  .hint { margin-top: 14px; }
   /* Phones: the cue drops under the author so the title keeps the full line. */
   .result { grid-template-columns: 40px minmax(0, 1fr) 20px; grid-template-areas: "thumb copy arrow" "thumb media arrow"; gap: 3px 14px; padding-inline: 10px; }
   .resultCopy { align-self: end; }

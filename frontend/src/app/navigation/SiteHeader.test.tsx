@@ -35,11 +35,13 @@ function mountHeader(path = "/catalog") {
 
 it("uses the server's ordered destinations and product type links, including Help", async () => {
   renderHeader("/", { sections: [...storefrontNavigationFixture.sections.slice(4), ...storefrontNavigationFixture.sections.slice(0, 4)].map(section => section.key === "PHYSICAL" ? { ...section, label: "Libros impresos", categories: [{ slug: "literatura", name: "Literatura", parentSlug: null, href: "/catalog?productType=PHYSICAL&category=literatura" }] } : section) });
-  await screen.findByRole("button", { name: "Libros impresos" });
+  await screen.findByRole("button", { name: "Menú de Libros impresos" });
   const navigation = within(screen.getByRole("navigation", { name: "Navegación principal" }));
   expect(within(navigation.getByRole("list")).getAllByRole("listitem").map((item) => item.textContent?.replace("expand_more", ""))).toEqual(["Ayuda", "Libros impresos", "eBooks", "Audiolibros", "Ofertas"]);
   // A section with subjects opens a menu; its own destination is the menu's "Explorar todos".
-  expect(navigation.getByRole("button", { name: "Libros impresos" })).toHaveAttribute("aria-expanded", "false");
+  expect(navigation.getByRole("button", { name: "Menú de Libros impresos" })).toHaveAttribute("aria-expanded", "false");
+  // One click on a section's name lands on its whole catalog; only the chevron opens the menu.
+  expect(navigation.getByRole("link", { name: "Libros impresos" })).toHaveAttribute("href", "/catalog?productType=PHYSICAL");
   expect(navigation.getByRole("link", { name: "eBooks" })).toHaveAttribute("href", "/catalog?productType=EBOOK");
   expect(navigation.getByRole("link", { name: "Ofertas" })).toHaveAttribute("href", "/ofertas");
   expect(navigation.getByRole("link", { name: "Ayuda" })).toHaveAttribute("href", "/ayuda");
@@ -95,7 +97,7 @@ const richNavigation = { sections: storefrontNavigationFixture.sections.map(sect
 
 it("opens one section menu at a time with only the destinations the server supplies", async () => {
   renderHeader("/", richNavigation);
-  const books = await screen.findByRole("button", { name: "Libros" });
+  const books = await screen.findByRole("button", { name: "Menú de Libros" });
   fireEvent.click(books);
   const menu = within(screen.getByRole("region", { name: "Menú de Libros" }));
   expect(books).toHaveAttribute("aria-expanded", "true");
@@ -107,7 +109,7 @@ it("opens one section menu at a time with only the destinations the server suppl
   expect(menu.queryByRole("link", { name: "Literatura" })).not.toBeInTheDocument();
   expect(menu.queryByText("Temas")).not.toBeInTheDocument();
 
-  fireEvent.click(screen.getByRole("button", { name: "eBooks" }));
+  fireEvent.click(screen.getByRole("button", { name: "Menú de eBooks" }));
   expect(screen.queryByRole("region", { name: "Menú de Libros" })).not.toBeInTheDocument();
   const ebooks = within(screen.getByRole("region", { name: "Menú de eBooks" }));
   expect(ebooks.queryByRole("link", { name: "Ofertas: eBooks" })).not.toBeInTheDocument();
@@ -119,7 +121,7 @@ it("opens one section menu at a time with only the destinations the server suppl
 
 it("closes a section menu with Escape, restoring focus, and on a press outside", async () => {
   renderHeader("/", richNavigation);
-  const books = await screen.findByRole("button", { name: "Libros" });
+  const books = await screen.findByRole("button", { name: "Menú de Libros" });
   fireEvent.click(books);
   const first = within(screen.getByRole("region", { name: "Menú de Libros" })).getByRole("link", { name: "Explorar todos los libros" });
   first.focus();
@@ -136,13 +138,15 @@ it("closes a section menu with Escape, restoring focus, and on a press outside",
 
 it("unfolds a section in place in the mobile sheet", async () => {
   renderHeader("/", richNavigation);
-  await screen.findByRole("button", { name: "Libros" });
+  await screen.findByRole("button", { name: "Menú de Libros" });
   fireEvent.click(screen.getByRole("button", { name: "Abrir navegación" }));
   const sheet = within(screen.getByRole("dialog", { name: "Navegación" }));
   expect(sheet.queryByRole("link", { name: "Literatura" })).not.toBeInTheDocument();
-  fireEvent.click(sheet.getByRole("button", { name: "Libros" }));
+  fireEvent.click(sheet.getByRole("button", { name: "Menú de Libros" }));
   expect(sheet.getByRole("link", { name: "Explorar todos los libros" })).toHaveAttribute("href", "/catalog?productType=PHYSICAL");
   expect(sheet.getByRole("link", { name: /Rayuela/ })).toHaveAttribute("href", "/catalog/editions/42");
+  // The row's name is a link of its own, so one tap goes straight to all the books.
+  expect(sheet.getByRole("link", { name: "Libros" })).toHaveAttribute("href", "/catalog?productType=PHYSICAL");
   expect(sheet.queryByRole("link", { name: "Literatura" })).not.toBeInTheDocument();
   expect(sheet.getByRole("link", { name: "Ayuda" })).toHaveAttribute("href", "/ayuda");
 });

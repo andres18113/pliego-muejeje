@@ -20,6 +20,18 @@ class EcuadorianIdentificationTest {
     }
 
     @Test
+    void companyRucsSkipModuloElevenButKeepProvinceThirdDigitAndEstablishmentChecks() {
+        assertThat(EcuadorianIdentification.isValid("EC_RUC", "1760001210001")).isTrue();
+        assertThat(EcuadorianIdentification.isValid("EC_RUC", "1790016918001")).isTrue();
+        assertThat(EcuadorianIdentification.isValid("EC_RUC", "1710034065001")).isTrue();
+        assertThat(EcuadorianIdentification.isValid("EC_RUC", "0090016918001")).isFalse();
+        assertThat(EcuadorianIdentification.isValid("EC_RUC", "1770001210001")).isFalse();
+        assertThat(EcuadorianIdentification.isValid("EC_RUC", "1790016918000")).isFalse();
+        assertThat(EcuadorianIdentification.isValid("EC_RUC", "1760001210000")).isFalse();
+        assertThat(EcuadorianIdentification.isValid("EC_RUC", "179001691800")).isFalse();
+    }
+
+    @Test
     void trimsOnlyExternalAsciiSpacesAndRejectsUnknownTypes() {
         assertThat(EcuadorianIdentification.normalized("  1710034065  ")).isEqualTo("1710034065");
         assertThat(EcuadorianIdentification.normalized("\t1710034065")).isEqualTo("\t1710034065");

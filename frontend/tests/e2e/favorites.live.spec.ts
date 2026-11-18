@@ -82,8 +82,14 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
     }
 
     await page.goto(`/catalog/editions/${catalogEdition.editionId}`);
-    await page.getByRole("button", { name: "Agregar al carrito", exact: true }).click();
-    await expect(page.getByRole("link", { name: "Ver el carrito", exact: true })).toBeVisible();
+    // The page's own purchase action, not the context bar's copy that appears on scroll.
+    await page.getByRole("region", { name: "Compra", exact: true }).getByRole("button", { name: "Agregar al carrito", exact: true }).click();
+    // Adding opens the cart drawer, a modal that owns the page until closed: prove the line, then close it.
+    const cartDrawer = page.getByRole("dialog", { name: "Tu carrito" });
+    await expect(cartDrawer.getByRole("link", { name: "Ver carrito", exact: true })).toBeVisible();
+    await expect(cartDrawer).toContainText(catalogEdition.title);
+    await cartDrawer.getByRole("button", { name: "Cerrar carrito" }).click();
+    await expect(cartDrawer).toBeHidden();
 
     await openFavorites(page);
     const favoriteCount = unavailableEdition ? 3 : 2;
@@ -93,7 +99,9 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
     expect(favoriteTitles).toContain(detailEdition.title);
     if (unavailableEdition) {
       expect(favoriteTitles).toContain(unavailableEdition.title);
-      await expect(cardFor(page, unavailableEdition.editionId).locator("[data-stockstatus]")).toContainText("No disponible");
+      // A public edition is active, so the server can only report it out of stock; Favoritos names that state.
+      expect((unavailableEdition as { unavailabilityReason?: string | null }).unavailabilityReason).toBe("OUT_OF_STOCK");
+      await expect(cardFor(page, unavailableEdition.editionId).locator("[data-stockstatus-label]")).toHaveText("Agotado");
     }
     const listedFavorite = cardFor(page, catalogEdition.editionId);
     await expect(listedFavorite).toContainText(catalogEdition.authors);
@@ -135,8 +143,8 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
       await mobileCard.getByRole("button", { name: `Agregar a favoritos: ${detailEdition.title}` }).tap();
       await expect(mobileCard.getByRole("button", { name: `Quitar de favoritos: ${detailEdition.title}` })).toHaveAttribute("aria-pressed", "true");
       await mobile.goto(`/catalog/editions/${detailEdition.editionId}`);
-      await mobile.getByRole("button", { name: "Agregar al carrito", exact: true }).tap();
-      await expect(mobile.getByRole("link", { name: "Ver el carrito", exact: true })).toBeVisible();
+      await mobile.getByRole("region", { name: "Compra", exact: true }).getByRole("button", { name: "Agregar al carrito", exact: true }).tap();
+      await expect(mobile.getByRole("dialog", { name: "Tu carrito" }).getByRole("link", { name: "Ver carrito", exact: true })).toBeVisible();
       await expect.poll(() => mobile.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
     } finally {
       await mobileContext.close();
@@ -181,7 +189,7 @@ test("reconciles a lost successful DELETE using the real authoritative favorite 
   });
   await remove.focus(); await page.keyboard.press("Enter");
   await expect(card.getByRole("button", { name: `Agregar a favoritos: ${edition.title}` })).toHaveAttribute("aria-pressed", "false");
-  await expect(card.locator("[data-bookcard-feedback]")).toContainText("Quitado de favoritos.");
+  await expect(page.locator("[data-undo-toast]")).toContainText("Quitado de favoritos");
   const state = await (await request.get(`${api}/me/favorites/status?editionIds=${edition.editionId}`, { headers: { Authorization: `Bearer ${login.accessToken}` } })).json();
   expect(state).toEqual([{ editionId: edition.editionId, favorite: false }]);
   expect(deletes).toBe(1);

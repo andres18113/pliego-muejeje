@@ -1,5 +1,5 @@
 import { useRef, type ComponentPropsWithRef } from "react";
-import { personNameInputError } from "@/shared/validation/person";
+import { personNameInputError } from "@/shared/validation/personName";
 
 type Props = ComponentPropsWithRef<"input"> & { onInputRejected?: (reason: string) => void };
 

@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { choosePlace, geoResponse } from "./geo-fixtures";
 
 test("registration rejects invalid edits without changing accepted data and maps server errors to exact controls", async ({page}) => {
   let posts=0;
@@ -26,12 +27,13 @@ test("registration rejects invalid edits without changing accepted data and maps
   const phone=page.getByLabel("Teléfono (opcional)", {exact:true});
   await phone.fill("9912");
   await phone.fill("0991234567");
-  await expect(phone).toHaveValue("9912");
+  await expect(phone).toHaveValue("0991234567");
   await expect(phone).toHaveAccessibleDescription("Escríbelo sin el 0 inicial.");
   await page.getByRole("button",{name:"Crear cuenta"}).click();
   await expect(phone).toHaveAccessibleDescription("Escríbelo sin el 0 inicial.");
   await expect(page.locator("#register-phone-input-status.field-error")).toHaveCount(1);
-  await expect(phone).toHaveValue("9912"); expect(posts).toBe(0);
+  // Submitting kept the draft as entered and sent nothing.
+  await expect(phone).toHaveValue("0991234567"); expect(posts).toBe(0);
   await phone.fill("991234567");
   await page.getByRole("button",{name:"Crear cuenta"}).click();
   await expect(last).toHaveAccessibleDescription("Revisa tus apellidos antes de continuar.");
@@ -45,6 +47,7 @@ test("profile rejects a pasted extension and address recipient errors reveal a r
   let patches=0, addresses=0;
   await page.route("**/api/v1/**", route => {
     const request=route.request(),path=new URL(request.url()).pathname;
+    { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }
     const json=(body:unknown,status=200)=>route.fulfill({status,contentType:status>=400?"application/problem+json":"application/json",body:JSON.stringify(body)});
     if(path==="/api/v1/auth/refresh") return json({accessToken:"test",expiresInSeconds:1800,user:{userId:"2",email:"ana@example.com",role:"CUSTOMER"}});
     if(path==="/api/v1/me" && request.method()==="GET") return json({customerId:"2",email:"ana@example.com",firstNames:first,lastNames:last,phone:null,state:"ACTIVE",version:"0"});
@@ -67,14 +70,14 @@ test("profile rejects a pasted extension and address recipient errors reveal a r
   await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.evaluate(() => navigator.clipboard.writeText("+593 99 123 4567 ext 5"));
   await phone.press("ControlOrMeta+A"); await phone.press("ControlOrMeta+V");
-  await expect(phone).toHaveValue("991234567");
+  await expect(phone).toHaveValue("+593 99 123 4567 ext 5");
   await expect(phone).toHaveAccessibleDescription("Usa solo números.");
   await expect(page.locator("#profile-phone-input-input-status.field-error")).toHaveCount(1);
   expect(patches).toBe(0);
   await page.goto("/account/addresses");
   await page.getByRole("button",{name:"Agregar dirección"}).click();
-  await page.getByLabel("Dirección",{exact:true}).fill("Calle 1"); await page.getByLabel("Ciudad").fill("Quito");
-  await page.getByLabel("Provincia").fill("Pichincha"); await page.getByLabel("Teléfono de contacto").fill("991234567");
+  await page.getByLabel("Dirección",{exact:true}).fill("Calle 1"); await choosePlace(page, page.locator(".address-form"));
+  await page.getByLabel("Teléfono de contacto").fill("991234567");
   await page.getByRole("button",{name:"Guardar dirección"}).click();
   const recipient=page.getByLabel("Quién recibe el pedido");
   await expect(recipient).toHaveValue(`${first} ${last}`); await expect(recipient).toBeFocused();
@@ -92,6 +95,7 @@ test("an incompatible saved phone is preserved until explicitly replaced", async
   const patches: unknown[] = [];
   await page.route("**/api/v1/**", route => {
     const request = route.request(), path = new URL(request.url()).pathname;
+    { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }
     if (path === "/api/v1/auth/refresh") return route.fulfill({ json: { accessToken: "test", expiresInSeconds: 1800,
       user: { userId: "2", email: profile.email, role: "CUSTOMER" } } });
     if (path === "/api/v1/me" && request.method() === "PATCH") {
@@ -107,10 +111,10 @@ test("an incompatible saved phone is preserved until explicitly replaced", async
   await expect(page.getByText(/\+593.*ext.*5/)).toBeVisible();
   await page.getByRole("button", { name: "Editar teléfono", exact: true }).click();
   const phone = page.getByLabel("Teléfono", { exact: true });
-  await expect(phone).toHaveValue("");
+  // The saved number is shown after its prefix with its reason, to be corrected in place; it is never rewritten.
+  await expect(phone).toHaveValue("99 123 4567 ext 5");
   await expect(phone).toHaveAttribute("aria-invalid", "true");
   await expect(phone).toHaveAccessibleDescription("Usa solo números.");
-  await expect(page.getByRole("button", { name: "Borrar número guardado" })).toBeVisible();
   await page.getByRole("button", { name: "Guardar", exact: true }).click();
   await expect(phone).toBeFocused();
   expect(patches).toHaveLength(0);
@@ -118,8 +122,7 @@ test("an incompatible saved phone is preserved until explicitly replaced", async
   await page.getByRole("button", { name: "Cancelar", exact: true }).click();
   await expect(page.getByText(/\+593.*ext.*5/)).toBeVisible();
   await page.getByRole("button", { name: "Editar teléfono", exact: true }).click();
-  await page.getByRole("button", { name: "Borrar número guardado" }).click();
-  await expect(phone).toBeFocused();
+  await expect(phone).toHaveValue("99 123 4567 ext 5");
   await phone.fill("998765432");
   await page.getByRole("button", { name: "Guardar", exact: true }).click();
   await expect(page.getByRole("status").filter({ hasText: "Guardamos tu teléfono." })).toBeVisible();

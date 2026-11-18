@@ -1,0 +1,136 @@
+{
+  "postgres_version": "18.6 (Ubuntu 18.6-1.pgdg26.04+2)",
+  "retained_rows": 200000,
+  "samples": 5,
+  "scenario": "Normal planner, warm cache, real V104 event table DDL; rollback row-lock probes",
+  "none_expired_before": {
+    "sql": "SELECT pending_id FROM pliego.realtime_event WHERE published_at<clock_timestamp()-INTERVAL '1 hour' ORDER BY event_id LIMIT 1000 FOR UPDATE SKIP LOCKED",
+    "median_execution_ms": 20.422,
+    "median_shared_blocks": 3019,
+    "plan": {
+      "execution_ms": 20.077,
+      "planning_ms": 0.222,
+      "shared_hit_blocks": 3019,
+      "shared_read_blocks": 0,
+      "shared_dirtied_blocks": 0,
+      "wal_bytes": 0,
+      "indexes": [
+        "realtime_event_event_id_key"
+      ],
+      "nodes": [
+        "Limit",
+        "LockRows",
+        "Index Scan"
+      ],
+      "rows": 0.0,
+      "rows_removed": 200000,
+      "triggers": []
+    },
+    "execution_ms_samples": [
+      29.543,
+      20.681,
+      20.261,
+      20.422,
+      20.077
+    ]
+  },
+  "index_build_ms": 66.96950099990318,
+  "index_bytes": 6324224,
+  "none_expired_after": {
+    "sql": "SELECT pending_id FROM pliego.realtime_event WHERE event_id IS NOT NULL AND published_at<'2026-11-03 08:22:22.7497-05'::timestamptz ORDER BY published_at,event_id LIMIT 1000 FOR UPDATE SKIP LOCKED",
+    "median_execution_ms": 0.059,
+    "median_shared_blocks": 21,
+    "plan": {
+      "execution_ms": 0.057,
+      "planning_ms": 0.252,
+      "shared_hit_blocks": 21,
+      "shared_read_blocks": 0,
+      "shared_dirtied_blocks": 0,
+      "wal_bytes": 0,
+      "indexes": [
+        "ix_realtime_event_retention"
+      ],
+      "nodes": [
+        "Limit",
+        "LockRows",
+        "Sort",
+        "Bitmap Heap Scan",
+        "Bitmap Index Scan"
+      ],
+      "rows": 0.0,
+      "rows_removed": 0,
+      "triggers": []
+    },
+    "execution_ms_samples": [
+      0.11,
+      0.059,
+      0.056,
+      0.061,
+      0.057
+    ]
+  },
+  "2000_expired_before": {
+    "sql": "SELECT pending_id FROM pliego.realtime_event WHERE published_at<clock_timestamp()-INTERVAL '1 hour' ORDER BY event_id LIMIT 1000 FOR UPDATE SKIP LOCKED",
+    "median_execution_ms": 0.484,
+    "median_shared_blocks": 1020,
+    "plan": {
+      "execution_ms": 0.533,
+      "planning_ms": 0.197,
+      "shared_hit_blocks": 1020,
+      "shared_read_blocks": 0,
+      "shared_dirtied_blocks": 0,
+      "wal_bytes": 54000,
+      "indexes": [
+        "realtime_event_event_id_key"
+      ],
+      "nodes": [
+        "Limit",
+        "LockRows",
+        "Index Scan"
+      ],
+      "rows": 1000.0,
+      "rows_removed": 0,
+      "triggers": []
+    },
+    "execution_ms_samples": [
+      0.493,
+      0.484,
+      0.473,
+      0.483,
+      0.533
+    ]
+  },
+  "2000_expired_after": {
+    "sql": "SELECT pending_id FROM pliego.realtime_event WHERE event_id IS NOT NULL AND published_at<'2026-11-03 08:22:23.022768-05'::timestamptz ORDER BY published_at,event_id LIMIT 1000 FOR UPDATE SKIP LOCKED",
+    "median_execution_ms": 0.799,
+    "median_shared_blocks": 1059,
+    "plan": {
+      "execution_ms": 0.796,
+      "planning_ms": 0.259,
+      "shared_hit_blocks": 1059,
+      "shared_read_blocks": 0,
+      "shared_dirtied_blocks": 0,
+      "wal_bytes": 54000,
+      "indexes": [
+        "ix_realtime_event_retention"
+      ],
+      "nodes": [
+        "Limit",
+        "LockRows",
+        "Sort",
+        "Bitmap Heap Scan",
+        "Bitmap Index Scan"
+      ],
+      "rows": 1000.0,
+      "rows_removed": 0,
+      "triggers": []
+    },
+    "execution_ms_samples": [
+      0.799,
+      0.826,
+      0.771,
+      0.829,
+      0.796
+    ]
+  }
+}

@@ -25,6 +25,12 @@ public class MailOutboxWorker {
    OutboxMail mail;
    try {mail=outbox.claim();} catch(RuntimeException e) {LOG.warn("mail_outbox state=CLAIM_FAILED code=DATABASE_ERROR");return;}
    if(mail==null)return;
+   try {
+    if(!outbox.prepareSend(mail)) {
+     LOG.info("mail_outbox id={} type={} state=NOT_SENT code=HELD_OR_STALE",mail.id(),mail.type());
+     continue;
+    }
+   } catch(RuntimeException e) {LOG.warn("mail_outbox id={} state=PREFLIGHT_FAILED code=DATABASE_ERROR",mail.id());return;}
    String outcome="SENT";String error=null;String providerMessageId=null;
    try {
     MailDeliveryReceipt receipt=sender.send(mail.recipient(),templates.render(mail.type(),json.readTree(mail.data())),mail.type(),mail.id());

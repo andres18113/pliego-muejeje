@@ -1,5 +1,14 @@
 -- PostgreSQL18 behavior assertions; fixtures and all effects roll back.
 BEGIN;
+-- Age only test fixtures; production snapshots remain immutable.
+CREATE PROCEDURE pg_temp.ready_pickup(p_order BIGINT) LANGUAGE plpgsql AS $$ BEGIN
+ ALTER TABLE pliego.pedido_retiro DISABLE TRIGGER trg_pedido_retiro_snapshot;
+ UPDATE pliego.pedido_retiro SET estimado_desde=estimado_desde-INTERVAL '1 day',listo_desde=listo_desde-INTERVAL '1 day',
+  zona_horaria='UTC',apertura=(clock_timestamp() AT TIME ZONE 'UTC')::TIME-INTERVAL '1 hour',
+  cierre=(clock_timestamp() AT TIME ZONE 'UTC')::TIME+INTERVAL '1 hour' WHERE pedido_id=p_order;
+ ALTER TABLE pliego.pedido_retiro ENABLE TRIGGER trg_pedido_retiro_snapshot;
+ UPDATE pliego.pedido SET cancelacion_hasta=clock_timestamp()-INTERVAL '1 second' WHERE pedido_id=p_order;
+END; $$;
 DO $gate$
 DECLARE
  a BIGINT; u BIGINT; customer BIGINT; address_id BIGINT; author_id BIGINT; pub BIGINT; cat BIGINT; book BIGINT;
@@ -13,7 +22,7 @@ BEGIN
  IF pickup IS NULL THEN RAISE EXCEPTION 'RED: active real pickup location not listed'; END IF;
  IF NOT EXISTS(SELECT FROM pliego.fn_pickup_locations() WHERE pickup_location_id=pickup
   AND latitude=-0.210000 AND longitude=-78.491400 AND timezone='America/Guayaquil'
-  AND opens_at='09:00'::TIME AND closes_at='17:00'::TIME AND preparation_minutes=25)
+  AND opens_at='09:00'::TIME AND closes_at='17:00'::TIME AND preparation_minutes=10)
  THEN RAISE EXCEPTION 'location contract not typed or seed incorrect'; END IF;
  INSERT INTO pliego.usuario(email_normalizado,password_hash,rol,estado)
  VALUES('pickup-gate-admin@example.invalid','fixture','ADMIN','ACTIVE') RETURNING usuario_id INTO a;
@@ -69,14 +78,14 @@ BEGIN
  snapshot:=d.fulfillment; confirmation:=pliego.fn_order_fulfillment(o,TRUE);
  code:=snapshot->'pickup'->>'pickupCode'; first_code:=code;
  IF code !~ '^P-[2-9A-HJ-NP-Z]{6,8}$' THEN RAISE EXCEPTION 'pickup code not human friendly'; END IF;
- IF (snapshot->'pickup'->>'readyAt')::TIMESTAMPTZ-(snapshot->'pickup'->>'estimatedAt')::TIMESTAMPTZ<>INTERVAL '25 minutes'
- OR (snapshot->'pickup'->>'estimatedAt')::TIMESTAMPTZ>clock_timestamp()
+ IF (snapshot->'pickup'->>'readyAt')::TIMESTAMPTZ-(snapshot->'pickup'->>'estimatedAt')::TIMESTAMPTZ<>INTERVAL '10 minutes'
+ OR (snapshot->'pickup'->>'readyAt')::TIMESTAMPTZ<(SELECT fecha_aprobacion+INTERVAL '10 minutes' FROM pliego.pago WHERE pedido_id=o)
  OR snapshot->'pickup'->'location'->>'timezone'<>'America/Guayaquil'
  THEN RAISE EXCEPTION 'readyAt not authoritative, timezone missing'; END IF;
  IF (SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:'||o)<>1
  OR (SELECT datos->'pickup' FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:'||o) IS DISTINCT FROM snapshot->'pickup'
  THEN RAISE EXCEPTION 'pickup confirmation not atomic or wrong snapshot'; END IF;
- CALL pliego.sp_pickup_location_update(a,pickup,'Nombre editado','Nueva dirección','Otra ciudad','Otra provincia','EC','170525',1,2,
+ CALL pliego.sp_pickup_location_update(a,pickup,'Nombre editado','Nueva dirección','Sangolquí','Pichincha','EC','170525',1,2,
   'UTC','10:00'::TIME,'16:00'::TIME,FALSE,45);
  SELECT * INTO d FROM pliego.fn_customer_order_detail(u,o);
  IF d.fulfillment IS DISTINCT FROM snapshot THEN RAISE EXCEPTION 'location edit changed history'; END IF;
@@ -100,19 +109,22 @@ BEGIN
   RAISE EXCEPTION 'legacy admin transition bypassed pickup collection';
  EXCEPTION WHEN SQLSTATE 'P5002' THEN NULL; END;
  BEGIN
-  CALL pliego.sp_pickup_collect(a,o,'P-WRONG');
+  CALL pliego.sp_pickup_collect(a,o,'P-WRONG',TRUE);
   RAISE EXCEPTION 'wrong code accepted';
  EXCEPTION WHEN SQLSTATE 'P5013' THEN NULL; END;
  IF EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:'||o||':STORE_PICKUP:COLLECTED')
  THEN RAISE EXCEPTION 'invalid collection emitted a notification'; END IF;
- CALL pliego.sp_pickup_collect(a,o,code);
- CALL pliego.sp_pickup_collect(a,o,code);
+ CALL pg_temp.ready_pickup(o);
+ confirmation:=pliego.fn_order_fulfillment(o,TRUE);
+ CALL pliego.sp_pickup_collect(a,o,code,TRUE);
+ BEGIN CALL pliego.sp_pickup_collect(a,o,code,TRUE);
+  RAISE EXCEPTION 'double collection accepted'; EXCEPTION WHEN SQLSTATE 'P5017' THEN NULL; END;
  SELECT * INTO d FROM pliego.fn_customer_order_detail(u,o);
  IF d.order_state<>'DELIVERED' OR d.fulfillment->>'state'<>'COLLECTED' OR d.fulfillment->>'collectedAt' IS NULL
  OR (SELECT count(*) FROM pliego.pedido_estado_historial WHERE pedido_id=o AND estado_nuevo='DELIVERED')<>1
  THEN RAISE EXCEPTION 'collection not idempotent or not terminal'; END IF;
  IF (SELECT string_agg(datos->>'state',',' ORDER BY correo_id) FROM pliego.correo_outbox
-      WHERE evento_clave LIKE 'ORDER_STATUS:'||o||':%') IS DISTINCT FROM 'COLLECTED'
+      WHERE evento_clave LIKE 'ORDER_STATUS:'||o||':%') IS DISTINCT FROM 'PREPARING,READY,COLLECTED'
  OR (SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:'||o||':STORE_PICKUP:COLLECTED')<>1
  OR EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:'||o||':STORE_PICKUP:COLLECTED'
       AND (((datos->'pickup') ? 'pickupCode') OR ((datos->'fulfillment'->'pickup') ? 'pickupCode')))
@@ -182,12 +194,13 @@ BEGIN
  IF EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave='ORDER_CANCELLED:'||replay)
  THEN RAISE EXCEPTION 'rejected late cancellation emitted a notification'; END IF;
  SELECT codigo INTO code FROM pliego.pedido_retiro WHERE pedido_id=replay;
- CALL pliego.sp_pickup_collect(a,replay,code);
+ CALL pg_temp.ready_pickup(replay);
+ CALL pliego.sp_pickup_collect(a,replay,code,TRUE);
  IF (SELECT estado FROM pliego.pedido WHERE pedido_id=replay)<>'DELIVERED'
     OR pliego.fn_order_fulfillment(replay,FALSE)->>'state'<>'COLLECTED'
  THEN RAISE EXCEPTION 'Pickup collection stopped after cancellation window'; END IF;
  IF (SELECT string_agg(datos->>'state',',' ORDER BY correo_id) FROM pliego.correo_outbox
-      WHERE evento_clave LIKE 'ORDER_STATUS:'||replay||':%') IS DISTINCT FROM 'PREPARING,COLLECTED'
+      WHERE evento_clave LIKE 'ORDER_STATUS:'||replay||':%') IS DISTINCT FROM 'PREPARING,READY,COLLECTED'
  THEN RAISE EXCEPTION 'pickup preparation/collection emails were not caught up once'; END IF;
 END $gate$;
 ROLLBACK;

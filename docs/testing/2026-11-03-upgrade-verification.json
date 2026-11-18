@@ -1,0 +1,92 @@
+{
+  "date": "2026-11-03",
+  "postgres_major": 18,
+  "passed": 16,
+  "total": 16,
+  "mandatory_ci_passed": 8,
+  "jar_sha256": "9011052401787658cdcb7c20a41514b8f8351b3a046c144cec1126a021e7693b",
+  "gates": [
+    {
+      "name": "automatic_billing",
+      "exit_code": 0,
+      "elapsed_seconds": 23.55
+    },
+    {
+      "name": "login_attempt",
+      "exit_code": 0,
+      "elapsed_seconds": 11.86
+    },
+    {
+      "name": "billing_identity",
+      "exit_code": 0,
+      "elapsed_seconds": 12.66
+    },
+    {
+      "name": "order_reference",
+      "exit_code": 0,
+      "elapsed_seconds": 12.76
+    },
+    {
+      "name": "monetary",
+      "exit_code": 0,
+      "elapsed_seconds": 12.21
+    },
+    {
+      "name": "ecuador_tax",
+      "exit_code": 0,
+      "elapsed_seconds": 12.61
+    },
+    {
+      "name": "ecuador_contact",
+      "exit_code": 0,
+      "elapsed_seconds": 15.77
+    },
+    {
+      "name": "geo",
+      "exit_code": 0,
+      "elapsed_seconds": 14.62
+    },
+    {
+      "name": "mail_deliverability",
+      "exit_code": 0,
+      "elapsed_seconds": 11.85
+    },
+    {
+      "name": "digital_single_copy",
+      "exit_code": 0,
+      "elapsed_seconds": 12.66
+    },
+    {
+      "name": "digital_ownership",
+      "exit_code": 0,
+      "elapsed_seconds": 11.86
+    },
+    {
+      "name": "post_purchase",
+      "exit_code": 0,
+      "elapsed_seconds": 0.06
+    },
+    {
+      "name": "transactional_email_lifecycle",
+      "exit_code": 0,
+      "elapsed_seconds": 12.26
+    },
+    {
+      "name": "release_pending",
+      "exit_code": 0,
+      "elapsed_seconds": 12.81
+    },
+    {
+      "name": "home_delivery",
+      "exit_code": 0,
+      "elapsed_seconds": 16.37
+    },
+    {
+      "name": "pickup_timing",
+      "exit_code": 0,
+      "elapsed_seconds": 13.76
+    }
+  ],
+  "preexisting_gate_repair": "release_pending: exclude only two V097 additive NULL keys and assert historical NULL policy metadata; full V087->V104 rerun passed",
+  "post_purchase_invocation": "prepare V032 -> packaged migrate V034 -> verify"
+}

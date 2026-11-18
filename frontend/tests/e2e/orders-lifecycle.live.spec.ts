@@ -31,6 +31,17 @@ function sql(statement: string) {
   execFileSync("psql",["-X","-v","ON_ERROR_STOP=1","-c",statement],{ env,stdio: "pipe" });
 }
 
+function sqlValue(statement: string) {
+  return execFileSync("psql",["-X","-v","ON_ERROR_STOP=1","-At","-c",statement],{ env,stdio: "pipe" }).toString().trim();
+}
+
+/** The customer sees the public reference (ADR 0047), never the internal id; the row is found by its order link. */
+function orderRow(page: import("@playwright/test").Page, orderId: string) {
+  const reference = sqlValue(`SELECT referencia_publica FROM pliego.pedido WHERE pedido_id=${orderId}`);
+  expect(reference).toMatch(/^PL-\d{4}-\d{4}$/);
+  return { row: page.locator(`a[href="/orders/${orderId}"]`), reference };
+}
+
 test("Mis pedidos reads real home transitions, cutoff, pickup collection and cancellation",async ({ page }) => {
   const data = fixture();
   for (const value of [data.adminId,data.homeOrderId,data.cancelOrderId,data.pickupOrderId,data.pickupCancelOrderId]) {
@@ -42,6 +53,7 @@ test("Mis pedidos reads real home transitions, cutoff, pickup collection and can
     return route.continue({ url: `${apiOrigin}${url.pathname}${url.search}` });
   });
   await page.route("https://www.openstreetmap.org/**",route => route.fulfill({ contentType: "text/html",body: "<html><body>Mapa</body></html>" }));
+  await page.route("https://tile.openstreetmap.org/**", route => route.fulfill({ contentType: "image/png", body: Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", "base64") }));
   await page.goto("/sign-in?from=%2Forders");
   await page.getByLabel("Correo electrónico").fill(data.email);
   await page.getByLabel("Contraseña",{ exact: true }).fill(data.password);
@@ -51,11 +63,19 @@ test("Mis pedidos reads real home transitions, cutoff, pickup collection and can
   for (const [minutes,label,cancel] of [[0,"En preparación",true],[3,"En camino",false],[2,"En reparto",false],[2,"Entregado",false]] as const) {
     if (minutes) sql(`UPDATE pliego.envio SET fecha_confirmacion=fecha_confirmacion-INTERVAL '${minutes} minutes',transito_desde=transito_desde-INTERVAL '${minutes} minutes',reparto_desde=reparto_desde-INTERVAL '${minutes} minutes',entrega_desde=entrega_desde-INTERVAL '${minutes} minutes' WHERE pedido_id=${data.homeOrderId}`);
     await page.goto("/orders"); // List snapshot can be behind; enrichment must invoke reconciliation.
-    const row = page.getByRole("link",{ name: new RegExp(`${label}.*Pedido N.° ${data.homeOrderId}`) });
+    const { row, reference } = orderRow(page, data.homeOrderId);
     await expect(row).toBeVisible();
+    await expect(row).toContainText(label);
+    await expect(row).toContainText(`Pedido #${reference}`);
     await row.click();
     await expect(page.getByRole("heading",{ level: 2,name: label })).toBeVisible();
-    await expect(page.getByRole("list",{ name: "Progreso del envío" }).locator('[aria-current="step"]')).toContainText(label);
+    if (label === "Entregado") {
+      // Delivered reads as one completed state, not the five-step list (ShipmentTrack).
+      await expect(page.getByRole("list",{ name: "Progreso del envío" })).toHaveCount(0);
+      await expect(page.getByRole("group",{ name: "Progreso del envío" })).toContainText("Entregado");
+    } else {
+      await expect(page.getByRole("list",{ name: "Progreso del envío" }).locator('[aria-current="step"]')).toContainText(label);
+    }
     await expect(page.getByRole("button",{ name: "Cancelar pedido" })).toHaveCount(cancel ? 1 : 0);
   }
 
@@ -67,16 +87,21 @@ test("Mis pedidos reads real home transitions, cutoff, pickup collection and can
   await expect(page.getByRole("button",{ name: "Cancelar pedido" })).toHaveCount(0);
 
   await page.goto("/orders");
-  const pickupRow = page.getByRole("link",{ name: new RegExp(`Pendiente de retiro.*Pedido N.° ${data.pickupOrderId}`) });
+  const { row: pickupRow, reference: pickupReference } = orderRow(page, data.pickupOrderId);
   await expect(pickupRow).toBeVisible();
-  sql(`CALL pliego.sp_pickup_collect(${data.adminId},${data.pickupOrderId},'${data.pickupCode}')`);
+  await expect(pickupRow).toContainText(`Pedido #${pickupReference}`);
+  // ADR 0051: only a READY pickup can be handed over; the fixture must provide one (within its point's hours).
+  expect(sqlValue(`SELECT pliego.fn_pickup_state(${data.pickupOrderId})`)).toBe("READY");
+  await expect(pickupRow).toContainText("Listo para retirar");
+  // V089: the counter confirms the customer's identity before handing over.
+  sql(`CALL pliego.sp_pickup_collect(${data.adminId},${data.pickupOrderId},'${data.pickupCode}',TRUE)`);
   await pickupRow.click();
   await expect(page.getByRole("heading",{ level: 2,name: "Retirado" })).toBeVisible();
   await expect(page.getByRole("list",{ name: "Progreso del envío" })).toHaveCount(0);
   await expect(page.getByRole("button",{ name: "Cancelar pedido" })).toHaveCount(0);
 
   await page.goto(`/orders/${data.pickupCancelOrderId}`);
-  await expect(page.getByRole("heading",{ level: 2,name: "Pendiente de retiro" })).toBeVisible();
+  await expect(page.getByRole("heading",{ level: 2,name: /^(?:En preparación|Listo para retirar)$/ })).toBeVisible();
   await page.getByRole("button",{ name: "Cancelar pedido" }).click();
   await page.getByRole("button",{ name: "Confirmar cancelación" }).click();
   await expect(page.getByRole("heading",{ level: 2,name: "Pedido cancelado" })).toBeVisible();

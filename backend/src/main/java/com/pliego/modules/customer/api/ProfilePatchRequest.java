@@ -21,7 +21,7 @@ public record ProfilePatchRequest(
         @Pattern(regexp = "^(0|[1-9][0-9]{0,18})$", message = "La versión del perfil no es válida.")
         @DecimalMax(value = "9223372036854775807", message = "La versión del perfil no es válida.") String expectedVersion) {
     public ProfilePatchRequest {
-        value = "phone".equals(field) ? PhoneNumbers.normalized(value)
+        value = "phone".equals(field) ? PhoneNumbers.normalizedOptionalInput(value)
                 : ("firstNames".equals(field) || "lastNames".equals(field)) ? PersonRules.name(value) : value;
     }
 }

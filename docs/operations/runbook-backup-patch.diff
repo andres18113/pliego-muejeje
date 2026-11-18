@@ -1,0 +1,100 @@
+--- a/docs/deployment/production-runbook.md
++++ b/docs/deployment/production-runbook.md
+@@ -276,8 +276,47 @@
+ source, manifests, JARs, `dist`, screenshots or logs. Do not enable `set -x`.
+ Do not pipe a password into the same stdin used to transport a script or SQL.
+ 
+-Before any production mutation, hold an exclusive deployment lock for the entire
+-operation. In the persistent remote privileged shell:
++Before taking the deployment lock, pause the installed backup timers and drain
++both backup jobs. In the same persistent privileged shell, remember only timers
++that were active so an intentionally disabled installation stays disabled:
++
++```bash
++PLIEGO_BACKUP_TIMERS_TO_RESUME=()
++for timer in pliego-backup.timer object-backup.timer pliego-backup-freshness.timer; do
++  if systemctl is-active --quiet "$timer"; then
++    PLIEGO_BACKUP_TIMERS_TO_RESUME+=("$timer")
++    systemctl stop "$timer"
++  fi
++done
++PLIEGO_BACKUP_DRAIN_DEADLINE=$((SECONDS + 3600))
++for unit in pliego-backup.service object-backup.service; do
++  while :; do
++    PLIEGO_BACKUP_UNIT_STATE=$(systemctl show "$unit" --property=ActiveState --value) || exit 1
++    case "$PLIEGO_BACKUP_UNIT_STATE" in
++      inactive|failed) break ;;
++      active|activating|deactivating|reloading) ;;
++      *) printf '%s\n' 'Unexpected backup state; leave timers paused and investigate.' >&2; exit 1 ;;
++    esac
++    if (( SECONDS >= PLIEGO_BACKUP_DRAIN_DEADLINE )); then
++      printf '%s\n' 'Backup drain timed out; do not kill the job or bypass its lock.' >&2
++      exit 1
++    fi
++    sleep 5
++  done
++done
++```
++
++A missing/uninstalled unit may report inactive. Stop on other lookup errors.
++Do not cancel a working dump. Both jobs retain the existing deployment-lock inode
++through systemd OpenFile; contention can mean either backup or another operator.
++Never remove, truncate outside the existing runbook open, replace, remode or bypass
++the lock. After a reboot require the backup packet's exact root:root0600 tmpfiles
++initialization; do not rely on a deployment to create it. Scheduling remains paused
++if drain fails; record the incident and restore only its previous timer states
++after safe recovery. The first backup activation is a separate reviewed ceremony.
++
++After drain and before any release mutation, hold the unchanged exclusive
++deployment lock for the entire operation. In this persistent privileged shell:
+ 
+ ```bash
+ exec 9>/run/lock/pliego-deploy.lock
+@@ -1184,6 +1223,26 @@
+ 
+ ## 11. Handoff and ongoing operations
+ 
++After all release postflight checks, or a verified healthy rollback, release this
++session's deployment lock before resuming the previously active backup timers.
++Keep the shell/array from section 3. Never blindly enable timers or resume from an
++unresolved restricted/migration state:
++
++```bash
++flock -u 9
++exec 9>&-
++if (( ${#PLIEGO_BACKUP_TIMERS_TO_RESUME[@]} )); then
++  systemctl start "${PLIEGO_BACKUP_TIMERS_TO_RESUME[@]}"
++fi
++```
++
++Confirm next UTC firings, both DB/invoice completion markers and external
++heartbeats. A successful unit exit can be a deploy-lock skip; it is insufficient
++without fresh receipts/remote run markers. Record pause/drain/resume times and any
++skipped/overdue run. Retain keys, receipts and locked remote objects on rollback.
++[Backup production operations](../operations/2026-11-05-backup-production-operations.md)
++contains first-enable, credential rotation and fresh-host recovery gates.
++
+ Write a non-secret local and server-side release record with: source SHA and CI
+ URL; artifact hashes; current/previous targets; startup times; planned/applied
+ migrations; configuration hashes and intentional changes; owner/runtime state;
+--- a/.agents/skills/pliego-deploy/SKILL.md
++++ b/.agents/skills/pliego-deploy/SKILL.md
+@@ -40,8 +40,17 @@
+   release in the runbook is a dated snapshot, not a permanent current-state claim.
+ - Freeze locally tested JAR/dist artifacts, compare installed migration bytes and
+   transfer only necessary files through the personal `ssh -F` connection.
++- Before taking the existing deployment lock, pause both installed backup timers
++  and freshness timer, record which were active, and let DB/invoice jobs drain
++  without cancellation. Both jobs hold that same root-owned inode through OpenFile;
++  contention may mean a backup or deployment. Never bypass/remove/replace/remode it.
++  Verify the approved root:root0600 boot tmpfiles initialization after reboot.
+ - Hold one exclusive deployment lock; prepare backup, private evidence, previous
+-  pointers and a schema-compatible rollback before activation.
++  pointers and a schema-compatible rollback before activation. After canonical
++  migration/privilege cleanup and successful postflight (or healthy rollback),
++  release this session's lock and resume only previously active timers. Verify
++  fresh DB/invoice markers and both external heartbeats; a skipped unit exit is
++  not a completed backup. Keep unresolved failure states paused and report them.
+ - Java exits 143 on SIGTERM: accept stopped `failed`/`inactive` with `MainPID=0`
+   as drained; run `systemctl reset-failed pliego` before starting again.
+ - Keep R2 enabled once any `storage_kind='R2'` row exists; disabling it leaves READY

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.pliego.foundation.web.PageResponse;
 import com.pliego.foundation.web.ProblemResponse;
@@ -50,6 +52,7 @@ import jakarta.validation.constraints.Positive;
 @Tag(name = "Pedidos administrativos", description = "Consulta y gestión logística de pedidos.")
 @SecurityRequirement(name = "bearerJwt")
 public class AdminOrderController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminOrderController.class);
 
     private final AdminOrderService service;
 
@@ -70,15 +73,16 @@ public class AdminOrderController {
     @ApiResponse(responseCode = "200", description = "Página de pedidos")
     public PageResponse<Summary> search(@AuthenticationPrincipal Jwt jwt,
             @RequestParam(required = false) String state,
+            @RequestParam(required = false) @jakarta.validation.constraints.Size(max = 100, message = "La búsqueda no puede superar 100 caracteres.") String q,
             @RequestParam(required = false) OffsetDateTime dateFrom,
             @RequestParam(required = false) OffsetDateTime dateTo,
             @RequestParam(required = false) @Positive Long customerId,
             @RequestParam(defaultValue = "0") @Min(0) int page,
             @RequestParam(defaultValue = "20") @Min(1) @Max(50) int pageSize) {
-        var result = service.search(actorId(jwt), new Search(state, dateFrom, dateTo, customerId, page, pageSize));
+        var result = service.search(actorId(jwt), new Search(state, dateFrom, dateTo, customerId, page, pageSize, q));
         return new PageResponse<>(result.items().stream().map(order -> new Summary(order.orderId(),
                 order.customerId(), order.customerName(), order.createdAt().toString(), order.orderState(),
-                money(order.total()), order.paymentState())).toList(), page, pageSize,
+                money(order.total()), order.paymentState(), order.orderReference())).toList(), page, pageSize,
                 Long.toString(result.totalCount()));
     }
 
@@ -110,7 +114,7 @@ public class AdminOrderController {
                         movement.type(), movement.quantity(), movement.stockBefore(), movement.stockAfter(),
                         movement.reason(), movement.eventAt())).toList(),post.purchaseState(),post.fulfillment(),post.shipment(),
                 PostPurchaseResponses.invoice(post.invoice()),PostPurchaseResponses.creditNotes(post.creditNotes()),post.availableActions(),
-                money(post.amounts().taxRate()),money(post.amounts().taxAmount()),money(post.amounts().shippingAmount()));
+                money(post.amounts().taxRate()),money(post.amounts().taxAmount()),money(post.amounts().shippingAmount()), order.orderReference());
     }
 
     @PostMapping(path = "/{orderId}/transitions", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -166,10 +170,20 @@ public class AdminOrderController {
         var address=request.billingAddress();
         long id=service.issueInvoice(actorId(jwt),orderId,new PostPurchaseModels.IssueInvoice(request.documentNumber(),
                 request.buyerName(),request.identityType(),request.identityNumber(),request.buyerEmail(),
-                new PostPurchaseModels.BillingAddress(address.line1(),address.line2(),address.city(),address.province(),
-                        address.countryCode(),address.postalCode())));
+                billingAddress(address)));
+        if (address.usesLegacyNames()) LOGGER.info("geo_legacy_payload operation=admin-invoice-issue");
         return ResponseEntity.created(java.net.URI.create("/api/v1/admin/orders/"+orderId))
                 .body(new PostPurchaseResponses.IssuedInvoice(Long.toString(orderId),Long.toString(id)));
+    }
+
+    private static PostPurchaseModels.BillingAddressInput billingAddress(PostPurchaseRequests.BillingAddress address) {
+        if (address.provinceId() != null) {
+            return new PostPurchaseModels.BillingAddressInput(address.line1(),address.line2(),
+                    Long.parseLong(address.provinceId()),Long.parseLong(address.cityId()),
+                    address.countryCode(),address.postalCode());
+        }
+        return new PostPurchaseModels.BillingAddressInput(address.line1(),address.line2(),null,null,
+                address.city(),address.province(),address.countryCode(),address.postalCode());
     }
 
     @PostMapping(path="/{orderId}/credit-notes",consumes=MediaType.APPLICATION_JSON_VALUE)

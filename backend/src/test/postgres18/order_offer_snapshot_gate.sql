@@ -95,7 +95,12 @@ BEGIN
  EXCEPTION WHEN SQLSTATE 'P9001' THEN NULL; END;
  CALL pliego.sp_order_cancel(buyer,order_id,replay,previous,state,pay,restored);
  SELECT * INTO detail FROM pliego.fn_customer_order_detail_priced(buyer,order_id);
- IF pay IS DISTINCT FROM 'REFUNDED' OR pliego.fn_order_item_offer_snapshots(detail.items) IS DISTINCT FROM snapshots
+ -- Access changes on refund; every historical item field and its ordering remain immutable.
+ enriched:=pliego.fn_order_item_offer_snapshots(detail.items);
+ IF pay IS DISTINCT FROM 'REFUNDED' OR jsonb_array_length(enriched) IS DISTINCT FROM jsonb_array_length(snapshots)
+ OR EXISTS(SELECT FROM jsonb_array_elements(enriched) WITH ORDINALITY e(value,position)
+  JOIN jsonb_array_elements(snapshots) WITH ORDINALITY s(value,position) USING(position)
+  WHERE e.value-'digitalAccess' IS DISTINCT FROM s.value-'digitalAccess')
  THEN RAISE EXCEPTION 'Cancellation/refund changed historical item savings'; END IF;
  SELECT * INTO pricing FROM pliego.fn_order_offer_pricing(order_id);
  IF pricing.original_subtotal IS DISTINCT FROM 214.88 OR pricing.savings_total IS DISTINCT FROM 40.98

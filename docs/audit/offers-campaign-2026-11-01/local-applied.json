@@ -1,0 +1,1649 @@
+{
+  "mode": "applied",
+  "counts": {
+    "PHYSICAL": 7,
+    "EBOOK": 7,
+    "AUDIOBOOK": 7
+  },
+  "preflight": [
+    {
+      "editionId": "25",
+      "sku": "PLG-BK-900001",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "PAPERBACK",
+      "productType": "PHYSICAL",
+      "basePrice": "9.95",
+      "stockActual": 10,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "8.96",
+      "discountPercentRequested": 10,
+      "durationDays": 3,
+      "request": {
+        "offerPrice": "8.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-04T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "26",
+      "sku": "PLG-BK-900002",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "PAPERBACK",
+      "productType": "PHYSICAL",
+      "basePrice": "19.95",
+      "stockActual": 10,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "16.96",
+      "discountPercentRequested": 15,
+      "durationDays": 7,
+      "request": {
+        "offerPrice": "16.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "27",
+      "sku": "PLG-BK-900003",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "PAPERBACK",
+      "productType": "PHYSICAL",
+      "basePrice": "29.95",
+      "stockActual": 10,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "23.96",
+      "discountPercentRequested": 20,
+      "durationDays": 5,
+      "request": {
+        "offerPrice": "23.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-06T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "28",
+      "sku": "PLG-BK-900004",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "PAPERBACK",
+      "productType": "PHYSICAL",
+      "basePrice": "9.95",
+      "stockActual": 10,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "8.96",
+      "discountPercentRequested": 10,
+      "durationDays": 7,
+      "request": {
+        "offerPrice": "8.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "29",
+      "sku": "PLG-BK-900005",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "PAPERBACK",
+      "productType": "PHYSICAL",
+      "basePrice": "19.95",
+      "stockActual": 10,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "16.96",
+      "discountPercentRequested": 15,
+      "durationDays": 3,
+      "request": {
+        "offerPrice": "16.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-04T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "30",
+      "sku": "PLG-BK-900006",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "PAPERBACK",
+      "productType": "PHYSICAL",
+      "basePrice": "29.95",
+      "stockActual": 10,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "23.96",
+      "discountPercentRequested": 20,
+      "durationDays": 7,
+      "request": {
+        "offerPrice": "23.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "31",
+      "sku": "PLG-BK-900007",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "PAPERBACK",
+      "productType": "PHYSICAL",
+      "basePrice": "9.95",
+      "stockActual": 10,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "8.96",
+      "discountPercentRequested": 10,
+      "durationDays": 5,
+      "request": {
+        "offerPrice": "8.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-06T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "34",
+      "sku": "PLG-BK-900010",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "EBOOK",
+      "productType": "EBOOK",
+      "basePrice": "7.99",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "6.79",
+      "discountPercentRequested": 15,
+      "durationDays": 3,
+      "request": {
+        "offerPrice": "6.79",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-04T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "35",
+      "sku": "PLG-BK-900011",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "EBOOK",
+      "productType": "EBOOK",
+      "basePrice": "12.99",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "10.39",
+      "discountPercentRequested": 20,
+      "durationDays": 7,
+      "request": {
+        "offerPrice": "10.39",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "36",
+      "sku": "PLG-BK-900012",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "EBOOK",
+      "productType": "EBOOK",
+      "basePrice": "19.99",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "14.99",
+      "discountPercentRequested": 25,
+      "durationDays": 5,
+      "request": {
+        "offerPrice": "14.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-06T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "37",
+      "sku": "PLG-BK-900013",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "EBOOK",
+      "productType": "EBOOK",
+      "basePrice": "7.99",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "6.79",
+      "discountPercentRequested": 15,
+      "durationDays": 7,
+      "request": {
+        "offerPrice": "6.79",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "38",
+      "sku": "PLG-BK-900014",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "EBOOK",
+      "productType": "EBOOK",
+      "basePrice": "12.99",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "10.39",
+      "discountPercentRequested": 20,
+      "durationDays": 3,
+      "request": {
+        "offerPrice": "10.39",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-04T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "39",
+      "sku": "PLG-BK-900015",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "EBOOK",
+      "productType": "EBOOK",
+      "basePrice": "19.99",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "14.99",
+      "discountPercentRequested": 25,
+      "durationDays": 7,
+      "request": {
+        "offerPrice": "14.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "40",
+      "sku": "PLG-BK-900016",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "EBOOK",
+      "productType": "EBOOK",
+      "basePrice": "7.99",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "6.79",
+      "discountPercentRequested": 15,
+      "durationDays": 5,
+      "request": {
+        "offerPrice": "6.79",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-06T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "43",
+      "sku": "PLG-BK-900019",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "AUDIOBOOK",
+      "productType": "AUDIOBOOK",
+      "basePrice": "9.95",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "8.96",
+      "discountPercentRequested": 10,
+      "durationDays": 3,
+      "request": {
+        "offerPrice": "8.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-04T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "44",
+      "sku": "PLG-BK-900020",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "AUDIOBOOK",
+      "productType": "AUDIOBOOK",
+      "basePrice": "19.95",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "16.96",
+      "discountPercentRequested": 15,
+      "durationDays": 7,
+      "request": {
+        "offerPrice": "16.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "45",
+      "sku": "PLG-BK-900021",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "AUDIOBOOK",
+      "productType": "AUDIOBOOK",
+      "basePrice": "29.95",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "23.96",
+      "discountPercentRequested": 20,
+      "durationDays": 5,
+      "request": {
+        "offerPrice": "23.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-06T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "46",
+      "sku": "PLG-BK-900022",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "AUDIOBOOK",
+      "productType": "AUDIOBOOK",
+      "basePrice": "9.95",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "8.96",
+      "discountPercentRequested": 10,
+      "durationDays": 7,
+      "request": {
+        "offerPrice": "8.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "47",
+      "sku": "PLG-BK-900023",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "AUDIOBOOK",
+      "productType": "AUDIOBOOK",
+      "basePrice": "19.95",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "16.96",
+      "discountPercentRequested": 15,
+      "durationDays": 3,
+      "request": {
+        "offerPrice": "16.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-04T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "48",
+      "sku": "PLG-BK-900024",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "AUDIOBOOK",
+      "productType": "AUDIOBOOK",
+      "basePrice": "29.95",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "23.96",
+      "discountPercentRequested": 20,
+      "durationDays": 7,
+      "request": {
+        "offerPrice": "23.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    },
+    {
+      "editionId": "49",
+      "sku": "PLG-BK-900025",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "format": "AUDIOBOOK",
+      "productType": "AUDIOBOOK",
+      "basePrice": "9.95",
+      "stockActual": null,
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "offerPrice": "8.96",
+      "discountPercentRequested": 10,
+      "durationDays": 5,
+      "request": {
+        "offerPrice": "8.96",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-06T20:48:21-05:00",
+        "offerCopy": null,
+        "terms": null
+      }
+    }
+  ],
+  "verifiedDetails": [
+    {
+      "editionId": "25",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900001",
+      "language": "es",
+      "format": "PAPERBACK",
+      "pageCount": 100,
+      "publicationDate": null,
+      "price": "8.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "26",
+        "originalPrice": "9.95",
+        "discountAmount": "0.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-04T20:48:21-05:00",
+        "daysRemaining": 3,
+        "endingSoon": true,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "8.96",
+        "savingsAmount": "0.99",
+        "savingsPercent": "9.95"
+      }
+    },
+    {
+      "editionId": "26",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900002",
+      "language": "es",
+      "format": "PAPERBACK",
+      "pageCount": 100,
+      "publicationDate": null,
+      "price": "16.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "27",
+        "originalPrice": "19.95",
+        "discountAmount": "2.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "daysRemaining": 7,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "16.96",
+        "savingsAmount": "2.99",
+        "savingsPercent": "14.99"
+      }
+    },
+    {
+      "editionId": "27",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900003",
+      "language": "es",
+      "format": "PAPERBACK",
+      "pageCount": 100,
+      "publicationDate": null,
+      "price": "23.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "28",
+        "originalPrice": "29.95",
+        "discountAmount": "5.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-06T20:48:21-05:00",
+        "daysRemaining": 5,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "23.96",
+        "savingsAmount": "5.99",
+        "savingsPercent": "20.00"
+      }
+    },
+    {
+      "editionId": "28",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900004",
+      "language": "es",
+      "format": "PAPERBACK",
+      "pageCount": 100,
+      "publicationDate": null,
+      "price": "8.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "29",
+        "originalPrice": "9.95",
+        "discountAmount": "0.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "daysRemaining": 7,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "8.96",
+        "savingsAmount": "0.99",
+        "savingsPercent": "9.95"
+      }
+    },
+    {
+      "editionId": "29",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900005",
+      "language": "es",
+      "format": "PAPERBACK",
+      "pageCount": 100,
+      "publicationDate": null,
+      "price": "16.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "30",
+        "originalPrice": "19.95",
+        "discountAmount": "2.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-04T20:48:21-05:00",
+        "daysRemaining": 3,
+        "endingSoon": true,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "16.96",
+        "savingsAmount": "2.99",
+        "savingsPercent": "14.99"
+      }
+    },
+    {
+      "editionId": "30",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900006",
+      "language": "es",
+      "format": "PAPERBACK",
+      "pageCount": 100,
+      "publicationDate": null,
+      "price": "23.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "31",
+        "originalPrice": "29.95",
+        "discountAmount": "5.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "daysRemaining": 7,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "23.96",
+        "savingsAmount": "5.99",
+        "savingsPercent": "20.00"
+      }
+    },
+    {
+      "editionId": "31",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900007",
+      "language": "es",
+      "format": "PAPERBACK",
+      "pageCount": 100,
+      "publicationDate": null,
+      "price": "8.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "32",
+        "originalPrice": "9.95",
+        "discountAmount": "0.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-06T20:48:21-05:00",
+        "daysRemaining": 5,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "8.96",
+        "savingsAmount": "0.99",
+        "savingsPercent": "9.95"
+      }
+    },
+    {
+      "editionId": "34",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900010",
+      "language": "es",
+      "format": "EBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "6.79",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": "EPUB",
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "33",
+        "originalPrice": "7.99",
+        "discountAmount": "1.20",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-04T20:48:21-05:00",
+        "daysRemaining": 3,
+        "endingSoon": true,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "6.79",
+        "savingsAmount": "1.20",
+        "savingsPercent": "15.02"
+      }
+    },
+    {
+      "editionId": "35",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900011",
+      "language": "es",
+      "format": "EBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "10.39",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": "EPUB",
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "34",
+        "originalPrice": "12.99",
+        "discountAmount": "2.60",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "daysRemaining": 7,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "10.39",
+        "savingsAmount": "2.60",
+        "savingsPercent": "20.02"
+      }
+    },
+    {
+      "editionId": "36",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900012",
+      "language": "es",
+      "format": "EBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "14.99",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": "EPUB",
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "35",
+        "originalPrice": "19.99",
+        "discountAmount": "5.00",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-06T20:48:21-05:00",
+        "daysRemaining": 5,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "14.99",
+        "savingsAmount": "5.00",
+        "savingsPercent": "25.01"
+      }
+    },
+    {
+      "editionId": "37",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900013",
+      "language": "es",
+      "format": "EBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "6.79",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": "EPUB",
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "36",
+        "originalPrice": "7.99",
+        "discountAmount": "1.20",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "daysRemaining": 7,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "6.79",
+        "savingsAmount": "1.20",
+        "savingsPercent": "15.02"
+      }
+    },
+    {
+      "editionId": "38",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900014",
+      "language": "es",
+      "format": "EBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "10.39",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": "EPUB",
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "37",
+        "originalPrice": "12.99",
+        "discountAmount": "2.60",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-04T20:48:21-05:00",
+        "daysRemaining": 3,
+        "endingSoon": true,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "10.39",
+        "savingsAmount": "2.60",
+        "savingsPercent": "20.02"
+      }
+    },
+    {
+      "editionId": "39",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900015",
+      "language": "es",
+      "format": "EBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "14.99",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": "EPUB",
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "38",
+        "originalPrice": "19.99",
+        "discountAmount": "5.00",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "daysRemaining": 7,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "14.99",
+        "savingsAmount": "5.00",
+        "savingsPercent": "25.01"
+      }
+    },
+    {
+      "editionId": "40",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900016",
+      "language": "es",
+      "format": "EBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "6.79",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": "EPUB",
+      "audioDurationSeconds": null,
+      "narrators": [],
+      "offer": {
+        "offerId": "39",
+        "originalPrice": "7.99",
+        "discountAmount": "1.20",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-06T20:48:21-05:00",
+        "daysRemaining": 5,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "6.79",
+        "savingsAmount": "1.20",
+        "savingsPercent": "15.02"
+      }
+    },
+    {
+      "editionId": "43",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900019",
+      "language": "es",
+      "format": "AUDIOBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "8.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": 3600,
+      "narrators": [
+        "Voz fixture"
+      ],
+      "offer": {
+        "offerId": "40",
+        "originalPrice": "9.95",
+        "discountAmount": "0.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-04T20:48:21-05:00",
+        "daysRemaining": 3,
+        "endingSoon": true,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "8.96",
+        "savingsAmount": "0.99",
+        "savingsPercent": "9.95"
+      }
+    },
+    {
+      "editionId": "44",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900020",
+      "language": "es",
+      "format": "AUDIOBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "16.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": 3600,
+      "narrators": [
+        "Voz fixture"
+      ],
+      "offer": {
+        "offerId": "41",
+        "originalPrice": "19.95",
+        "discountAmount": "2.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "daysRemaining": 7,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "16.96",
+        "savingsAmount": "2.99",
+        "savingsPercent": "14.99"
+      }
+    },
+    {
+      "editionId": "45",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900021",
+      "language": "es",
+      "format": "AUDIOBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "23.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": 3600,
+      "narrators": [
+        "Voz fixture"
+      ],
+      "offer": {
+        "offerId": "42",
+        "originalPrice": "29.95",
+        "discountAmount": "5.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-06T20:48:21-05:00",
+        "daysRemaining": 5,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "23.96",
+        "savingsAmount": "5.99",
+        "savingsPercent": "20.00"
+      }
+    },
+    {
+      "editionId": "46",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900022",
+      "language": "es",
+      "format": "AUDIOBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "8.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": 3600,
+      "narrators": [
+        "Voz fixture"
+      ],
+      "offer": {
+        "offerId": "43",
+        "originalPrice": "9.95",
+        "discountAmount": "0.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "daysRemaining": 7,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "8.96",
+        "savingsAmount": "0.99",
+        "savingsPercent": "9.95"
+      }
+    },
+    {
+      "editionId": "47",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900023",
+      "language": "es",
+      "format": "AUDIOBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "16.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": 3600,
+      "narrators": [
+        "Voz fixture"
+      ],
+      "offer": {
+        "offerId": "44",
+        "originalPrice": "19.95",
+        "discountAmount": "2.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-04T20:48:21-05:00",
+        "daysRemaining": 3,
+        "endingSoon": true,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "16.96",
+        "savingsAmount": "2.99",
+        "savingsPercent": "14.99"
+      }
+    },
+    {
+      "editionId": "48",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900024",
+      "language": "es",
+      "format": "AUDIOBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "23.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": 3600,
+      "narrators": [
+        "Voz fixture"
+      ],
+      "offer": {
+        "offerId": "45",
+        "originalPrice": "29.95",
+        "discountAmount": "5.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-08T20:48:21-05:00",
+        "daysRemaining": 7,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "23.96",
+        "savingsAmount": "5.99",
+        "savingsPercent": "20.00"
+      }
+    },
+    {
+      "editionId": "49",
+      "bookId": "2",
+      "title": "Catálogo fixture campaña 276f18e90f1c",
+      "subtitle": null,
+      "synopsis": null,
+      "authors": [
+        {
+          "authorId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "order": 1
+        }
+      ],
+      "categories": [
+        {
+          "categoryId": "2",
+          "name": "Campaña 276f18e90f1c",
+          "slug": "campaign-276f18e90f1c",
+          "parentCategoryId": null
+        }
+      ],
+      "publisher": {
+        "publisherId": "2",
+        "name": "Campaña 276f18e90f1c"
+      },
+      "isbn13": null,
+      "sku": "PLG-BK-900025",
+      "language": "es",
+      "format": "AUDIOBOOK",
+      "pageCount": null,
+      "publicationDate": null,
+      "price": "8.96",
+      "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "coverLicense": null,
+      "coverSourceUrl": null,
+      "coverAttribution": null,
+      "available": true,
+      "ebookFileFormat": null,
+      "audioDurationSeconds": 3600,
+      "narrators": [
+        "Voz fixture"
+      ],
+      "offer": {
+        "offerId": "46",
+        "originalPrice": "9.95",
+        "discountAmount": "0.99",
+        "startsAt": "2026-11-01T20:48:21-05:00",
+        "endsAt": "2026-11-06T20:48:21-05:00",
+        "daysRemaining": 5,
+        "endingSoon": false,
+        "offerCopy": null,
+        "terms": null,
+        "effectivePrice": "8.96",
+        "savingsAmount": "0.99",
+        "savingsPercent": "9.95"
+      }
+    }
+  ],
+  "facets": {
+    "productTypes": [
+      {
+        "code": "AUDIOBOOK",
+        "label": "Audiolibros",
+        "count": "7"
+      },
+      {
+        "code": "EBOOK",
+        "label": "eBooks",
+        "count": "7"
+      },
+      {
+        "code": "PHYSICAL",
+        "label": "Libros físicos",
+        "count": "7"
+      }
+    ],
+    "categories": [
+      {
+        "slug": "campaign-276f18e90f1c",
+        "name": "Campaña 276f18e90f1c",
+        "count": "21"
+      }
+    ],
+    "sorts": [
+      {
+        "code": "RELEVANCE",
+        "label": "Relevancia"
+      },
+      {
+        "code": "ENDING_SOON",
+        "label": "Próximas a terminar"
+      },
+      {
+        "code": "PRICE_ASC",
+        "label": "Precio: menor a mayor"
+      },
+      {
+        "code": "PRICE_DESC",
+        "label": "Precio: mayor a menor"
+      }
+    ],
+    "endingSoonDays": 3,
+    "timezone": "America/Guayaquil",
+    "totalCount": "21"
+  },
+  "endingSoonCount": 6
+}

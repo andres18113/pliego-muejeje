@@ -1,0 +1,19 @@
+flowchart TD
+    A([Inicio]) --> Q{¿Cómo explora?}
+    Q -->|Menú Libros / eBooks / Audiolibros| CAT[Catálogo<br/>filtros y orden]
+    Q -->|Buscador| BUS[Diálogo de búsqueda<br/>con sugerencias]
+    Q -->|Ofertas| OFE[Ofertas]
+    Q -->|Ayuda| AYU[Centro de ayuda] --> ART[Artículo de ayuda]
+    BUS -->|Ver todos los resultados| CAT
+    BUS -->|Elige una sugerencia| DET
+    CAT --> DET[Detalle de la edición]
+    OFE --> DET
+    DET --> S{¿Sesión iniciada?}
+    S -->|No| LOG[Iniciar sesión]
+    S -->|No tiene cuenta| REG[Crear cuenta] --> VER[Verificar correo] --> LOG
+    LOG -->|Datos válidos| DET
+    LOG -->|Datos inválidos| ERR[Mensajes de error<br/>junto a cada campo] --> LOG
+    S -->|Sí| ACC{Acción}
+    ACC -->|Agregar al carrito| PAN[Panel lateral<br/>Tu carrito]
+    ACC -->|Marcar favorito| FAV[Favoritos]
+    PAN --> NEXT([Continúa en el flujo de compra])

@@ -1,12 +1,20 @@
 package com.pliego.foundation.openapi;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import org.springdoc.core.customizers.OpenApiCustomizer;
+
+import com.pliego.modules.catalog.application.EditionUnavailabilityReason;
+
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.media.ComposedSchema;
+import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 
 @Configuration
@@ -22,7 +30,54 @@ public class OpenApiConfiguration {
                         new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"))
                         .addSecuritySchemes("authSessionCookie",
                                 new SecurityScheme().type(SecurityScheme.Type.APIKEY)
-                                        .in(SecurityScheme.In.COOKIE).name("pliego_session")));
+                                        .in(SecurityScheme.In.COOKIE).name("pliego_session"))
+                        .addSecuritySchemes("registrationContinuationCookie",
+                                new SecurityScheme().type(SecurityScheme.Type.APIKEY)
+                                        .in(SecurityScheme.In.COOKIE).name("pliego_registration")));
+    }
+
+    @Bean
+    OpenApiCustomizer editionUnavailabilityReasonContract() {
+        return openApi -> {
+            var values = new ArrayList<String>();
+            for (var reason : EditionUnavailabilityReason.values()) {
+                values.add(reason.name());
+            }
+            // OpenAPI 3.1 requires null to satisfy both the type and enum constraints.
+            values.add(null);
+            for (String name : List.of("CatalogEditionSummaryResponse", "CatalogEditionDetailResponse", "CustomerFavorite")) {
+                var schema = openApi.getComponents().getSchemas().get(name);
+                if (schema != null) {
+                    schema.addProperty("unavailabilityReason", new Schema<String>()
+                            .types(new LinkedHashSet<>(List.of("string", "null")))
+                            ._enum(values)
+                            .description("Motivo de indisponibilidad: OUT_OF_STOCK sin existencias, P2042 edición inactiva, "
+                                    + "P2043 libro inactivo. Null cuando la edición está disponible."));
+                }
+            }
+        };
+    }
+
+    @Bean
+    OpenApiCustomizer pendingEmailNullableContract() {
+        return openApi -> {
+            var identity = openApi.getComponents().getSchemas().get("StoredBillingIdentity");
+            if (identity != null && identity.getProperties() != null) {
+                identity.addProperty("correctionRequest", new ComposedSchema()
+                        .addAnyOfItem(new Schema<>().$ref("#/components/schemas/StoredBillingIdentityCorrectionRequest"))
+                        .addAnyOfItem(new Schema<>().types(java.util.Set.of("null")))
+                        .description("Solicitud pendiente o última reciente. Tras reconocer una decisión APPROVED/REJECTED devuelve null, sin recuperar decisiones anteriores; se conserva la recencia histórica de 30 días."));
+            }
+            var profile = openApi.getComponents().getSchemas().get("CustomerProfile");
+            if (profile != null && profile.getProperties() != null) {
+                // A nullable $ref sibling is ignored by some 3.1 clients. Model the union explicitly.
+                var pending = new ComposedSchema()
+                        .addAnyOfItem(new Schema<>().$ref("#/components/schemas/PendingEmail"))
+                        .addAnyOfItem(new Schema<>().types(java.util.Set.of("null")))
+                        .description("Cambio de correo vigente; null cuando no existe o venció.");
+                profile.addProperty("pendingEmail", pending);
+            }
+        };
     }
 
     @Bean

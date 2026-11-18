@@ -158,7 +158,8 @@ public class CatalogController {
         return new CatalogEditionSummaryResponse(edition.editionId(), edition.bookId(), edition.title(),
                 edition.authors(), edition.publisher(), edition.isbn13(), money(edition.price()),
                 edition.coverUrl(), edition.coverLicense(), edition.coverAttribution(), edition.format(),
-                edition.language(), edition.available(), edition.ebookFileFormat(), edition.audioDurationSeconds(), edition.narrators(), toOfferResponse(edition.offer()));
+                edition.language(), edition.available(), edition.unavailabilityReason(), edition.ebookFileFormat(),
+                edition.audioDurationSeconds(), edition.narrators(), toOfferResponse(edition.offer()));
     }
 
     private static CatalogEditionDetailResponse toDetailResponse(CatalogEditionDetail edition) {
@@ -175,7 +176,8 @@ public class CatalogController {
                 edition.isbn13(), edition.sku(), edition.language(), edition.format(), edition.pageCount(),
                 edition.publicationDate() == null ? null : CONTRACT_DATE.format(edition.publicationDate()),
                 money(edition.price()), edition.coverUrl(), edition.coverLicense(), edition.coverSourceUrl(),
-                edition.coverAttribution(), edition.available(), edition.ebookFileFormat(), edition.audioDurationSeconds(), edition.narrators(), toOfferResponse(edition.offer()));
+                edition.coverAttribution(), edition.available(), edition.unavailabilityReason(), edition.ebookFileFormat(),
+                edition.audioDurationSeconds(), edition.narrators(), toOfferResponse(edition.offer()));
     }
 
     private static CatalogOfferResponse toOfferResponse(com.pliego.modules.catalog.application.CatalogOffer offer) {

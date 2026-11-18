@@ -12,15 +12,30 @@ import { useSession } from "@/app/session";
 import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { availabilityConflictMessage, resolveStockStatus } from "./stockStatusModel";
 import type { BookCardFeedback, FavoriteControl, CartControl } from "./bookCardModel";
+import { dismissFavoriteSnackbar, registerFavoriteSnackbarCard, showFavoriteSnackbar } from "@/features/favorites/favoriteSnackbar";
 
 type FeedbackSink = (value: BookCardFeedback | null) => void;
 export interface FavoriteControllerProps { editionId: string; isFavorite: boolean; ready: boolean; queryKey: QueryKey; returnHref: string; onFeedback: FeedbackSink;
   /** Told the confirmed state after a change the server accepted (e.g. so a list can offer to undo a removal). */
-  onChanged?: (favorite: boolean) => void }
+  onChanged?: (favorite: boolean) => void;
+  /**
+   * Where a confirmed change is told: "snackbar" (cards and the edition page; PLIEGO's snackbar with "Ver favoritos"
+   * or "Deshacer", see favoriteSnackbar) or "inline" (the Favoritos list, which has its own removal snackbar).
+   * Problems are always told beside the control.
+   */
+  confirmation: { kind: "snackbar"; title: string } | { kind: "inline" } }
 
 class FavoriteOutcomeUnknown extends Error {}
 
-export function useFavoriteControl({ editionId, isFavorite, ready, queryKey, returnHref, onFeedback, onChanged }: FavoriteControllerProps): FavoriteControl {
+export function useFavoriteControl({ editionId, isFavorite, ready, queryKey, returnHref, onFeedback, onChanged, confirmation }: FavoriteControllerProps): FavoriteControl {
+  const snackbarTitle = confirmation.kind === "snackbar" ? confirmation.title : null;
+  const snackbarOwner = useRef(Symbol("favorite"));
+  const usesSnackbar = snackbarTitle !== null;
+  useEffect(() => {
+    const owner = snackbarOwner.current;
+    const release = usesSnackbar ? registerFavoriteSnackbarCard() : undefined;
+    return () => { dismissFavoriteSnackbar(owner); release?.(); };
+  }, [usesSnackbar]);
   const scope = useSessionOperationScope(editionId);
   const location = useLocation();
   const navigate = useNavigate();
@@ -101,9 +116,15 @@ export function useFavoriteControl({ editionId, isFavorite, ready, queryKey, ret
       ]);
       if (!scope.isCurrent()) return;
       if (actual === next) onChangedRef.current?.(actual);
+      if (actual === next && snackbarTitle !== null) {
+        showFavoriteSnackbar({ owner: snackbarOwner.current, favorite: actual, title: snackbarTitle, undo: () => void saveFavoriteRef.current(!actual) });
+        return;
+      }
+      dismissFavoriteSnackbar(snackbarOwner.current);
       setFeedback({ message: actual === next ? (actual ? "Agregado a favoritos." : "Quitado de favoritos.") : (actual ? "El libro sigue guardado en tus favoritos. El cambio no se confirmó." : "El libro no está guardado en tus favoritos. El cambio no se confirmó."), error: actual !== next });
     } catch (error) {
       if (!scope.isCurrent()) return;
+      dismissFavoriteSnackbar(snackbarOwner.current);
       if (error instanceof FavoriteOutcomeUnknown) {
         setUncertain(true);
         setFeedback({ message: "No pudimos confirmar tus favoritos. Consulta el estado antes de volver a cambiarlo.", error: true });
@@ -125,7 +146,10 @@ export function useFavoriteControl({ editionId, isFavorite, ready, queryKey, ret
     } finally {
       if (scope.isCurrent()) { lock.current = false; setChecking(false); }
     }
-  }, [clear, editionId, goToSignIn, isFavorite, mutation, queryClient, queryKey, scope, session, setFeedback]);
+  }, [clear, editionId, goToSignIn, isFavorite, mutation, queryClient, queryKey, scope, session, setFeedback, snackbarTitle]);
+  // "Deshacer" runs the card's current save, so it follows the same locks, session checks and reporting.
+  const saveFavoriteRef = useRef(saveFavorite);
+  saveFavoriteRef.current = saveFavorite;
 
   const locationIntent = readCatalogIntent(location.state);
   useEffect(() => {

@@ -189,3 +189,28 @@ function parseCalendarDate(value: string | null | undefined) {
   const [year, month, day] = [Number(match[1]), Number(match[2]), Number(match[3])];
   return month >= 1 && month <= 12 && day >= 1 && day <= 31 ? { year, month, day } : null;
 }
+
+/**
+ * The order's public identity (ADR 0047): "#PL-4827-1093", the server's random reference. The internal `orderId`
+ * stays the route and API key and is shown only for a response that predates the reference.
+ */
+export function orderReference(order: { orderId: string; orderReference?: string | null }) {
+  return `#${order.orderReference?.trim() || order.orderId}`;
+}
+
+/**
+ * How a digital-only purchase arrives, said positively and with its real moment (the payment's approval, which for a
+ * transfer is our confirmation). It names where the titles go — Mi biblioteca — never a reader or a player.
+ */
+export function digitalDeliveryCopy(formats: (string | null | undefined)[], paymentMethod: string | null | undefined) {
+  const count = formats.length;
+  const ebooks = formats.filter((format) => format === "EBOOK").length;
+  const audiobooks = formats.filter((format) => format === "AUDIOBOOK").length;
+  const subject = count === 1
+    ? (audiobooks ? "Tu audiolibro se añadirá" : ebooks ? "Tu eBook se añadirá" : "Tu título digital se añadirá")
+    : ebooks === count ? `Tus ${count} eBooks se añadirán` : audiobooks === count ? `Tus ${count} audiolibros se añadirán` : `Tus ${count} títulos digitales se añadirán`;
+  const when = paymentMethod === "TRANSFER"
+    ? (count === 1 ? "Estará disponible cuando confirmemos tu transferencia." : "Estarán disponibles cuando confirmemos tu transferencia.")
+    : (count === 1 ? "Estará disponible en cuanto se apruebe el pago." : "Estarán disponibles en cuanto se apruebe el pago.");
+  return { subject, when };
+}

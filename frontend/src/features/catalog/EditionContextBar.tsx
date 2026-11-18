@@ -1,6 +1,5 @@
-import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from "react";
 import { BackButton } from "@/app/navigation/BackButton";
-import { BookCover } from "./BookCover";
 import classes from "./editionDetail.module.css";
 
 /**
@@ -30,20 +29,22 @@ export function useContextBarVisible(watched: RefObject<HTMLElement | null>) {
 }
 
 /**
- * The edition's context bar, as on product pages: when the page's top has scrolled away it is simply there, fixed at
- * the top — back arrow and title on the left, today's price and the jacket on the right — and at the top it is simply
- * gone. No slide, no fade: it replaces the wayfinding row at the moment that row leaves, so nothing sweeps or jumps.
- * It exists only while shown, so the page never holds a hidden second arrow, title or price.
+ * The edition's context bar, as on product pages: when the page's top has scrolled away it is simply there, a floating
+ * pill at the top — back arrow and title on the left; today's price (the previous one struck after it) and the scene's
+ * own "Agregar al carrito" grouped on the right — and at the top it is simply gone. No slide, no fade: it replaces the
+ * wayfinding row at the moment that row leaves, so nothing sweeps or jumps. It exists only while shown, so the page
+ * never holds a hidden second arrow, title or price.
  */
 export function EditionContextBar({ visible, ...props }: Parameters<typeof Bar>[0] & { visible: boolean }) {
   return visible ? <Bar {...props} /> : null;
 }
 
-function Bar({ title, price, originalPrice, cover, onHiddenWithFocus }: {
+function Bar({ title, price, originalPrice, action, onHiddenWithFocus }: {
   title: string;
   price: string | null;
   originalPrice: string | null;
-  cover: { url: string | null; license: string | null; attribution: string | null };
+  /** The purchase scene's action at bar size (its own mutation and states), or its unavailability; none for staff. */
+  action: ReactNode;
   /** Focus inside the bar when it goes must land somewhere visible. */
   onHiddenWithFocus: () => void;
 }) {
@@ -63,12 +64,10 @@ function Bar({ title, price, originalPrice, cover, onHiddenWithFocus }: {
       </div>
       <div className={classes.contextTrail}>
         {price && <p className={classes.contextPrice}>
-          {originalPrice && <s className={classes.contextWas}><span className="visually-hidden">Precio anterior </span>{originalPrice}</s>}
           <span>{originalPrice && <span className="visually-hidden">Precio actual </span>}{price}</span>
+          {originalPrice && <s className={classes.contextWas}><span className="visually-hidden">Precio anterior </span>{originalPrice}</s>}
         </p>}
-        <span className={classes.contextCover}>
-          <BookCover url={cover.url} license={cover.license} attribution={cover.attribution} title={title} size="compact" decorative />
-        </span>
+        {action}
       </div>
     </div>
   </div>;

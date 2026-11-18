@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  CATALOG_PAGE_SIZE,
   catalogHref,
   readCatalogCriteria,
   safeCatalogReturnHref,
@@ -49,7 +50,7 @@ describe("catalog URL helpers", () => {
       format: "",
       sort: "TITLE_ASC",
       page: 0,
-      pageSize: 20,
+      pageSize: 24,
     });
 
     expect(readCatalogCriteria("?que=no-es-isbn&scope=isbn13&minPrice=38&maxPrice=7.25")).toMatchObject({
@@ -112,4 +113,12 @@ it("preserves descending titles and all filters in shareable navigation", () => 
   const criteria = readCatalogCriteria(query);
   expect(criteria.sort).toBe("TITLE_DESC");
   expect(readCatalogCriteria(new URL(catalogHref(criteria), "https://pliegolibros.com").search)).toEqual(criteria);
+});
+
+it("pages the catalog in whole shelf rows at both of its column counts (2 on phones, 3 from 600px)", () => {
+  expect(CATALOG_PAGE_SIZE % 2).toBe(0);
+  expect(CATALOG_PAGE_SIZE % 3).toBe(0);
+  expect(readCatalogCriteria("").pageSize).toBe(CATALOG_PAGE_SIZE);
+  expect(writeCatalogCriteria(readCatalogCriteria("")).has("pageSize")).toBe(false);
+  expect(writeCatalogCriteria({ ...readCatalogCriteria(""), pageSize: 20 }).get("pageSize")).toBe("20");
 });

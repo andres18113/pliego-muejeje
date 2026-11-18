@@ -26,7 +26,7 @@ public record RegisterRequest(
 
     public RegisterRequest {
         firstNames=PersonRules.name(firstNames); lastNames=PersonRules.name(lastNames);
-        phone=PhoneNumbers.normalized(phone);
+        phone=PhoneNumbers.normalizedOptionalInput(phone);
     }
 
     public RegisterRequest(String email, String password, String firstNames, String lastNames, String phone) {

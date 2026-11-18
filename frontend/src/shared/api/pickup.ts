@@ -15,6 +15,9 @@ export const pickupLocationSchema = z.object({
 });
 export type PickupLocation = z.infer<typeof pickupLocationSchema>;
 
+export const pickupStateSchema = z.enum(["PENDING", "READY", "COLLECTED", "CANCELLED"]);
+export type PickupState = z.infer<typeof pickupStateSchema>;
+
 export const fulfillmentSchema = z.object({
   method: z.string(),
   pickup: z.object({
@@ -26,6 +29,9 @@ export const fulfillmentSchema = z.object({
 }).superRefine((value, context) => {
   if (value.method === "STORE_PICKUP" && !value.pickup) {
     context.addIssue({ code: "custom", path: ["pickup"], message: "Faltan los datos de retiro del pedido." });
+  }
+  if (value.method === "STORE_PICKUP" && value.state != null && !pickupStateSchema.safeParse(value.state).success) {
+    context.addIssue({ code: "custom", path: ["state"], message: "El estado de retiro del pedido no es válido." });
   }
 });
 export type OrderPickup = NonNullable<z.infer<typeof fulfillmentSchema>["pickup"]>;

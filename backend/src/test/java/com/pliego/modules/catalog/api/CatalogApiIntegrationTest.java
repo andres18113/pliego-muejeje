@@ -44,6 +44,7 @@ import com.pliego.modules.catalog.application.CatalogEditionSummary;
 import com.pliego.modules.catalog.application.CatalogQuery;
 import com.pliego.modules.catalog.application.CatalogOffer;
 import com.pliego.modules.catalog.application.CatalogSearchPage;
+import com.pliego.modules.catalog.application.EditionUnavailabilityReason;
 import com.pliego.modules.catalog.application.PublicCatalogCategory;
 import com.pliego.modules.catalog.application.PublicCatalogFilterOptions;
 import com.pliego.modules.catalog.gateway.CatalogGateway;
@@ -72,7 +73,7 @@ class CatalogApiIntegrationTest {
     private static final CatalogEditionSummary SUMMARY = new CatalogEditionSummary("250", "80",
             "Don Quijote de la Mancha", "Miguel de Cervantes", "Editorial Ejemplo", "9780306406157",
             new BigDecimal("18.50"), CDN_COVER_URL, null, null,
-            "PAPERBACK", "es", true, null, null, List.of());
+            "PAPERBACK", "es", true, null, null, null, List.of());
 
     private static final CatalogEditionDetail DETAIL = new CatalogEditionDetail("250", "80",
             "Don Quijote de la Mancha", null,
@@ -82,7 +83,7 @@ class CatalogApiIntegrationTest {
             new Publisher("7", "Editorial Ejemplo"), "9780306406157", "PLG-LIT-001", "es",
             "PAPERBACK", 560, LocalDate.of(2024, 1, 1), new BigDecimal("18.50"),
             CDN_COVER_URL, null, null,
-            null, true, null, null, List.of());
+            null, true, null, null, null, List.of());
 
     @Autowired
     MockMvc mvc;
@@ -113,7 +114,8 @@ class CatalogApiIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.page").value(2))
                 .andExpect(jsonPath("$.pageSize").value(5))
-                .andExpect(jsonPath("$.items[0].price").value("18.50"));
+                .andExpect(jsonPath("$.items[0].price").value("18.50"))
+                .andExpect(jsonPath("$.items[0].unavailabilityReason").value(org.hamcrest.Matchers.nullValue()));
         assertEquals(2, gateway.lastQuery.page());
         assertEquals(5, gateway.lastQuery.pageSize());
         mvc.perform(get("/api/v1/catalog/offers").param("pageSize", "51"))
@@ -132,16 +134,37 @@ class CatalogApiIntegrationTest {
     }
 
     @Test
+    void zeroStockReasonSerializesInSearchOffersAndDetail() throws Exception {
+        gateway.searchPage = new CatalogSearchPage(List.of(new CatalogEditionSummary("250", "80",
+                "Don Quijote de la Mancha", "Miguel de Cervantes", "Editorial Ejemplo", "9780306406157",
+                new BigDecimal("18.50"), CDN_COVER_URL, null, null, "PAPERBACK", "es", false,
+                EditionUnavailabilityReason.OUT_OF_STOCK, null, null, List.of())), 1);
+        gateway.publicEdition = Optional.of(new CatalogEditionDetail("250", "80", "Don Quijote de la Mancha", null,
+                "Una novela clásica.", DETAIL.authors(), DETAIL.categories(), DETAIL.publisher(), "9780306406157",
+                "PLG-LIT-001", "es", "PAPERBACK", 560, LocalDate.of(2024, 1, 1), new BigDecimal("18.50"),
+                CDN_COVER_URL, null, null, null, false, EditionUnavailabilityReason.OUT_OF_STOCK, null, null, List.of()));
+
+        for (String path : List.of("/api/v1/catalog/editions", "/api/v1/catalog/offers")) {
+            mvc.perform(get(path)).andExpect(status().isOk())
+                    .andExpect(jsonPath("$.items[0].available").value(false))
+                    .andExpect(jsonPath("$.items[0].unavailabilityReason").value("OUT_OF_STOCK"));
+        }
+        mvc.perform(get("/api/v1/catalog/editions/250")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.available").value(false))
+                .andExpect(jsonPath("$.unavailabilityReason").value("OUT_OF_STOCK"));
+    }
+
+    @Test
     void offerDatesAlwaysIncludeSecondsForMidnightAndExactMinutes() throws Exception {
         CatalogOffer offer = new CatalogOffer("10", new BigDecimal("18.50"), new BigDecimal("1.00"),
                 Instant.parse("2026-10-05T05:00:00Z"), Instant.parse("2026-10-06T13:30:00Z"),
                 1, true, null, null, new BigDecimal("17.50"), new BigDecimal("5.41"));
         gateway.searchPage = new CatalogSearchPage(List.of(new CatalogEditionSummary("250", "80", "Una obra", "Autora",
                 "Editorial", null, new BigDecimal("17.50"), CDN_COVER_URL, null, null, "EBOOK", "es", true,
-                "EPUB", null, List.of(), offer)), 1);
+                null, "EPUB", null, List.of(), offer)), 1);
         gateway.publicEdition = Optional.of(new CatalogEditionDetail("250", "80", "Una obra", null, "Sinopsis",
                 DETAIL.authors(), DETAIL.categories(), DETAIL.publisher(), null, "DIGITAL-TEST", "es", "EBOOK", null,
-                null, new BigDecimal("17.50"), CDN_COVER_URL, null, null, null, true, "EPUB", null, List.of(), offer));
+                null, new BigDecimal("17.50"), CDN_COVER_URL, null, null, null, true, null, "EPUB", null, List.of(), offer));
         for (String path : List.of("/api/v1/catalog/editions", "/api/v1/catalog/offers")) {
             mvc.perform(get(path)).andExpect(status().isOk())
                     .andExpect(jsonPath("$.items[0].offer.startsAt").value("2026-10-05T00:00:00-05:00"))
@@ -167,10 +190,10 @@ class CatalogApiIntegrationTest {
     void audiobookMetadataSerializesInSearchDetailAndGeneratedContract() throws Exception {
         gateway.searchPage = new CatalogSearchPage(List.of(new CatalogEditionSummary("250", "80", "Una obra", "Autora",
                 "Editorial", null, new BigDecimal("10.00"), CDN_COVER_URL, null, null, "AUDIOBOOK", "es", true,
-                null, 3600, List.of("Una voz", "Otra voz"))), 1);
+                null, null, 3600, List.of("Una voz", "Otra voz"))), 1);
         gateway.publicEdition = Optional.of(new CatalogEditionDetail("250", "80", "Una obra", null, "Sinopsis",
                 DETAIL.authors(), DETAIL.categories(), DETAIL.publisher(), null, "DIGITAL-TEST", "es", "AUDIOBOOK", null,
-                null, new BigDecimal("10.00"), CDN_COVER_URL, null, null, null, true, null, 3600, List.of("Una voz", "Otra voz")));
+                null, new BigDecimal("10.00"), CDN_COVER_URL, null, null, null, true, null, null, 3600, List.of("Una voz", "Otra voz")));
         mvc.perform(get("/api/v1/catalog/editions")).andExpect(status().isOk())
                 .andExpect(jsonPath("$.items[0].format").value("AUDIOBOOK"))
                 .andExpect(jsonPath("$.items[0].audioDurationSeconds").value(3600))
@@ -204,6 +227,7 @@ class CatalogApiIntegrationTest {
                 .andExpect(jsonPath("$.items[0].coverUrl").value(CDN_COVER_URL))
                 .andExpect(jsonPath("$.items[0].coverLicense").value(org.hamcrest.Matchers.nullValue()))
                 .andExpect(jsonPath("$.items[0].available").value(true))
+                .andExpect(jsonPath("$.items[0].unavailabilityReason").value(org.hamcrest.Matchers.nullValue()))
                 .andReturn().getResponse().getContentAsString();
 
         assertEquals(new CatalogQuery(null, null, null, null, null, null, null, null, null,
@@ -443,6 +467,7 @@ class CatalogApiIntegrationTest {
                 .andExpect(jsonPath("$.coverLicense").value(org.hamcrest.Matchers.nullValue()))
                 .andExpect(jsonPath("$.coverSourceUrl").value(org.hamcrest.Matchers.nullValue()))
                 .andExpect(jsonPath("$.available").value(true))
+                .andExpect(jsonPath("$.unavailabilityReason").value(org.hamcrest.Matchers.nullValue()))
                 .andReturn().getResponse().getContentAsString();
 
         JsonNode json = objectMapper.readTree(response);

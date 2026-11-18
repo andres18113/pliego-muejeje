@@ -17,9 +17,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -193,7 +197,7 @@ class AdminCatalogApiIntegrationTest {
         gateway.editionPage = new Page<>(List.of(new EditionRow("250", "90", "1984", "8", "Penguin",
                 "PLG-LIT-001", "9780306406157", "es", "PAPERBACK", 328, LocalDate.of(2024, 1, 15),
                 new BigDecimal("18.50"), null, null, null, null, "ACTIVE", 4,
-                "2024-01-15T10:00:00Z", "2024-01-15T10:00:00Z", null, null, List.of())), 1);
+                "2024-01-15T10:00:00Z", "2024-01-15T10:00:00Z", null, null, List.of(), false)), 1);
         String body = mvc.perform(get("/api/v1/admin/editions").header("Authorization", adminToken("17")))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.items[0].editionId").value("250"))
                 .andExpect(jsonPath("$.items[0].bookId").value("90"))
@@ -202,6 +206,7 @@ class AdminCatalogApiIntegrationTest {
                 .andExpect(jsonPath("$.items[0].coverUrl").value(org.hamcrest.Matchers.nullValue()))
                 .andExpect(jsonPath("$.items[0].publicationDate").value("2024-01-15"))
                 .andExpect(jsonPath("$.items[0].stockActual").value(4))
+                .andExpect(jsonPath("$.items[0].offerRowExists").value(false))
                 .andReturn().getResponse().getContentAsString();
         assertTrue(body.contains("\"editionId\":\"250\""));
         assertFalse(body.contains("18.5\""));
@@ -248,6 +253,77 @@ class AdminCatalogApiIntegrationTest {
                 .andExpect(jsonPath("$.title").value("Datos inválidos"))
                 .andExpect(jsonPath("$.violations[0].message").value("El precio debe tener dos posiciones decimales."));
         assertEquals(0, gateway.mutationCalls);
+    }
+
+    @ParameterizedTest
+    @MethodSource("catalogIdentifierRequests")
+    void catalogIdentifiersOutsideLongRangeReturnSpanishValidationBeforeGateway(
+            String method, String path, String body, String field, String message) throws Exception {
+        var request = "POST".equals(method) ? post(path) : put(path);
+        mvc.perform(request.header("Authorization", adminToken("17"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body.replace("IDENTIFIER", "9223372036854775808")))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.title").value("Datos inválidos"))
+                .andExpect(jsonPath("$.violations[*].field").value(org.hamcrest.Matchers.hasItem(field)))
+                .andExpect(jsonPath("$.violations[*].message").value(org.hamcrest.Matchers.hasItem(message)));
+        assertEquals(0, gateway.mutationCalls);
+    }
+
+    @ParameterizedTest
+    @MethodSource("catalogIdentifierRequests")
+    void catalogIdentifiersAtLongMaximumReachGateway(
+            String method, String path, String body, String field, String message) throws Exception {
+        var request = "POST".equals(method) ? post(path) : put(path);
+        mvc.perform(request.header("Authorization", adminToken("17"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body.replace("IDENTIFIER", "9223372036854775807")))
+                .andExpect("POST".equals(method) ? status().isCreated() : status().isNoContent());
+        assertEquals(1, gateway.mutationCalls);
+    }
+
+    static Stream<Arguments> catalogIdentifierRequests() {
+        String parent = CATEGORY.replace("\"parentCategoryId\":null", "\"parentCategoryId\":\"IDENTIFIER\"");
+        String author = BOOK.replace("\"authorId\":\"15\"", "\"authorId\":\"IDENTIFIER\"");
+        String category = BOOK.replace("\"categoryIds\":[\"2\",\"7\"]", "\"categoryIds\":[\"IDENTIFIER\",\"7\"]");
+        String book = EDITION.replace("\"bookId\":\"90\"", "\"bookId\":\"IDENTIFIER\"");
+        String publisher = EDITION.replace("\"publisherId\":\"8\"", "\"publisherId\":\"IDENTIFIER\"");
+        String updatedPublisher = EDITION_UPDATE.replace("\"publisherId\":\"8\"", "\"publisherId\":\"IDENTIFIER\"");
+        return Stream.of(
+                Arguments.of("POST", "/api/v1/admin/categories", parent, "parentCategoryId", "El identificador de la categoría padre no es válido."),
+                Arguments.of("PUT", "/api/v1/admin/categories/3", parent, "parentCategoryId", "El identificador de la categoría padre no es válido."),
+                Arguments.of("POST", "/api/v1/admin/books", author, "authors[0].authorId", "El identificador del autor no es válido."),
+                Arguments.of("PUT", "/api/v1/admin/books/90", author, "authors[0].authorId", "El identificador del autor no es válido."),
+                Arguments.of("POST", "/api/v1/admin/books", category, "categoryIds[0]", "Un identificador de categoría no es válido."),
+                Arguments.of("PUT", "/api/v1/admin/books/90", category, "categoryIds[0]", "Un identificador de categoría no es válido."),
+                Arguments.of("POST", "/api/v1/admin/editions", book, "bookId", "El identificador del libro no es válido."),
+                Arguments.of("POST", "/api/v1/admin/editions", publisher, "publisherId", "El identificador de la editorial no es válido."),
+                Arguments.of("PUT", "/api/v1/admin/editions/505", updatedPublisher, "publisherId", "El identificador de la editorial no es válido."));
+    }
+
+    @ParameterizedTest
+    @MethodSource("nullBookAssociationRequests")
+    void nullBookAssociationEntriesReturnSpanishValidationBeforeGateway(
+            String method, String path, String body, String field, String message) throws Exception {
+        var request = "POST".equals(method) ? post(path) : put(path);
+        mvc.perform(request.header("Authorization", adminToken("17"))
+                        .contentType(MediaType.APPLICATION_JSON).content(body))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.violations[*].field").value(org.hamcrest.Matchers.hasItem(field)))
+                .andExpect(jsonPath("$.violations[*].message").value(org.hamcrest.Matchers.hasItem(message)));
+        assertEquals(0, gateway.mutationCalls);
+    }
+
+    static Stream<Arguments> nullBookAssociationRequests() {
+        String author = BOOK.replace("{\"authorId\":\"15\",\"order\":2}", "null");
+        String category = BOOK.replace("\"categoryIds\":[\"2\",\"7\"]", "\"categoryIds\":[null,\"7\"]");
+        return Stream.of(
+                Arguments.of("POST", "/api/v1/admin/books", author, "authors[0]", "El autor no puede ser nulo."),
+                Arguments.of("PUT", "/api/v1/admin/books/90", author, "authors[0]", "El autor no puede ser nulo."),
+                Arguments.of("POST", "/api/v1/admin/books", category, "categoryIds[0]", "Un identificador de categoría no es válido."),
+                Arguments.of("PUT", "/api/v1/admin/books/90", category, "categoryIds[0]", "Un identificador de categoría no es válido."));
     }
 
     @Test

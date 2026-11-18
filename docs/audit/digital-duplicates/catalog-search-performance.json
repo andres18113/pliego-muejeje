@@ -1,0 +1,125 @@
+{
+  "catalog": {
+    "editions": 425,
+    "PAPERBACK": 176,
+    "EBOOK": 135,
+    "AUDIOBOOK": 114
+  },
+  "method": "PostgreSQL 18.6 EXPLAIN (ANALYZE,BUFFERS,FORMAT JSON); actual global routine, AUDIOBOOK scope, 16 independent samples per query, first excluded, median of 15; ANALYZE before each version",
+  "before_v077": {
+    "Cómo": {
+      "median_ms": 8.131,
+      "min_ms": 7.201,
+      "max_ms": 9.572,
+      "rows": 2.0,
+      "shared_hit_blocks": 2626
+    },
+    "como": {
+      "median_ms": 7.389,
+      "min_ms": 6.635,
+      "max_ms": 7.843,
+      "rows": 0.0,
+      "shared_hit_blocks": 2325
+    },
+    "García": {
+      "median_ms": 7.846,
+      "min_ms": 7.481,
+      "max_ms": 9.726,
+      "rows": 2.0,
+      "shared_hit_blocks": 2662
+    },
+    "garcia": {
+      "median_ms": 7.034,
+      "min_ms": 6.515,
+      "max_ms": 7.986,
+      "rows": 0.0,
+      "shared_hit_blocks": 2326
+    },
+    "niño": {
+      "median_ms": 7.497,
+      "min_ms": 7.209,
+      "max_ms": 10.358,
+      "rows": 1.0,
+      "shared_hit_blocks": 2610
+    },
+    "nino": {
+      "median_ms": 7.377,
+      "min_ms": 6.42,
+      "max_ms": 9.656,
+      "rows": 0.0,
+      "shared_hit_blocks": 2325
+    },
+    "9780306406157": {
+      "median_ms": 6.74,
+      "min_ms": 5.955,
+      "max_ms": 7.626,
+      "rows": 0.0,
+      "shared_hit_blocks": 1857
+    },
+    "libro": {
+      "median_ms": 7.349,
+      "min_ms": 6.56,
+      "max_ms": 8.614,
+      "rows": 0.0,
+      "shared_hit_blocks": 2323
+    }
+  },
+  "after_v078": {
+    "Cómo": {
+      "median_ms": 7.891,
+      "min_ms": 7.16,
+      "max_ms": 10.234,
+      "rows": 2.0,
+      "shared_hit_blocks": 2732
+    },
+    "como": {
+      "median_ms": 8.029,
+      "min_ms": 7.412,
+      "max_ms": 11.93,
+      "rows": 2.0,
+      "shared_hit_blocks": 2732
+    },
+    "García": {
+      "median_ms": 8.382,
+      "min_ms": 7.355,
+      "max_ms": 11.564,
+      "rows": 2.0,
+      "shared_hit_blocks": 2708
+    },
+    "garcia": {
+      "median_ms": 8.612,
+      "min_ms": 7.848,
+      "max_ms": 10.357,
+      "rows": 2.0,
+      "shared_hit_blocks": 2708
+    },
+    "niño": {
+      "median_ms": 7.632,
+      "min_ms": 7.377,
+      "max_ms": 10.97,
+      "rows": 1.0,
+      "shared_hit_blocks": 2689
+    },
+    "nino": {
+      "median_ms": 7.712,
+      "min_ms": 7.219,
+      "max_ms": 9.338,
+      "rows": 1.0,
+      "shared_hit_blocks": 2689
+    },
+    "9780306406157": {
+      "median_ms": 6.276,
+      "min_ms": 6.017,
+      "max_ms": 6.787,
+      "rows": 0.0,
+      "shared_hit_blocks": 1899
+    },
+    "libro": {
+      "median_ms": 6.763,
+      "min_ms": 6.564,
+      "max_ms": 7.415,
+      "rows": 0.0,
+      "shared_hit_blocks": 2401
+    }
+  }
+}

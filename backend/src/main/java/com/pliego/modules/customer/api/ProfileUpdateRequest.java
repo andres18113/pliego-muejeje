@@ -24,7 +24,7 @@ public record ProfileUpdateRequest(
         @DecimalMax(value = "9223372036854775807", message = "La versión del perfil no es válida.") String expectedVersion) {
     public ProfileUpdateRequest {
         firstNames=PersonRules.name(firstNames); lastNames=PersonRules.name(lastNames);
-        phone=PhoneNumbers.normalized(phone);
+        phone=PhoneNumbers.normalizedOptionalInput(phone);
     }
 
 

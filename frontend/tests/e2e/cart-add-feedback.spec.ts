@@ -24,8 +24,10 @@ async function mockApi(page: Page, state: { quantity: number; format: string; po
     return route.fulfill({ status: 404, json: {} });
   });
 }
-for (const width of [320, 390, 1280]) for (const surface of ["/favorites", "/cart"]) {
-  test(`Cart feedback ${surface} ${width}px: confirmed quantity, pending lock, failure retry, keyboard and one announcement`, async ({ page }) => {
+const cartDrawer = (page: Page) => page.getByRole("dialog", { name: "Tu carrito" });
+
+for (const width of [320, 390, 1280]) for (const surface of ["/favorites"]) {
+  test(`Cart feedback ${surface} ${width}px: confirmed add opens Tu carrito; pending lock, failure retry and keyboard`, async ({ page }) => {
     const state = { quantity: 2, format: "PAPERBACK", posts: 0, fail: true, release: undefined as Promise<void> | undefined };
     await mockApi(page, state); await page.setViewportSize({ width, height: 900 }); await page.goto(surface);
     const row = page.locator('[data-favorite-row][data-edition-id="42"]');
@@ -36,118 +38,61 @@ for (const width of [320, 390, 1280]) for (const surface of ["/favorites", "/car
     await expect(row.getByRole("button", { name: "Agregando…: Cien años de soledad" })).toHaveAttribute("aria-disabled", "true");
     await expect.poll(() => state.posts).toBe(1);
     await page.keyboard.press("Enter"); expect(state.posts).toBe(1);
-    await expect(page.getByText("¡Agregado al carrito!")).toHaveCount(0); release();
+    release();
+    // A refused add explains itself on the row and never opens the cart.
     await expect(row.getByRole("alert")).toContainText("stock");
+    await expect(cartDrawer(page)).toHaveCount(0);
     state.fail = false; state.release = undefined;
     await add.focus(); await page.keyboard.press("Enter");
-    const toast = page.locator("[data-cart-added-notification]");
-    await expect(toast).toContainText("Añadiste 1 unidad. Ahora tienes 3 unidades de esta edición en tu carrito.");
+    const drawer = cartDrawer(page);
+    await expect(drawer).toBeVisible();
+    await expect(drawer.getByRole("status").first()).toContainText("Agregaste Cien años de soledad");
+    await expect(page.getByText("¡Agregado al carrito!")).toHaveCount(0);
     await expect(row.getByText("En el carrito: 3 unidades")).toBeVisible();
     await expect(row.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" })).toHaveAttribute("aria-pressed", "true");
-    await expect(add).toHaveText("add_shopping_cartAgregar al carrito");
-    await expect(page.getByRole("status").filter({ hasText: "¡Agregado al carrito!" })).toHaveCount(1);
-    await expect(row.locator('[role="status"]')).toHaveCount(0);
-    await expect(page.locator("header [aria-live]" )).toHaveCount(0);
-    if (surface === "/favorites") await expect(page.getByRole("link", { name: "Carrito, 3 unidades" })).toBeVisible();
-    else await expect(page.locator("[data-purchase-header]")).toContainText("3 artículos");
-    const box = await toast.boundingBox(); expect(box!.x).toBeGreaterThanOrEqual(0); expect(box!.x + box!.width).toBeLessThanOrEqual(width);
-    await page.screenshot({ path: test.info().outputPath(`cart-feedback-${surface.slice(1)}-${width}.png`), fullPage: true, animations: "disabled" });
-    await toast.getByRole("link", { name: "Ver carrito" }).focus(); await page.keyboard.press("Tab");
-    await expect(toast.getByRole("button", { name: "Cerrar aviso de carrito" })).toBeFocused();
-    await page.keyboard.press("Escape"); await expect(toast).toHaveCount(0); await expect(add).toBeFocused();
+    // Once its slide-in settles, the drawer sits fully inside the viewport (full width on phones).
+    await expect.poll(async () => { const box = await drawer.boundingBox(); return box ? Math.round(box.x + box.width) : Infinity; }).toBeLessThanOrEqual(width);
+    expect((await drawer.boundingBox())!.x).toBeGreaterThanOrEqual(0);
+    await page.screenshot({ path: test.info().outputPath(`cart-feedback-${surface.slice(1)}-${width}.png`), fullPage: false, animations: "disabled" });
+    // Escape closes the drawer and the keyboard is back on the control that added.
+    await page.keyboard.press("Escape"); await expect(drawer).toHaveCount(0); await expect(add).toBeFocused();
+    await expect(page.getByRole("link", { name: "Carrito, 3 unidades" })).toBeVisible();
     await page.keyboard.press("Enter"); await expect(row.getByText("En el carrito: 4 unidades")).toBeVisible();
-    await expect(page.getByText("¡Agregado al carrito!")).toHaveCount(1); expect(state.posts).toBe(3);
-    if (width === 320 && surface === "/favorites") await expect(toast).toHaveCount(0, { timeout: 6500 });
-    else { await toast.getByRole("link", { name: "Ver carrito" }).click(); await expect(page).toHaveURL(/\/cart$/); }
+    await expect(cartDrawer(page)).toBeVisible(); expect(state.posts).toBe(3);
+    await cartDrawer(page).getByRole("link", { name: "Ver carrito" }).click(); await expect(page).toHaveURL(/\/cart$/);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
   });
 }
-for (const format of ["EBOOK", "AUDIOBOOK"]) for (const surface of ["/favorites", "/cart"]) {
+for (const format of ["EBOOK", "AUDIOBOOK"]) for (const surface of ["/favorites"]) {
   test(`Digital ${format} ${surface}: one copy and no false success`, async ({ page }) => {
     const state = { quantity: 1, format, posts: 0 }; await mockApi(page, state); await page.setViewportSize({ width: 390, height: 900 }); await page.goto(surface);
     const row = page.locator('[data-favorite-row][data-edition-id="42"]');
-    await expect(row.getByText("En el carrito: 1 unidad")).toBeVisible(); await expect(row.getByRole("button", { name: /Ya está en el carrito/ })).toBeDisabled();
-    expect(state.posts).toBe(0); await expect(page.getByText("¡Agregado al carrito!")).toHaveCount(0);
+    // The state stays, with a persistent way back to the cart (never a dead button).
+    await expect(row.getByText("Ya está en el carrito", { exact: true })).toBeVisible();
+    const shortcut = row.getByRole("button", { name: "Ver carrito: Cien años de soledad" });
+    await expect(shortcut).toBeEnabled(); await expect(row.getByRole("button", { name: /Agregar al carrito/ })).toHaveCount(0);
+    expect(state.posts).toBe(0); await expect(cartDrawer(page)).toHaveCount(0);
+    await page.setViewportSize({ width: 1280, height: 800 }); await expect(shortcut).toBeVisible();
+    await page.screenshot({ path: test.info().outputPath(`digital-in-cart-${format}-1280.png`), fullPage: false, animations: "disabled" });
+    await shortcut.click(); await expect(page).toHaveURL(/\/cart$/); expect(state.posts).toBe(0);
   });
 }
-
-for (const dismissal of ["close", "Escape"]) {
- test(`Favorites pagination restores focus after ${dismissal} when its original row disappeared`, async ({ page }) => {
-  const state = { quantity: 2, format: "PAPERBACK", posts: 0, pagination: true };
-  await mockApi(page, state); await page.goto("/favorites");
-  await page.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" }).click();
-  const toast = page.locator("[data-cart-added-notification]"); await expect(toast).toBeVisible();
-  await toast.getByRole("link", { name: "Ver carrito" }).focus();
-  await page.getByRole("button", { name: "Siguiente", exact: true }).click();
-  await expect(page.locator('[data-favorite-row][data-edition-id="62"]')).toBeVisible();
-  await expect(page.locator('[data-favorite-row][data-edition-id="42"]')).toHaveCount(0);
-  if (dismissal === "close") await toast.getByRole("button", { name: "Cerrar aviso de carrito" }).click();
-  else { await toast.getByRole("link", { name: "Ver carrito" }).focus(); await page.keyboard.press("Escape"); }
-  await expect(toast).toHaveCount(0); await expect(page.locator("#favorite-editions-heading")).toBeFocused();
- });
-}
-test("the first saved-list addition to an empty cart keeps its confirmed notification", async ({ page }) => {
- const state = { quantity: 0, format: "PAPERBACK", posts: 0 };
- await mockApi(page, state); await page.setViewportSize({ width: 320, height: 900 }); await page.goto("/cart");
- await expect(page.getByRole("heading", { name: "Tu carrito está vacío." })).toBeVisible();
- await page.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" }).click();
- await expect(page.locator('[data-favorite-row][data-edition-id="42"]').getByText("En el carrito: 1 unidad")).toBeVisible();
- await expect(page.locator("[data-cart-added-notification]")).toContainText("Ahora tienes 1 unidad de esta edición en tu carrito.");
- expect(state.posts).toBe(1);
-});
-
-for (const width of [320, 390]) for (const format of ["EBOOK", "AUDIOBOOK"]) for (const surface of ["/favorites", "/cart"]) {
- test(`First digital keyboard addition ${format} ${surface} ${width}px retains local focus`, async ({ page }) => {
+for (const width of [320, 390]) for (const format of ["EBOOK", "AUDIOBOOK"]) for (const surface of ["/favorites"]) {
+ test(`First digital keyboard addition ${format} ${surface} ${width}px opens the drawer and closes back onto the row`, async ({ page }) => {
   const state = { quantity: 0, format, posts: 0 }; await mockApi(page, state); await page.setViewportSize({ width, height: 900 }); await page.goto(surface);
   const row = page.locator('[data-favorite-row][data-edition-id="42"]');
   const add = row.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" }); await add.focus(); await page.keyboard.press("Enter");
-  await expect(row.getByText("En el carrito: 1 unidad")).toBeVisible();
-  await expect(row.getByRole("button", { name: /Ya está en el carrito/ })).toBeDisabled();
-  await expect(row.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" })).toBeFocused();
-  await expect(page.getByRole("status").filter({ hasText: "¡Agregado al carrito!" })).toHaveCount(1);
+  await expect(cartDrawer(page)).toBeVisible();
+  await expect(row.getByText("Ya está en el carrito", { exact: true })).toBeVisible();
   expect(state.posts).toBe(1);
-  await page.screenshot({ path: test.info().outputPath(`first-digital-focus-${format}-${surface.slice(1)}-${width}.png`), fullPage: true, animations: "disabled" });
- });
-}
-for (const width of [320, 390]) {
- test(`First physical keyboard addition to empty cart ${width}px retains the available add control`, async ({ page }) => {
-  const state = { quantity: 0, format: "PAPERBACK", posts: 0 }; await mockApi(page, state); await page.setViewportSize({ width, height: 900 }); await page.goto("/cart");
-  const row = page.locator('[data-favorite-row][data-edition-id="42"]'); const add = row.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" });
-  await add.focus(); await page.keyboard.press("Enter"); await expect(row.getByText("En el carrito: 1 unidad")).toBeVisible(); await expect(add).toBeFocused();
-  await page.keyboard.press("Enter"); await expect(row.getByText("En el carrito: 2 unidades")).toBeVisible(); expect(state.posts).toBe(2);
- });
-}
-test("empty-cart focus recovery preserves the focused notification action", async ({ page }) => {
- let release!: () => void; const readRelease = new Promise<void>(resolve => { release = resolve; });
- const state = { quantity: 0, format: "EBOOK", posts: 0, readRelease }; await mockApi(page, state); await page.goto("/cart");
- const add = page.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" }); await add.focus(); await page.keyboard.press("Enter");
- const action = page.locator("[data-cart-added-notification]").getByRole("link", { name: "Ver carrito" }); await expect(action).toBeVisible(); await action.focus(); release();
- await expect(page.locator('[data-favorite-row][data-edition-id="42"]').getByText("En el carrito: 1 unidad")).toBeVisible(); await expect(action).toBeFocused();
-});
-
-for (const width of [320, 390]) {
- test(`Confirmed first addition with failed cart read ${width}px shows recovery rather than an empty cart`, async ({ page }) => {
-  const state = { quantity: 0, format: "PAPERBACK", posts: 0, readFail: true }; await mockApi(page, state); await page.setViewportSize({ width, height: 900 }); await page.goto("/cart");
-  const row = page.locator('[data-favorite-row][data-edition-id="42"]'); const node = await row.elementHandle();
-  await row.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" }).click();
-  await expect(page.getByRole("alert", { name: "No pudimos consultar tu carrito." })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Tu carrito está vacío." })).toHaveCount(0);
-  await expect(row.getByText("En el carrito: 1 unidad")).toBeVisible();
-  await expect(page.locator("[data-cart-added-notification]")).toContainText("Ahora tienes 1 unidad");
-  expect(await node!.evaluate(element => element.isConnected)).toBe(true);
-  state.readFail = false; await page.getByRole("button", { name: "Volver a intentar", exact: true }).click();
-  await expect(page.getByRole("alert", { name: "No pudimos consultar tu carrito." })).toHaveCount(0);
-  await expect(page.locator("[data-cart-line]")).toHaveCount(1); expect(state.posts).toBe(1);
- });
- test(`Ver carrito from its own saved section ${width}px moves to the review content`, async ({ page }) => {
-  const state = { quantity: 2, format: "PAPERBACK", posts: 0 }; await mockApi(page, state); await page.setViewportSize({ width, height: 900 }); await page.goto("/cart");
-  const add = page.locator('[data-favorite-row][data-edition-id="42"]').getByRole("button", { name: "Agregar al carrito: Cien años de soledad" });
-  await add.focus(); await page.keyboard.press("Enter");
-  const action = page.locator("[data-cart-added-notification]").getByRole("link", { name: "Ver carrito" }); await action.focus(); await page.keyboard.press("Enter");
-  await expect(page.locator("#contenido-principal")).toBeFocused(); await expect(page.locator("[data-cart-added-notification]")).toHaveCount(0);
-  const headerBottom = await page.locator("[data-purchase-header]").evaluate(element => element.getBoundingClientRect().bottom);
-  const mainTop = await page.locator("#contenido-principal").evaluate(element => element.getBoundingClientRect().top);
-  expect(mainTop).toBeGreaterThanOrEqual(headerBottom - 1); expect(mainTop).toBeLessThanOrEqual(headerBottom + 8);
+  await page.screenshot({ path: test.info().outputPath(`first-digital-drawer-${format}-${surface.slice(1)}-${width}.png`), fullPage: false, animations: "disabled" });
+  await page.keyboard.press("Escape"); await expect(cartDrawer(page)).toHaveCount(0);
+  // The add action became the row's "Ver carrito" in place, so focus returns to that shortcut, not to the page.
+  const shortcut = row.getByRole("button", { name: "Ver carrito: Cien años de soledad" });
+  await expect(shortcut).toBeFocused();
+  const box = (await shortcut.boundingBox())!; expect(box.height).toBeGreaterThanOrEqual(44);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.screenshot({ path: test.info().outputPath(`digital-in-cart-${format}-${width}.png`), fullPage: false, animations: "disabled" });
  });
 }
 test("Favorites does not announce the old zero after a confirmed addition and failed cart refresh", async ({ page }) => {
@@ -155,5 +100,9 @@ test("Favorites does not announce the old zero after a confirmed addition and fa
  await expect(page.getByRole("link", { name: "Carrito, 0 unidades" })).toBeVisible();
  await page.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" }).click();
  await expect(page.getByRole("link", { name: "Carrito, unidades no disponibles" })).toBeVisible();
- await expect(page.getByText("En el carrito: 1 unidad")).toBeVisible(); await expect(page.locator("[data-cart-added-notification]")).toContainText("Ahora tienes 1 unidad");
+ // A confirmed digital copy reads as in the cart (not the old zero), with its way back to the cart.
+ await expect(page.getByText("Ya está en el carrito", { exact: true })).toBeVisible();
+ // The add is confirmed: the drawer opens and says plainly that what it shows may be out of date.
+ await expect(cartDrawer(page)).toBeVisible();
+ await expect(cartDrawer(page).getByRole("alert")).toContainText("No pudimos");
 });

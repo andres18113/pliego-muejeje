@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "exceptions": [
+    {
+      "id": "GHSA-fc5q-39xc-vjpf",
+      "npmSource": 1247710,
+      "url": "https://github.com/advisories/GHSA-fc5q-39xc-vjpf",
+      "package": "picomatch",
+      "severity": "high",
+      "range": "<=4.0.7",
+      "installedVersions": [
+        "4.0.7"
+      ],
+      "project": "frontend",
+      "expires": "2026-12-01",
+      "approved": "2026-11-17",
+      "justification": "The vulnerable repeated extglob is introduced by the compiled glob pattern. PLIEGO passes checked-in source and configuration, installed package metadata, and tool defaults as patterns. Vite request paths are match subjects or select local files, and catalog and user content stay outside glob compilation. Tailwind source discovery uses its native scanner. Picomatch is absent from the production bundle, and nginx serves static frontend files alongside a Java backend.",
+      "affected": {
+        "@vitejs/plugin-react": {"isDirect": true, "range": ">=6.0.0-beta.0", "nodes": ["node_modules/@vitejs/plugin-react"], "via": ["vite"], "effects": []},
+        "fdir": {"isDirect": false, "range": ">=5.2.1", "nodes": ["node_modules/fdir"], "via": ["picomatch"], "effects": ["tinyglobby"]},
+        "picomatch": {"isDirect": false, "range": "*", "nodes": ["node_modules/picomatch"], "via": ["GHSA-fc5q-39xc-vjpf"], "effects": ["fdir", "tinyglobby", "vite", "vitest"]},
+        "tinyglobby": {"isDirect": false, "range": "*", "nodes": ["node_modules/tinyglobby"], "via": ["fdir", "picomatch"], "effects": ["vite", "vitest"]},
+        "vite": {"isDirect": true, "range": ">=6.3.0-beta.0", "nodes": ["node_modules/vite"], "via": ["picomatch", "tinyglobby"], "effects": ["@vitejs/plugin-react", "vitest"]},
+        "vitest": {"isDirect": true, "range": ">=3.1.2", "nodes": ["node_modules/vitest"], "via": ["picomatch", "tinyglobby", "vite"], "effects": []}
+      }
+    }
+  ]
+}

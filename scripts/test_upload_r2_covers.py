@@ -3,12 +3,15 @@
 from __future__ import annotations
 
 import importlib.util
+import contextlib
+import io
 import json
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 from typing import Any
+from unittest.mock import patch
 
 
 SCRIPT = Path(__file__).with_name("upload-r2-covers.py")
@@ -31,6 +34,8 @@ class FakeS3:
         return {key: value for key, value in item.items() if key != "Body"}
 
     def put_object(self, *, Bucket: str, Key: str, Body: Any, **metadata: Any) -> None:
+        if metadata.get("IfNoneMatch") == "*" and Key in self.objects:
+            raise FileExistsError(Key)
         contents = Body.read() if hasattr(Body, "read") else Body
         self.objects[Key] = {
             "Body": contents,
@@ -46,6 +51,127 @@ class FakeS3:
 
 
 class UploadR2CoversTests(unittest.TestCase):
+    def email_fixture(self, root):
+        assets_dir = root / "email-v1"
+        records = []
+        for number in (1, 2):
+            key = f"covers/editions/email-v1/book-{number}.jpg"
+            path = assets_dir / key
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b"JPEG" + bytes([number]) * 20)
+            records.append({"r2_object_key": key, "size": path.stat().st_size,
+                            "sha256": upload_module.sha256_file(path)})
+        manifest = root / "manifest.json"
+        manifest.write_text(json.dumps({"records": records}))
+        return manifest, assets_dir
+
+    def test_email_jpegs_upload_add_only_then_skip_identical_objects(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest, directory = self.email_fixture(Path(temporary))
+            assets, prefix = upload_module.load_upload_plan(manifest, directory)
+            client = FakeS3()
+            first = upload_module.sync_assets(client, "pliego-covers", assets, prefix, add_only=True)
+            second = upload_module.sync_assets(client, "pliego-covers", assets, prefix, add_only=True)
+            self.assertEqual(first["errors"], [])
+            self.assertEqual(second["errors"], [])
+            self.assertEqual((first["uploaded"], second["skipped"], second["verified_count"]), (2, 2, 2))
+            for item in client.objects.values():
+                self.assertEqual(item["ContentType"], "image/jpeg")
+                self.assertEqual(item["CacheControl"], upload_module.CACHE_CONTROL)
+
+    def test_email_conflict_aborts_entire_plan_without_any_write_even_without_flag(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest, directory = self.email_fixture(Path(temporary))
+            assets, prefix = upload_module.load_upload_plan(manifest, directory)
+            client = FakeS3()
+            client.objects[assets[1].key] = {"Body": b"different", "ContentLength": 9,
+                                           "ContentType": "image/jpeg", "Metadata": {"sha256": "different"}}
+            result = upload_module.sync_assets(client, "pliego-covers", assets, prefix)
+            self.assertTrue(result["errors"])
+            self.assertEqual(client.put_count, 0)
+            self.assertNotIn(assets[0].key, client.objects)
+            self.assertEqual(client.objects[assets[1].key]["Body"], b"different")
+
+    def test_email_mode_refuses_other_buckets_or_prefixes_without_writes(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest, directory = self.email_fixture(Path(temporary))
+            assets, prefix = upload_module.load_upload_plan(manifest, directory)
+            for bucket, selected_prefix, selected_assets in [
+                    ("billing-pliego", prefix, assets), ("pliego-covers", "covers/editions/", assets),
+                    ("pliego-covers", prefix, [upload_module.UploadAsset("other/book.jpg", assets[0].path, 24, assets[0].sha256)])]:
+                client = FakeS3()
+                result = upload_module.sync_assets(client, bucket, selected_assets, selected_prefix, add_only=True)
+                self.assertTrue(result["errors"])
+                self.assertEqual(client.objects, {})
+
+    def test_dry_run_needs_no_credentials_or_s3_client_and_prints_counts_only(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest, directory = self.email_fixture(Path(temporary))
+            output = io.StringIO()
+            with patch.dict("os.environ", {}, clear=True), patch.object(upload_module, "create_s3_client") as client, contextlib.redirect_stdout(output):
+                result = upload_module.main(["--manifest", str(manifest), "--assets-dir", str(directory), "--add-only", "--dry-run"])
+            self.assertEqual(result, 0)
+            client.assert_not_called()
+            self.assertIn("2", output.getvalue())
+            self.assertNotIn("book-", output.getvalue())
+
+    def test_email_manifest_checksum_mismatch_is_rejected(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest, directory = self.email_fixture(Path(temporary))
+            data = json.loads(manifest.read_text())
+            (directory / data["records"][0]["r2_object_key"]).write_bytes(b"tampered")
+            with self.assertRaises(upload_module.UploadError):
+                upload_module.load_upload_plan(manifest, directory)
+
+    def test_email_racing_creation_cannot_be_overwritten(self):
+        class RacingS3(FakeS3):
+            def put_object(self, **request):
+                self.objects[request["Key"]] = {"Body": b"created concurrently", "ContentLength": 20,
+                    "ContentType": "image/jpeg", "CacheControl": upload_module.CACHE_CONTROL,
+                    "Metadata": {"sha256": "other"}}
+                super().put_object(**request)
+
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest, directory = self.email_fixture(Path(temporary))
+            assets, prefix = upload_module.load_upload_plan(manifest, directory)
+            client = RacingS3()
+            result = upload_module.sync_assets(client, "pliego-covers", assets, prefix, add_only=True)
+            self.assertTrue(result["errors"])
+            self.assertEqual(client.put_count, 0)
+            self.assertTrue(all(item["Body"] == b"created concurrently" for item in client.objects.values()))
+
+    def test_email_upload_preserves_unlisted_objects_without_listing_or_retirement(self):
+        class NoListingS3(FakeS3):
+            def list_objects_v2(self, **request):
+                raise AssertionError("Email uploads must not enumerate or retire unrelated objects")
+
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest, directory = self.email_fixture(Path(temporary))
+            assets, prefix = upload_module.load_upload_plan(manifest, directory)
+            client = NoListingS3()
+            for key in ["covers/editions/email-v1/historical.jpg", "covers/editions/v2/book.webp"]:
+                client.objects[key] = {"Body": b"history"}
+            result = upload_module.sync_assets(client, "pliego-covers", assets, prefix, add_only=True)
+            self.assertEqual(result["errors"], [])
+            self.assertEqual(client.objects["covers/editions/email-v1/historical.jpg"], {"Body": b"history"})
+            self.assertEqual(client.objects["covers/editions/v2/book.webp"], {"Body": b"history"})
+
+    def test_jpeg_extension_uses_jpeg_content_type(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            manifest, directory = self.email_fixture(root)
+            document = json.loads(manifest.read_text())
+            row = document["records"][0]
+            old_key = row["r2_object_key"]
+            row["r2_object_key"] = old_key.replace(".jpg", ".jpeg")
+            (directory / old_key).rename(directory / row["r2_object_key"])
+            manifest.write_text(json.dumps(document))
+            assets, prefix = upload_module.load_upload_plan(manifest, directory)
+            client = FakeS3()
+            result = upload_module.sync_assets(client, "pliego-covers", assets, prefix)
+            self.assertEqual(result["errors"], [])
+            self.assertEqual(client.objects[row["r2_object_key"]]["ContentType"], "image/jpeg")
+
     def test_batch_sync_preserves_explicit_historical_objects_without_uploading_them(self):
         with tempfile.TemporaryDirectory() as temporary:
             manifest, directory = self.make_fixture(Path(temporary))

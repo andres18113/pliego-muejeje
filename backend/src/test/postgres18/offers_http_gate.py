@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 import uuid
 import os
 from urllib.parse import urlencode
-from digital_editions_http_gate import ok, problem
+from digital_editions_http_gate import assert_availability, ok, problem
 from full_journey_http_gate import admin_token
 from checkout_last_unit import query
 
@@ -26,6 +26,14 @@ def main():
     endpoint = f'/api/v1/admin/editions/{edition}/offer'
     now = datetime.now(timezone.utc)
     offer = {'offerPrice': '15.00', 'startsAt': (now-timedelta(days=1)).isoformat(), 'endsAt': (now+timedelta(days=1)).isoformat(), 'offerCopy': 'Texto editorial de la oferta', 'terms': 'Aplica a esta edición.'}
+    # pgjdbc maps these valid OffsetDateTime values to PostgreSQL infinities.
+    # Reject them before an unbounded end can break public date projections.
+    for changes in [
+        {'startsAt': '-999999999-01-01T00:00:00+18:00'},
+        {'endsAt': '+999999999-12-31T23:59:59.999999999-18:00'},
+    ]:
+        problem(endpoint, admin, 'PUT', {**offer, **changes}, 'P1001')
+        assert query(f"SELECT count(*) FROM pliego.edicion_oferta WHERE edicion_id={edition}") == '0'
     # This route is the first missing production behavior in the pre-integration baseline.
     ok(endpoint, admin, 'PUT', offer, 204)
     detail = ok('/api/v1/catalog/editions/'+edition)
@@ -45,6 +53,7 @@ def main():
     assert len(results['items']) == 1 and results['items'][0]['offer'] == detail['offer'], results
     offers = ok('/api/v1/catalog/offers?'+urlencode({'productType': 'EBOOK', 'category': f'offers-{suffix}', 'sort': 'ENDING_SOON', 'pageSize': 50}))
     assert offers['totalCount'] == '1' and [row['editionId'] for row in offers['items']] == [edition], offers
+    assert_availability(offers['items'][0], None)
     assert ok('/api/v1/catalog/offers?'+urlencode({'productType': 'PHYSICAL', 'category': f'offers-{suffix}'}))['totalCount'] == '0'
     customer_email = f'offers-customer-{suffix}@example.invalid'
     ok('/api/v1/auth/register', None, 'POST', {'email': customer_email, 'password': 'Offers-fixture-1', 'firstNames': 'Cliente', 'lastNames': 'Ofertas'}, 201)
@@ -53,7 +62,7 @@ def main():
     customer = 'Bearer ' + ok('/api/v1/auth/login', None, 'POST', {'email': customer_email, 'password': 'Offers-fixture-1'})['accessToken']
     problem(endpoint, customer, 'PUT', offer, 'ACCESS_DENIED', 403)
     address = ok('/api/v1/me/addresses', customer, 'POST', {'alias': 'Casa', 'recipient': 'Cliente Ofertas', 'line1': 'Calle Ofertas',
-        'line2': None, 'city': 'Quito', 'province': 'Pichincha', 'countryCode': 'EC', 'postalCode': None, 'reference': None,
+        'line2': None, 'provinceId': '17', 'cityId': '893', 'countryCode': 'EC', 'postalCode': None, 'reference': None,
         'phone': '+59325550134', 'makePrimary': True}, 201)['addressId']
     ok('/api/v1/me/favorites/'+edition, customer, 'PUT', expected=204)
     assert ok('/api/v1/me/favorites', customer)['items'][0]['price'] == '15.00'

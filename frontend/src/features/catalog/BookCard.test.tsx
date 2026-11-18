@@ -63,6 +63,22 @@ describe("BookCard controlled contract", () => {
     expect(screen.getAllByText("No disponible")).toHaveLength(1);
   });
 
+  it.each([["OUT_OF_STOCK", "Agotado"], ["P2042", "Fuera de venta"], ["P2043", "Fuera de venta"]] as const)("names the server's reason %s on the card and in the purchase description", (reason, label) => {
+    setup({ book: toBookCardData({ ...edition, available: false, unavailabilityReason: reason }) });
+    expect(screen.getByText(label, { exact: true })).toBeVisible();
+    expect(screen.queryByText("No disponible")).not.toBeInTheDocument();
+    expect(screen.getByRole("link")).toHaveAccessibleDescription(new RegExp(label));
+    expect(screen.getByRole("button", { name: `Agregar al carrito: ${edition.title}` })).toBeDisabled();
+    // A card has room for the state's name only; the reason's sentence belongs to the edition page.
+    expect(document.querySelector("[data-stockstatus-explanation]")).toBeNull();
+  });
+
+  it("drops a stale reason when the read says the edition is available", () => {
+    setup({ book: toBookCardData({ ...edition, available: true, unavailabilityReason: "OUT_OF_STOCK" }) });
+    expect(screen.getByText("Disponible", { exact: true })).toBeVisible();
+    expect(screen.queryByText("Agotado")).not.toBeInTheDocument();
+  });
+
   it.each([
     { state: "ready" as const, icon: "add_shopping_cart", text: "Agregar", label: "Agregar al carrito" },
     { state: "pending" as const, icon: "schedule", text: "Agregando…", label: "Agregando…" },
@@ -99,5 +115,52 @@ describe("BookCard controlled contract", () => {
     setup({ book: { ...toBookCardData(edition), cover: { url: null, attribution: "Crédito técnico completo de la edición", license: "Licencia de prueba" } }, headingOrder: 4 });
     expect(screen.getByRole("heading", { level: 4 })).toHaveTextContent(edition.title);
     expect(screen.queryByText(/Crédito técnico completo de la edición/)).not.toBeInTheDocument();
+  });
+});
+
+describe("BookCard offer on the catalog shelf", () => {
+  const offer = { offerId: "7", originalPrice: "18.95", discountAmount: "2.84", effectivePrice: "16.11", savingsAmount: "2.84", savingsPercent: "15.00", startsAt: "2026-11-02T17:21:55-05:00", endsAt: "2026-11-09T17:21:55-05:00", daysRemaining: 12, endingSoon: false, offerCopy: "Una lectura para ti", terms: "Hasta agotar la vigencia" };
+  const offered = (daysRemaining: number) => toBookCardData({ ...edition, price: "16.11", offer: { ...offer, daysRemaining, endingSoon: daysRemaining <= 5 } });
+
+  it("reads like Ofertas: today's price, the previous one struck and one saving chip — nothing else", () => {
+    setup({ book: offered(12), cart: undefined, media: "physical" });
+    expect(screen.getByText(/16,11/)).toBeVisible();
+    expect(screen.getByText(/18,95/).closest("s")).not.toBeNull();
+    const saving = screen.getByText(/Ahorras \$\s*2,84/).parentElement!;
+    expect(saving.querySelector(".material-symbol")?.textContent).toBe("sell");
+    expect(saving.textContent).not.toMatch(/%/);
+    expect(screen.queryByText(/Quedan|Queda 1|Termina/)).toBeNull();
+    expect(screen.queryByText("Una lectura para ti")).toBeNull();
+    expect(screen.queryByText(/Términos de la oferta/)).toBeNull();
+    expect(screen.queryByRole("time")).toBeNull();
+    expect(document.querySelector("time")).toBeNull();
+    expect(screen.getByRole("link")).toHaveAccessibleDescription(/16,11.*Ahorras \$\s*2,84.*Disponible/);
+  });
+
+  it.each([[0, "Termina hoy"], [1, "Queda 1 día"], [5, "Quedan 5 días"], [6, null], [30, null]])("adds the days-left chip only for five days or fewer (%i)", (daysRemaining, label) => {
+    setup({ book: offered(daysRemaining), cart: undefined, media: "physical" });
+    const urgency = document.querySelector("[data-offer-urgency]");
+    if (label) expect(urgency).toHaveTextContent(label);
+    else expect(urgency).toBeNull();
+    // Urgency belongs to the stage (as on Ofertas), never beside the saving under the price; the link still hears it.
+    expect(document.querySelector("[data-bookcard-offer] [data-offer-urgency]")).toBeNull();
+    expect(document.querySelector("[data-bookcard-offer]")).toHaveTextContent(/Ahorras \$\s*2,84/);
+    expect(document.querySelector("[data-bookcard]")?.hasAttribute("data-urgent")).toBe(Boolean(label));
+    if (label) {
+      expect(urgency?.closest("[data-bookcard-shelf]")).not.toBeNull();
+      expect(screen.getByRole("link")).toHaveAccessibleDescription(new RegExp(`Ahorras \\$\\s*2,84.*${label}.*Disponible`));
+    }
+  });
+
+  it("keeps both chips under the price on a card without a stage", () => {
+    setup({ book: offered(0) });
+    expect(document.querySelector("[data-bookcard-offer] [data-offer-urgency]")).toHaveTextContent("Termina hoy");
+    expect(document.querySelector("[data-bookcard]")?.hasAttribute("data-urgent")).toBe(false);
+  });
+
+  it("shows no offer chips for an edition without an offer", () => {
+    setup({ cart: undefined, media: "physical" });
+    expect(document.querySelector("[data-bookcard-offer]")).toBeNull();
+    expect(screen.queryByText(/Ahorras/)).toBeNull();
   });
 });

@@ -18,6 +18,13 @@ function mockOffers(handler: (request: Request) => Response | Promise<Response>)
 }
 afterEach(() => vi.unstubAllGlobals());
 describe("OffersPage", () => {
+  it.each([["OUT_OF_STOCK", "Agotado"], [null, "No disponible"]] as const)("names an unbuyable offer with the server's reason (%s) instead of guessing stock", async (reason, label) => {
+    mockOffers(async () => response([{ ...offerEdition, available: false, unavailabilityReason: reason }]));
+    renderOffers();
+    await screen.findByRole("heading", { name: "Libro en oferta" });
+    expect(screen.getByText(label, { exact: true })).toBeVisible();
+    expect(screen.queryByText("Sin existencias")).not.toBeInTheDocument();
+  });
   it("renders the quiet offer card from the server's prices, saving and days left", async () => {
     mockOffers(async () => response([offerEdition]));
     renderOffers();

@@ -32,11 +32,18 @@ export function HeaderCart() {
 
 /** The customer's account destinations; the account menu is their only navigation (current = ultramar + yellow dot). */
 const accountSections = [
-  { to: "/account", icon: "account_circle", label: "Perfil", current: (path: string) => path === "/account" },
+  { to: "/account", icon: "account_circle", label: "Perfil", current: (path: string) => path === "/account" || path === "/account/identity" },
   { to: "/account/addresses", icon: "location_on", label: "Direcciones", current: (path: string) => path.startsWith("/account/addresses") },
   { to: "/favorites", icon: "favorite", label: "Favoritos", current: (path: string) => path.startsWith("/favorites") },
   { to: "/biblioteca", icon: "menu_book", label: "Mi biblioteca", current: (path: string) => path.startsWith("/biblioteca") },
   { to: "/orders", icon: "shopping_bag", label: "Pedidos", current: (path: string) => path.startsWith("/orders") },
+] as const;
+
+/** An ADMIN session's menu: the administration area and its tools (ADR 0047). */
+const adminSections = [
+  { to: "/admin", icon: "inventory_2", label: "Administración", current: (path: string) => path === "/admin" || path === "/admin/" },
+  { to: "/admin/retiros", icon: "storefront", label: "Retiros en tienda", current: (path: string) => path.startsWith("/admin/retiros") },
+  { to: "/admin/correcciones", icon: "badge", label: "Correcciones de identificación", current: (path: string) => path.startsWith("/admin/correcciones") },
 ] as const;
 
 export function HeaderAccount({ opened, onChange }: { opened: boolean; onChange: (opened: boolean) => void }) {
@@ -87,10 +94,13 @@ export function HeaderAccount({ opened, onChange }: { opened: boolean; onChange:
           event.preventDefault();
           onChange(true);
           const last = event.key === "ArrowUp";
-          requestAnimationFrame(() => {
+          // The dropdown mounts after this keystroke, a frame or several later on a busy device: wait for its items.
+          const focusEdge = (framesLeft: number) => requestAnimationFrame(() => {
             const items = dropdown.current?.querySelectorAll<HTMLElement>('[role="menuitem"]');
-            items?.[last ? items.length - 1 : 0]?.focus();
+            if (items?.length) items[last ? items.length - 1 : 0].focus();
+            else if (framesLeft > 0) focusEdge(framesLeft - 1);
           });
+          focusEdge(30);
         }}>
           <MaterialSymbol name="account_circle" context="header" />
         </ActionIcon>
@@ -106,12 +116,12 @@ export function HeaderAccount({ opened, onChange }: { opened: boolean; onChange:
           {profile.isError && <Text size="xs" className={classes.muted}>No pudimos consultar tu nombre.</Text>}
           </div>
         </div>
-        {isCustomer ? accountSections.map((section, index) => {
+        {(isCustomer ? accountSections : adminSections).map((section, index) => {
           const current = section.current(location.pathname);
           return <Menu.Item key={section.to} component={Link} to={section.to} data-autofocus={index === 0 || undefined}
             leftSection={<MaterialSymbol name={section.icon} />} rightSection={current ? <span className={classes.hereDot} aria-hidden="true" /> : undefined}
             aria-current={current ? "page" : undefined}>{section.label}</Menu.Item>;
-        }) : <Menu.Item component={Link} to="/admin" data-autofocus leftSection={<MaterialSymbol name="inventory_2" />}>Administración</Menu.Item>}
+        })}
         <Menu.Divider />
         {logoutError && <Text role="alert" size="sm" className={classes.error}>No se pudo cerrar la sesión. Comprueba tu conexión e inténtalo otra vez.</Text>}
         <Menu.Item closeMenuOnClick={false} disabled={loggingOut} onClick={() => void signOut()} leftSection={<MaterialSymbol name="logout" />}>{loggingOut ? "Cerrando sesión…" : "Cerrar sesión"}</Menu.Item>

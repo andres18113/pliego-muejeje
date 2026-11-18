@@ -7,7 +7,7 @@ import { useSession } from "@/app/session";
 import { AccountShell } from "@/features/account/AccountShell";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { UndoToast, type UndoToastMessage } from "@/shared/ui/UndoToast";
-import { CartAddedNotification, useCartAddedNotification } from "@/shared/ui/CartAddedNotification";
+import { useCartPreview } from "@/features/purchase/CartPreview";
 import { FavoriteRow } from "./FavoriteRow";
 import classes from "./favorites.module.css";
 import { addCustomerFavorite, favoriteListQueryKey, favoriteStatusQueryKey, listCustomerFavorites, type FavoriteStatus } from "@/shared/api/favorites";
@@ -23,7 +23,8 @@ export function FavoritesPage() {
 
 function FavoritesContent() {
   const collection = useRef<HTMLDivElement>(null);
-  const cartNotice = useCartAddedNotification();
+  // A confirmed add answers as everywhere else in the store: the "Tu carrito" drawer on that edition.
+  const cartPreview = useCartPreview();
   const focusedRow = useRef<{ node: HTMLElement; index: number } | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -55,7 +56,6 @@ function FavoritesContent() {
   const restore = useMutation({ mutationFn: (editionId: string) => addCustomerFavorite(editionId), retry: false });
 
   function offerUndo(removed: { editionId: string; title: string }) {
-    cartNotice.dismiss();
     setToast({ key: ++toastKey.current, message: "Quitado de favoritos", detail: removed.title, removed });
   }
 
@@ -111,8 +111,8 @@ function FavoritesContent() {
       {favoritePage.totalCountValue === 0n ? (
         <section className={`favorites-empty ${classes.collection} ${classes.empty}`} aria-labelledby="favorites-empty-heading">
           <span className={classes.emptyMark} aria-hidden="true"><MaterialSymbol name="favorite_border" size={28} /></span>
-          <h2 id="favorites-empty-heading" tabIndex={-1}>Aún no guardaste favoritos.</h2>
-          <p>En el catálogo, elige “Agregar a favoritos” en la tarjeta de una edición.</p>
+          <h2 id="favorites-empty-heading" tabIndex={-1}>Todavía no tienes favoritos</h2>
+          <p>Guarda los libros que te interesen para encontrarlos aquí.</p>
           <ButtonLink variant="primary" to="/catalog">Explorar el catálogo</ButtonLink>
         </section>
       ) : editions.length === 0 ? (
@@ -135,7 +135,7 @@ function FavoritesContent() {
               returnHref={currentHref}
               queryKey={favoriteStatusQueryKey(userId, [edition.editionId])}
               onRemoved={() => offerUndo({ editionId: edition.editionId, title: edition.title })}
-              onCartConfirmed={addition => { setToast(null); cartNotice.show(addition); }}
+              onAddedToCart={editionId => { setToast(null); cartPreview?.open(editionId); }}
               confirmRemoval
             /></li>;
           })}
@@ -147,7 +147,6 @@ function FavoritesContent() {
       </section>}
     </>}
     </div>
-    <CartAddedNotification addition={cartNotice.addition} onDismiss={cartNotice.dismiss} fallbackFocus={() => collection.current?.querySelector<HTMLElement>("#favorite-editions-heading, .favorites-empty h2") ?? null} />
     <UndoToast onDismiss={() => setToast(null)} toast={toast && {
       key: toast.key, message: toast.message, detail: toast.detail,
       action: toast.removed && { label: toast.retry ? "Reintentar" : "Deshacer", busyLabel: "Restaurando…", busy: restore.isPending, onPress: () => void undoRemoval(toast.removed!) },

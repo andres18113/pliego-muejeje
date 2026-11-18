@@ -19,48 +19,46 @@ async function install(page: Page, customer = false) {
   return commands;
 }
 
-for (const width of [320, 375, 768, 1440]) {
+// Primary sections are reached from the header (which marks the current one) or the account menu: no back arrow.
+const primary = ["/", "/catalog", "/catalog?productType=EBOOK", "/catalog?productType=AUDIOBOOK", "/ofertas", "/ayuda", "/account", "/account/addresses", "/favorites", "/orders", "/biblioteca"];
+
+for (const width of [320, 1440]) {
   for (const theme of ["light", "dark"]) {
-    test(`one back arrow under the header, never beside the wordmark, at ${width}px ${theme}`, async ({ page }) => {
+    test(`primary sections carry no back control at ${width}px ${theme}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.addInitScript(value => localStorage.setItem("mantine-color-scheme-value", value), theme);
       const commands = await install(page, true);
+      for (const path of primary) {
+        await page.goto(path);
+        await expect(page.getByRole("heading", { level: 1 }).first()).toBeAttached();
+        await expect(page.getByTestId("site-header").getByRole("link", { name: "PLIEGO, ir al inicio" })).toHaveAttribute("href", "/");
+        await expect(page.getByRole("button", { name: "Volver atrás", exact: true }), path).toHaveCount(0);
+        await expect(page.getByRole("main").getByRole("link", { name: /^Volver a/ }), path).toHaveCount(0);
+        expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), path).toBe(true);
+      }
       await page.goto("/cart");
-      const purchaseHeader = page.locator("[data-purchase-header]");
-      await expect(purchaseHeader).toBeVisible();
-      await expect(purchaseHeader.getByRole("link", { name: "PLIEGO, ir al inicio" })).toHaveAttribute("href", "/");
-      await expect(page.getByRole("button", { name: "Volver atrás", exact: true })).toHaveCount(0);
-      await page.goto("/catalog");
-      const header = page.getByTestId("site-header");
-      await expect(header.getByRole("link", { name: "PLIEGO, ir al inicio" })).toHaveAttribute("href", "/");
-      await expect(header.getByRole("button", { name: "Volver atrás", exact: true })).toHaveCount(0);
-      const back = page.getByRole("main").getByRole("button", { name: "Volver atrás", exact: true });
-      await expect(back).toHaveCount(1);
-      await expect(back).toBeVisible();
-      const bounds = (await back.boundingBox())!, bar = (await header.boundingBox())!;
-      expect(bounds.width).toBeGreaterThanOrEqual(44);
-      expect(bounds.y).toBeGreaterThanOrEqual(bar.y + bar.height - 1);
-      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-      await back.click();
-      await expect(page).toHaveURL(/\/$/);
-      await expect(page.getByRole("button", { name: "Volver atrás", exact: true })).toHaveCount(0);
+      await expect(page.locator("[data-purchase-header]").getByRole("button", { name: "Volver atrás", exact: true })).toHaveCount(0);
+      expect(commands).toEqual([]);
+    });
+
+    test(`a child page names its parent 8px under the header, on the content edge, at ${width}px ${theme}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.addInitScript(value => localStorage.setItem("mantine-color-scheme-value", value), theme);
+      const commands = await install(page);
+      await page.goto("/ayuda/no-existe");
+      const parent = page.getByRole("main").getByRole("link", { name: "Volver a Ayuda" });
+      await expect(parent).toBeVisible();
+      const link = (await parent.boundingBox())!, bar = (await page.getByTestId("site-header").boundingBox())!;
+      expect(link.height).toBeGreaterThanOrEqual(44);
+      expect(Math.abs(link.y - (bar.y + bar.height) - 8)).toBeLessThanOrEqual(1);
+      const contentStart = await page.getByRole("main").evaluate(main => main.getBoundingClientRect().left + parseFloat(getComputedStyle(main).paddingLeft));
+      expect(Math.abs(link.x - contentStart)).toBeLessThanOrEqual(1);
+      await parent.click();
+      await expect(page).toHaveURL(/\/ayuda$/);
       expect(commands).toEqual([]);
     });
   }
 }
-
-test("global arrow skips catalog filter entries and retains the internal screen", async ({ page }) => {
-  const commands = await install(page);
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("/ayuda");
-  await page.getByRole("link", { name: "eBooks", exact: true }).first().click();
-  await expect(page).toHaveURL(/productType=EBOOK/);
-  await page.getByRole("link", { name: "Audiolibros", exact: true }).first().click();
-  await expect(page).toHaveURL(/productType=AUDIOBOOK/);
-  await page.getByRole("button", { name: "Volver atrás", exact: true }).click();
-  await expect(page).toHaveURL(/\/ayuda$/);
-  expect(commands).toEqual([]);
-});
 
 test("unknown route recovers home through its own link and no arrow is drawn there or on the root", async ({ page }) => {
   const commands = await install(page);

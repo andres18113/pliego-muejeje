@@ -24,7 +24,7 @@ public class LibraryController {
     private final LibraryService service;
     public LibraryController(LibraryService service) { this.service=service; }
     @GetMapping
-    @Operation(operationId="listOwnedDigitalItems",summary="Consultar títulos digitales propios",description="Incluye propiedad revocada para conservar historial de compra.")
+    @Operation(operationId="listOwnedDigitalItems",summary="Consultar títulos digitales propios",description="Incluye solo títulos con al menos una adquisición activa. El historial comercial permanece en Mis pedidos.")
     public PageResponse<LibraryModels.Item> list(@AuthenticationPrincipal Jwt jwt,
             @RequestParam(required=false) @Pattern(regexp="EBOOK|AUDIOBOOK",message="El tipo de edición no es válido.") String productType,
             @RequestParam(defaultValue="0") @Min(value=0,message="La página debe ser mayor o igual que cero.") int page,

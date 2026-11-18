@@ -19,6 +19,7 @@ DECLARE
     ids BIGINT[]; count_rows BIGINT; total_rows BIGINT; product VARCHAR;
     expected BIGINT[]; sort_order VARCHAR; current_id BIGINT; item_data JSONB;
     metadata RECORD;
+    expected_reason TEXT;
 BEGIN
     INSERT INTO pliego.usuario(email_normalizado,password_hash,rol,estado)
     VALUES('catalog-contract-admin@example.invalid','fixture','ADMIN','ACTIVE')
@@ -38,7 +39,8 @@ BEGIN
     CALL pliego.sp_edition_create(admin_id,book_id,publisher_id,'CONTRACT-AUDIO',NULL,'es','AUDIOBOOK',NULL,NULL,
         40,NULL,NULL,NULL,NULL,NULL,3600,ARRAY['Voz contrato'],audio_id);
     CALL pliego.sp_inventory_entry(admin_id,paper_id,5,'Fixture contrato',movement_id,stock_before,stock_after);
-    CALL pliego.sp_inventory_entry(admin_id,hard_id,5,'Fixture contrato',movement_id,stock_before,stock_after);
+    -- The missing-inventory case removes this row. Keep the fixture free of movement history.
+    UPDATE pliego.inventario SET stock_actual = 5 WHERE edicion_id = hard_id;
 
     CALL pliego.sp_book_create(admin_id,'Obra retirada contrato mixto',NULL,NULL,
         jsonb_build_array(jsonb_build_object('authorId',author_id,'order',1)),
@@ -103,7 +105,9 @@ BEGIN
 
     FOREACH current_id IN ARRAY ARRAY[paper_id,hard_id,ebook_id,audio_id] LOOP
         SELECT * INTO metadata FROM pliego.fn_edition_detail(current_id);
-        IF NOT FOUND OR metadata.available IS DISTINCT FROM TRUE THEN RAISE EXCEPTION 'Missing/incorrect available detail: %',current_id; END IF;
+        IF NOT FOUND OR metadata.available IS DISTINCT FROM TRUE OR metadata.unavailability_reason IS NOT NULL THEN
+            RAISE EXCEPTION 'Missing/incorrect available detail: %',current_id;
+        END IF;
         SELECT array_agg(edition_id) INTO ids FROM pliego.fn_catalog_search(NULL,NULL,NULL,'catalog-contract-fixture',NULL,NULL,NULL,metadata.format,'TITLE_ASC',0,20,NULL);
         IF ids IS DISTINCT FROM ARRAY[current_id] THEN RAISE EXCEPTION 'Format filter failed for %',metadata.format; END IF;
         SELECT array_agg(edition_id) INTO ids FROM pliego.fn_catalog_search_global('contrato mixto','catalog-contract-fixture',NULL,NULL,NULL,metadata.format,'TITLE_ASC',0,20,NULL);
@@ -140,6 +144,61 @@ BEGIN
     SELECT array_agg((value->>'editionId')::BIGINT ORDER BY (value->>'editionId')::BIGINT)
     INTO ids FROM jsonb_array_elements(item_data);
     IF ids IS DISTINCT FROM ARRAY[paper_id,ebook_id,audio_id] THEN RAISE EXCEPTION 'Mixed cart identities failed: %',ids; END IF;
+
+    FOREACH current_id IN ARRAY ARRAY[paper_id,hard_id,ebook_id,audio_id] LOOP
+        CALL pliego.sp_customer_favorite_add(customer_user,current_id);
+    END LOOP;
+    SELECT count(*) INTO count_rows FROM pliego.fn_customer_favorites(customer_user,0,20)
+    WHERE available AND unavailability_reason IS NULL;
+    IF count_rows <> 4 THEN RAISE EXCEPTION 'Available physical and digital favorites must report null reason'; END IF;
+
+    CALL pliego.sp_inventory_adjust(admin_id,paper_id,'ADJUSTMENT_OUT',5,'Fixture contrato',movement_id,stock_before,stock_after);
+    SELECT count(*), count(*) FILTER (WHERE NOT available AND unavailability_reason = 'OUT_OF_STOCK')
+    INTO count_rows,total_rows
+    FROM (
+        SELECT edition_id,available,unavailability_reason FROM pliego.fn_edition_detail(paper_id)
+        UNION ALL SELECT edition_id,available,unavailability_reason FROM pliego.fn_catalog_search(NULL,NULL,NULL,'catalog-contract-fixture',NULL,NULL,NULL,NULL,'TITLE_ASC',0,20)
+        UNION ALL SELECT edition_id,available,unavailability_reason FROM pliego.fn_catalog_search(NULL,NULL,NULL,'catalog-contract-fixture',NULL,NULL,NULL,NULL,'BEST_SELLING',0,20,'PHYSICAL')
+        UNION ALL SELECT edition_id,available,unavailability_reason FROM pliego.fn_catalog_search_global('contrato mixto','catalog-contract-fixture',NULL,NULL,NULL,NULL,'TITLE_ASC',0,20)
+        UNION ALL SELECT edition_id,available,unavailability_reason FROM pliego.fn_catalog_search_global('contrato mixto','catalog-contract-fixture',NULL,NULL,NULL,NULL,'TITLE_ASC',0,20,'PHYSICAL')
+        UNION ALL SELECT edition_id,available,unavailability_reason FROM pliego.fn_catalog_search_offers(NULL,NULL,NULL,'catalog-contract-fixture',NULL,NULL,NULL,NULL,'PHYSICAL','PRICE_ASC',0,20)
+        UNION ALL SELECT edition_id,available,unavailability_reason FROM pliego.fn_catalog_search_global_offers('contrato mixto','catalog-contract-fixture',NULL,NULL,NULL,NULL,'TITLE_ASC',0,20)
+        UNION ALL SELECT edition_id,available,unavailability_reason FROM pliego.fn_customer_favorites(customer_user,0,20)
+    ) AS reads WHERE edition_id = paper_id;
+    IF count_rows <> 8 OR total_rows <> 8 THEN
+        RAISE EXCEPTION 'Each edition read must report OUT_OF_STOCK at zero physical stock: % / %',total_rows,count_rows;
+    END IF;
+
+    DELETE FROM pliego.inventario WHERE edicion_id = hard_id;
+    IF EXISTS(SELECT 1 FROM pliego.fn_edition_detail(hard_id))
+        OR EXISTS(SELECT 1 FROM pliego.fn_catalog_search(NULL,NULL,NULL,'catalog-contract-fixture',NULL,NULL,NULL,NULL,'TITLE_ASC',0,20,'PHYSICAL') WHERE edition_id = hard_id)
+        OR NOT EXISTS(SELECT 1 FROM pliego.fn_customer_favorites(customer_user,0,20)
+                      WHERE edition_id = hard_id AND NOT available AND unavailability_reason = 'OUT_OF_STOCK') THEN
+        RAISE EXCEPTION 'Missing physical inventory must stay hidden publicly and report OUT_OF_STOCK in favorites';
+    END IF;
+
+    CALL pliego.sp_edition_set_status(admin_id,paper_id,'INACTIVE');
+    IF NOT EXISTS(SELECT 1 FROM pliego.fn_customer_favorites(customer_user,0,20)
+                  WHERE edition_id = paper_id AND NOT available AND unavailability_reason = 'P2042') THEN
+        RAISE EXCEPTION 'Inactive edition must take precedence over stock in favorites';
+    END IF;
+    IF EXISTS(SELECT 1 FROM pliego.fn_edition_detail(paper_id))
+        OR EXISTS(SELECT 1 FROM pliego.fn_catalog_search_offers(NULL,NULL,NULL,'catalog-contract-fixture',NULL,NULL,NULL,NULL,'PHYSICAL','PRICE_ASC',0,20)) THEN
+        RAISE EXCEPTION 'Inactive edition leaked into public detail or offers';
+    END IF;
+
+    CALL pliego.sp_book_set_status(admin_id,book_id,'INACTIVE');
+    FOREACH current_id IN ARRAY ARRAY[paper_id,ebook_id] LOOP
+        SELECT unavailability_reason INTO expected_reason FROM pliego.fn_customer_favorites(customer_user,0,20)
+        WHERE edition_id = current_id AND NOT available;
+        IF expected_reason IS DISTINCT FROM 'P2043' THEN
+            RAISE EXCEPTION 'Inactive book must take precedence for edition %, got %',current_id,expected_reason;
+        END IF;
+    END LOOP;
+    IF EXISTS(SELECT 1 FROM pliego.fn_edition_detail(ebook_id))
+        OR EXISTS(SELECT 1 FROM pliego.fn_catalog_search_global('contrato mixto','catalog-contract-fixture',NULL,NULL,NULL,NULL,'TITLE_ASC',0,20,'EBOOK')) THEN
+        RAISE EXCEPTION 'Inactive book leaked into public detail or global search';
+    END IF;
 
     BEGIN
         PERFORM * FROM pliego.fn_catalog_search(NULL,NULL,NULL,'catalog-contract-fixture',NULL,NULL,NULL,NULL,'TITLE_ASC',0,20,'INVALID');

@@ -2,7 +2,7 @@ import { fillBillingFixture } from "./billingTestFixtures";
 import { act, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { cartBody, json, problem, renderPurchaseRoute, savedAddress, stubApi } from "@/test/purchase";
+import { cartBody, json, problem, renderPurchaseRoute, savedAddress, stubApi, choosePlace } from "@/test/purchase";
 import { CheckoutPage } from "./CheckoutPage";
 import { AccountPage } from "@/features/account/AccountPage";
 import { AddressBookPage } from "@/features/account/AddressBook";
@@ -30,12 +30,12 @@ describe("P1 integrity regressions", () => {
     renderPurchaseRoute(routes, "/checkout");
     await screen.findByText("Av. Principal 123");
     await user.click(screen.getByRole("button", { name: /Transferencia/ }));
-    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    await fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await user.click(await screen.findByRole("button", { name: /Consultar mis pedidos|Consultar resultado/ }));
     await waitFor(() => expect(api.calls.filter((call) => call.method === "GET" || call.path.includes("resolve")).length).toBeGreaterThan(3));
     expect(screen.queryByRole("heading", { name: "No se creó ningún pedido." })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Hacer pedido" })).toHaveAttribute("aria-disabled", "true");
-    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    await fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     expect(api.calls.filter((call) => call.method === "POST" && call.path === "/api/v1/checkout")).toHaveLength(1);
   });
 
@@ -49,9 +49,8 @@ describe("P1 integrity regressions", () => {
     await user.click(await screen.findByRole("button", { name: "Agregar dirección" }));
     await screen.findByRole("dialog", { name: "Nueva dirección" });
     await user.type(screen.getByLabelText("Dirección", { exact: true }), "Av. Principal 123");
-    await user.type(screen.getByLabelText("Ciudad"), "Quito");
-    await user.type(screen.getByLabelText("Provincia"), "Pichincha");
-    await user.type(screen.getByLabelText("Teléfono de contacto"), "0991234567");
+    await choosePlace(document.querySelector<HTMLElement>(".address-form")!);
+    await user.type(screen.getByLabelText("Teléfono de contacto"), "991234567");
     await waitFor(() => expect(screen.getByRole("button", { name: "Guardar dirección" })).toBeEnabled());
     await user.click(screen.getByRole("button", { name: "Guardar dirección" }));
     await screen.findByRole("alert");
@@ -120,7 +119,7 @@ describe("P1 integrity regressions", () => {
     await screen.findByText(/La dirección sigue pendiente/);
     expect(localStorage.getItem("pliego:pending:address:2")).toBe(key);
     await user.click(screen.getByRole("button", { name: "Consultar resultado" }));
-    await screen.findByText(/Guardamos la dirección/);
+    await waitFor(() => expect(document.querySelector("[data-undo-toast]")).toHaveTextContent("Dirección agregada"));
     expect(api.calls.some((call) => call.path === "/api/v1/me/addresses" && call.method === "POST")).toBe(false);
     expect(localStorage.getItem("pliego:pending:address:2")).toBeNull();
   });
@@ -203,7 +202,7 @@ describe("P1 integrity regressions", () => {
     renderPurchaseRoute(routes, "/checkout");
     await screen.findByText("Av. Principal 123");
     await user.click(screen.getByRole("button", { name: /Transferencia/ }));
-    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    await fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await waitFor(() => expect(finishPreflight).toBeTypeOf("function"));
     await act(async () => {
       localStorage.setItem("pliego:pending:checkout:2", "550e8400-e29b-41d4-a716-446655440000");

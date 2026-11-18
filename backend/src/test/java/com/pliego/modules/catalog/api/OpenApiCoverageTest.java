@@ -26,14 +26,17 @@ class OpenApiCoverageTest {
 
     private static final List<Class<?>> CONTROLLERS = List.of(
             com.pliego.modules.identity.api.AuthController.class,
+            com.pliego.modules.realtime.api.RealtimeController.class,
             com.pliego.modules.identity.api.EmailActionController.class,
+            com.pliego.modules.identity.api.EmailChangeController.class,
             com.pliego.modules.sales.api.PickupLocationController.class,
             com.pliego.modules.sales.api.AdminPickupController.class,
             com.pliego.modules.customer.api.CustomerController.class,
             com.pliego.modules.customer.api.BillingIdentityController.class,
+            com.pliego.modules.customer.api.AdminBillingIdentityCorrectionController.class,
             com.pliego.modules.billing.api.BillingController.class,
             com.pliego.modules.customer.api.AdminCustomerController.class,
-            com.pliego.modules.catalog.api.CatalogController.class, EditionOfferController.class,
+            com.pliego.modules.catalog.api.CatalogController.class, EditionOfferController.class, OfferRefreshController.class,
             com.pliego.modules.catalog.api.AdminCatalogController.class,
             com.pliego.modules.inventory.api.AdminInventoryController.class,
             com.pliego.modules.cart.api.CartController.class,
@@ -42,7 +45,9 @@ class OpenApiCoverageTest {
             com.pliego.modules.sales.api.AdminOrderController.class,
             com.pliego.modules.storefront.api.StorefrontController.class,
             com.pliego.modules.help.api.HelpController.class,
-            com.pliego.modules.library.api.LibraryController.class);
+            com.pliego.modules.library.api.LibraryController.class,
+            com.pliego.modules.library.api.DigitalEligibilityController.class,
+            com.pliego.modules.geo.api.GeoController.class);
 
     private static boolean isEndpoint(Method method) {
         return method.isAnnotationPresent(GetMapping.class)
@@ -65,8 +70,8 @@ class OpenApiCoverageTest {
                 }
             }
         }
-        assertThat(endpoints).as("REST total including public catalog, customer favorites, post-purchase routes and email change")
-                .isEqualTo(88);
+        assertThat(endpoints).as("REST total including registration continuation, catalog, saved-for-later, billing-identity corrections, invoice access, verified pickup and post-purchase routes")
+                .isEqualTo(112);
     }
 
     @Test
@@ -83,7 +88,19 @@ class OpenApiCoverageTest {
         for (Class<?> controller : CONTROLLERS) {
             boolean secured = controller.isAnnotationPresent(SecurityRequirement.class);
             String name = controller.getSimpleName();
-            if (name.equals("AuthController") || name.equals("EmailActionController") || name.equals("CatalogController") || name.equals("PickupLocationController")
+            if (name.equals("RealtimeController")) {
+                assertThat(controller.getAnnotation(SecurityRequirement.class).name()).isEqualTo("authSessionCookie");
+            } else if (name.equals("EmailChangeController")) {
+                assertThat(secured).isFalse();
+                for (Method method : controller.getDeclaredMethods()) {
+                    if (isEndpoint(method)) {
+                        boolean authenticated = method.getName().equals("resend") || method.getName().equals("cancelPending");
+                        assertThat(method.isAnnotationPresent(SecurityRequirement.class))
+                                .as("%s#%s security must match its public or authenticated contract", name, method.getName())
+                                .isEqualTo(authenticated);
+                    }
+                }
+            } else if (name.equals("AuthController") || name.equals("EmailActionController") || name.equals("CatalogController") || name.equals("OfferRefreshController") || name.equals("PickupLocationController") || name.equals("GeoController")
                     || name.equals("StorefrontController") || name.equals("HelpController")) {
                 assertThat(secured).as("%s must stay public", name).isFalse();
             } else {

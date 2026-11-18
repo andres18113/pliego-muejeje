@@ -67,7 +67,7 @@ public class CustomerOrderController {
                 post.amounts() == null ? null : money(post.amounts().subtotal()),
                 post.amounts() == null ? null : money(post.amounts().taxRate()),
                 post.amounts() == null ? null : money(post.amounts().taxAmount()),
-                post.amounts() == null ? null : money(post.amounts().shippingAmount()));
+                post.amounts() == null ? null : money(post.amounts().shippingAmount()), order.orderReference());
         }).toList(), page, pageSize, Long.toString(result.totalCount()));
     }
 
@@ -86,7 +86,7 @@ public class CustomerOrderController {
                         item.isbn(), item.title(), item.authors(), item.publisher(), item.format(),
                         item.language(), money(item.unitPrice()), item.quantity(), money(item.subtotal()), item.requiresPhysicalFulfillment(),
                         money(item.originalPrice()), money(item.unitSavings()), money(item.originalSubtotal()), money(item.lineSavings()),
-                        item.pricingSnapshotAvailable())).toList(),
+                        item.pricingSnapshotAvailable(), item.digitalAccess())).toList(),
                 address==null ? null : new Address(address.recipient(), address.line1(), address.line2(), address.city(),
                         address.province(), address.countryCode(), address.postalCode(), address.reference(),
                         address.phone()),
@@ -98,7 +98,7 @@ public class CustomerOrderController {
                 PostPurchaseResponses.invoice(post.invoice()),PostPurchaseResponses.creditNotes(post.creditNotes()),post.availableActions(),
                 money(post.amounts().taxRate()),money(post.amounts().taxAmount()),money(post.amounts().shippingAmount()),
                 money(post.offerPricing().originalSubtotal()), money(post.offerPricing().savingsTotal()),
-                money(post.offerPricing().currentSubtotal()), post.offerPricing().pricingSnapshotAvailable());
+                money(post.offerPricing().currentSubtotal()), post.offerPricing().pricingSnapshotAvailable(), order.orderReference());
     }
 
     @PostMapping("/{orderId}/cancel")

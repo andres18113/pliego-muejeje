@@ -14,6 +14,7 @@ const routes = [
   { path: "/verificar-correo", element: <VerifyEmailPage /> },
   { path: "/", element: <Destination /> },
   { path: "/catalog", element: <Destination /> },
+  { path: "/favorites", element: <Destination /> },
   { path: "/catalog/editions/:editionId", element: <Destination /> },
   { path: "/cart", element: <CustomerOnly intent="/cart" task="ver tu carrito"><Destination /></CustomerOnly> },
 ];
@@ -31,7 +32,13 @@ async function pendingVerification(from?: string, role: "CUSTOMER" | null = null
   return { ...view, api, finish };
 }
 
-async function settle(finish: (response: Response) => void, response = new Response(null, { status: 204 })) {
+/** The registering browser's answer (ADR 0050): verified and signed in, the destination left to this page's own intent. */
+const signedIn = (returnTo: string | null = null) => new Response(JSON.stringify({ accessToken: "verified-session", tokenType: "Bearer", expiresInSeconds: 1800,
+  user: { userId: "100", email: "ana@example.com", role: "CUSTOMER" }, returnTo }), { status: 200, headers: { "Content-Type": "application/json" } });
+/** Another browser or device: verified, never signed in. */
+const verifiedOnly = () => new Response(null, { status: 204 });
+
+async function settle(finish: (response: Response) => void, response: Response = signedIn()) {
   await act(async () => { finish(response); await vi.advanceTimersByTimeAsync(0); });
 }
 
@@ -44,7 +51,7 @@ it.each([
   ["/admin", "/"],
   ["/sign-in?from=%2Fverificar-correo", "/"],
   ["/verificar-correo#token=unsafe", "/"],
-])("automatically returns from %s to the validated destination %s after confirmed verification", async (from, destination) => {
+])("in the registering browser, signs in and returns from %s to the validated destination %s", async (from, destination) => {
   const { router, api, finish } = await pendingVerification(from);
   await settle(finish);
   expect(screen.getByRole("heading", { name: "Correo verificado" })).toBeInTheDocument();
@@ -56,21 +63,41 @@ it.each([
   expect(api.count("POST", "/api/v1/auth/login")).toBe(0);
 });
 
-it("returns a guest to the protected cart without authenticating or issuing purchase commands", async () => {
+it("verifying on another device does not sign in: it says so and offers sign-in back to the cart, without purchase commands", async () => {
   const { router, api, finish } = await pendingVerification("/cart?source=edition#items");
-  await settle(finish);
+  await settle(finish, verifiedOnly());
   await act(async () => vi.advanceTimersByTimeAsync(2_000));
-  expect(router.state.location.pathname).toBe("/cart");
-  expect(screen.getByRole("heading", { name: "Inicia sesión para ver tu carrito." })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: "Iniciar sesión" })).toHaveAttribute("href", "/sign-in?from=%2Fcart%3Fsource%3Dedition%23items");
+  expect(router.state.location.pathname).toBe("/verificar-correo");
+  expect(screen.getByRole("heading", { name: "Correo verificado" })).toBeInTheDocument();
+  expect(screen.getByRole("status")).toHaveTextContent("Tu cuenta ya está activa.");
+  expect(screen.getByText(/vuelve a esa página: continuará sola/)).toBeInTheDocument();
+  // The page's way back and the outcome's action both lead to sign-in, carrying the cart.
+  for (const link of screen.getAllByRole("link", { name: "Iniciar sesión" })) expect(link).toHaveAttribute("href", "/sign-in?from=%2Fcart%3Fsource%3Dedition%23items");
+  expect(screen.queryByRole("link", { name: "Continuar" })).not.toBeInTheDocument();
   expect(api.count("POST", "/api/v1/auth/login")).toBe(0);
   expect(api.count("POST", "/api/v1/checkout")).toBe(0);
   expect(api.count("GET", "/api/v1/cart")).toBe(0);
 });
 
+it("lands a signed-in registration on its protected destination with the new session", async () => {
+  const { api, finish } = await pendingVerification("/cart");
+  await settle(finish);
+  await act(async () => vi.advanceTimersByTimeAsync(2_000));
+  expect(screen.getByLabelText("Destino")).toHaveTextContent("/cart");
+  expect(api.count("POST", "/api/v1/auth/login")).toBe(0);
+});
+
+it("prefers the server's sanitized returnTo and sends the session marker with the verification", async () => {
+  const { api, finish } = await pendingVerification("/catalog");
+  await settle(finish, signedIn("/favorites"));
+  await act(async () => vi.advanceTimersByTimeAsync(2_000));
+  expect(screen.getByLabelText("Destino")).toHaveTextContent("/favorites");
+  expect(api.calls.find((call) => call.path === "/api/v1/auth/verify-email")?.headers.get("X-PLIEGO-SESSION-REQUEST")).toBe("1");
+});
+
 it("retains the existing customer session while returning to its protected destination", async () => {
   const { api, finish } = await pendingVerification("/cart", "CUSTOMER");
-  await settle(finish);
+  await settle(finish, verifiedOnly());
   await act(async () => vi.advanceTimersByTimeAsync(2_000));
   expect(screen.getByLabelText("Destino")).toHaveTextContent("/cart");
   expect(api.count("POST", "/api/v1/auth/login")).toBe(0);

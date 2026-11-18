@@ -30,5 +30,6 @@ public final class AdminCatalogResponses {
             String coverLicense, String coverSourceUrl, String coverAttribution, String state,
             Integer stockActual, String createdAt, String updatedAt,
             @Schema(nullable = true, allowableValues = {"EPUB", "PDF"}) String ebookFileFormat,
-        @Schema(nullable = true) Integer audioDurationSeconds, List<String> narrators) { }
+        @Schema(nullable = true) Integer audioDurationSeconds, List<String> narrators,
+            @Schema(description = "Existe una fila de oferta, incluso vencida o inactiva.") boolean offerRowExists) { }
 }

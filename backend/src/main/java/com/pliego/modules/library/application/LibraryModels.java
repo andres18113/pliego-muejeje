@@ -19,7 +19,9 @@ public final class LibraryModels {
             @Schema(nullable=true) String ebookFileFormat, @Schema(nullable=true) Integer audioDurationSeconds,
             List<String> narrators) { }
     @Schema(name="LibrarySourcePurchase")
-    public record SourcePurchase(String orderId, String orderItemId, @Schema(format="date-time") String acquiredAt,
+    public record SourcePurchase(String orderId,
+            @Schema(pattern="^PL-[0-9]{4}-[0-9]{4}$", example="PL-0123-4567") String orderReference,
+            String orderItemId, @Schema(format="date-time") String acquiredAt,
             String paymentState, String orderState, @Schema(allowableValues={"ACTIVE","REVOKED"}) String grantState) { }
     @Schema(name="LibraryAction")
     public record Action(@Schema(allowableValues={"VIEW_ORDER","HELP"}) String type, String label, String href) { }

@@ -12,6 +12,8 @@ public class MailOutboxService {
  @Transactional(propagation=Propagation.REQUIRES_NEW)
  public OutboxMail claim() {return gateway.claim();}
  @Transactional(propagation=Propagation.REQUIRES_NEW)
+ public boolean prepareSend(OutboxMail mail) {return gateway.prepareSend(mail);}
+ @Transactional(propagation=Propagation.REQUIRES_NEW)
  public boolean complete(OutboxMail mail,String outcome,String error,String providerMessageId) {
   return gateway.complete(mail,outcome,error,providerMessageId);
  }

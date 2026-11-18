@@ -1,0 +1,11 @@
+# OPTIONAL drop-in only; do not copy unless the owner created/tested the check.
+# Install as /etc/systemd/system/pliego-backup.service.d/heartbeat.conf.
+[Unit]
+OnFailure=pliego-backup-heartbeat-fail.service
+[Service]
+Environment=BACKUP_HEARTBEAT_ENABLED=1
+LoadCredential=heartbeat.json:/etc/pliego-backup/heartbeat.json
+# Also install the failure service and add only the [Unit] OnFailure above to
+# /etc/systemd/system/pliego-backup-freshness.service.d/heartbeat.conf.
+# heartbeat.json (root:root0600) schema: {"url":"OWNER_CREATED_HEALTHCHECKS_PING_URL"}
+# Never put the URL in Environment=, argv or logs.

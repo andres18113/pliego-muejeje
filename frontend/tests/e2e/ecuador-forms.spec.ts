@@ -45,9 +45,14 @@ for (const width of [320, 390, 768, 1280]) {
     await expect(page.locator("#register-phone-input-status.field-error")).toHaveCount(1);
     await phone.press("End");
     await phone.pressSequentially("12345678");
+    // A tenth digit is kept and explained, never dropped at a cap.
+    await expect(phone).toHaveValue("9912345678");
+    await expect(phone).not.toHaveAttribute("maxlength");
+    await expect(phone).toHaveAttribute("aria-invalid", "true");
+    await expect(page.locator("#register-phone-input-status")).toHaveText("Usa como máximo 9 dígitos.");
+    await phone.press("Backspace");
     await expect(phone).toHaveValue("991234567");
-    await expect(phone).toHaveAttribute("maxlength", "9");
-    await expect(page.locator("#register-phone-input-status")).toContainText(/9 dígitos/);
+    await expect(phone).not.toHaveAttribute("aria-invalid", "true");
     await expect(page.getByRole("combobox", { name: /país|prefijo/i })).toHaveCount(0);
     expect(writes).toHaveLength(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
@@ -76,9 +81,10 @@ for (const width of [320, 390, 768, 1280]) {
     await expect(page.locator("#profile-phone-input-input-status.field-error")).toHaveCount(1);
     await phone.press("End");
     await phone.pressSequentially("a");
-    await expect(phone).toHaveValue("99");
+    await expect(phone).toHaveValue("99a");
     await expect(phone).toHaveAccessibleDescription("Usa solo números.");
     await expect(page.locator("#profile-phone-input-input-status.field-error")).toHaveCount(1);
+    await phone.press("Backspace");
     await phone.pressSequentially("1234567");
     await expect(phone).toHaveValue("991234567");
     await expect(phone).not.toHaveAttribute("aria-invalid", "true");
@@ -112,8 +118,9 @@ for (const width of [320, 390, 768, 1280]) {
     await expect(dialog.locator("#address-phone-input-status.field-error")).toHaveCount(1);
     await phone.press("End");
     await phone.pressSequentially("123456789");
-    await expect(phone).toHaveValue("991234567");
-    await expect(dialog.locator("#address-phone-input-status")).toContainText(/9 dígitos/);
+    await expect(phone).toHaveValue("99123456789");
+    await expect(phone).toHaveAttribute("aria-invalid", "true");
+    await expect(dialog.locator("#address-phone-input-status")).toHaveText("Usa como máximo 9 dígitos.");
     expect(writes).toHaveLength(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
     await page.screenshot({ path: test.info().outputPath(`delivery-ecuador-${width}.png`), fullPage: true, animations: "disabled" });

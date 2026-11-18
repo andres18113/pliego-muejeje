@@ -1,6 +1,8 @@
 package com.pliego.modules.customer.api;
 
+import static com.pliego.foundation.validation.PhoneValidationTestCases.malformedPhones;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -9,8 +11,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.Instant;
 import java.util.UUID;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
@@ -18,6 +25,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import com.pliego.foundation.security.JwtTokenIssuer;
+import tools.jackson.databind.ObjectMapper;
 
 @org.springframework.test.context.TestPropertySource(properties = "pliego.mail.enabled=false")
 @SpringBootTest(properties = {"spring.datasource.url=jdbc:postgresql://localhost:5432/pliego_i3_test", "spring.datasource.username=pliego_test",
@@ -26,9 +34,15 @@ import com.pliego.foundation.security.JwtTokenIssuer;
 @AutoConfigureMockMvc
 @Import(CustomerApiIntegrationTest.TestConfigurationForCustomerApi.class)
 class CustomerValidationApiIntegrationTest {
+    private static final String ADDRESS = """
+            {"alias":"Casa","recipient":"Ana Pérez","line1":"Calle 1","provinceId":"17","cityId":"801","countryCode":"EC"%s}
+            """;
+    private static final String PHONE_REQUIRED = "Escribe un teléfono de contacto.";
+
     @Autowired MockMvc mvc;
     @Autowired JwtTokenIssuer issuer;
     @Autowired CustomerApiIntegrationTest.FakeCustomerGateway gateway;
+    @Autowired ObjectMapper objectMapper;
     @BeforeEach void reset() { gateway.reset(); }
     private String token() {
         Instant now = Instant.now();
@@ -36,7 +50,11 @@ class CustomerValidationApiIntegrationTest {
     }
     private org.springframework.test.web.servlet.ResultActions replace(String first, String last, String phone) throws Exception {
         return mvc.perform(put("/api/v1/me").header("Authorization", token()).contentType(MediaType.APPLICATION_JSON)
-                .content("{\"firstNames\":\""+first+"\",\"lastNames\":\""+last+"\",\"phone\":"+(phone==null?"null":"\""+phone+"\"")+",\"expectedVersion\":\"0\"}"));
+                .content("{\"firstNames\":\""+first+"\",\"lastNames\":\""+last+"\",\"phone\":"+objectMapper.writeValueAsString(phone)+",\"expectedVersion\":\"0\"}"));
+    }
+    private org.springframework.test.web.servlet.ResultActions patchPhone(String phone) throws Exception {
+        return mvc.perform(patch("/api/v1/me").header("Authorization", token()).contentType(MediaType.APPLICATION_JSON)
+                .content("{\"field\":\"phone\",\"value\":" + objectMapper.writeValueAsString(phone) + ",\"expectedVersion\":\"0\"}"));
     }
     @Test void replacementRejectsNameDigitsAtTheirField() throws Exception {
         replace("Gat1n", "Pérez", null).andExpect(status().isBadRequest())
@@ -58,9 +76,92 @@ class CustomerValidationApiIntegrationTest {
         }
     }
     @Test void profilePatchAppliesTheSamePhoneRule() throws Exception {
-        mvc.perform(patch("/api/v1/me").header("Authorization",token()).contentType(MediaType.APPLICATION_JSON)
-                .content("{\"field\":\"phone\",\"value\":\"0991234567\",\"expectedVersion\":\"0\"}"))
-                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.violations[0].field").value("value"));
+        // A PATCH names the request property that failed: "value" (the contract also used by names).
+        patchPhone("0991234567").andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.violations[0].field").value("value"));
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    void profilePatchClearsThePhoneWhenGivenNullOrEmptyValue(String phone) throws Exception {
+        assertEquals("+59325550134", gateway.findProfile(100L).phone());
+        patchPhone(phone).andExpect(status().isNoContent());
+        assertNull(gateway.findProfile(100L).phone());
+    }
+
+    @Test void profilePatchStillRequiresValueAndRejectsAnExtraPhoneProperty() throws Exception {
+        var before = gateway.findProfile(100L);
+        for (String body : new String[]{"{\"field\":\"phone\",\"expectedVersion\":\"0\"}",
+                "{\"field\":\"phone\",\"value\":null,\"expectedVersion\":\"0\",\"phone\":\"+593991234567\"}"}) {
+            mvc.perform(patch("/api/v1/me").header("Authorization", token()).contentType(MediaType.APPLICATION_JSON)
+                            .content(body))
+                    .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("MALFORMED_JSON"));
+        }
+        assertEquals(before, gateway.findProfile(100L));
+    }
+
+    static Stream<Arguments> invalidAddressPhones() {
+        return Stream.concat(malformedPhones().map(arguments -> {
+                    String phone = (String) arguments.get()[0];
+                    String message = phone.isBlank() ? PHONE_REQUIRED : (String) arguments.get()[1];
+                    return Arguments.of(true, phone, message);
+                }), Stream.of(Arguments.of(true, "", PHONE_REQUIRED),
+                        Arguments.of(true, null, PHONE_REQUIRED),
+                        Arguments.of(false, null, PHONE_REQUIRED)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidAddressPhones")
+    void addressCommandsRejectInvalidPhoneWithoutChangingAnyAddress(boolean includePhone, String phone, String message) throws Exception {
+        String phoneProperty = includePhone ? ",\"phone\":" + objectMapper.writeValueAsString(phone) : "";
+        String token = token();
+        mvc.perform(post("/api/v1/me/addresses").header("Authorization", token)
+                        .header("Idempotency-Key", UUID.randomUUID().toString()).contentType(MediaType.APPLICATION_JSON)
+                        .content(ADDRESS.formatted(",\"phone\":\"+593991234567\",\"makePrimary\":true")))
+                .andExpect(status().isCreated());
+        var before = gateway.listAddresses(100L);
+
+        mvc.perform(put("/api/v1/me/addresses/{addressId}", before.getFirst().addressId())
+                        .header("Authorization", token).contentType(MediaType.APPLICATION_JSON)
+                        .content(ADDRESS.formatted(phoneProperty).replace("Casa", "Trabajo").replace("Calle 1", "Calle 2")))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.violations.length()").value(1))
+                .andExpect(jsonPath("$.violations[0].field").value("phone"))
+                .andExpect(jsonPath("$.violations[0].message").value(message));
+        assertEquals(before, gateway.listAddresses(100L));
+
+        mvc.perform(post("/api/v1/me/addresses").header("Authorization", token)
+                        .header("Idempotency-Key", UUID.randomUUID().toString()).contentType(MediaType.APPLICATION_JSON)
+                        .content(ADDRESS.formatted(phoneProperty + ",\"makePrimary\":true")))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.violations.length()").value(1))
+                .andExpect(jsonPath("$.violations[0].field").value("phone"))
+                .andExpect(jsonPath("$.violations[0].message").value(message));
+        assertEquals(before, gateway.listAddresses(100L));
+    }
+
+    @ParameterizedTest
+    @MethodSource("com.pliego.foundation.validation.PhoneValidationTestCases#malformedPhones")
+    void profileReplacementRejectsInvalidPhoneWithoutUpdatingTheProfile(String phone, String message) throws Exception {
+        var before = gateway.findProfile(100L);
+        replace("María", "Pérez", phone).andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.violations.length()").value(1))
+                .andExpect(jsonPath("$.violations[0].field").value("phone"))
+                .andExpect(jsonPath("$.violations[0].message").value(message));
+        assertEquals(before, gateway.findProfile(100L));
+    }
+
+    @ParameterizedTest
+    @MethodSource("com.pliego.foundation.validation.PhoneValidationTestCases#malformedPhones")
+    void profilePatchRejectsInvalidPhoneWithoutUpdatingTheProfile(String phone, String message) throws Exception {
+        var before = gateway.findProfile(100L);
+        patchPhone(phone).andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.violations.length()").value(1))
+                .andExpect(jsonPath("$.violations[0].field").value("value"))
+                .andExpect(jsonPath("$.violations[0].message").value(message));
+        assertEquals(before, gateway.findProfile(100L));
     }
     @Test void namesCountUnicodeCodePointsAndNormalizeAccents() throws Exception {
         replace("𐐀".repeat(120), "O’Connor-Pérez", null).andExpect(status().isNoContent());
@@ -70,7 +171,7 @@ class CustomerValidationApiIntegrationTest {
     @Test void fullValidProfileNameFitsTheAddressRecipient() throws Exception {
         String recipient="A".repeat(120)+" "+"B".repeat(120);
         mvc.perform(post("/api/v1/me/addresses").header("Authorization",token()).header("Idempotency-Key",UUID.randomUUID().toString())
-                .contentType(MediaType.APPLICATION_JSON).content("{\"alias\":\"Casa\",\"recipient\":\""+recipient+"\",\"line1\":\"Calle 1\",\"city\":\"Quito\",\"province\":\"Pichincha\",\"countryCode\":\"EC\",\"phone\":\"+593991234567\",\"makePrimary\":true}"))
+                .contentType(MediaType.APPLICATION_JSON).content("{\"alias\":\"Casa\",\"recipient\":\""+recipient+"\",\"line1\":\"Calle 1\",\"provinceId\":\"17\",\"cityId\":\"801\",\"countryCode\":\"EC\",\"phone\":\"+593991234567\",\"makePrimary\":true}"))
                 .andExpect(status().isCreated());
     }
 }

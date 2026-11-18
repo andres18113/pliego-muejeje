@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { expectLightAppearance, expectUnchangedByDarkPreference } from "./light-appearance";
 import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
 
 const testFrontendOrigin = process.env.PLIEGO_E2E_BASE_URL || "http://127.0.0.1:5173";
@@ -44,6 +45,7 @@ for (const scheme of ["light", "dark"] as const) for (const width of [320, 375, 
     await expect(main.getByRole("link", { name: "Ver categorías" })).toHaveCount(0);
     // The Home is the opening with one entry point per way of reading; its footer names the storefront's sections, not every subject.
     await expect(main.getByRole("heading", { level: 1, name: "Descubre el mundo de PLIEGO." })).toBeVisible();
+    await expectLightAppearance(page); if (scheme === "dark") await expectUnchangedByDarkPreference(page);
     await expect(main.locator('section[aria-labelledby="page-title"]').getByRole("link", { name: /^Explorar / })).toHaveCount(3);
     await expect(main.getByRole("heading", { name: "Tu próxima lectura." })).toHaveCount(0);
     await reflow(page);
@@ -161,8 +163,14 @@ test("touch topic navigation, filter selection and search work at 320 and 375px"
     await session.detach();
     await page.goto(`${testFrontendOrigin}/catalog?category=literatura`);
     await expect(page.locator("[data-bookcard]").first()).toBeVisible();
-    await page.getByRole("button", { name: /^Filtros/ }).tap();
     const filters = page.getByRole("dialog", { name: "Filtros" });
+    // A synthesized touch tap right after the raw CDP swipe above is occasionally dropped by Chromium's gesture
+    // detector (no click reaches the page; seen on old and new code alike). Tap again only when no dialog appeared,
+    // so a tap that opens and then closes the drawer would still fail here.
+    await expect(async () => {
+      if (!(await filters.isVisible())) await page.getByRole("button", { name: /^Filtros/ }).tap();
+      await expect(filters).toBeVisible({ timeout: 1_500 });
+    }).toPass({ timeout: 10_000 });
     await filters.getByRole("button", { name: "Formato" }).tap();
     await filters.getByText("Tapa dura", { exact: true }).tap();
     await expect(page).toHaveURL(/format=HARDCOVER/);

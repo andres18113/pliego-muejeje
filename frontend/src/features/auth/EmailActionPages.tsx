@@ -1,17 +1,19 @@
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate, useNavigation } from "react-router-dom";
 import { z } from "zod";
 import { useSession } from "@/app/session";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { ApiRequestError, describeApiError } from "@/shared/api/errors";
-import { EmailActionOutcomeUnknown } from "@/shared/api/emailActions";
+import { cancelEmailChangeByLink, confirmEmailChange, EmailActionOutcomeUnknown } from "@/shared/api/emailActions";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 import { Field, FieldMessage } from "@/shared/ui/Field";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { AuthState, authFlowClasses as flow } from "./AuthFlow";
-import { useEmailRequest, useEmailTokenAction } from "./emailActionHooks";
+import { useEmailRequest, useEmailTokenAction, useFragmentToken } from "./emailActionHooks";
 import { emailActionLocation, safeAuthReturnHref } from "./authLocation";
 import { PasswordInput } from "@/shared/ui/PasswordInput";
+import { adoptSharedSession, registrationDestination, sessionFromRegistration } from "./registrationContinuation";
 
 function useEmailReturnHref() {
   const location = useLocation();
@@ -112,6 +114,7 @@ export function VerifyEmailPage() {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const from = useEmailReturnHref();
+  const { session, establish } = useSession();
   const { token, mutation } = useEmailTokenAction("verification");
   const attempted = useRef("");
   const verify = mutation.mutate;
@@ -127,20 +130,44 @@ export function VerifyEmailPage() {
     attempted.current = token;
     verify({ token });
   }, [token, verify, idle]);
-  const verified = mutation.isSuccess;
+
+  // In the browser that registered, verifying also signed in (ADR 0050): install that session once. Its broadcast
+  // lets the "Revisa tu correo" tab restore the same cookie and continue on its own.
+  const created = mutation.isSuccess ? mutation.data ?? null : null;
+  const installed = useRef<object | null>(null);
   useEffect(() => {
-    // Let the confirmation be read, then continue without another required click.
-    // A new fragment belongs to a new verification, even before its effect resets
-    // the previous result. Leaving this view always cancels the return.
-    if (!verified || location.hash || navigation.state !== "idle") return;
-    const timer = window.setTimeout(() => navigate(from, { replace: true }), 1200);
+    if (!created || installed.current === created) return;
+    installed.current = created;
+    establish(sessionFromRegistration(created));
+  }, [created, establish]);
+  // A lost answer may still have verified and signed in: the cookie decides, before any new link is suggested.
+  const uncertain = mutation.isError && mutation.error instanceof EmailActionOutcomeUnknown;
+  const restoreTried = useRef(false);
+  useEffect(() => {
+    if (!uncertain || session || restoreTried.current) return;
+    restoreTried.current = true;
+    void adoptSharedSession(establish);
+  }, [uncertain, session, establish]);
+
+  const signedIn = Boolean(session) && (mutation.isSuccess || uncertain);
+  const destination = created ? registrationDestination(created, from) : from;
+  useEffect(() => {
+    // Let the confirmation be read, then continue without another required click — only with a session, since
+    // the destination may be a customer page. A new fragment belongs to a new verification; leaving cancels it.
+    if (!signedIn || location.hash || navigation.state !== "idle") return;
+    const timer = window.setTimeout(() => navigate(destination, { replace: true }), 1200);
     return () => window.clearTimeout(timer);
-  }, [verified, location.hash, navigation.state, from, navigate]);
+  }, [signedIn, location.hash, navigation.state, destination, navigate]);
   const another = <Link to={emailActionLocation("/reenviar-verificacion", from)}>Solicitar otro enlace</Link>;
   return <EmailActionFrame title="Verificación de correo">
-    {mutation.isSuccess ? <AuthState tone="success" title="Correo verificado" actions={<ButtonLink variant="primary" to={from} replace>Continuar</ButtonLink>}>
-      <p role="status">{from === "/" ? "Abriendo el inicio…" : "Volviendo a donde estabas…"}</p>
+    {signedIn ? <AuthState tone="success" title="Correo verificado" actions={<ButtonLink variant="primary" to={destination} replace>Continuar</ButtonLink>}>
+      <p role="status">{destination === "/" ? "Ya iniciaste sesión. Abriendo el inicio…" : "Ya iniciaste sesión. Volviendo a donde estabas…"}</p>
     </AuthState>
+      : mutation.isSuccess ? <AuthState tone="success" title="Correo verificado"
+        actions={<ButtonLink variant="primary" to={emailActionLocation("/sign-in", from)}>Iniciar sesión</ButtonLink>}>
+        <p role="status">Tu cuenta ya está activa.</p>
+        <p>Si la creaste en otro navegador o dispositivo, vuelve a esa página: continuará sola. Aquí, inicia sesión para seguir.</p>
+      </AuthState>
       : mutation.isError ? <ActionFailure error={mutation.error} another={another} />
         : !token && !mutation.isPending ? <MissingLink another={another}>Abre el enlace completo del correo para verificar tu cuenta.</MissingLink>
           : <AuthState tone="info" symbol="mail" title="Verificando tu correo">
@@ -199,5 +226,63 @@ export function ResetPasswordPage() {
             </form>
             <p className={flow.links}>{another}</p>
           </>}
+  </EmailActionFrame>;
+}
+
+/**
+ * The link sent to a requested address. Opening it confirms (it only proves that mailbox, which the customer asked
+ * for); the server then swaps the login email and closes every session, so the next step is signing in with it.
+ */
+export function ConfirmEmailChangePage() {
+  const token = useFragmentToken();
+  const { session, clear } = useSession();
+  const attempted = useRef("");
+  const mutation = useMutation({ mutationFn: confirmEmailChange, retry: false });
+  const confirm = mutation.mutate;
+  useEffect(() => {
+    // One attempt per token, also under Strict Mode's repeated effects; an uncertain outcome is never replayed.
+    if (!token || attempted.current === token) return;
+    attempted.current = token;
+    confirm(token);
+  }, [token, confirm]);
+  const confirmed = mutation.isSuccess;
+  useEffect(() => { if (confirmed && session) clear(); }, [confirmed, session, clear]);
+  const another = <Link to="/account">Ir a Mi perfil</Link>;
+  return <EmailActionFrame title="Confirmar nuevo correo">
+    {mutation.isSuccess ? <AuthState tone="success" title="Correo confirmado" actions={<ButtonLink variant="primary" to={emailActionLocation("/sign-in", "/account")}>Iniciar sesión</ButtonLink>}>
+      <p role="status">Desde ahora entras con <strong>{mutation.data}</strong>. Por seguridad cerramos tus sesiones abiertas.</p>
+    </AuthState>
+      : mutation.isError ? <ActionFailure error={mutation.error} another={another} />
+        : !token ? <MissingLink another={another}>Abre el enlace completo del correo para confirmar tu nuevo correo.</MissingLink>
+          : <AuthState tone="info" symbol="mail" title="Confirmando tu correo">
+            <p role="status">Estamos comprobando el enlace…</p>
+          </AuthState>}
+  </EmailActionFrame>;
+}
+
+/**
+ * The link sent to the address still in use when a change is requested: the account's way back. It waits for an
+ * explicit press, so a mail scanner that follows links cannot withdraw a change the customer did ask for.
+ */
+export function CancelEmailChangePage() {
+  const token = useFragmentToken();
+  const mutation = useMutation({ mutationFn: cancelEmailChangeByLink, retry: false });
+  const lock = useRef(false);
+  const alreadyConfirmed = mutation.error instanceof ApiRequestError && mutation.error.code === "EMAIL_CHANGE_ALREADY_CONFIRMED";
+  const help = <Link to="/ayuda">Ir a Ayuda</Link>;
+  return <EmailActionFrame title="Cancelar cambio de correo">
+    {mutation.isSuccess ? <AuthState tone="success" title="Cambio cancelado" actions={<ButtonLink variant="primary" to="/recuperar-contrasena">Cambiar contraseña</ButtonLink>}>
+      <p role="status">Tu cuenta sigue usando esta dirección. Si no pediste el cambio, alguien conoce tu contraseña: cámbiala ahora.</p>
+    </AuthState>
+      : alreadyConfirmed ? <AuthState tone="terminal" title="El cambio ya se confirmó" actions={help}>
+        <ActionError>Tu cuenta ya usa la dirección nueva. Si no fuiste tú, escríbenos desde Ayuda para recuperarla.</ActionError>
+      </AuthState>
+        : mutation.isError ? <ActionFailure error={mutation.error} another={help} />
+          : !token ? <MissingLink another={help}>Abre el enlace completo del correo para cancelar el cambio.</MissingLink>
+            : <AuthState tone="info" symbol="lock" title="¿No pediste este cambio?" actions={<Button variant="primary" type="button" disabled={mutation.isPending} onClick={() => {
+              if (lock.current) return; lock.current = true; mutation.mutate(token, { onSettled: () => { lock.current = false; } });
+            }}>{mutation.isPending ? "Cancelando…" : "Cancelar el cambio"}</Button>}>
+              <p>Si lo cancelas, tu cuenta seguirá usando esta dirección y el enlace enviado a la nueva dejará de funcionar.</p>
+            </AuthState>}
   </EmailActionFrame>;
 }

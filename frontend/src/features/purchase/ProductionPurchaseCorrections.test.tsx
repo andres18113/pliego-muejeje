@@ -1,7 +1,7 @@
 import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { cartBody, json, renderPurchaseRoute, savedAddress, stubApi } from "@/test/purchase";
+import { cartBody, json, renderPurchaseRoute, savedAddress, stubApi, choosePlace } from "@/test/purchase";
 import { CartPage } from "./CartPage";
 import { CheckoutPage } from "./CheckoutPage";
 import { cartQueryKey, useCustomerCart } from "./cartQuery";
@@ -95,8 +95,7 @@ describe("production purchase corrections", () => {
     const form = within(dialog);
     await user.type(form.getByLabelText("Nombre de la dirección"), "Casa");
     await user.type(form.getByLabelText("Dirección", { exact: true }), "Av. Principal 123");
-    await user.type(form.getByLabelText("Ciudad"), "Quito");
-    await user.type(form.getByLabelText("Provincia"), "Pichincha");
+    await choosePlace(document.querySelector<HTMLElement>(".address-form")!);
     await user.type(form.getByLabelText("Teléfono de contacto"), "25550134");
     await user.click(form.getByRole("button", { name: "Guardar dirección" }));
     await waitFor(() => expect(screen.queryByRole("dialog", { name: "Nueva dirección" })).not.toBeInTheDocument());

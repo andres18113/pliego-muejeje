@@ -17,6 +17,26 @@ function transport(body: unknown, status = 200) {
 }
 afterEach(() => vi.unstubAllGlobals());
 describe("ownership-only storefront contracts", () => {
+  it("preserves public references beside internal order IDs in library lists and details", async () => {
+    const item = { ...owned, sourcePurchases: [
+      { ...owned.sourcePurchases[0], orderId: "701", orderReference: "PL-0012-3401", orderItemId: "2" },
+      { ...owned.sourcePurchases[0], orderReference: "PL-0123-4567", paymentState: "REFUNDED", orderState: "CANCELLED", grantState: "REVOKED" },
+    ] };
+    transport({ items: [item], page: 0, pageSize: 20, totalCount: "1" });
+    const page = await listOwnedItems({ productType: "", page: 0, pageSize: 20 });
+    expect(page.items[0].sourcePurchases).toEqual(item.sourcePurchases);
+    transport(item);
+    expect((await getOwnedItem("8")).sourcePurchases).toEqual(item.sourcePurchases);
+  });
+  it.each([{}, { orderReference: null }])("accepts legacy library purchases with reference %j", async (reference) => {
+    const item = { ...owned, sourcePurchases: [{ ...owned.sourcePurchases[0], ...reference }] };
+    transport(item);
+    expect((await getOwnedItem("8")).sourcePurchases).toEqual(item.sourcePurchases);
+  });
+  it("rejects a library purchase with a non-string public reference", async () => {
+    transport({ ...owned, sourcePurchases: [{ ...owned.sourcePurchases[0], orderReference: 700 }] });
+    await expect(getOwnedItem("8")).rejects.toMatchObject({ status: 502, code: "INVALID_LIBRARY_RESPONSE" });
+  });
   it("keeps owned metadata, purchase links and server-filtered pagination", async () => {
     const requests = transport({ items: [owned], page: 0, pageSize: 20, totalCount: "1" });
     const result = await listOwnedItems({ productType: "EBOOK", page: 0, pageSize: 20 });

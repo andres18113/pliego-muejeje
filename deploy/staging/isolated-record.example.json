@@ -1,0 +1,13 @@
+{
+  "purpose": "pliego-disposable-staging",
+  "target_vm_id": "REPLACE-ISOLATED-VM-ID",
+  "generator_vm_id": "REPLACE-SEPARATE-GENERATOR-ID",
+  "target_ipv4": "10.33.0.8",
+  "generator_ipv4": "10.33.0.9",
+  "admin_ipv4": "192.0.2.10",
+  "target_machine_id": "REPLACE-32-HEX-MACHINE-ID",
+  "ssh_host_fingerprint": "SHA256:REPLACE-VERIFIED-OUT-OF-BAND",
+  "region": "REPLACE-SAME-REGION",
+  "destroy_after_utc": "REPLACE-UTC-DEADLINE",
+  "generator_machine_id": "REPLACE-32-HEX-GENERATOR-MACHINE-ID"
+}

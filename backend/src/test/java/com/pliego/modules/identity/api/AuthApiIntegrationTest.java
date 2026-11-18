@@ -17,6 +17,8 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -99,6 +101,25 @@ class AuthApiIntegrationTest {
     @Autowired
     FakeIdentityGateway identityGateway;
 
+    @org.springframework.test.context.bean.override.mockito.MockitoBean
+    com.pliego.modules.identity.gateway.RegistrationContinuationGateway continuationGateway;
+
+    @org.springframework.test.context.bean.override.mockito.MockitoBean
+    com.pliego.modules.identity.gateway.LoginAttemptGateway loginAttempts;
+
+    @org.springframework.test.context.bean.override.mockito.MockitoBean
+    com.pliego.modules.identity.application.LoginAttemptAdmissionService loginAdmission;
+
+    @org.springframework.test.context.bean.override.mockito.MockitoBean
+    com.pliego.modules.identity.application.RegistrationAttemptAdmissionService registrationAdmission;
+
+    @BeforeEach
+    void continuationFixture() {
+        org.mockito.Mockito.when(continuationGateway.issue(org.mockito.ArgumentMatchers.anyLong(),
+                org.mockito.ArgumentMatchers.anyString(),org.mockito.ArgumentMatchers.nullable(String.class)))
+                .thenReturn(Instant.now().plusSeconds(86400));
+    }
+
     @TestConfiguration(proxyBeanMethods = false)
     static class NoDatabaseTransactionConfiguration {
 
@@ -146,8 +167,8 @@ class AuthApiIntegrationTest {
                         .content(REGISTER_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.userId").value("100"))
-                .andExpect(jsonPath("$.customerId").value("87"))
+                .andExpect(jsonPath("$.userId").doesNotExist())
+                .andExpect(jsonPath("$.customerId").doesNotExist())
                 .andExpect(jsonPath("$.state").value("PENDING_VERIFICATION"))
                 .andReturn();
 
@@ -164,6 +185,19 @@ class AuthApiIntegrationTest {
         org.junit.jupiter.api.Assertions.assertFalse(response.getResponse().getContentAsString().contains("password"));
         org.junit.jupiter.api.Assertions.assertTrue(identityGateway.verificationHash.matches("[0-9a-f]{64}"));
         org.junit.jupiter.api.Assertions.assertFalse(response.getResponse().getContentAsString().contains(identityGateway.verificationNonce));
+    }
+
+    @ParameterizedTest
+    @MethodSource("com.pliego.foundation.validation.PhoneValidationTestCases#malformedPhones")
+    void registrationRejectsInvalidPhoneWithoutRegisteringAnAccount(String phone, String message) throws Exception {
+        mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
+                        .content(REGISTER_JSON.replace("\"+59325550134\"", objectMapper.writeValueAsString(phone))))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.violations.length()").value(1))
+                .andExpect(jsonPath("$.violations[0].field").value("phone"))
+                .andExpect(jsonPath("$.violations[0].message").value(message));
+        org.junit.jupiter.api.Assertions.assertNull(identityGateway.registeredEmail);
     }
 
     @Test
@@ -216,20 +250,32 @@ class AuthApiIntegrationTest {
     }
 
     @Test
-    void duplicateEmailMapsToConflictWithoutDatabaseDetails() throws Exception {
-        identityGateway.registrationFailure = exceptionTranslator
-                .translate(new SQLException("private uq_usuario_email detail", "P1101"));
-
+    void duplicateEmailKeepsNeutralStateAndSecureCookieWithoutAccountIdentifiers() throws Exception {
+        identityGateway.registrationResult = new RegistrationResult(0, 0, "PENDING_VERIFICATION");
         mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON).content(REGISTER_JSON))
-                .andExpect(status().isConflict())
+                .andExpect(status().isCreated())
+                .andExpect(content().json("{\"state\":\"PENDING_VERIFICATION\"}"))
+                .andExpect(jsonPath("$.userId").doesNotExist())
+                .andExpect(jsonPath("$.customerId").doesNotExist())
+                .andExpect(result -> org.assertj.core.api.Assertions.assertThat(result.getResponse().getHeader("Set-Cookie"))
+                        .contains("pliego_registration=", "HttpOnly", "Secure", "Max-Age=86400"));
+        org.mockito.Mockito.verify(continuationGateway,org.mockito.Mockito.never())
+                .issue(org.mockito.ArgumentMatchers.anyLong(),org.mockito.ArgumentMatchers.anyString(),org.mockito.ArgumentMatchers.any());
+        org.mockito.Mockito.verify(continuationGateway).issueNeutral(org.mockito.ArgumentMatchers.anyString());
+    }
+
+    @Test
+    void registrationQuotaHasSpanishProblemAndRetryAfterWithoutCookie() throws Exception {
+        org.mockito.Mockito.when(registrationAdmission.admit(org.mockito.ArgumentMatchers.anyString(),org.mockito.ArgumentMatchers.anyString())).thenReturn(42);
+        mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON).content(REGISTER_JSON))
+                .andExpect(status().isTooManyRequests())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
-                .andExpect(jsonPath("$.code").value("P1101"))
-                .andExpect(jsonPath("$.type").value("urn:pliego:problem:P1101"))
-                .andExpect(jsonPath("$.title").value("Correo ya registrado"))
-                .andExpect(jsonPath("$.traceId").isNotEmpty())
-                .andExpect(jsonPath("$.detail").value("Ya existe una cuenta con ese correo electrónico."))
-                .andExpect(result -> org.junit.jupiter.api.Assertions.assertFalse(
-                        result.getResponse().getContentAsString().contains("uq_usuario_email")));
+                .andExpect(jsonPath("$.code").value("AUTH_REGISTER_RATE_LIMITED"))
+                .andExpect(jsonPath("$.title").value("Demasiados intentos"))
+                .andExpect(jsonPath("$.detail").value("Espera unos minutos antes de volver a intentarlo."))
+                .andExpect(result -> org.assertj.core.api.Assertions.assertThat(result.getResponse().getHeader("Retry-After")).isEqualTo("42"))
+                .andExpect(result -> org.assertj.core.api.Assertions.assertThat(result.getResponse().getHeader("Set-Cookie")).isNull());
+        org.assertj.core.api.Assertions.assertThat(identityGateway.registeredEmail).isNull();
     }
 
     @Test
@@ -307,6 +353,25 @@ class AuthApiIntegrationTest {
         mvc.perform(post("/api/v1/auth/refresh").cookie(firstCookie)
                 .header(com.pliego.foundation.security.AuthSessionRequestFilter.HEADER_NAME, "1"))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void registrationIssuesSeparateSecureContinuationWithoutAccess() throws Exception {
+        mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON).content(REGISTER_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.accessToken").doesNotExist())
+                .andExpect(result -> org.assertj.core.api.Assertions.assertThat(
+                        result.getResponse().getHeaders("Set-Cookie"))
+                        .anySatisfy(value -> org.assertj.core.api.Assertions.assertThat(value)
+                                .startsWith("pliego_registration=").contains("HttpOnly", "Secure", "SameSite=Strict", "Path=/api/v1/auth")
+                                .doesNotContain("Domain=")));
+    }
+
+    @Test
+    void registrationSessionRequiresBrowserMarker() throws Exception {
+        mvc.perform(post("/api/v1/auth/registration-session"))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("ACCESS_DENIED"));
     }
 
     @Test
@@ -519,8 +584,15 @@ class AuthApiIntegrationTest {
         return jws.serialize();
     }
 
-    private void assertInvalidToken(String token) {
+    private void assertInvalidToken(String token) throws Exception {
         org.junit.jupiter.api.Assertions.assertThrows(JwtException.class, () -> jwtDecoder.decode(token));
+        mvc.perform(get("/api/v1/me").header("Authorization", "Bearer " + token))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("AUTH_INVALID_TOKEN"))
+                .andExpect(jsonPath("$.title").value("Token inválido"))
+                .andExpect(jsonPath("$.detail").value("El token de acceso no es válido o ha vencido."))
+                .andExpect(result -> org.junit.jupiter.api.Assertions.assertEquals("Bearer error=\"invalid_token\"",
+                        result.getResponse().getHeader("WWW-Authenticate")));
     }
 
     private JsonNode withoutTraceId(JsonNode problem) {

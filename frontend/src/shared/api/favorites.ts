@@ -3,6 +3,7 @@ import { apiClient } from "./client";
 import { parseTotalCount } from "./catalog";
 import { toApiRequestError } from "./errors";
 import { editionFormatSchema } from "./editionFormats";
+import { editionUnavailabilityReasonSchema } from "./availability";
 
 const favoriteEditionSchema = z.object({
   editionId: z.string().regex(/^[1-9][0-9]*$/),
@@ -17,6 +18,7 @@ const favoriteEditionSchema = z.object({
   format: editionFormatSchema,
   language: z.string(),
   available: z.boolean(),
+  unavailabilityReason: editionUnavailabilityReasonSchema,
   favoritedAt: z.string(),
 });
 

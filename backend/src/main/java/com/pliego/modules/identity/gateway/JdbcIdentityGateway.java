@@ -16,10 +16,11 @@ import com.pliego.foundation.database.JdbcGatewaySupport;
 @Repository
 public class JdbcIdentityGateway extends JdbcGatewaySupport implements IdentityGateway {
 
-    private static final String REGISTER_CALL = "CALL pliego.sp_customer_register_with_verification(?,?,?,?,?,?,?,?,?,?)";
+    private static final String REGISTER_CALL = "CALL pliego.sp_customer_register_neutral(?,?,?,?,?,?,?,?,?,?)";
     private static final String AUTH_QUERY = "SELECT user_id, email_canonical, password_hash, role, state "
             + "FROM pliego.fn_user_auth_data(?)";
     private static final String CREATE_SESSION_QUERY = "SELECT pliego.fn_auth_session_create_checked(?,?,?,?)";
+    private static final String CREATE_IDENTITY_SESSION_QUERY = "SELECT pliego.fn_auth_session_create_identity_checked(?,?,?,?,?)";
     private static final String REFRESH_SESSION_QUERY = "SELECT user_id, email_canonical, role, expires_at "
             + "FROM pliego.fn_auth_session_refresh(?,?)";
     private static final String REVOKE_SESSION_QUERY = "SELECT pliego.fn_auth_session_revoke(?)";
@@ -100,6 +101,19 @@ public class JdbcIdentityGateway extends JdbcGatewaySupport implements IdentityG
                     statement.setString(2, refreshTokenHash);
                     statement.setTimestamp(3, java.sql.Timestamp.from(expiresAt));
                     statement.setString(4, expectedPasswordHash);
+                }, resultSet -> resultSet.next() && resultSet.getBoolean(1)));
+    }
+
+    @Override
+    public boolean createSession(long userId, String refreshTokenHash, Instant expiresAt,
+            String expectedPasswordHash, String expectedEmail) {
+        return withDatabaseErrorTranslation(() -> jdbcTemplate.query(CREATE_IDENTITY_SESSION_QUERY,
+                statement -> {
+                    statement.setLong(1, userId);
+                    statement.setString(2, refreshTokenHash);
+                    statement.setTimestamp(3, java.sql.Timestamp.from(expiresAt));
+                    statement.setString(4, expectedPasswordHash);
+                    statement.setString(5, expectedEmail);
                 }, resultSet -> resultSet.next() && resultSet.getBoolean(1)));
     }
 

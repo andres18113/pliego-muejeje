@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { expectLightAppearance, expectUnchangedByDarkPreference } from "./light-appearance";
 
 const summary = { editionId: "42", bookId: "17", title: "Cien años de soledad", authors: "Gabriel García Márquez", publisher: "Debolsillo", isbn13: "9786287745131", price: "20.00", coverUrl: null, coverLicense: null, coverAttribution: null, format: "HARDCOVER", language: "es", available: true };
 const unavailable = { ...summary, editionId: "43", bookId: "18", title: "Introducción al álgebra lineal", authors: "José Alfredo Collazos Sánchez, Carlos Alberto Ramírez Vanegas, Óscar Danilo Montoya Giraldo", publisher: "Ecoe Ediciones", isbn13: "9789585082656", format: "PAPERBACK", available: false };
@@ -26,6 +27,9 @@ async function install(page: Page, scheme: "light" | "dark", quantityConflict = 
     if (path === "/cart") return ok({ cartId: "40", state: "ACTIVE", requiresPhysicalFulfillment: true, physicalItemCount: 4, digitalItemCount: 0, items: [null, "P3002", "P2042", "P2043"].map((reason, index) => ({
       cartItemId: String(100 + index), editionId: String(42 + index), title: index === 0 ? summary.title : `${unavailable.title} ${index}`, authors: summary.authors, sku: `PLG-BK-${index}`, coverUrl: null, requiresPhysicalFulfillment: true, quantityEditable: true, quantity: 2, currentPrice: "20.00", currentSubtotal: "40.00", available: stockOverride ?? (reason === null), unavailabilityReason: stockOverride === true ? null : stockOverride === false ? "P3002" : reason,
     })), totalCurrent: "160.00" });
+    // Guardado para después (ADR 0045): a saved row shows availability only when there is a problem, as a cart line does.
+    if (path === "/cart/saved") return ok({ items: [{ savedItemId: "501", editionId: "60", title: `${unavailable.title} guardado`, authors: summary.authors, sku: "PLG-BK-60", coverUrl: null,
+      requiresPhysicalFulfillment: true, quantityEditable: true, quantity: 1, currentPrice: "20.00", currentSubtotal: "20.00", available: false, unavailabilityReason: "P2042" }], totalCount: 1 });
     if (route.request().method() !== "GET" && path.startsWith("/cart/items")) writes++;
     if (path === "/cart/items" && quantityConflict) return route.fulfill({ status: 409, contentType: "application/problem+json", body: JSON.stringify({ type: "urn:pliego:problem:P3002", code: "P3002", status: 409, title: "Existencias insuficientes", detail: "La cantidad solicitada no está cubierta." }) });
     if (path === "/me/addresses") return ok([{ addressId: "15", alias: "Casa", recipient: "Lector de prueba", line1: "Av. Principal 100", line2: null, city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+593991234567", primary: true }]);
@@ -77,10 +81,12 @@ for (const scheme of ["light", "dark"] as const) {
   test(`StockStatus in production routes: ${scheme}, desktop/mobile and real API states`, async ({ page }) => {
     test.setTimeout(120_000);
     await install(page, scheme);
+    // A stored "dark" choice from before PLIEGO had one appearance, plus a dark system preference: both are ignored.
+    await page.emulateMedia({ colorScheme: scheme, reducedMotion: "reduce" });
     for (const width of [320, 390, 768, 1440, 1920]) {
       await page.setViewportSize({ width, height: 1000 });
       await page.goto("/catalog"); await expect(page.locator("[data-bookcard]")).toHaveCount(2); await check(page, 2);
-      await expect(page.locator("html")).toHaveAttribute("data-mantine-color-scheme", scheme);
+      await expectLightAppearance(page); if (scheme === "dark") await expectUnchangedByDarkPreference(page);
       // Catalog cards are browse cards: availability lives in the stock line; buying happens on the edition page.
       await expect(page.locator('.edition-item [data-bookcard-cart]')).toHaveCount(0);
       await expect(page.locator('.edition-item [data-stockstatus]')).toHaveCount(2);
@@ -94,7 +100,7 @@ for (const scheme of ["light", "dark"] as const) {
       await page.goto("/cart"); await check(page, 4);
       await page.locator('[data-purchase="line-copy"] h2 a').first().hover();
       await check(page, 4);
-      await expect(page.locator('[data-stockstatus-explanation]')).toHaveText(["No hay existencias suficientes para esta cantidad.", "Esta edición ya no está a la venta.", "Este libro ya no está a la venta."]);
+      await expect(page.locator('[data-cart-line] [data-stockstatus-explanation]')).toHaveText(["No hay existencias suficientes para esta cantidad.", "Esta edición ya no está a la venta.", "Este libro ya no está a la venta."]);
       await expect(page.getByRole('combobox', { name: 'Cantidad de Introducción al álgebra lineal 1' })).toHaveAccessibleDescription(/No disponible.*No hay existencias suficientes para esta cantidad/);
       await page.goto("/checkout");
       await check(page, 3); // One summary sheet at every width.

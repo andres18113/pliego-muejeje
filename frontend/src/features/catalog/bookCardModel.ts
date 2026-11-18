@@ -1,12 +1,13 @@
 import type { MouseEventHandler } from "react";
 import type { To } from "react-router-dom";
 import type { EditionSummary } from "@/shared/api/catalog";
+import type { EditionUnavailabilityReason } from "@/shared/api/availability";
 import { resolveStockStatus, type StockAvailability } from "./stockStatusModel";
 import { formatAuthorNames, formatEdition, formatLanguage, formatUsd } from "./formatters";
 import { mediaCue, mediaOfFormat, type CatalogMedia } from "./catalogMedia";
 import { toOfferViewModel } from "./offersViewModel";
 
-export type BookCardEditionSource = Pick<EditionSummary, "editionId" | "title" | "authors" | "publisher" | "format" | "language" | "price" | "available" | "coverUrl" | "coverLicense" | "coverAttribution" | "offer">;
+export type BookCardEditionSource = Pick<EditionSummary, "editionId" | "title" | "authors" | "publisher" | "format" | "language" | "price" | "available" | "unavailabilityReason" | "coverUrl" | "coverLicense" | "coverAttribution" | "offer">;
 export interface BookCardData {
   id: string;
   title: string;
@@ -19,6 +20,8 @@ export interface BookCardData {
   discountLabel?: string;
   offer?: ReturnType<typeof toOfferViewModel>;
   available: boolean;
+  /** The server's reason when it cannot be bought; StockStatus names it. */
+  unavailabilityReason?: EditionUnavailabilityReason | null;
   cover: { url: string | null; license: string | null; attribution: string | null };
 }
 export type FavoriteControl =
@@ -59,7 +62,7 @@ export function toBookCardData(edition: BookCardEditionSource): BookCardData {
   return { id: edition.editionId, title: edition.title, authors: formatAuthorNames(edition.authors), publisher: edition.publisher,
     formatLabel: mediaCue(mediaOfFormat(edition.format)).label,
     editionLabel: `${formatEdition(edition.format)} · ${formatLanguage(edition.language)}`,
-    priceLabel: formatUsd(edition.price), available: edition.available,
+    priceLabel: formatUsd(edition.price), available: edition.available, unavailabilityReason: edition.available ? null : edition.unavailabilityReason ?? null,
     ...(edition.offer ? { originalPriceLabel: formatUsd(edition.offer.originalPrice), discountLabel: formatUsd(edition.offer.savingsAmount), offer: toOfferViewModel(edition.offer) } : {}),
     cover: { url: edition.coverUrl, license: edition.coverLicense, attribution: edition.coverAttribution } };
 }

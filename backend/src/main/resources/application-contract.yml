@@ -1,0 +1,7 @@
+# Explicit opt-in for local development, CI and static OpenAPI export only.
+# Do not activate this profile in production.
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true

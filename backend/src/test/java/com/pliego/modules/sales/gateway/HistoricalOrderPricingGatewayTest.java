@@ -49,6 +49,7 @@ class HistoricalOrderPricingGatewayTest {
         var page = new JdbcCustomerOrderGateway(new DatabaseExceptionTranslator(), jdbc, new ObjectMapper()).list(42L, 0, 20);
         var summary = page.items().getFirst();
 
+        assertEquals("PL-0123-4567", new ObjectMapper().valueToTree(summary).path("orderReference").asText());
         assertEquals(1L, page.totalCount());
         assertEquals(new BigDecimal("45.77"), summary.total());
         var amounts = summary.postPurchase().amounts();
@@ -82,18 +83,46 @@ class HistoricalOrderPricingGatewayTest {
         var order = new JdbcCustomerOrderGateway(new DatabaseExceptionTranslator(), jdbc, new ObjectMapper()).detail(42L, 700L);
 
         assertNotNull(order, "Order detail must read the immutable offer-pricing Database API projection");
+        assertEquals("PL-0123-4567", new ObjectMapper().valueToTree(order).path("orderReference").asText());
         assertTrue(order.postPurchase().offerPricing().pricingSnapshotAvailable());
         assertEquals(new BigDecimal("44.31"), order.postPurchase().offerPricing().originalSubtotal());
         assertEquals(new BigDecimal("4.51"), order.postPurchase().offerPricing().savingsTotal());
         assertEquals(new BigDecimal("39.80"), order.postPurchase().offerPricing().currentSubtotal());
         var item = order.items().getFirst();
         assertTrue(item.pricingSnapshotAvailable());
+        assertNull(item.digitalAccess());
         assertEquals(new BigDecimal("22.15"), item.originalPrice());
         assertEquals(new BigDecimal("2.26"), item.unitSavings());
         assertEquals(new BigDecimal("44.31"), item.originalSubtotal());
         assertEquals(new BigDecimal("4.51"), item.lineSavings());
         assertEquals(0, new BigDecimal("19.90").compareTo(item.unitPrice()));
         assertEquals(0, new BigDecimal("39.80").compareTo(item.subtotal()));
+    }
+
+    @Test
+    void customerDetailMapsDigitalAccessWithoutBorrowingAnotherSource() throws Exception {
+        for (String state : java.util.List.of("PENDING_PAYMENT", "AVAILABLE", "REVOKED", "UNAVAILABLE")) {
+            var jdbc = mock(JdbcTemplate.class);
+            var row = orderRow();
+            String ownedId = "AVAILABLE".equals(state) ? "\"9007199254740993\"" : "null";
+            when(row.getString("items")).thenReturn("""
+                    [{"orderItemId":"801","editionId":"251","title":"Digital",
+                      "format":"EBOOK","unitPrice":10.00,"quantity":1,"subtotal":10.00,
+                      "requiresPhysicalFulfillment":false,"pricingSnapshotAvailable":false,
+                      "digitalAccess":{"state":"%s","ownedItemId":%s}}]
+                    """.formatted(state, ownedId));
+            when(jdbc.queryForObject(anyString(), org.mockito.ArgumentMatchers.<RowMapper<Detail>>any(), eq(42L), eq(700L)))
+                    .thenAnswer(invocation -> {
+                        RowMapper<Detail> mapper = invocation.getArgument(1);
+                        return mapper.mapRow(row, 0);
+                    });
+            var item = new JdbcCustomerOrderGateway(new DatabaseExceptionTranslator(), jdbc, new ObjectMapper())
+                    .detail(42L, 700L).items().getFirst();
+            assertFalse(item.requiresPhysicalFulfillment());
+            assertNotNull(item.digitalAccess());
+            assertEquals(state, item.digitalAccess().state());
+            assertEquals("AVAILABLE".equals(state) ? "9007199254740993" : null, item.digitalAccess().ownedItemId());
+        }
     }
 
     @Test
@@ -162,6 +191,7 @@ class HistoricalOrderPricingGatewayTest {
                 .resolve(42L, UUID.randomUUID()).order();
 
         assertNotNull(order);
+        assertEquals("PL-0123-4567", new ObjectMapper().valueToTree(order).path("orderReference").asText());
         assertTrue(order.offerPricing().pricingSnapshotAvailable());
         assertEquals(new BigDecimal("44.31"), order.offerPricing().originalSubtotal());
         assertEquals(new BigDecimal("4.51"), order.offerPricing().savingsTotal());
@@ -174,6 +204,7 @@ class HistoricalOrderPricingGatewayTest {
     private static ResultSet orderRow() throws Exception {
         var row = mock(ResultSet.class);
         when(row.getLong("order_id")).thenReturn(700L);
+        when(row.getString("order_reference")).thenReturn("PL-0123-4567");
         when(row.getString("order_state")).thenReturn("CONFIRMED");
         when(row.getString("purchase_state")).thenReturn("CONFIRMED");
         when(row.getObject("created_at", OffsetDateTime.class)).thenReturn(OffsetDateTime.parse("2026-09-23T19:30:00Z"));

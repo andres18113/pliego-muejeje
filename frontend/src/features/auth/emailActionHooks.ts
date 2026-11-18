@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { requestEmailAction, resetPassword, verifyEmail } from "@/shared/api/emailActions";
+import type { RegistrationSession } from "@/shared/api/registrationSession";
 
 export function useEmailRequest(purpose: "verification" | "recovery", from = "/") {
   return useMutation({ mutationFn: (email: string) => requestEmailAction(purpose, email, from === "/" ? undefined : from), retry: false });
@@ -19,10 +20,10 @@ export function useEmailTokenAction(purpose: "verification" | "recovery") {
   // Verification has no editable payload: reuse its original pending/result for
   // every visit to that link on this view, including an uncertain failure. This
   // stays in component memory, never in the query cache or browser storage.
-  const verificationRuns = useRef(new Map<string, Promise<void>>());
+  const verificationRuns = useRef(new Map<string, Promise<RegistrationSession | null>>());
   const mutation = useMutation({
     mutationFn: (command: { token: string; password?: string }) => {
-      if (purpose === "recovery") return resetPassword(command.token, command.password ?? "");
+      if (purpose === "recovery") return resetPassword(command.token, command.password ?? "").then(() => null);
       let result = verificationRuns.current.get(command.token);
       if (!result) {
         result = verifyEmail(command.token);
@@ -49,4 +50,25 @@ export function useEmailTokenAction(purpose: "verification" | "recovery") {
     navigate(location.pathname + location.search, { replace: true, state: location.state });
   }, [location.hash, location.pathname, location.search, location.state, navigate, resetMutation]);
   return { token, mutation };
+}
+
+/**
+ * Reads a one-use link token from the fragment (never sent to servers or Referer), keeps it in memory and removes
+ * it from history at once, as the verification and recovery links do.
+ */
+export function useFragmentToken() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const parse = (hash: string) => {
+    const candidate = new URLSearchParams(hash.slice(1)).get("token") ?? "";
+    return /^[A-Za-z0-9_-]{43}$/.test(candidate) ? candidate : "";
+  };
+  const [token, setToken] = useState(() => parse(location.hash));
+  useEffect(() => {
+    if (!location.hash) return;
+    const next = parse(location.hash);
+    setToken(current => next || current);
+    navigate(location.pathname + location.search, { replace: true, state: location.state });
+  }, [location.hash, location.pathname, location.search, location.state, navigate]);
+  return token;
 }

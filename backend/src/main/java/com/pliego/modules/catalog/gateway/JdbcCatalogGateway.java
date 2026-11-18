@@ -23,6 +23,7 @@ import com.pliego.modules.catalog.application.CatalogEditionDetail.Publisher;
 import com.pliego.modules.catalog.application.CatalogEditionSummary;
 import com.pliego.modules.catalog.application.CatalogQuery;
 import com.pliego.modules.catalog.application.CatalogSearchPage;
+import com.pliego.modules.catalog.application.EditionUnavailabilityReason;
 import com.pliego.modules.catalog.application.PublicCatalogCategory;
 import com.pliego.modules.catalog.application.PublicCatalogFilterOptions;
 import tools.jackson.core.JacksonException;
@@ -36,14 +37,14 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
 
     private static final String CATALOG_SEARCH_QUERY = "SELECT edition_id, book_id, title, authors_ordered, "
             + "publisher_name, btrim(isbn13::text) AS isbn13, s.price, cover_url, cover_license, cover_attribution, "
-            + "format, language, available, total_count, ebook_file_format, audio_duration_seconds, narrators, o.offer_id, o.original_price, o.discount_amount, o.starts_at, o.ends_at, o.days_remaining, o.ending_soon, o.offer_copy, o.terms, o.savings_percent FROM pliego.fn_catalog_search(?,?,?,?,?,?,?,?,?,?,?) AS s LEFT JOIN LATERAL pliego.fn_edition_offer(s.edition_id) o ON true";
+            + "format, language, available, unavailability_reason, total_count, ebook_file_format, audio_duration_seconds, narrators, o.offer_id, o.original_price, o.discount_amount, o.starts_at, o.ends_at, o.days_remaining, o.ending_soon, o.offer_copy, o.terms, o.savings_percent FROM pliego.fn_catalog_search(?,?,?,?,?,?,?,?,?,?,?) AS s LEFT JOIN LATERAL pliego.fn_edition_offer(s.edition_id) o ON true";
     private static final String CATALOG_GLOBAL_SEARCH_QUERY = "SELECT edition_id, book_id, title, authors_ordered, "
             + "publisher_name, btrim(isbn13::text) AS isbn13, s.price, cover_url, cover_license, cover_attribution, "
-            + "format, language, available, total_count, ebook_file_format, audio_duration_seconds, narrators, o.offer_id, o.original_price, o.discount_amount, o.starts_at, o.ends_at, o.days_remaining, o.ending_soon, o.offer_copy, o.terms, o.savings_percent FROM pliego.fn_catalog_search_global(?,?,?,?,?,?,?,?,?) AS s LEFT JOIN LATERAL pliego.fn_edition_offer(s.edition_id) o ON true";
+            + "format, language, available, unavailability_reason, total_count, ebook_file_format, audio_duration_seconds, narrators, o.offer_id, o.original_price, o.discount_amount, o.starts_at, o.ends_at, o.days_remaining, o.ending_soon, o.offer_copy, o.terms, o.savings_percent FROM pliego.fn_catalog_search_global(?,?,?,?,?,?,?,?,?) AS s LEFT JOIN LATERAL pliego.fn_edition_offer(s.edition_id) o ON true";
     private static final String EDITION_DETAIL_QUERY = "SELECT edition_id, book_id, title, subtitle, synopsis, "
             + "authors_json::text AS authors_json, categories_json::text AS categories_json, publisher_id, "
             + "publisher_name, btrim(isbn13::text) AS isbn13, sku, language, format, page_count, publication_date, "
-            + "s.price, cover_url, cover_license, cover_source_url, cover_attribution, available, ebook_file_format, audio_duration_seconds, narrators, "
+            + "s.price, cover_url, cover_license, cover_source_url, cover_attribution, available, unavailability_reason, ebook_file_format, audio_duration_seconds, narrators, "
             + "o.offer_id, o.original_price, o.discount_amount, o.starts_at, o.ends_at, o.days_remaining, o.ending_soon, o.offer_copy, o.terms, o.savings_percent FROM pliego.fn_edition_detail(?) AS s LEFT JOIN LATERAL pliego.fn_edition_offer(s.edition_id) o ON true";
     private static final String PUBLIC_CATEGORY_LIST_QUERY = "SELECT category_slug, category_name, "
             + "parent_category_slug FROM pliego.fn_public_category_list(?)";
@@ -167,7 +168,9 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
                         results.getString("isbn13"), results.getBigDecimal("price"),
                         results.getString("cover_url"), results.getString("cover_license"),
                         results.getString("cover_attribution"), results.getString("format"),
-                        results.getString("language"), results.getBoolean("available"), results.getString("ebook_file_format"),
+                        results.getString("language"), results.getBoolean("available"),
+                        EditionUnavailabilityReason.fromNullableCode(results.getString("unavailability_reason")),
+                        results.getString("ebook_file_format"),
                         results.getObject("audio_duration_seconds", Integer.class), JdbcArrays.strings(results, "narrators"), offer(results)),
                 results.getLong("total_count"));
     }
@@ -191,7 +194,9 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
                 results.getObject("publication_date", LocalDate.class), results.getBigDecimal("price"),
                 results.getString("cover_url"), results.getString("cover_license"),
                 results.getString("cover_source_url"), results.getString("cover_attribution"),
-                results.getBoolean("available"), results.getString("ebook_file_format"),
+                results.getBoolean("available"),
+                EditionUnavailabilityReason.fromNullableCode(results.getString("unavailability_reason")),
+                results.getString("ebook_file_format"),
                 results.getObject("audio_duration_seconds", Integer.class), JdbcArrays.strings(results, "narrators"), offer(results));
     }
 

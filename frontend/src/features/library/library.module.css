@@ -57,6 +57,8 @@
 .notice :is(h1, h2) { margin: 0; color: var(--acc-ink); font: 650 clamp(1.375rem, 1.2rem + .8vw, 1.75rem)/1.15 var(--acc-display); letter-spacing: -.04em; overflow-wrap: anywhere; text-wrap: balance; }
 .notice p { max-width: 44ch; margin: 0 0 8px; color: var(--acc-muted); line-height: 1.5; text-wrap: pretty; }
 .noticeSymbol { color: var(--acc-blue); }
+.noticeActions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 20px; }
+.noticeLink { display: inline-flex; align-items: center; min-height: 44px; color: var(--acc-blue); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
 
 /* Loading keeps the shape of what arrives; nothing moves. */
 .pending { pointer-events: none; }
@@ -69,10 +71,8 @@
 
 /* Detail */
 .page { composes: shell from "../account/accountShell.module.css"; width: 100%; max-width: 920px; margin-inline: auto; }
-.back { display: inline-flex; align-items: center; gap: 8px; justify-self: start; min-height: 44px; margin: 6px 0 12px; color: var(--acc-ink); font-size: .9375rem; font-weight: 500; text-decoration: none; }
-.back span:last-child { text-decoration: underline; text-underline-offset: 4px; }
-.back:hover { color: var(--acc-blue); }
-.back:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }
+/* The way back to Mi biblioteca keeps its 12px from the ownership scene below. */
+.page > a:first-child { margin-bottom: 12px; }
 
 .detail { display: grid; gap: clamp(28px, 4vw, 44px); min-width: 0; }
 .scene {
@@ -90,18 +90,14 @@
 .ownership { display: grid; gap: 2px; margin-top: 10px; color: var(--acc-muted); font-size: .9375rem; line-height: 1.5; }
 .ownership .ownershipState { display: flex; align-items: center; gap: 8px; color: var(--acc-ink); font-size: 1.0625rem; font-weight: 600; line-height: 1.35; }
 .ownershipState :global(.material-symbol) { flex: 0 0 auto; color: var(--acc-blue); }
-.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-.action {
-  display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 20px; border-radius: 999px;
-  box-shadow: inset 0 0 0 1.5px var(--acc-blue); color: var(--acc-blue); font-size: .9375rem; font-weight: 600; text-decoration: none;
-  transition: background-color 160ms var(--acc-ease), color 160ms var(--acc-ease);
-}
-.action[data-action="VIEW_ORDER"] { background: var(--acc-blue); box-shadow: none; color: var(--acc-on-blue); }
-.action:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 3px; }
-@media (hover: hover) {
-  .action:hover { background: var(--store-tint); }
-  .action[data-action="VIEW_ORDER"]:hover { background: var(--acc-blue-hover); }
-}
+/* The scene ends on the title and its ownership; help is one quiet link, never a pill competing with the book. */
+.helpLink { justify-self: start; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin-top: 10px; color: var(--acc-blue); font-size: .9375rem; font-weight: 600; text-decoration: none; }
+.helpLink:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }
+@media (hover: hover) { .helpLink:hover span { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; } }
+/* The order is administration: it lives in its purchase record, as that record's quiet way in. */
+.purchaseLink { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: 2px; min-height: 44px; margin: 4px 0 -8px; color: var(--acc-blue); font-size: .9375rem; font-weight: 600; text-decoration: none; }
+.purchaseLink:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }
+@media (hover: hover) { .purchaseLink:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; } }
 .detail[data-ownership="REVOKED"] .scene { background: transparent; }
 .detail[data-ownership="REVOKED"] .jacket { opacity: .6; }
 .detail[data-ownership="REVOKED"] :is(.media, .title, .ownershipState, .ownershipState :global(.material-symbol)) { color: var(--acc-muted); }
@@ -131,11 +127,10 @@
   .scene { grid-template-columns: minmax(0, 1fr); }
   .jacket { width: min(58%, 200px); }
   .scene.pending .pendingCover { width: min(58%, 200px); }
-  .actions, .action { width: 100%; }
   .purchase { grid-template-columns: minmax(0, 1fr); }
   .purchaseDate { text-align: left; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .owned, .ownedGo, .action { transition: none; }
+  .owned, .ownedGo { transition: none; }
   .owned:has(a:hover) .ownedGo { translate: none; }
 }

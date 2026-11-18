@@ -1,10 +1,11 @@
 import { expect, test, type Page, type Route } from "@playwright/test";
+import { choosePlace, geoResponse, quitoIds, withPlaceNames } from "./geo-fixtures";
 
 /** In-memory stand-in for the address endpoints of the v1 REST contract. */
 class FakeAddresses {
   addresses: Record<string, unknown>[] = [
-    { addressId: "15", alias: "Casa", recipient: "Ana Pérez", line1: "Av. Principal 123", line2: null, city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true },
-    { addressId: "16", alias: "Oficina", recipient: "Ana Pérez", line1: "Av. Amazonas 100", line2: "Piso 4", city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: "170135", reference: "Edificio azul", phone: "+593991234567", primary: false },
+    { addressId: "15", alias: "Casa", recipient: "Ana Pérez", line1: "Av. Principal 123", line2: null, city: "Quito", province: "Pichincha", ...quitoIds, countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true },
+    { addressId: "16", alias: "Oficina", recipient: "Ana Pérez", line1: "Av. Amazonas 100", line2: "Piso 4", city: "Quito", province: "Pichincha", ...quitoIds, countryCode: "EC", postalCode: "170135", reference: "Edificio azul", phone: "+593991234567", primary: false },
   ];
   posts = 0;
   puts = 0;
@@ -25,12 +26,14 @@ class FakeAddresses {
     if (path === "/auth/login") return ok({ accessToken: "e2e-token", tokenType: "Bearer", expiresInSeconds: 1800, user: { userId: "100", email: "ana@example.com", role: "CUSTOMER" } });
     if (path === "/me" && method === "GET") return ok({ customerId: "100", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" });
     if (path === "/reference/countries") return ok([{ code: "EC", name: "Ecuador" }, { code: "CO", name: "Colombia" }]);
+    const geo = geoResponse(path);
+    if (geo) return ok(geo);
     if (path === "/me/addresses" && method === "GET") return ok(this.addresses);
     if (path === "/me/addresses" && method === "POST") {
       this.posts += 1;
       const addressId = String(20 + this.addresses.length);
       if (body.makePrimary) this.addresses.forEach((address) => { address.primary = false; });
-      this.addresses.push({ line2: null, postalCode: null, reference: null, ...body, addressId, primary: Boolean(body.makePrimary) });
+      this.addresses.push({ line2: null, postalCode: null, reference: null, ...withPlaceNames(body), addressId, primary: Boolean(body.makePrimary) });
       return ok({ addressId }, 201);
     }
     const update = /^\/me\/addresses\/(\d+)$/.exec(path);
@@ -40,7 +43,7 @@ class FakeAddresses {
         return route.fulfill({ status: 409, contentType: "application/problem+json", body: JSON.stringify({ type: "urn:pliego:problem:P2010", title: "Dirección no disponible", status: 409, detail: "No pudimos guardar esta dirección ahora.", code: "P2010", traceId: "e2e" }) });
       }
       this.puts += 1;
-      Object.assign(this.addresses.find((address) => address.addressId === update[1])!, body);
+      Object.assign(this.addresses.find((address) => address.addressId === update[1])!, withPlaceNames(body));
       return route.fulfill({ status: 204 });
     }
     if (update && method === "DELETE") {
@@ -71,6 +74,8 @@ async function shot(page: Page, name: string) {
 const noPageOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
 
 test("address editing opens over the list, guards typed data and returns focus", async ({ page }) => {
+  // About 14s alone across desktop and phone flows with two place pickers each; parallel workers can double it.
+  test.setTimeout(60_000);
   const api = new FakeAddresses();
   await api.install(page);
   await page.setViewportSize({ width: 1280, height: 720 });
@@ -86,7 +91,8 @@ test("address editing opens over the list, guards typed data and returns focus",
   await expect(page.locator("#address-form-heading")).toBeInViewport({ ratio: 1 });
   await expect(editor.getByRole("button", { name: "Guardar dirección" })).toBeInViewport({ ratio: 1 });
   await expect(page.getByRole("heading", { level: 3, name: "Casa" })).toBeVisible();
-  await expect(editor.getByLabel("Ciudad")).toHaveValue("Quito");
+  await expect(editor.getByRole("combobox", { name: "Ciudad", exact: true })).toContainText("Quito");
+  await expect(editor.getByRole("combobox", { name: "Provincia", exact: true })).toContainText("Pichincha");
   await shot(page, "desktop-edit");
 
   // Keyboard: focus stays inside the editor.
@@ -102,7 +108,8 @@ test("address editing opens over the list, guards typed data and returns focus",
 
   // Leaving typed data asks in its own dialog; staying keeps the draft and returns to the field in use.
   await editOffice.click();
-  await editor.getByLabel("Ciudad").fill("Cuenca");
+  await choosePlace(page, editor, "Pichincha", "Sangolquí");
+  await expect(editor.getByRole("combobox", { name: "Ciudad", exact: true })).toBeFocused();
   await page.keyboard.press("Escape");
   const discard = page.getByRole("dialog", { name: "¿Descartar los cambios?" });
   await expect(discard).toBeVisible();
@@ -115,12 +122,12 @@ test("address editing opens over the list, guards typed data and returns focus",
   await expect(discard.getByRole("button", { name: "Seguir editando" })).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(discard).toBeHidden();
-  await expect(editor.getByLabel("Ciudad")).toHaveValue("Cuenca");
-  await expect(editor.getByLabel("Ciudad")).toBeFocused();
+  await expect(editor.getByRole("combobox", { name: "Ciudad", exact: true })).toContainText("Sangolquí");
+  await expect(editor.getByRole("combobox", { name: "Ciudad", exact: true })).toBeFocused();
   // Cancelar and the close button ask too.
   await editor.getByRole("button", { name: "Cancelar" }).click();
   await discard.getByRole("button", { name: "Seguir editando" }).click();
-  await expect(editor.getByLabel("Ciudad")).toHaveValue("Cuenca");
+  await expect(editor.getByRole("combobox", { name: "Ciudad", exact: true })).toContainText("Sangolquí");
   // So does the veil.
   await expect(discard).toBeHidden();
   await page.mouse.click(40, 400);
@@ -136,7 +143,7 @@ test("address editing opens over the list, guards typed data and returns focus",
 
   // Delivery is fixed to Ecuador; focusing the country never opens a second editor.
   await editOffice.click();
-  await expect(editor.getByLabel("Ciudad")).toHaveValue("Quito");
+  await expect(editor.getByRole("combobox", { name: "Ciudad", exact: true })).toContainText("Quito");
   const country = editor.getByLabel("País de entrega", { exact: true });
   await expect(country).toHaveValue("Ecuador");
   await expect(country).toHaveAttribute("readonly", "");
@@ -147,26 +154,35 @@ test("address editing opens over the list, guards typed data and returns focus",
   await shot(page, "desktop-country");
   await expect(editor).toBeVisible();
 
-  // Validation errors stay in the editor and are recoverable.
-  await editor.getByLabel("Ciudad").fill("");
+  // Validation errors stay in the editor and are recoverable: another province leaves the city to choose.
+  await editor.getByRole("combobox", { name: "Provincia", exact: true }).click();
+  await page.getByRole("option", { name: "Azuay", exact: true }).click();
+  await expect(editor.getByRole("combobox", { name: "Ciudad", exact: true })).toContainText("Elige una ciudad");
   await editor.getByRole("button", { name: "Guardar dirección" }).click();
-  await expect(editor.getByLabel("Ciudad")).toHaveAttribute("aria-invalid", "true");
-  await expect(editor.getByLabel("Ciudad")).toBeFocused();
+  await expect(editor.getByRole("combobox", { name: "Ciudad", exact: true })).toHaveAttribute("aria-invalid", "true");
+  await expect(editor.getByRole("combobox", { name: "Ciudad", exact: true })).toHaveAccessibleDescription("Elige la ciudad.");
+  await expect(editor.getByRole("combobox", { name: "Ciudad", exact: true })).toBeFocused();
   await shot(page, "desktop-validation");
   expect(api.puts).toBe(0);
 
   // A server rejection is shown in the editor; the data stays for another attempt.
   api.rejectNextUpdate = true;
-  await editor.getByLabel("Ciudad").fill("Cuenca");
+  await editor.getByRole("combobox", { name: "Ciudad", exact: true }).click();
+  await page.getByRole("option", { name: /^Cuenca/ }).click();
   await editor.getByRole("button", { name: "Guardar dirección" }).click();
   await expect(editor.getByRole("alert")).toBeInViewport({ ratio: 1 });
-  await expect(editor.getByLabel("Ciudad")).toHaveValue("Cuenca");
+  await expect(editor.getByRole("combobox", { name: "Ciudad", exact: true })).toContainText("Cuenca");
   await shot(page, "desktop-server-error");
   await editor.getByRole("button", { name: "Guardar dirección" }).click();
   await expect(editor).toBeHidden();
-  await expect(page.getByText("Guardamos los cambios de la dirección.")).toBeFocused();
+  // The confirmation is the store's snackbar, not a banner; focus returns to what opened the editor.
+  await expect(page.locator("[data-undo-toast]")).toHaveText(/Dirección actualizada/);
+  await expect(page.locator(".purchase-notice")).toHaveCount(0);
+  await expect(editOffice).toBeFocused();
+  await page.getByRole("button", { name: "Cerrar aviso" }).click();
+  await expect(page.locator("[data-undo-toast]")).toHaveCount(0);
   expect(api.addresses.find(address => address.addressId === "16")?.countryCode).toBe("EC");
-  await expect(page.getByText("Cuenca, Pichincha, Ecuador")).toBeVisible();
+  await expect(page.getByText("Cuenca, Azuay, Ecuador")).toBeVisible();
   expect(api.puts).toBe(1);
 
   // Add uses the same editor; discarding its draft returns focus to the tile.
@@ -174,7 +190,7 @@ test("address editing opens over the list, guards typed data and returns focus",
   await add.click();
   const creator = page.getByRole("dialog", { name: "Nueva dirección" });
   await expect(page.locator("#address-form-heading")).toBeFocused();
-  await creator.getByLabel("Ciudad").fill("Loja");
+  await choosePlace(page, creator, "Guayas", "Guayaquil");
   await shot(page, "desktop-add");
   await creator.getByRole("button", { name: "Cancelar" }).click();
   await page.getByRole("dialog", { name: "¿Descartar los cambios?" }).getByRole("button", { name: "Descartar cambios" }).click();
@@ -182,15 +198,15 @@ test("address editing opens over the list, guards typed data and returns focus",
   await expect(add).toBeFocused();
 
   await add.click();
-  await expect(creator.getByLabel("Ciudad")).toHaveValue("");
+  await expect(creator.getByRole("combobox", { name: "Ciudad", exact: true })).toContainText("Elige primero la provincia");
+  await expect(creator.getByRole("combobox", { name: "Ciudad", exact: true })).toBeDisabled();
   await creator.getByLabel("Nombre de la dirección").fill("Taller");
   await creator.getByLabel("Dirección", { exact: true }).fill("Calle Larga 8");
-  await creator.getByLabel("Ciudad").fill("Cuenca");
-  await creator.getByLabel("Provincia").fill("Azuay");
+  await choosePlace(page, creator, "Azuay", "Cuenca");
   await creator.getByLabel("Teléfono de contacto").fill("991234567");
   await creator.getByRole("button", { name: "Guardar dirección" }).click();
   await expect(creator).toBeHidden();
-  await expect(page.getByText("Guardamos la dirección. Ya puedes elegirla al finalizar una compra.")).toBeVisible();
+  await expect(page.locator("[data-undo-toast]")).toHaveText(/Dirección agregada/);
   await expect(page.getByRole("heading", { level: 3, name: "Taller" })).toBeVisible();
   expect(api.posts).toBe(1);
   expect(api.addresses.find(address => address.alias === "Taller")).toMatchObject({ countryCode: "EC", phone: "+593991234567" });
@@ -216,10 +232,11 @@ for (const viewport of [{ name: "phone", width: 390, height: 844 }, { name: "sma
     expect(await editor.evaluate((node) => node.scrollWidth <= node.clientWidth)).toBe(true);
     await shot(page, `${viewport.name}-edit`);
 
-    await editor.getByLabel("Ciudad").fill("");
+    await editor.getByRole("combobox", { name: "Provincia", exact: true }).click();
+    await page.getByRole("option", { name: "Guayas", exact: true }).click();
     await editor.getByRole("button", { name: "Guardar dirección" }).click();
-    await expect(editor.getByLabel("Ciudad")).toBeFocused();
-    await expect(editor.getByLabel("Ciudad")).toBeInViewport({ ratio: 1 });
+    await expect(editor.getByRole("combobox", { name: "Ciudad", exact: true })).toBeFocused();
+    await expect(editor.getByRole("combobox", { name: "Ciudad", exact: true })).toBeInViewport({ ratio: 1 });
     await shot(page, `${viewport.name}-validation`);
 
     const country = editor.getByLabel("País de entrega", { exact: true });
@@ -231,13 +248,96 @@ for (const viewport of [{ name: "phone", width: 390, height: 844 }, { name: "sma
     await shot(page, `${viewport.name}-country`);
     await expect(editor).toBeVisible();
 
-    await editor.getByLabel("Ciudad").fill("Ambato");
+    await editor.getByRole("combobox", { name: "Ciudad", exact: true }).click();
+    await page.getByRole("option", { name: /^Guayaquil/ }).click();
     await editor.getByRole("button", { name: "Guardar dirección" }).click();
     await expect(editor).toBeHidden();
-    await expect(page.getByText("Ambato, Pichincha, Ecuador")).toBeVisible();
+    await expect(page.getByText("Guayaquil, Guayas, Ecuador")).toBeVisible();
     expect(api.addresses.find(address => address.addressId === "16")?.countryCode).toBe("EC");
   });
 }
+
+test("F03: an invalid phone never saves the previous number or claims a save", async ({ page }) => {
+  const api = new FakeAddresses();
+  await api.install(page);
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await openAddresses(page);
+  await page.getByRole("button", { name: "Editar Casa" }).click();
+  const editor = page.getByRole("dialog", { name: "Editar Casa" });
+  const phone = editor.getByLabel("Teléfono de contacto");
+  await expect(phone).toHaveValue("25550134");
+
+  // The reported repro: replace the saved number with "abc" and save.
+  await phone.fill("abc");
+  await expect(phone).toHaveValue("abc");
+  await expect(phone).toHaveAttribute("aria-invalid", "true");
+  await expect(phone).toHaveAccessibleDescription("Usa solo números.");
+  await editor.getByRole("button", { name: "Guardar dirección" }).click();
+  await expect(editor).toBeVisible();
+  await expect(phone).toBeFocused();
+  await expect(phone).toHaveAccessibleDescription("Usa solo números.");
+  await expect(page.locator("[data-undo-toast]")).toHaveCount(0);
+  await shot(page, "f03-refused");
+
+  // A number with its trunk zero is kept as entered and refused for that reason (never silently shortened).
+  await phone.fill("0991281194");
+  await expect(phone).toHaveValue("0991281194");
+  await editor.getByRole("button", { name: "Guardar dirección" }).click();
+  await expect(phone).toHaveAccessibleDescription("Escríbelo sin el 0 inicial.");
+
+  // Cleared, the required phone is asked for.
+  await phone.fill("");
+  await editor.getByRole("button", { name: "Guardar dirección" }).click();
+  await expect(phone).toHaveAccessibleDescription("Escribe un teléfono de contacto.");
+  expect(api.puts).toBe(0);
+  expect(api.addresses.find((address) => address.addressId === "15")?.phone).toBe("+59325550134");
+
+  // A corrected number is saved, and only then confirmed.
+  await phone.fill("991281194");
+  await editor.getByRole("button", { name: "Guardar dirección" }).click();
+  await expect(editor).toBeHidden();
+  await expect(page.locator("[data-undo-toast]")).toHaveText(/Dirección actualizada/);
+  expect(api.puts).toBe(1);
+  expect(api.addresses.find((address) => address.addressId === "15")?.phone).toBe("+593991281194");
+  await expect(page.getByText("+593 99 128 1194")).toBeVisible();
+  await shot(page, "f03-saved-toast");
+});
+
+test("the address snackbar waits while hovered, leaves after ten seconds and skips its time line with reduced motion", async ({ page }) => {
+  test.setTimeout(60_000);
+  const api = new FakeAddresses();
+  await api.install(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openAddresses(page);
+  await page.getByRole("button", { name: "Editar Casa" }).click();
+  const editor = page.getByRole("dialog", { name: "Editar Casa" });
+  await editor.getByLabel("Teléfono de contacto").fill("991281194");
+  await editor.getByRole("button", { name: "Guardar dirección" }).click();
+  const toast = page.locator("[data-undo-toast]");
+  await expect(toast).toBeVisible();
+  // At the foot of the viewport, inside the phone's width, with its time line drawn.
+  const box = (await toast.boundingBox())!;
+  expect(box.y + box.height).toBeLessThanOrEqual(844);
+  expect(box.y).toBeGreaterThan(844 / 2);
+  expect(box.x).toBeGreaterThanOrEqual(16);
+  expect(box.x + box.width).toBeLessThanOrEqual(390 - 16);
+  await expect(toast.locator("[data-undo-toast-progress]")).toBeVisible();
+  expect(await noPageOverflow(page)).toBe(true);
+  await shot(page, "phone-toast");
+  await toast.hover();
+  await page.waitForTimeout(11_000);
+  await expect(toast).toBeVisible();
+  await page.mouse.move(5, 5);
+  await expect(toast).toBeHidden({ timeout: 11_000 });
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.getByRole("button", { name: "Editar Casa" }).click();
+  await editor.getByLabel("Teléfono de contacto").fill("991281131");
+  await editor.getByRole("button", { name: "Guardar dirección" }).click();
+  await expect(toast).toBeVisible();
+  await expect(toast.locator("[data-undo-toast-progress]")).toBeHidden();
+  expect(api.puts).toBe(2);
+});
 
 test("the address editor stays usable at 200% text", async ({ page }) => {
   const api = new FakeAddresses();
@@ -296,7 +396,8 @@ test("deleting an address asks in a dialog that names it and returns focus when 
   await expect(confirm.getByRole("button", { name: "Eliminar dirección" })).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(confirm).toBeHidden();
-  await expect(page.getByText("Eliminamos la dirección.")).toBeFocused();
+  await expect(page.locator("[data-undo-toast]")).toHaveText(/Dirección eliminada/);
+  await expect(page.getByRole("button", { name: "Editar Casa" })).toBeFocused();
   await expect(page.getByRole("heading", { level: 3, name: "Oficina" })).toHaveCount(0);
   expect(api.deletes).toBe(1);
 
@@ -348,3 +449,67 @@ test("a small address collection sits centered and fills out as it grows", async
   expect(await offCenter()).toMatchObject({ perRow: 1 });
   expect(await noPageOverflow(page)).toBe(true);
 });
+
+for (const viewport of [{ name: "desktop", width: 1280, height: 800 }, { name: "phone", width: 390, height: 844 }]) {
+  test(`province and city are chosen by typing alone (${viewport.name})`, async ({ page }) => {
+    test.setTimeout(60_000);
+    const api = new FakeAddresses();
+    await api.install(page);
+    await page.setViewportSize(viewport);
+    await openAddresses(page);
+    await page.getByRole("button", { name: "Agregar dirección" }).click();
+    const creator = page.getByRole("dialog", { name: "Nueva dirección" });
+    await creator.getByLabel("Nombre de la dirección").fill("Valle");
+    await creator.getByLabel("Dirección", { exact: true }).fill("Av. General Enríquez 10");
+    const province = creator.getByRole("combobox", { name: "Provincia", exact: true });
+    const city = creator.getByRole("combobox", { name: "Ciudad", exact: true });
+    const search = (name: string) => page.getByRole("combobox", { name: `Buscar ${name}` });
+    const expectActive = async (name: string, option: string | RegExp) =>
+      expect(search(name)).toHaveAttribute("aria-activedescendant", (await page.getByRole("option", { name: option }).getAttribute("id"))!);
+
+    // Focus, then type at full speed: the search opens with every key, its best match already active.
+    await creator.getByLabel("Dirección", { exact: true }).press("Tab");
+    await expect(province).toBeFocused();
+    await page.keyboard.type("PICH");
+    await expect(search("provincia")).toBeFocused();
+    await expect(search("provincia")).toHaveValue("PICH");
+    await expectActive("provincia", "Pichincha");
+    await page.keyboard.press("Enter");
+    await expect(province).toContainText("Pichincha");
+    await expect(province).toBeFocused();
+
+    // The city follows its province; accents are optional; Escape keeps the value.
+    await expect(city).toBeEnabled();
+    await page.keyboard.press("Tab");
+    await expect(city).toBeFocused();
+    await page.keyboard.type("xyz");
+    await expect(page.getByText("No encontramos «xyz». Prueba con otro nombre.")).toBeVisible();
+    await page.keyboard.press("Enter");
+    await page.keyboard.press("Escape");
+    await expect(city).toBeFocused();
+    await expect(city).toContainText("Elige una ciudad");
+    await page.keyboard.type("sangolqui");
+    await expect(search("ciudad")).toHaveValue("sangolqui");
+    await expectActive("ciudad", /^Sangolquí/);
+    await page.keyboard.press("Enter");
+    await expect(city).toContainText("Sangolquí");
+    expect(await noPageOverflow(page)).toBe(true);
+
+    // Another province clears the city it no longer contains; choosing the same one again would not.
+    await province.focus();
+    await page.keyboard.type("gua");
+    await expectActive("provincia", "Guayas");
+    await page.keyboard.press("Enter");
+    await expect(city).toContainText("Elige una ciudad");
+    await city.focus();
+    await page.keyboard.type("guayaquil");
+    await page.keyboard.press("Enter");
+    await expect(city).toContainText("Guayaquil");
+
+    await creator.getByLabel("Teléfono de contacto").fill("991234567");
+    await creator.getByRole("button", { name: "Guardar dirección" }).click();
+    await expect(creator).toBeHidden();
+    expect(api.posts).toBe(1);
+    expect(api.addresses.find(address => address.alias === "Valle")).toMatchObject({ provinceId: "9", cityId: "432", city: "Guayaquil", province: "Guayas" });
+  });
+}

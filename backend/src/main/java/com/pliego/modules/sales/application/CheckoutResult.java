@@ -4,7 +4,13 @@ import java.math.BigDecimal;
 
 public record CheckoutResult(String orderId, String orderState, String paymentState, BigDecimal total,
         String paymentReference, PostPurchaseModels.Fulfillment fulfillment,
-        com.pliego.foundation.money.MonetaryAmounts amounts, PostPurchaseModels.OfferPricing offerPricing) {
+        com.pliego.foundation.money.MonetaryAmounts amounts, PostPurchaseModels.OfferPricing offerPricing, String orderReference) {
+    public CheckoutResult(String orderId, String orderState, String paymentState, BigDecimal total,
+            String paymentReference, PostPurchaseModels.Fulfillment fulfillment,
+            com.pliego.foundation.money.MonetaryAmounts amounts, PostPurchaseModels.OfferPricing offerPricing) {
+        this(orderId, orderState, paymentState, total, paymentReference, fulfillment, amounts, offerPricing, null);
+    }
+
     public CheckoutResult(String orderId, String orderState, String paymentState, BigDecimal total,
             String paymentReference, PostPurchaseModels.Fulfillment fulfillment,
             com.pliego.foundation.money.MonetaryAmounts amounts) {

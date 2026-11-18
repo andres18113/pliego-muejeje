@@ -1,0 +1,26 @@
+{
+  "Shared gates/documentation": {
+    "files": 7,
+    "insertions": 81,
+    "deletions": 7,
+    "newFiles": 1
+  },
+  "Task 2 registration": {
+    "files": 20,
+    "insertions": 1156,
+    "deletions": 67,
+    "newFiles": 12
+  },
+  "Task 1 offers": {
+    "files": 33,
+    "insertions": 3826,
+    "deletions": 13,
+    "newFiles": 24
+  },
+  "Task 3 pickup": {
+    "files": 16,
+    "insertions": 777,
+    "deletions": 23,
+    "newFiles": 7
+  }
+}

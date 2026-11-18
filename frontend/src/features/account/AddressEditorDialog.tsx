@@ -81,6 +81,7 @@ export function AddressEditorDialog({ opened, opening, address, firstAddress, di
             onStateChange={trackForm}
             onSaved={async (addressId) => { setDiscarding(false); await onSaved(addressId); }}
             onCancel={requestClose}
+            onUnchanged={onClose}
             onUncertain={onUncertain}
             onSessionExpired={onSessionExpired}
           />
