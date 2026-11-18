@@ -363,8 +363,10 @@ retain their existing flow.
   pastes stays in the field exactly as entered — letters, a trunk zero, an extension, a tenth digit — with its reason at
   once ("Usa solo números.", "Escríbelo sin el 0 inicial.", "Usa como máximo 9 dígitos."), and the form receives an
   invalid value, so saving is refused and focus returns to the phone; it never quietly keeps or saves the previous
-  number, never truncates at a length cap and never strips digits. A typed or pasted `+593` prefix is absorbed; a saved
-  number from another country is explained and offers "Borrar número guardado". When its column is very
+  number, never truncates at a length cap and never strips digits. A typed or pasted `+593` prefix is absorbed. A saved +593 number
+  that today's rules refuse (an old one with an extension) is shown after its prefix with its reason, to be corrected in
+  place; a saved number from another country is explained and offers "Borrar número guardado". Neither is ever rewritten
+  or saved until the customer enters a valid one. When its column is very
   narrow (large text, tight inline rows) the prefix stacks above the number instead of overflowing.
 - Consumers: Mi perfil (phone), `AddressForm` (country + phone) in Direcciones and Checkout. Style the shared
   component, never a page-specific copy.

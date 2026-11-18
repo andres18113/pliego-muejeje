@@ -54,6 +54,11 @@ it("keeps foreign and trunk-zero pastes visible with a specific reason",async()=
  const{input,changed}=example();const user=userEvent.setup();await user.click(input);await user.paste("+44 20 7946 0018");expect(input).toHaveValue("+44 20 7946 0018");expectReportedInvalid(changed,/Ecuador/i);
  await user.clear(input);await user.paste("0991234567");expect(input).toHaveValue("0991234567");expectReportedInvalid(changed,"Escríbelo sin el 0 inicial.");
 });
+it("shows a stored +593 number with an extension after its prefix, explained and correctable in place",async()=>{
+ const{input,changed}=example("+593 99 123 4567 ext 5");expect(input).toHaveValue("99 123 4567 ext 5");expect(input).toHaveAttribute("aria-invalid","true");expect(input).toHaveAccessibleDescription("Usa solo números.");expect(changed).not.toHaveBeenCalled();
+ expect(screen.queryByRole("button",{name:"Borrar número guardado"})).not.toBeInTheDocument();
+ const user=userEvent.setup();await user.click(input);for(let i=0;i<5;i++)await user.keyboard("{End}{Backspace}");expect(input).toHaveValue("991234567");expect(changed).toHaveBeenLastCalledWith("+593991234567");expect(input).not.toHaveAttribute("aria-invalid","true");
+});
 it("does not reinterpret a stored foreign phone with the fixed Ecuador prefix",()=>{
  const{input,changed}=example("+442079460018");expect(input).toHaveValue("");expect(changed).not.toHaveBeenCalled();expect(screen.getByRole("status")).toHaveTextContent(/Ecuador/i);
 });

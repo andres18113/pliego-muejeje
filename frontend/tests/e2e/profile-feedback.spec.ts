@@ -115,7 +115,7 @@ for (const width of [320, 768, 1280]) for (const theme of ["light", "dark"]) {
     await number.press("Tab");
     await expect(number).toHaveAttribute("aria-invalid", "true");
     await number.fill("93141a");
-    await expect(number).toHaveValue("93141");
+    await expect(number).toHaveValue("93141a");
     await expect(phone.locator(".field-error:visible")).toHaveCount(1);
     await expect(number).toHaveAccessibleDescription(/solo (dígitos|números)/);
     await expect(phone.getByText(/debe tener 9 dígitos/)).toHaveCount(0);

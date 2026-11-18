@@ -62,8 +62,9 @@ export function InternationalPhoneField({ id, label, value, onChange, onBlur, di
   const own = draft !== null && draft.value === value;
   // A stored number from another country is not reinterpreted under +593: it is explained and can be cleared.
   const foreign = !own && Boolean(value && !value.startsWith("+593"));
-  const national = own ? draft.text : foreign ? "" : value?.slice(4) ?? "";
-  // A +593 value this field did not just write (a restored draft) is shown as it is, with its own reason.
+  // A +593 value this field did not just write (a restored draft, or a number saved before today's rules) is shown
+  // after the prefix as it is, with its own reason, so it can be corrected in place; nothing is saved until it is valid.
+  const national = own ? draft.text : foreign ? "" : value?.slice(4).trimStart() ?? "";
   const restoredProblem = !own && !foreign && value ? parseInput(national).error : null;
   const statusId = `${id}-input-status`;
   function enter(raw: string) {
