@@ -10,6 +10,7 @@ import { SavingsChip, UrgencyChip } from "./OfferChips";
 import { offerUrgencyLabel } from "./offersPresentation";
 import { useFavoriteControl } from "./useBookCardActions";
 import classes from "./OfferCard.module.css";
+import { resolveStockStatus } from "./stockStatusModel";
 
 type OfferCardProps = {
   edition: BookCardEditionSource; detailHref: string; returnHref: string; isFavorite: boolean; favoriteReady: boolean;
@@ -68,7 +69,7 @@ export function OfferCard({ edition, detailHref, returnHref, isFavorite, favorit
         {book.originalPriceLabel && <p className={classes.was}><span className="visually-hidden">Precio anterior </span><s>{book.originalPriceLabel}</s></p>}
       </div>
       {book.discountLabel && <SavingsChip id={`${uid}-saving`} amountLabel={book.discountLabel} />}
-      {!book.available && <p className={classes.unavailable}>Sin existencias</p>}
+      {!book.available && <p className={classes.unavailable}>{resolveStockStatus(book).label}</p>}
     </div>
 
     {/* A visual cue only: the card's link already covers it, so it adds no second stop for the same edition. */}

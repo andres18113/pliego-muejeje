@@ -120,15 +120,19 @@ it("lets Escape explicitly discard a draft and recover focus", async () => {
   expect(sessionStorage.getItem("pliego-profile-draft:2:firstNames")).toBeNull();
 });
 
-it("preserves a valid phone draft when rejecting pasted letters, including across navigation", async () => {
+it("preserves the phone draft exactly as typed, with its reason, across navigation", async () => {
   stubApi({ "GET /api/v1/me": () => json(profile), "GET /api/v1/reference/countries": () => json([{ code: "EC", name: "Ecuador" }]) });
   const { router } = renderPurchaseRoute(routes, "/account"); const user = userEvent.setup();
   await user.click(await screen.findByRole("button", { name: "Agregar teléfono" }));
   const phone = screen.getByLabelText("Teléfono", { exact: true });
   await user.type(phone, "991234567");
   fireEvent.change(phone, { target: { value: "991234567abc" } });
-  expect(phone).toHaveValue("991234567");
+  expect(phone).toHaveValue("991234567abc");
   expect(phone).toHaveAccessibleDescription(/solo números/);
   await act(async () => { await router.navigate("/orders"); await router.navigate("/account"); });
-  expect(await screen.findByLabelText("Teléfono", { exact: true })).toHaveValue("991234567");
+  const restored = await screen.findByLabelText("Teléfono", { exact: true });
+  expect(restored).toHaveValue("991234567abc");
+  expect(restored).toHaveAccessibleDescription(/solo números/);
+  expect(restored).toHaveAttribute("aria-invalid", "true");
+  expect(screen.queryByRole("button", { name: "Borrar número guardado" })).not.toBeInTheDocument();
 });

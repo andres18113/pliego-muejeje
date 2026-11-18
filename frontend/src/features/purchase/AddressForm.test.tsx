@@ -27,13 +27,14 @@ describe("AddressForm collapsed error recovery", () => {
     const field = phone.closest(".form-field")!;
     expect(field.querySelectorAll(".field-error, .field-help")).toHaveLength(1);
     await user.type(phone, "a");
-    expect(phone).toHaveValue("99");
+    expect(phone).toHaveValue("99a");
     expect(phone).toHaveAccessibleDescription(/solo números/i);
     expect(phone).not.toHaveAccessibleDescription(/9 dígitos/);
     expect(field.querySelectorAll(".field-error, .field-help")).toHaveLength(1);
     await user.tab();
     expect(phone).toHaveAccessibleDescription(/solo números/i);
-    await user.type(phone, "1");
+    await user.click(phone);
+    await user.type(phone, "{Backspace}1");
     expect(phone).not.toHaveAttribute("aria-invalid", "true");
     await user.tab();
     expect(phone).toHaveAttribute("aria-invalid", "true");

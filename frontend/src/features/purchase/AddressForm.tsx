@@ -72,6 +72,7 @@ export function AddressForm({
   focusOnMount = false,
   disabled = false,
   onStateChange,
+  onUnchanged,
 }: {
   firstAddress: boolean;
   onSaved: (addressId: string) => Promise<void> | void;
@@ -83,6 +84,8 @@ export function AddressForm({
   disabled?: boolean;
   /** Lets a host surface (the Direcciones editor) guard its own close: unsaved input, or a request in flight. */
   onStateChange?: (state: { dirty: boolean; busy: boolean }) => void;
+  /** Editing only: a valid save with nothing changed sends no request and claims no save; the host just closes. */
+  onUnchanged?: () => void;
 }) {
   const { session } = useSession();
   const actor = session!.user.userId;
@@ -202,6 +205,7 @@ export function AddressForm({
       setError("recipient",{type:"validate",message:recipientProblem});
       requestAnimationFrame(() => setFocus("recipient")); return;
     }
+    if (address && onUnchanged && !isDirty) { onUnchanged(); return; }
     lock.current = true;
     setProblem(null);
     try {

@@ -18,6 +18,9 @@ import { useCountries } from "@/shared/api/reference";
 
 type Action = { kind: "delete" | "primary"; addressId: string };
 
+/** How long a confirmed change stays in the snackbar (it waits while hovered or focused). */
+export const ADDRESS_TOAST_MS = 10_000;
+
 export function AddressBookPage() {
   return <PurchasePage title="Mis direcciones"><CustomerOnly intent="/account/addresses" task="ver tus direcciones">
     <AccountShell title="Direcciones" trail="Direcciones" intro="Dónde recibes tus libros. La dirección principal aparece primero al finalizar una compra."><AddressBook /></AccountShell>
@@ -37,9 +40,11 @@ export function AddressBook() {
   });
   const [formAddressId, setFormAddressId] = useState<string | "new" | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
-  const [notice, setNotice] = useState<{ text: string; error: boolean } | null>(null);
+  // Only what still needs the customer: a failure or a list that could not be refreshed. Successes are toasts.
+  const [notice, setNotice] = useState<string | null>(null);
   const noticeRef = useRef<HTMLParagraphElement>(null);
-  // A confirmed deletion is a passing fact, not a state of the page: a short toast, never a banner.
+  // A confirmed change (saved, added, made primary, deleted) is a passing fact, not a state of the page: one toast,
+  // never a banner. Banners stay for what still needs the customer (a failure, a list that could not be refreshed).
   const [toast, setToast] = useState<UndoToastMessage | null>(null);
   const missingRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -70,7 +75,8 @@ export function AddressBook() {
       if (!scope.isCurrent()) return;
       setConfirmDeleteId(null);
       if (action.kind === "delete" && !current.isError) { deleted(position); return; }
-      setNotice({ text: current.isError ? "Guardamos el cambio, pero no pudimos actualizar la lista. Pulsa Actualizar para comprobarlo." : "Esta es ahora tu dirección principal.", error: current.isError });
+      if (!current.isError) { madePrimary(action.addressId); return; }
+      setNotice("Guardamos el cambio, pero no pudimos actualizar la lista. Pulsa Actualizar para comprobarlo.");
     } catch (error) {
       if (!scope.isCurrent()) return;
       if (error instanceof ApiRequestError && error.status === 401) { clear("expired"); return; }
@@ -81,24 +87,28 @@ export function AddressBook() {
         ? !current.data?.some((address) => address.addressId === action.addressId)
         : current.data?.some((address) => address.addressId === action.addressId && address.primary));
       if (applied && action.kind === "delete") { deleted(position); return; }
+      if (applied) { madePrimary(action.addressId); return; }
       if (!(error instanceof ApiRequestError) || error.status >= 500) {
-        setNotice({ text: applied
-          ? "Confirmamos que esta es tu dirección principal."
-          : "No pudimos confirmar el cambio. Consulta la lista actual antes de decidir si quieres intentarlo otra vez.", error: !applied });
+        setNotice("No pudimos confirmar el cambio. Consulta la lista actual antes de decidir si quieres intentarlo otra vez.");
       } else {
-        setNotice({ text: `${error.title}. ${error.detail}`, error: true });
+        setNotice(`${error.title}. ${error.detail}`);
       }
     }
   }
 
   /** The deleted object's trigger is gone: focus moves to the address now in its place (or the add tile), and a toast reports it. */
   function deleted(position: number) {
-    setToast({ key: Date.now(), message: "Dirección eliminada" });
+    setToast({ key: Date.now(), message: "Dirección eliminada", detail: deleteShown.current?.alias });
     requestAnimationFrame(() => {
       const rows = document.querySelectorAll<HTMLElement>("#direcciones .account-address-row");
       const next = rows[Math.min(Math.max(position, 0), rows.length - 1)];
       (next?.querySelector<HTMLElement>("button") ?? document.querySelector<HTMLElement>('#direcciones button[aria-label="Agregar dirección"]'))?.focus({ preventScroll: true });
     });
+  }
+
+  function madePrimary(addressId: string) {
+    const alias = query.data?.find((address) => address.addressId === addressId)?.alias;
+    setToast({ key: Date.now(), message: "Dirección principal actualizada", detail: alias });
   }
 
   const addresses = query.data;
@@ -146,9 +156,9 @@ export function AddressBook() {
       {notice && <p
         ref={noticeRef}
         tabIndex={-1}
-        className={`purchase-notice ${notice.error ? "purchase-notice--error" : "purchase-notice--success"}`}
-        role={notice.error ? "alert" : "status"}
-      >{notice.text}</p>}
+        className="purchase-notice purchase-notice--error"
+        role="alert"
+      >{notice}</p>}
       {addresses.length === 0 && <div className={`purchase-empty account-address-empty ${classes.empty}`}><h3>Aún no tienes direcciones guardadas.</h3></div>}
       <div className={classes.grid}>
       {addresses.length > 0 && <ul className={`account-address-list ${classes.list}`}>
@@ -172,12 +182,20 @@ export function AddressBook() {
         firstAddress={addresses.length === 0}
         disabled={query.isError || query.isFetching || mutation.isPending}
         onClose={closeEditor}
-        onSaved={async () => {
+        onSaved={async (addressId) => {
           if (!scope.isCurrent()) return;
+          const edited = Boolean(shownAddress);
           const current = await query.refetch();
           if (!scope.isCurrent()) return;
           setFormAddressId(null);
-          setNotice({ text: current.isError ? "Guardamos la dirección, pero no pudimos actualizar la lista. Pulsa Actualizar para comprobarla." : shownAddress ? "Guardamos los cambios de la dirección." : "Guardamos la dirección. Ya puedes elegirla al finalizar una compra.", error: current.isError });
+          if (current.isError) {
+            setNotice("Guardamos la dirección, pero no pudimos actualizar la lista. Pulsa Actualizar para comprobarla.");
+            return;
+          }
+          // Called only after the server confirmed the write; focus goes back to what opened the editor.
+          const alias = current.data?.find((address) => address.addressId === addressId)?.alias;
+          setToast({ key: Date.now(), message: edited ? "Dirección actualizada" : "Dirección agregada", detail: alias });
+          returnFocus();
         }}
         onUncertain={async () => { if (scope.isCurrent()) await query.refetch(); }}
         onSessionExpired={() => { if (scope.isCurrent()) clear("expired"); }}
@@ -190,7 +208,7 @@ export function AddressBook() {
         <p>Los pedidos anteriores conservan los datos de entrega con los que se hicieron.</p>
       </ConfirmDialog>
     </>}
-    <UndoToast toast={toast} onDismiss={() => setToast(null)} duration={5000} />
+    <UndoToast toast={toast} onDismiss={() => setToast(null)} duration={ADDRESS_TOAST_MS} />
   </section>;
 }
 

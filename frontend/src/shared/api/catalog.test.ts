@@ -45,6 +45,25 @@ describe("edition availability boundary", () => {
     vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ editionId: "42", available }), { status: 200, headers: { "Content-Type": "application/json" } })));
     await expect(getPublicEdition("42")).rejects.toMatchObject({ code: "INVALID_CATALOG_RESPONSE", status: 502 });
   });
+
+  it.each([
+    ["OUT_OF_STOCK", "OUT_OF_STOCK"], ["P2042", "P2042"], ["P2043", "P2043"],
+    // A reason this client does not know, or none at all, never becomes a guessed cause.
+    ["P3002", null], ["RESTOCKING_SOON", null], [null, null], [undefined, null],
+  ] as const)("reads the server's unavailability reason %s as %s", async (sent, read) => {
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ editionId: "42", available: false, unavailabilityReason: sent }), { status: 200, headers: { "Content-Type": "application/json" } })));
+    const edition = await getPublicEdition("42");
+    expect(edition.available).toBe(false);
+    expect(edition.unavailabilityReason).toBe(read);
+  });
+
+  it("publishes the reason on every catalog and favorites edition response, with exactly the states the UI names", () => {
+    const schemas = (openApi as unknown as { components: { schemas: Record<string, { properties?: Record<string, { enum?: unknown[] }>; required?: string[] }> } }).components.schemas;
+    for (const name of ["CatalogEditionDetailResponse", "CatalogEditionSummaryResponse", "CustomerFavorite"]) {
+      const reason = schemas[name].properties?.unavailabilityReason;
+      expect(reason?.enum).toEqual(expect.arrayContaining(["OUT_OF_STOCK", "P2042", "P2043"]));
+    }
+  });
 });
 
 describe("parseTotalCount", () => {

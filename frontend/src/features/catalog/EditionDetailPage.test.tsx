@@ -309,6 +309,33 @@ describe("EditionDetailPage", () => {
     expect(screen.queryByRole("link", { name: "Iniciar sesión para agregar" })).not.toBeInTheDocument();
   });
 
+  it("says an out-of-stock edition is sold out, why it cannot be added, and promises nothing about its return", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => editionResponse(false, { unavailabilityReason: "OUT_OF_STOCK" })));
+
+    renderDetail();
+
+    await screen.findByRole("heading", { name: "Cien años de soledad" });
+    const main = screen.getByRole("main");
+    expect(main.querySelector("#edition-stock")).toHaveTextContent(/^Agotado$/);
+    const status = within(main).getByRole("status");
+    expect(status).toHaveTextContent("No quedan ejemplares de esta edición.");
+    expect(main).not.toHaveTextContent(/No disponible|no está disponible para agregar/);
+    expect(main).not.toHaveTextContent(/pronto|volverá|repon|próximamente|avisaremos/i);
+    expect(screen.queryByRole("button", { name: "Agregar al carrito" })).not.toBeInTheDocument();
+  });
+
+  it("keeps the neutral wording when the server gives no reason, never guessing out of stock", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => editionResponse(false, { unavailabilityReason: null })));
+
+    renderDetail();
+
+    await screen.findByRole("heading", { name: "Cien años de soledad" });
+    const main = screen.getByRole("main");
+    expect(main.querySelector("#edition-stock")).toHaveTextContent(/^No disponible$/);
+    expect(within(main).getByRole("status")).toHaveTextContent("Esta edición no está disponible para agregar al carrito.");
+    expect(main).not.toHaveTextContent(/Agotado|No quedan ejemplares/);
+  });
+
   it("rejects unsafe cover-source schemes and formats edition facts for es-EC", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => editionResponse(true, {
       coverSourceUrl: "javascript:alert(1)",

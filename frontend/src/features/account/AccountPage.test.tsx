@@ -217,6 +217,10 @@ describe("customer account", () => {
     await user.clear(phone);
     await user.type(phone, "0991234567");
     await user.click(screen.getByRole("button", { name: "Guardar" }));
+    expect(phone).toHaveAccessibleDescription("Escríbelo sin el 0 inicial.");
+    expect(api.count("PATCH", "/api/v1/me")).toBe(0);
+    await user.type(phone, "{Home}{Delete}");
+    await user.click(screen.getByRole("button", { name: "Guardar" }));
     await waitFor(() => expect(api.calls.find((call) => call.method === "PATCH")?.body).toEqual({ field: "phone", value: "+593991234567", expectedVersion: "0" }));
     expect(await screen.findByText("Guardamos tu teléfono.")).toBeInTheDocument();
   });
@@ -312,8 +316,16 @@ describe("customer account", () => {
     await screen.findByRole("dialog", { name: "Nueva dirección" });
     await user.type(screen.getByLabelText("Dirección", { exact: true }), "Av. Principal 123");
     await choosePlace(document.querySelector<HTMLElement>(".address-form")!);
-    await user.type(screen.getByLabelText("Teléfono de contacto"), "0991234567");
+    const phone = screen.getByLabelText("Teléfono de contacto");
+    await user.type(phone, "0991234567");
     await waitFor(() => expect(screen.getByRole("button", { name: "Guardar dirección" })).toBeEnabled());
+    // A trunk zero is never dropped silently: the save waits until the customer removes it.
+    await user.click(screen.getByRole("button", { name: "Guardar dirección" }));
+    await waitFor(() => expect(phone).toHaveFocus());
+    expect(phone).toHaveAccessibleDescription("Escríbelo sin el 0 inicial.");
+    expect(api.count("POST", "/api/v1/me/addresses")).toBe(0);
+    await user.type(phone, "{Home}{Delete}");
+    expect(phone).toHaveValue("991234567");
     await user.click(screen.getByRole("button", { name: "Guardar dirección" }));
     await waitFor(() => expect(api.calls.find((call) => call.method === "POST")?.body).toMatchObject({
       alias: "Casa", recipient: "Ana Pérez", countryCode: "EC", phone: "+593991234567", makePrimary: true,

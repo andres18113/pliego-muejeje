@@ -50,7 +50,7 @@ describe("P1 integrity regressions", () => {
     await screen.findByRole("dialog", { name: "Nueva dirección" });
     await user.type(screen.getByLabelText("Dirección", { exact: true }), "Av. Principal 123");
     await choosePlace(document.querySelector<HTMLElement>(".address-form")!);
-    await user.type(screen.getByLabelText("Teléfono de contacto"), "0991234567");
+    await user.type(screen.getByLabelText("Teléfono de contacto"), "991234567");
     await waitFor(() => expect(screen.getByRole("button", { name: "Guardar dirección" })).toBeEnabled());
     await user.click(screen.getByRole("button", { name: "Guardar dirección" }));
     await screen.findByRole("alert");
@@ -119,7 +119,7 @@ describe("P1 integrity regressions", () => {
     await screen.findByText(/La dirección sigue pendiente/);
     expect(localStorage.getItem("pliego:pending:address:2")).toBe(key);
     await user.click(screen.getByRole("button", { name: "Consultar resultado" }));
-    await screen.findByText(/Guardamos la dirección/);
+    await waitFor(() => expect(document.querySelector("[data-undo-toast]")).toHaveTextContent("Dirección agregada"));
     expect(api.calls.some((call) => call.path === "/api/v1/me/addresses" && call.method === "POST")).toBe(false);
     expect(localStorage.getItem("pliego:pending:address:2")).toBeNull();
   });

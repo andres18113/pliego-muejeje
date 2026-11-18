@@ -83,7 +83,7 @@ export function BookCard({ book, to, navigationState, onNavigate, favorite, cart
           {urgency && !urgencyOnStage && <UrgencyChip label={urgency} data-offer-urgency />}
         </div>}
       </div>
-      <p className={classes.availability} id={`${uid}-availability`} data-bookcard-availability><StockStatus available={book.available} size="compact" variant="quiet" /></p>
+      <p className={classes.availability} id={`${uid}-availability`} data-bookcard-availability><StockStatus available={book.available} unavailabilityReason={book.unavailabilityReason} explained={false} size="compact" variant="quiet" /></p>
       {cart && cartAction ? <div className={classes.actionLine}><div className={classes.actions} data-bookcard-actions>
           <Button type="button" radius="md" variant="filled" className={classes.cart}
             leftSection={<MaterialSymbol name={cartAction.icon} size={20} />}

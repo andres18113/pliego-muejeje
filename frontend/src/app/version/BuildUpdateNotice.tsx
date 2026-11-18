@@ -20,5 +20,5 @@ export function BuildUpdateNotice({ environment, reload = () => window.location.
   })), [environment]);
   // Mounted only while there is something to say: an always-present live region would add a second, empty
   // role="status" to every page of the site.
-  return toast ? <UndoToast toast={toast} onDismiss={() => setToast(null)} duration={10 * 60_000} /> : null;
+  return toast ? <UndoToast toast={toast} onDismiss={() => setToast(null)} duration={10 * 60_000} progress={false} /> : null;
 }

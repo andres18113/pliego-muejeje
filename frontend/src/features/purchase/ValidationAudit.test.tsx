@@ -51,14 +51,16 @@ describe("confirmed validation audit regressions", () => {
     await waitFor(() => expect(api.calls.find(call => call.method === "POST")?.body).toMatchObject({ phone: "+593991234567" }));
   });
 
-  it("rejects a pasted extension immediately instead of changing it into phone digits", async () => {
+  it("keeps a pasted extension visible and invalid instead of changing it into phone digits", async () => {
     const api = stubApi({ "GET /api/v1/me": () => json(profile) });
     renderPurchaseRoute(account, "/account");
     const user = userEvent.setup(); await user.click(await screen.findByRole("button", { name: "Agregar teléfono" }));
     const phone = await screen.findByLabelText("Teléfono");
     await waitFor(() => expect(phone).toBeEnabled());
     await user.click(phone); await user.paste("+593 99 123 4567 ext 5");
-    expect(phone).toHaveValue("");
+    expect(phone).toHaveValue("+593 99 123 4567 ext 5");
+    expect(phone).toHaveAccessibleDescription(/solo números/);
+    await user.click(screen.getByRole("button", { name: "Guardar" }));
     expect(phone).toHaveAccessibleDescription(/solo números/);
     expect(api.count("PATCH", "/api/v1/me")).toBe(0);
   });
@@ -99,7 +101,7 @@ describe("confirmed validation audit regressions", () => {
     const user = userEvent.setup();
     await user.type(screen.getByLabelText("Dirección", { exact: true }), savedAddress.line1);
     await choosePlace(document.querySelector<HTMLElement>(".address-form")!);
-    await user.type(screen.getByLabelText("Teléfono de contacto"), "0991234567");
+    await user.type(screen.getByLabelText("Teléfono de contacto"), "991234567");
     await waitFor(() => expect(screen.getByRole("button", { name: "Guardar dirección" })).toBeEnabled());
     if (frameOrder === "before commit") {
       // A rendering frame can run before React commits the newly revealed recipient.

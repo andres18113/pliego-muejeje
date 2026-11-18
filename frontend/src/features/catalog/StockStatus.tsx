@@ -8,9 +8,11 @@ export interface StockStatusProps extends StockAvailability {
   variant?: "text" | "badge" | "quiet";
   id?: string;
   className?: string;
+  /** Off where the surface states the reason itself (the edition page) or has room only for the state's name (cards, rows). */
+  explained?: boolean;
 }
 
-export function StockStatus({ available, unavailabilityReason, size = "normal", variant = "text", id, className }: StockStatusProps) {
+export function StockStatus({ available, unavailabilityReason, size = "normal", variant = "text", id, className, explained = true }: StockStatusProps) {
   const status = resolveStockStatus({ available, unavailabilityReason });
   return <Text component="span" size={size === "compact" ? "xs" : "sm"} fw={400} id={id}
     className={[classes.root, className].filter(Boolean).join(" ")}
@@ -19,6 +21,6 @@ export function StockStatus({ available, unavailabilityReason, size = "normal", 
       {variant === "quiet" ? <span className={classes.mark} data-stockstatus-mark aria-hidden="true" /> : <MaterialSymbol name={status.icon} size={size === "compact" ? 16 : 20} className={classes.icon} />}
       <span className={classes.label} data-stockstatus-label>{status.label}</span>
     </span>
-    {status.explanation && <>{" "}<span className={classes.explanation} data-stockstatus-explanation>{status.explanation}</span></>}
+    {explained && status.explanation && <>{" "}<span className={classes.explanation} data-stockstatus-explanation>{status.explanation}</span></>}
   </Text>;
 }

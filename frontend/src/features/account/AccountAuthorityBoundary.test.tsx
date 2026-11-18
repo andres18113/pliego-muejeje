@@ -55,7 +55,7 @@ describe("account command authority boundaries", () => {
     try {
       await user.type(await screen.findByLabelText("Dirección", { exact: true }), "Casa privada de Ana");
       await choosePlace(document.querySelector<HTMLElement>(".address-form")!);
-      await user.type(screen.getByLabelText("Teléfono de contacto"), "0991234567");
+      await user.type(screen.getByLabelText("Teléfono de contacto"), "991234567");
       await user.click(screen.getByRole("button", { name: "Guardar dirección" }));
       await waitFor(() => expect(states).toHaveBeenLastCalledWith(expect.objectContaining({ busy: true })));
       await user.click(screen.getByRole("button", { name: "Cambiar a Bea" }));

@@ -90,7 +90,7 @@ export function FavoriteRow({ edition, detailHref, returnHref, queryKey, onRemov
     </Link>
     <div className={classes.commerce}>
       <p className={classes.price} id={`${uid}-price`} data-bookcard-price>{book.priceLabel}</p>
-      <p className={classes.stock} id={`${uid}-stock`}><StockStatus available={book.available} size="compact" variant="quiet" /></p>
+      <p className={classes.stock} id={`${uid}-stock`}><StockStatus available={book.available} unavailabilityReason={book.unavailabilityReason} explained={false} size="compact" variant="quiet" /></p>
     </div>
     <div className={classes.actions} data-bookcard-actions>
       {inCart

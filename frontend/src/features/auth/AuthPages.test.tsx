@@ -341,7 +341,7 @@ describe("authentication forms", () => {
     expect(mockRegister).not.toHaveBeenCalled();
   });
 
-  it("rejects name digits while typing and caps national phone input before submission", async () => {
+  it("rejects name digits while typing and keeps an over-long phone visible and invalid before submission", async () => {
     renderAuth("/register");
     const user = userEvent.setup();
     const names = screen.getByLabelText("Nombres");
@@ -351,7 +351,9 @@ describe("authentication forms", () => {
     await user.click(screen.getByRole("button", { name: "Añadir teléfono (opcional)" }));
     const phone = screen.getByLabelText(/Teléfono/);
     await user.type(phone, "9912345678");
-    expect(phone).toHaveValue("991234567");
+    expect(phone).toHaveValue("9912345678");
+    expect(phone).toHaveAttribute("aria-invalid", "true");
+    expect(phone).toHaveAccessibleDescription("Usa como máximo 9 dígitos.");
     expect(screen.queryByRole("combobox", { name: /país/i })).not.toBeInTheDocument();
     expect(mockRegister).not.toHaveBeenCalled();
   });
@@ -421,13 +423,14 @@ describe("authentication forms", () => {
     expect(mockRegister).not.toHaveBeenCalled();
   });
 
-  it("rejects phone letters and extensions at input time without changing the number", async () => {
+  it("explains phone letters and extensions at input time and keeps them visible, never as a number", async () => {
     const user = userEvent.setup();
     renderAuth("/register");
     await user.click(screen.getByRole("button", { name: "Añadir teléfono (opcional)" }));
     const phone = screen.getByLabelText(/Teléfono/);
     await user.click(phone); await user.paste("+593#25550134");
-    expect(phone).toHaveValue("");
+    expect(phone).toHaveValue("+593#25550134");
+    expect(phone).toHaveAttribute("aria-invalid", "true");
     expect(phone).toHaveAccessibleDescription("Usa solo números.");
     expect(mockRegister).not.toHaveBeenCalled();
   });
@@ -447,11 +450,11 @@ describe("authentication forms", () => {
     const field = phone.closest(".form-field")!;
     expect(field.querySelectorAll(".field-error, .field-help")).toHaveLength(1);
     await user.type(phone, "a");
-    expect(phone).toHaveValue("99");
+    expect(phone).toHaveValue("99a");
     expect(phone).toHaveAccessibleDescription(/solo números/i);
     expect(phone).not.toHaveAccessibleDescription(/9 dígitos/);
     expect(field.querySelectorAll(".field-error, .field-help")).toHaveLength(1);
-    await user.type(phone, "1");
+    await user.type(phone, "{Backspace}1");
     expect(phone).not.toHaveAttribute("aria-invalid", "true");
     await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
     await waitFor(() => expect(phone).toHaveFocus());

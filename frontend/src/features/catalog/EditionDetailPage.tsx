@@ -399,7 +399,7 @@ export function EditionDetailPage() {
                     ? purchaseFeedback.message
                     : detail.available
                     ? "No podemos agregar esta edición porque no hay un precio disponible."
-                    : "Esta edición no está disponible para agregar al carrito."}
+                    : stock.explanation ?? "Esta edición no está disponible para agregar al carrito."}
                 </p>
               ) : customerSession ? (
                 <>
@@ -509,7 +509,7 @@ export function EditionDetailPage() {
     <ButtonLink id="context-digital-destination" variant="primary" className={`${classes.contextAction} ${classes.contextDigitalAction}`} to={digitalState.href}>
       {phone ? digitalState.compactLabel : digitalState.label}
     </ButtonLink>
-  ) : !purchasingAvailable ? <span className={classes.contextUnavailable}>No disponible</span>
+  ) : !purchasingAvailable ? <span className={classes.contextUnavailable}>{detail.available ? "No disponible" : stock.label}</span>
     : customerSession ? (
       <Button
         variant="primary"
@@ -601,7 +601,7 @@ export function EditionDetailPage() {
                 <SavingsChip amountLabel={formatUsd(detail.offer.savingsAmount)} />
                 {urgency && <UrgencyChip label={urgency} />}
               </div>}
-              <StockStatus id="edition-stock" available={detail.available} variant="quiet" className={classes.stock} />
+              <StockStatus id="edition-stock" available={detail.available} unavailabilityReason={detail.unavailabilityReason} explained={false} variant="quiet" className={classes.stock} />
             </div>
             <div className={classes.actions}>
               {purchase}

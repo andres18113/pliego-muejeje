@@ -23,8 +23,15 @@ describe("StockStatus", () => {
   it("supports a wrapping badge with the same accessible meaning and leaves explanations complete", () => {
     const { container } = render(<MantineProvider><StockStatus available={false} variant="badge" size="compact" unavailabilityReason="P2042" /></MantineProvider>);
     expect(container.querySelector('[data-stockstatus]')).toHaveAttribute("data-variant", "badge");
-    expect(screen.getByText("No disponible")).toBeVisible();
+    expect(screen.getByText("Fuera de venta")).toBeVisible();
     expect(screen.getByText("Esta edición ya no está a la venta.")).toBeVisible();
+  });
+
+  it("names the state alone where the surface states the reason itself", () => {
+    const { container } = render(<MantineProvider><StockStatus available={false} variant="quiet" size="compact" unavailabilityReason="OUT_OF_STOCK" explained={false} /></MantineProvider>);
+    expect(screen.getByText("Agotado")).toBeVisible();
+    expect(screen.queryByText("No quedan ejemplares de esta edición.")).not.toBeInTheDocument();
+    expect(container.querySelector("[data-stockstatus-explanation]")).toBeNull();
   });
 
   it("keeps quantity-specific meaning fully readable in compact presentation and usable as a description", () => {

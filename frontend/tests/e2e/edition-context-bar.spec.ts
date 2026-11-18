@@ -237,6 +237,28 @@ test("an unavailable edition keeps its price in the bar and says it is not avail
   await expect(bar.getByRole("button", { name: "Agregar al carrito" })).toHaveCount(0);
 });
 
+test("an out-of-stock edition says Agotado in the scene and the bar, explains it once and promises nothing", async ({ page }, testInfo) => {
+  for (const width of [1280, 390]) {
+    await page.setViewportSize({ width, height: 800 });
+    await mockCustomer(page, { quantity: 0, posts: 0 }, { ...edition, available: false, unavailabilityReason: "OUT_OF_STOCK" });
+    await page.goto("/catalog/editions/42");
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    const scene = page.getByRole("region", { name: "Compra" });
+    await expect(scene.locator("[data-stockstatus-label]")).toHaveText("Agotado");
+    await expect(scene.getByRole("status")).toHaveText("No quedan ejemplares de esta edición.");
+    await expect(scene).not.toContainText(/No disponible|pronto|volverá|repon/i);
+    await expect(scene.getByRole("button", { name: /Agregar/ })).toHaveCount(0);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    await page.screenshot({ path: testInfo.outputPath(`out-of-stock-${width}.png`) });
+    await openSynopsis(page);
+    await page.evaluate(() => window.scrollTo(0, 1400));
+    const bar = page.getByRole("region", { name: "Resumen del libro" });
+    await expect(bar.getByText("Agotado", { exact: true })).toBeVisible();
+    await expect(bar.getByRole("button", { name: /Agregar/ })).toHaveCount(0);
+    await page.screenshot({ path: testInfo.outputPath(`out-of-stock-bar-${width}.png`) });
+  }
+});
+
 test("the floating bar stays on PLIEGO's light card under a dark system preference", async ({ page }, testInfo) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.setViewportSize({ width: 1280, height: 800 });

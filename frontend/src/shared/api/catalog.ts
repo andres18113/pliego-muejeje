@@ -3,6 +3,7 @@ import type { components, paths } from "./generated";
 import { apiClient } from "./client";
 import { isRecord, toApiRequestError } from "./errors";
 import { digitalMetadataFields, editionFormatSchema, validateDigitalMetadata, type EditionFormat } from "./editionFormats";
+import { editionUnavailabilityReasonSchema, type EditionUnavailabilityReason } from "./availability";
 
 const offerSchema = z.object({
   offerId: z.string().regex(/^[1-9]\d*$/),
@@ -53,6 +54,7 @@ const editionSummarySchema = z.object({
   format: editionFormatSchema,
   language: z.string(),
   available: z.boolean(),
+  unavailabilityReason: editionUnavailabilityReasonSchema,
   offer: offerSchema.nullable().optional(),
   ...digitalMetadataFields,
 }).superRefine(validateDigitalMetadata);
@@ -99,7 +101,12 @@ const pageEnvelopeSchema = z.object({
 export type EditionSummary = z.infer<typeof editionSummarySchema>;
 export type PublicCategory = z.infer<typeof publicCategorySchema> & Pick<components["schemas"]["Category"], "slug" | "name">;
 /** The offer is the validated `offerSchema` shape (`getPublicEdition` rejects anything else), not the looser generated one. */
-export type EditionDetail = Omit<components["schemas"]["CatalogEditionDetailResponse"], "offer"> & { available: boolean; offer?: OfferSummary | null };
+export type EditionDetail = Omit<components["schemas"]["CatalogEditionDetailResponse"], "offer" | "unavailabilityReason"> & {
+  available: boolean;
+  /** Null when available, or when the server sent no reason this client knows. */
+  unavailabilityReason: EditionUnavailabilityReason | null;
+  offer?: OfferSummary | null;
+};
 export type PublicCatalogFilterOptions = z.infer<typeof publicCatalogFilterOptionsSchema>;
 export type CatalogScope = NonNullable<NonNullable<paths["/api/v1/catalog/categories"]["get"]["parameters"]["query"]>["scope"]>;
 
@@ -252,7 +259,7 @@ export async function getPublicEdition(editionId: string, signal?: AbortSignal):
   if (!data || typeof data.available !== "boolean") throw invalidCatalogResponse();
   const parsed = editionDetailCompatibilitySchema.safeParse(data);
   if (!parsed.success) throw invalidCatalogResponse();
-  return { ...data, available: data.available, offer: parsed.data.offer };
+  return { ...data, available: data.available, unavailabilityReason: editionUnavailabilityReasonSchema.parse(data.unavailabilityReason) ?? null, offer: parsed.data.offer };
 }
 
 function invalidCatalogResponse() {

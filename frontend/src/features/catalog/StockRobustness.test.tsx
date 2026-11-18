@@ -32,6 +32,26 @@ it.each(["P2042", "P3002"] as const)("ignores a residual reason on an authoritat
   expect(screen.queryByText("No disponible")).not.toBeInTheDocument();
 });
 
+it("tells each favorite's state apart: available, sold out, or no longer for sale", async () => {
+  const items = [
+    { ...book, editionId: "41", title: "Primera lectura", available: true, unavailabilityReason: null },
+    { ...book, editionId: "42", title: "Sin ejemplares", available: false, unavailabilityReason: "OUT_OF_STOCK" },
+    { ...book, editionId: "43", title: "Edición retirada", available: false, unavailabilityReason: "P2042" },
+    { ...book, editionId: "44", title: "Libro retirado", available: false, unavailabilityReason: "P2043" },
+  ].map((item) => ({ ...item, favoritedAt: "2026-10-04T12:00:00Z" }));
+  stubApi({
+    "GET /api/v1/me/favorites": () => json({ items, page: 0, pageSize: 20, totalCount: "4" }),
+    "GET /api/v1/cart": () => json(cartBody([])),
+  });
+  renderPurchaseRoute([{ path: "/favorites", element: <FavoritesPage /> }], "/favorites");
+  const state = async (title: string) => ((await screen.findByRole("heading", { name: title })).closest("article, li") as HTMLElement).querySelector("[data-stockstatus-label]")?.textContent;
+  expect(await state("Primera lectura")).toBe("Disponible");
+  expect(await state("Sin ejemplares")).toBe("Agotado");
+  expect(await state("Edición retirada")).toBe("Fuera de venta");
+  expect(await state("Libro retirado")).toBe("Fuera de venta");
+  expect(screen.queryByText("No disponible")).not.toBeInTheDocument();
+});
+
 it("restores Favorites cart availability after authoritative unavailable/available transitions", async () => {
   let available = true;
   stubApi({

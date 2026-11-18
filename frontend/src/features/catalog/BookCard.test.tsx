@@ -63,6 +63,22 @@ describe("BookCard controlled contract", () => {
     expect(screen.getAllByText("No disponible")).toHaveLength(1);
   });
 
+  it.each([["OUT_OF_STOCK", "Agotado"], ["P2042", "Fuera de venta"], ["P2043", "Fuera de venta"]] as const)("names the server's reason %s on the card and in the purchase description", (reason, label) => {
+    setup({ book: toBookCardData({ ...edition, available: false, unavailabilityReason: reason }) });
+    expect(screen.getByText(label, { exact: true })).toBeVisible();
+    expect(screen.queryByText("No disponible")).not.toBeInTheDocument();
+    expect(screen.getByRole("link")).toHaveAccessibleDescription(new RegExp(label));
+    expect(screen.getByRole("button", { name: `Agregar al carrito: ${edition.title}` })).toBeDisabled();
+    // A card has room for the state's name only; the reason's sentence belongs to the edition page.
+    expect(document.querySelector("[data-stockstatus-explanation]")).toBeNull();
+  });
+
+  it("drops a stale reason when the read says the edition is available", () => {
+    setup({ book: toBookCardData({ ...edition, available: true, unavailabilityReason: "OUT_OF_STOCK" }) });
+    expect(screen.getByText("Disponible", { exact: true })).toBeVisible();
+    expect(screen.queryByText("Agotado")).not.toBeInTheDocument();
+  });
+
   it.each([
     { state: "ready" as const, icon: "add_shopping_cart", text: "Agregar", label: "Agregar al carrito" },
     { state: "pending" as const, icon: "schedule", text: "Agregando…", label: "Agregando…" },

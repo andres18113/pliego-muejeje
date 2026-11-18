@@ -1,6 +1,7 @@
 /* PLIEGO's snackbar: a bounded ultramar field with the yellow action, at the foot of the viewport. */
 .region { position: fixed; z-index: 150; inset: auto 0 0 0; display: flex; justify-content: center; padding: 0 16px calc(20px + env(safe-area-inset-bottom)); pointer-events: none; }
 .toast {
+  position: relative; overflow: hidden;
   display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 2px 4px; min-width: 0; max-width: min(100%, 520px);
   padding: 6px 6px 6px 20px; border-radius: 16px; background: #283da8; color: #fff; pointer-events: auto;
   box-shadow: 0 16px 40px -16px rgba(37, 39, 64, .55);
@@ -14,6 +15,17 @@
 .action:hover, .close:hover { background: rgba(255, 255, 255, .14); }
 .action:focus-visible, .close:focus-visible { outline: 3px solid #f3df83; outline-offset: -3px; }
 
+/* The time left: a quiet paper line along the whole foot, clipped by the toast's rounding, that shortens toward the start
+   and stops whenever the toast waits (hover, focus, an action in flight). Decorative: the toast never leaves while
+   someone is reading or using it, which is what assistive technology relies on. */
+.progress {
+  position: absolute; inset: auto 0 0; height: 3px;
+  background: rgba(255, 255, 255, .5); transform-origin: left center; pointer-events: none;
+  animation: toast-time var(--toast-duration, 9000ms) linear forwards;
+}
+.toast[data-paused] .progress { animation-play-state: paused; }
+
 @keyframes toast-in { from { opacity: 0; transform: translateY(10px); } }
-@media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
-@media (forced-colors: active) { .toast { border: 1px solid CanvasText; } }
+@keyframes toast-time { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) { .toast { animation: none; } .progress { display: none; } }
+@media (forced-colors: active) { .toast { border: 1px solid CanvasText; } .progress { background: CanvasText; } }

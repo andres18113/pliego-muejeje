@@ -175,7 +175,12 @@ test("address editing opens over the list, guards typed data and returns focus",
   await shot(page, "desktop-server-error");
   await editor.getByRole("button", { name: "Guardar dirección" }).click();
   await expect(editor).toBeHidden();
-  await expect(page.getByText("Guardamos los cambios de la dirección.")).toBeFocused();
+  // The confirmation is the store's snackbar, not a banner; focus returns to what opened the editor.
+  await expect(page.locator("[data-undo-toast]")).toHaveText(/Dirección actualizada/);
+  await expect(page.locator(".purchase-notice")).toHaveCount(0);
+  await expect(editOffice).toBeFocused();
+  await page.getByRole("button", { name: "Cerrar aviso" }).click();
+  await expect(page.locator("[data-undo-toast]")).toHaveCount(0);
   expect(api.addresses.find(address => address.addressId === "16")?.countryCode).toBe("EC");
   await expect(page.getByText("Cuenca, Azuay, Ecuador")).toBeVisible();
   expect(api.puts).toBe(1);
@@ -201,7 +206,7 @@ test("address editing opens over the list, guards typed data and returns focus",
   await creator.getByLabel("Teléfono de contacto").fill("991234567");
   await creator.getByRole("button", { name: "Guardar dirección" }).click();
   await expect(creator).toBeHidden();
-  await expect(page.getByText("Guardamos la dirección. Ya puedes elegirla al finalizar una compra.")).toBeVisible();
+  await expect(page.locator("[data-undo-toast]")).toHaveText(/Dirección agregada/);
   await expect(page.getByRole("heading", { level: 3, name: "Taller" })).toBeVisible();
   expect(api.posts).toBe(1);
   expect(api.addresses.find(address => address.alias === "Taller")).toMatchObject({ countryCode: "EC", phone: "+593991234567" });
@@ -251,6 +256,88 @@ for (const viewport of [{ name: "phone", width: 390, height: 844 }, { name: "sma
     expect(api.addresses.find(address => address.addressId === "16")?.countryCode).toBe("EC");
   });
 }
+
+test("F03: an invalid phone never saves the previous number or claims a save", async ({ page }) => {
+  const api = new FakeAddresses();
+  await api.install(page);
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await openAddresses(page);
+  await page.getByRole("button", { name: "Editar Casa" }).click();
+  const editor = page.getByRole("dialog", { name: "Editar Casa" });
+  const phone = editor.getByLabel("Teléfono de contacto");
+  await expect(phone).toHaveValue("25550134");
+
+  // The reported repro: replace the saved number with "abc" and save.
+  await phone.fill("abc");
+  await expect(phone).toHaveValue("abc");
+  await expect(phone).toHaveAttribute("aria-invalid", "true");
+  await expect(phone).toHaveAccessibleDescription("Usa solo números.");
+  await editor.getByRole("button", { name: "Guardar dirección" }).click();
+  await expect(editor).toBeVisible();
+  await expect(phone).toBeFocused();
+  await expect(phone).toHaveAccessibleDescription("Usa solo números.");
+  await expect(page.locator("[data-undo-toast]")).toHaveCount(0);
+  await shot(page, "f03-refused");
+
+  // A number with its trunk zero is kept as entered and refused for that reason (never silently shortened).
+  await phone.fill("0991281194");
+  await expect(phone).toHaveValue("0991281194");
+  await editor.getByRole("button", { name: "Guardar dirección" }).click();
+  await expect(phone).toHaveAccessibleDescription("Escríbelo sin el 0 inicial.");
+
+  // Cleared, the required phone is asked for.
+  await phone.fill("");
+  await editor.getByRole("button", { name: "Guardar dirección" }).click();
+  await expect(phone).toHaveAccessibleDescription("Escribe un teléfono de contacto.");
+  expect(api.puts).toBe(0);
+  expect(api.addresses.find((address) => address.addressId === "15")?.phone).toBe("+59325550134");
+
+  // A corrected number is saved, and only then confirmed.
+  await phone.fill("991281194");
+  await editor.getByRole("button", { name: "Guardar dirección" }).click();
+  await expect(editor).toBeHidden();
+  await expect(page.locator("[data-undo-toast]")).toHaveText(/Dirección actualizada/);
+  expect(api.puts).toBe(1);
+  expect(api.addresses.find((address) => address.addressId === "15")?.phone).toBe("+593991281194");
+  await expect(page.getByText("+593 99 128 1194")).toBeVisible();
+  await shot(page, "f03-saved-toast");
+});
+
+test("the address snackbar waits while hovered, leaves after ten seconds and skips its time line with reduced motion", async ({ page }) => {
+  test.setTimeout(60_000);
+  const api = new FakeAddresses();
+  await api.install(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openAddresses(page);
+  await page.getByRole("button", { name: "Editar Casa" }).click();
+  const editor = page.getByRole("dialog", { name: "Editar Casa" });
+  await editor.getByLabel("Teléfono de contacto").fill("991281194");
+  await editor.getByRole("button", { name: "Guardar dirección" }).click();
+  const toast = page.locator("[data-undo-toast]");
+  await expect(toast).toBeVisible();
+  // At the foot of the viewport, inside the phone's width, with its time line drawn.
+  const box = (await toast.boundingBox())!;
+  expect(box.y + box.height).toBeLessThanOrEqual(844);
+  expect(box.y).toBeGreaterThan(844 / 2);
+  expect(box.x).toBeGreaterThanOrEqual(16);
+  expect(box.x + box.width).toBeLessThanOrEqual(390 - 16);
+  await expect(toast.locator("[data-undo-toast-progress]")).toBeVisible();
+  expect(await noPageOverflow(page)).toBe(true);
+  await shot(page, "phone-toast");
+  await toast.hover();
+  await page.waitForTimeout(11_000);
+  await expect(toast).toBeVisible();
+  await page.mouse.move(5, 5);
+  await expect(toast).toBeHidden({ timeout: 11_000 });
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.getByRole("button", { name: "Editar Casa" }).click();
+  await editor.getByLabel("Teléfono de contacto").fill("991281131");
+  await editor.getByRole("button", { name: "Guardar dirección" }).click();
+  await expect(toast).toBeVisible();
+  await expect(toast.locator("[data-undo-toast-progress]")).toBeHidden();
+  expect(api.puts).toBe(2);
+});
 
 test("the address editor stays usable at 200% text", async ({ page }) => {
   const api = new FakeAddresses();

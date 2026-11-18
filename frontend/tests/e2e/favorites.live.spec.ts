@@ -99,7 +99,9 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
     expect(favoriteTitles).toContain(detailEdition.title);
     if (unavailableEdition) {
       expect(favoriteTitles).toContain(unavailableEdition.title);
-      await expect(cardFor(page, unavailableEdition.editionId).locator("[data-stockstatus]")).toContainText("No disponible");
+      // A public edition is active, so the server can only report it out of stock; Favoritos names that state.
+      expect((unavailableEdition as { unavailabilityReason?: string | null }).unavailabilityReason).toBe("OUT_OF_STOCK");
+      await expect(cardFor(page, unavailableEdition.editionId).locator("[data-stockstatus-label]")).toHaveText("Agotado");
     }
     const listedFavorite = cardFor(page, catalogEdition.editionId);
     await expect(listedFavorite).toContainText(catalogEdition.authors);
