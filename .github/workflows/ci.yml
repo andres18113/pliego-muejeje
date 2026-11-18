@@ -43,13 +43,19 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - name: Install frontend dependencies
         run: npm ci
+      - name: Test npm audit gate
+        working-directory: .
+        run: node --test 'scripts/ci/*.test.mjs'
       - name: Audit frontend dependencies
-        run: npm audit --audit-level=low
+        working-directory: .
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/ci/npm-audit-gate.mjs --project frontend --policy security/npm-audit-exceptions.json
       - name: Install and audit root dependencies
         working-directory: .
         run: |
           npm ci
-          npm audit --audit-level=low
+          node scripts/ci/npm-audit-gate.mjs --project .
       - name: Typecheck frontend
         run: npm run typecheck
       - name: Build frontend
